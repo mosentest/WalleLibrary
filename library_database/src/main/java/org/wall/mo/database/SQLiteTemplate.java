@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.wall.mo.utils.log.WLog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,68 +15,62 @@ import java.util.List;
  * Created by moziqi on 2014/12/25.
  */
 public class SQLiteTemplate {
+
+    private final static String TAG = "SQLiteTemplate";
+
     /**
      * Default Primary key
      */
     protected String mPrimaryKey = "_id";
 
-    /**
-     * WalleDBManager
-     */
-    private WalleDBManager dBManager;
-    /**
-     * 数据库连接
-     */
-    private SQLiteDatabase dataBase = null;
+
+    protected static SQLiteTemplate instance;
+
 
     private SQLiteTemplate() {
     }
 
-    private SQLiteTemplate(WalleDBManager dBManager) {
-        this.dBManager = dBManager;
-    }
 
-    /**
-     * isTransaction 是否属于一个事务 注:一旦isTransaction设为true
-     * 所有的SQLiteTemplate方法都不会自动关闭资源,需在事务成功后手动关闭
-     *
-     * @return
-     */
-    public static SQLiteTemplate getInstance(WalleDBManager dBManager) {
-        return new SQLiteTemplate(dBManager);
+    public static SQLiteTemplate getInstance() {
+        if (instance == null) {
+            synchronized (SQLiteTemplate.class) {
+                if (instance == null) {
+                    instance = new SQLiteTemplate();
+                }
+            }
+        }
+        return instance;
     }
 
     /**
      * 执行一条sql语句
      */
-    public void execSQL(String sql) {
+    public void execSQL(SQLiteDatabase dataBase, String sql) {
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             dataBase.execSQL(sql);
             dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "execSQL", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
     }
 
     /**
      * 执行一条sql语句
      */
-    public void execSQL(String sql, Object[] bindArgs) {
+    public void execSQL(SQLiteDatabase dataBase, String sql, Object[] bindArgs) {
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             dataBase.execSQL(sql, bindArgs);
             dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "execSQL", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
     }
 
@@ -83,22 +79,21 @@ public class SQLiteTemplate {
      *
      * @param sqls
      */
-    public void execSQLByBatch(List<String> sqls) {
+    public void execSQLByBatch(SQLiteDatabase dataBase, List<String> sqls) {
         if (sqls == null || sqls.isEmpty()) {
             return;
         }
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             for (String sql : sqls) {
                 dataBase.execSQL(sql);
             }
             dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "execSQLByBatch", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
     }
 
@@ -108,19 +103,18 @@ public class SQLiteTemplate {
      * @param table   表名
      * @param content 字段值
      */
-    public long insert(String table, ContentValues content) {
+    public long insert(SQLiteDatabase dataBase, String table, ContentValues content) {
         long insert = 0;
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             // insert方法第一参数：数据库表名，第二个参数如果CONTENT为空时则向表中插入一个NULL,第三个参数为插入的内容
             insert = dataBase.insert(table, null, content);
             dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "insert", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
         return insert;
     }
@@ -128,9 +122,8 @@ public class SQLiteTemplate {
     /**
      * 批量删除指定主键数据
      */
-    public void deleteByIds(String table, Object... primaryKeys) {
+    public void deleteByIds(SQLiteDatabase dataBase, String table, Object... primaryKeys) {
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             if (primaryKeys.length > 0) {
                 StringBuilder sb = new StringBuilder();
@@ -142,10 +135,10 @@ public class SQLiteTemplate {
                 dataBase.setTransactionSuccessful();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "deleteByIds", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
     }
 
@@ -157,18 +150,17 @@ public class SQLiteTemplate {
      * @param value
      * @return 返回值大于0表示删除成功
      */
-    public int deleteByField(String table, String field, String value) {
+    public int deleteByField(SQLiteDatabase dataBase, String table, String field, String value) {
         int delete = 0;
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             delete = dataBase.delete(table, field + "=?", new String[]{value});
             dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "deleteByField", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
         return delete;
     }
@@ -181,18 +173,17 @@ public class SQLiteTemplate {
      * @param whereArgs   参数值
      * @return 返回值大于0表示删除成功
      */
-    public int deleteByCondition(String table, String whereClause, String[] whereArgs) {
+    public int deleteByCondition(SQLiteDatabase dataBase, String table, String whereClause, String[] whereArgs) {
         int delete = 0;
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             delete = dataBase.delete(table, whereClause, whereArgs);
             dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-
+            WLog.e(TAG, "deleteByCondition", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
         return delete;
     }
@@ -204,14 +195,13 @@ public class SQLiteTemplate {
      * @param id
      * @return 返回值大于0表示删除成功
      */
-    public int deleteById(String table, String id) {
+    public int deleteById(SQLiteDatabase dataBase, String table, String id) {
         try {
-            dataBase = dBManager.openDatabase();
-            return deleteByField(table, mPrimaryKey, id);
+            return deleteByField(dataBase, table, mPrimaryKey, id);
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "deleteById", e);
         } finally {
-            closeDatabase(null);
+            closeCursor(null);
         }
         return 0;
     }
@@ -224,18 +214,17 @@ public class SQLiteTemplate {
      * @param values
      * @return 返回值大于0表示更新成功
      */
-    public int updateById(String table, String id, ContentValues values) {
+    public int updateById(SQLiteDatabase dataBase, String table, String id, ContentValues values) {
         int update = 0;
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             update = dataBase.update(table, values, mPrimaryKey + "=?", new String[]{id});
             dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "updateById", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
         return update;
     }
@@ -249,18 +238,17 @@ public class SQLiteTemplate {
      * @param whereArgs
      * @return 返回值大于0表示更新成功
      */
-    public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
+    public int update(SQLiteDatabase dataBase, String table, ContentValues values, String whereClause, String[] whereArgs) {
         int update = 0;
         try {
-            dataBase = dBManager.openDatabase();
             dataBase.beginTransaction();
             update = dataBase.update(table, values, whereClause, whereArgs);
             dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "update", e);
         } finally {
             dataBase.endTransaction();
-            closeDatabase(null);
+            closeCursor(null);
         }
         return update;
     }
@@ -272,14 +260,13 @@ public class SQLiteTemplate {
      * @param id
      * @return
      */
-    public Boolean isExistsById(String table, String id) {
+    public Boolean isExistsById(SQLiteDatabase dataBase, String table, String id) {
         try {
-            dataBase = dBManager.openDatabase();
-            return isExistsByField(table, mPrimaryKey, id);
+            return isExistsByField(dataBase, table, mPrimaryKey, id);
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "isExistsById", e);
         } finally {
-            closeDatabase(null);
+            closeCursor(null);
         }
         return null;
     }
@@ -289,16 +276,15 @@ public class SQLiteTemplate {
      *
      * @return
      */
-    public Boolean isExistsByField(String table, String field, String value) {
+    public Boolean isExistsByField(SQLiteDatabase dataBase, String table, String field, String value) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT COUNT(*) FROM ").append(table).append(" WHERE ").append(field).append(" =?");
         try {
-            dataBase = dBManager.openDatabase();
-            return isExistsBySQL(sql.toString(), new String[]{value});
+            return isExistsBySQL(dataBase, sql.toString(), new String[]{value});
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "isExistsByField", e);
         } finally {
-            closeDatabase(null);
+            closeCursor(null);
         }
         return null;
     }
@@ -310,22 +296,23 @@ public class SQLiteTemplate {
      * @param selectionArgs
      * @return
      */
-    public Boolean isExistsBySQL(String sql, String[] selectionArgs) {
+    public Boolean isExistsBySQL(SQLiteDatabase dataBase, String sql, String[] selectionArgs) {
         Cursor cursor = null;
+        boolean result = false;
         try {
-            dataBase = dBManager.openDatabase();
+            dataBase.beginTransaction();
             cursor = dataBase.rawQuery(sql, selectionArgs);
             if (cursor.moveToFirst()) {
-                return (cursor.getInt(0) > 0);
-            } else {
-                return false;
+                result = (cursor.getInt(0) > 0);
             }
+            dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "isExistsBySQL", e);
         } finally {
-            closeDatabase(cursor);
+            dataBase.endTransaction();
+            closeCursor(cursor);
         }
-        return null;
+        return result;
     }
 
     /**
@@ -336,17 +323,21 @@ public class SQLiteTemplate {
      * @param args
      * @return
      */
-    public <T> T queryForObject(RowMapper<T> rowMapper, String sql, String[] args) {
+    public <T> T queryForObject(SQLiteDatabase dataBase, RowMapper<T> rowMapper, String sql, String[] args) {
         Cursor cursor = null;
         T object = null;
         try {
-            dataBase = dBManager.openDatabase();
+            dataBase.beginTransaction();
             cursor = dataBase.rawQuery(sql, args);
             if (cursor.moveToFirst()) {
                 object = rowMapper.mapRow(cursor, cursor.getCount());
             }
+            dataBase.setTransactionSuccessful();
+        } catch (Exception e) {
+            WLog.e(TAG, "queryForObject", e);
         } finally {
-            closeDatabase(cursor);
+            dataBase.endTransaction();
+            closeCursor(cursor);
         }
         return object;
     }
@@ -358,18 +349,22 @@ public class SQLiteTemplate {
      * @param sql
      * @return
      */
-    public <T> List<T> queryForList(RowMapper<T> rowMapper, String sql, String[] selectionArgs) {
+    public <T> List<T> queryForList(SQLiteDatabase dataBase, RowMapper<T> rowMapper, String sql, String[] selectionArgs) {
         Cursor cursor = null;
         List<T> list = null;
         try {
-            dataBase = dBManager.openDatabase();
+            dataBase.beginTransaction();
             cursor = dataBase.rawQuery(sql, selectionArgs);
             list = new ArrayList<T>();
             while (cursor.moveToNext()) {
                 list.add(rowMapper.mapRow(cursor, cursor.getPosition()));
             }
+            dataBase.setTransactionSuccessful();
+        } catch (Exception e) {
+            WLog.e(TAG, "queryForList", e);
         } finally {
-            closeDatabase(cursor);
+            dataBase.endTransaction();
+            closeCursor(cursor);
         }
         return list;
     }
@@ -383,18 +378,22 @@ public class SQLiteTemplate {
      * @param maxResult   步长
      * @return
      */
-    public <T> List<T> queryForList(RowMapper<T> rowMapper, String sql, int startResult, int maxResult) {
+    public <T> List<T> queryForList(SQLiteDatabase dataBase, RowMapper<T> rowMapper, String sql, int startResult, int maxResult) {
         Cursor cursor = null;
         List<T> list = null;
         try {
-            dataBase = dBManager.openDatabase();
+            dataBase.beginTransaction();
             cursor = dataBase.rawQuery(sql + " limit ?,?", new String[]{String.valueOf(startResult), String.valueOf(maxResult)});
             list = new ArrayList<T>();
             while (cursor.moveToNext()) {
                 list.add(rowMapper.mapRow(cursor, cursor.getPosition()));
             }
+            dataBase.setTransactionSuccessful();
+        } catch (Exception e) {
+            WLog.e(TAG, "queryForList", e);
         } finally {
-            closeDatabase(cursor);
+            dataBase.endTransaction();
+            closeCursor(cursor);
         }
         return list;
     }
@@ -404,20 +403,23 @@ public class SQLiteTemplate {
      *
      * @return
      */
-    public Integer getCount(String sql, String[] args) {
+    public Integer getCount(SQLiteDatabase dataBase, String sql, String[] args) {
         Cursor cursor = null;
+        Integer result = 0;
         try {
-            dataBase = dBManager.openDatabase();
+            dataBase.beginTransaction();
             cursor = dataBase.rawQuery("select count(*) from (" + sql + ")", args);
             if (cursor.moveToNext()) {
-                return cursor.getInt(0);
+                result = cursor.getInt(0);
             }
+            dataBase.setTransactionSuccessful();
         } catch (Exception e) {
-            e.printStackTrace();
+            WLog.e(TAG, "getCount", e);
         } finally {
-            closeDatabase(cursor);
+            dataBase.endTransaction();
+            closeCursor(cursor);
         }
-        return 0;
+        return result;
 
     }
 
@@ -435,18 +437,22 @@ public class SQLiteTemplate {
      * @param limit         指定偏移量和获取的记录数，相当于select语句limit关键字后面的部分,如果为null则返回所有行
      * @return
      */
-    public <T> List<T> queryForList(RowMapper<T> rowMapper, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
+    public <T> List<T> queryForList(SQLiteDatabase dataBase, RowMapper<T> rowMapper, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
         List<T> list = null;
         Cursor cursor = null;
         try {
-            dataBase = dBManager.openDatabase();
+            dataBase.beginTransaction();
             cursor = dataBase.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
             list = new ArrayList<T>();
             while (cursor.moveToNext()) {
                 list.add(rowMapper.mapRow(cursor, cursor.getPosition()));
             }
+            dataBase.setTransactionSuccessful();
+        } catch (Exception e) {
+            WLog.e(TAG, "queryForList", e);
         } finally {
-            closeDatabase(cursor);
+            dataBase.endTransaction();
+            closeCursor(cursor);
         }
         return list;
     }
@@ -461,31 +467,9 @@ public class SQLiteTemplate {
     }
 
     /**
-     * Set Primary Key
-     *
-     * @param primaryKey
+     * 关闭Cursor
      */
-    public void setPrimaryKey(String primaryKey) {
-        this.mPrimaryKey = primaryKey;
-    }
-
-    /**
-     * @param <T>
-     * @author shimiso
-     */
-    public interface RowMapper<T> {
-        /**
-         * @param cursor 游标
-         * @param index  下标索引
-         * @return
-         */
-        public T mapRow(Cursor cursor, int index);
-    }
-
-    /**
-     * 关闭数据库
-     */
-    public void closeDatabase(Cursor cursor) {
+    public void closeCursor(Cursor cursor) {
         if (null != cursor) {
             cursor.close();
         }

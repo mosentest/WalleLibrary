@@ -1,8 +1,13 @@
 package org.wall.mo.database.dao;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
+import org.wall.mo.database.RowMapper;
 import org.wall.mo.database.SQLiteTemplate;
+import org.wall.mo.database.WalleContentValues;
+import org.wall.mo.database.WalleDBManager;
 import org.wall.mo.database.bean.DemoBean;
 import org.wall.mo.utils.thread.ExCallable;
 import org.wall.mo.utils.thread.ExRunnable;
@@ -12,20 +17,24 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class DemoDAO implements BaseDAO<DemoBean> {
+public class DemoDAO implements IBaseDAO<DemoBean> {
     @Override
     public String getTableName() {
-        return null;
+        return DemoBean.Constants.TABLE.getTableName();
     }
 
     @Override
     public ContentValues getContentValues(DemoBean bean) {
-        return null;
+        WalleContentValues walleContentValues = new WalleContentValues();
+        walleContentValues.add(DemoBean.Constants.ID, bean.getId());
+        return walleContentValues.create();
     }
 
     @Override
     public long insert(DemoBean bean) {
-        return 0;
+        SQLiteDatabase sqLiteDatabase = WalleDBManager.getInstance().openDatabase();
+        long insert = SQLiteTemplate.getInstance().insert(sqLiteDatabase, getTableName(), getContentValues(bean));
+        return insert;
     }
 
     /**
@@ -102,7 +111,13 @@ public class DemoDAO implements BaseDAO<DemoBean> {
     }
 
     @Override
-    public SQLiteTemplate.RowMapper<DemoBean> getRowMapper() {
-        return null;
+    public RowMapper<DemoBean> getRowMapper() {
+        RowMapper<DemoBean> demoBeanRowMapper = new RowMapper<DemoBean>() {
+            @Override
+            public DemoBean mapRow(Cursor cursor, int index) {
+                return null;
+            }
+        };
+        return demoBeanRowMapper;
     }
 }

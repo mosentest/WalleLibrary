@@ -12,9 +12,6 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class WalleDBManager {
 
-    // 本地Context对象
-    private Context mContext = null;
-
     private static WalleDBManager dBManager = null;
 
     private SDCardSQLiteOpenHelper mSdCardSQLiteOpenHelper;
@@ -22,18 +19,16 @@ public class WalleDBManager {
     /**
      * 构造函数
      *
-     * @param mContext
      */
-    private WalleDBManager(Context mContext) {
+    private WalleDBManager() {
         super();
-        this.mContext = mContext;
     }
 
-    public static synchronized WalleDBManager getInstance(Context mContext) {
+    public static synchronized WalleDBManager getInstance() {
         if (null == dBManager) {
             synchronized (WalleDBManager.class) {
                 if (null == dBManager) {
-                    dBManager = new WalleDBManager(mContext.getApplicationContext());
+                    dBManager = new WalleDBManager();
                 }
             }
         }

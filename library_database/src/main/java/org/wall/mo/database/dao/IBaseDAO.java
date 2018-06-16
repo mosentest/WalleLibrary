@@ -2,6 +2,7 @@ package org.wall.mo.database.dao;
 
 import android.content.ContentValues;
 
+import org.wall.mo.database.RowMapper;
 import org.wall.mo.database.SQLiteTemplate;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * @since
  * @return
  */
-public interface BaseDAO<T> {
+public interface IBaseDAO<T> {
 	
 	public String getTableName();
 	
@@ -34,6 +35,6 @@ public interface BaseDAO<T> {
 
 	public List<T> findAll();
 	
-	public SQLiteTemplate.RowMapper<T> getRowMapper();
+	public RowMapper<T> getRowMapper();
 	
 }
