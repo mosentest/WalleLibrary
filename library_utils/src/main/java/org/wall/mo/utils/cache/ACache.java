@@ -33,13 +33,18 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.WorkerThread;
+import android.util.Base64;
 
+/**
+ * 原来的作者
+ * https://github.com/yangfuhai/ASimpleCache
+ * ASimpleCache 是一个为android制定的 轻量级的 开源缓存框架。
+ * 轻量到只有一个java文件（由十几个类精简而来）。
+ *
+ */
+@WorkerThread
 public class ACache {
-
-    public static class Param {
-        public static String KEY_FB_CACHE_DATA = "KEY_FB_CACHE_DATA";// aps data
-        public static String SDK_CACHE_DATA = "SDK_CACHE_DATA";// third sdk dy
-    }
 
     private static final String FILE_NAME = "ACache";
 
@@ -49,7 +54,8 @@ public class ACache {
     public static final int TIME_DAY = TIME_HOUR * 24;
     private static final int MAX_SIZE = 1000 * 1000 * 100; // 100 mb
     private static final int MAX_COUNT = Integer.MAX_VALUE; // 不限制存放数据的数量
-    private static Map<String, ACache> mInstanceMap = Collections.synchronizedMap(new HashMap<String, ACache>());
+    //private static Map<String, ACache> mInstanceMap = Collections.synchronizedMap(new HashMap<String, ACache>());
+    private static ACache instance = null;
     private ACacheManager mCache;
 
     public static ACache get(Context ctx) {
@@ -70,13 +76,24 @@ public class ACache {
         return get(f, max_zise, max_count);
     }
 
-    public synchronized static ACache get(File cacheDir, long max_zise, int max_count) {
-        ACache manager = mInstanceMap.get(cacheDir.getAbsoluteFile() + myPid());
-        if (manager == null) {
-            manager = new ACache(cacheDir, max_zise, max_count);
-            mInstanceMap.put(cacheDir.getAbsolutePath() + myPid(), manager);
+    /**
+     * 个人觉得没必要用map来缓存实例，一个就够用了
+     * @param cacheDir
+     * @param max_zise
+     * @param max_count
+     * @return
+     */
+    public  static ACache get(File cacheDir, long max_zise, int max_count) {
+        if (instance == null) {
+            synchronized (ACache.class) {
+                //ACache manager = mInstanceMap.get(cacheDir.getAbsoluteFile() + myPid());
+                if (instance == null) {
+                    instance = new ACache(cacheDir, max_zise, max_count);
+                    //mInstanceMap.put(cacheDir.getAbsolutePath() + myPid(), manager);
+                }
+            }
         }
-        return manager;
+        return instance;
     }
 
     private static String myPid() {
@@ -556,7 +573,7 @@ public class ACache {
                     if (cachedFiles != null) {
                         for (File cachedFile : cachedFiles) {
                             size += calculateSize(cachedFile);
-                            count += 1;
+                            count++;
                             lastUsageDates.put(cachedFile, cachedFile.lastModified());
                         }
                         cacheSize.set(size);
@@ -598,8 +615,14 @@ public class ACache {
             return file;
         }
 
+        /**
+         * hashCode发生碰撞怎么办，我建议用base64
+         * @param key
+         * @return
+         */
         private File newFile(String key) {
-            return new File(cacheDir, key.hashCode() + "");
+            //return new File(cacheDir, key.hashCode() + "");
+            return new File(cacheDir, Base64.encodeToString(key.getBytes(), Base64.NO_WRAP) + "");
         }
 
         private boolean remove(String key) {
@@ -607,6 +630,7 @@ public class ACache {
             return image.delete();
         }
 
+        @WorkerThread
         private void clear() {
             lastUsageDates.clear();
             cacheSize.set(0);
