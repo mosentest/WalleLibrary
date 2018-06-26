@@ -12,6 +12,7 @@
     <!-- 读写配置 -->
     <uses-permission android:name="android.permission.READ_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
     <!-- 获取网络信息 -->
     <uses-permission android:name="android.permission.INTERNET"/>

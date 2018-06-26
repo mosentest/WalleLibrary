@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package mo.wall.org;
+package org.wall.mo.utils.ntp;
 
 import android.os.SystemClock;
 import android.util.Log;
 
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;

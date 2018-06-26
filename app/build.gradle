@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "mo.wall.org"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

@@ -6,13 +6,15 @@ import android.os.Looper
 import android.os.Message
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import org.wall.mo.utils.ntp.NtpHelper
+import org.wall.mo.utils.ntp.LowNtpTrustedTime
 
 class MainActivity : AppCompatActivity() {
 
     var handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
-            Toast.makeText(applicationContext, "==" + msg!!.obj, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(applicationContext, "==" + msg!!.obj, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -26,8 +28,13 @@ class MainActivity : AppCompatActivity() {
         var thread = object : Thread() {
             override fun run() {
                 super.run()
-                val ntpTrustedTime = NtpUtils.forceRefresh(applicationContext);
+                val ntpTrustedTime = LowNtpTrustedTime.forceRefresh(applicationContext);
                 val message = handler.obtainMessage()
+
+
+                val cachedNtpTime = LowNtpTrustedTime.getCachedNtpTime();
+                NtpHelper.setCurrentTimeMillis(cachedNtpTime);
+
                 message.obj = ntpTrustedTime;
                 handler.sendMessage(message)
             }
