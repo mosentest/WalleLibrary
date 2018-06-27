@@ -1,5 +1,6 @@
 # WalleLibrary
- 开发一个兼容库，可start，我会持续更新
+- 开发一个兼容库，可start，我会持续更新
+- [目录结构]
 
 # 学习站点
 - [Android Blog 周刊 ](http://androidblog.cn/)工具汇总，源码汇总等
@@ -7,6 +8,7 @@
 - [泡在网上的日子](http://www.jcodecraeer.com/)
 - [hongyang的wanandroid](http://www.wanandroid.com/)
 - [androiddevtools](http://www.androiddevtools.cn/)
+- [Android官方架构组件:Lifecycle详解&原理分析](https://blog.csdn.net/mq2553299/article/details/79029657)
 
 # 值得学习
 1.httpdns
