@@ -1,1 +1,1 @@
-include ':app', ':library_ui', ':library_utils', ':library_database', ':library_urlconnection', ':library_compat', ':library_okhttp'
+include ':app', ':library_ui', ':library_utils', ':library_database', ':library_urlconnection', ':library_compat', ':library_okhttp', ':library_datausagesummary'
