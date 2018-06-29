@@ -31,4 +31,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':library_utils')
     implementation project(':library_ui')
+    implementation project(':library_datausagesummary')
 }

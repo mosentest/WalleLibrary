@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import org.wall.mo.utils.ntp.NtpHelper
 import org.wall.mo.utils.ntp.LowNtpTrustedTime
+import org.ziqi.librarydatausagesummary.DataUsageSummaryHelper
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,15 +29,18 @@ class MainActivity : AppCompatActivity() {
         var thread = object : Thread() {
             override fun run() {
                 super.run()
-                val ntpTrustedTime = LowNtpTrustedTime.forceRefresh(applicationContext);
-                val message = handler.obtainMessage()
+//                val ntpTrustedTime = LowNtpTrustedTime.forceRefresh(applicationContext);
+//                val message = handler.obtainMessage()
+//
+//
+//                val cachedNtpTime = LowNtpTrustedTime.getCachedNtpTime();
+//                NtpHelper.setCurrentTimeMillis(cachedNtpTime);
+//
+//                message.obj = ntpTrustedTime;
+//                handler.sendMessage(message)
 
-
-                val cachedNtpTime = LowNtpTrustedTime.getCachedNtpTime();
-                NtpHelper.setCurrentTimeMillis(cachedNtpTime);
-
-                message.obj = ntpTrustedTime;
-                handler.sendMessage(message)
+                //test
+                DataUsageSummaryHelper.get_simTotalData(applicationContext,1,1,1);
             }
         }
         thread.start()
