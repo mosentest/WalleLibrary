@@ -11,6 +11,7 @@ import android.os.RemoteException;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 
+import org.wall.mo.utils.relect.FieldUtils;
 import org.wall.mo.utils.relect.MethodUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,6 +26,7 @@ public class DataUsageSummaryHelper {
     private final static String TAG = "DataUsageSummaryHelper";
 
     /**
+     * 发现要在系统区才能读取
      *
      * @param context
      * @param simNum
@@ -48,23 +50,34 @@ public class DataUsageSummaryHelper {
             Thread.sleep(2 * 1000);
             //强制更新
             mStatsService.forceUpdate();
-            INetworkStatsSession mStatsSession = mStatsService.openSession();
+            Object mStatsSession = null;
             try {
+                //INetworkStatsSession mStatsSession = mStatsService.openSession();
+                mStatsSession = MethodUtils.invokeMethod(mStatsService, "openSession");
                 Class clazzNetworkTemplate = Class.forName("android.net.NetworkTemplate");
                 Class clazzNetworkStatsHistory = Class.forName("android.net.NetworkStatsHistory");
-                Object buildTemplateMobileAll = MethodUtils.invokeStaticMethod(clazzNetworkTemplate, "buildTemplateMobileAll", new Object[]{getActiveSubscriberId(context)});
-                NetworkTemplate mTemplate = NetworkTemplate.buildTemplateMobileAll(getActiveSubscriberId(context));
+                //NetworkTemplate mTemplate = NetworkTemplate.buildTemplateMobileAll(getActiveSubscriberId(context));
+                Object mTemplate = MethodUtils.invokeStaticMethod(clazzNetworkTemplate, "buildTemplateMobileAll", new Object[]{getActiveSubscriberId(context)});
                 //NetworkStatsHistory.FIELD_ALL
-                NetworkStatsHistory networkStatsHistory = mStatsSession.getHistoryForNetwork(mTemplate, /*FIELD_RX_BYTES | FIELD_TX_BYTES*/0xFFFFFFFF);
+                //NetworkStatsHistory networkStatsHistory = mStatsSession.getHistoryForNetwork(mTemplate, /*FIELD_RX_BYTES | FIELD_TX_BYTES*/0xFFFFFFFF);
+                Object networkStatsHistory = MethodUtils.invokeMethod(mStatsSession, "getHistoryForNetwork", new Object[]{mTemplate, 0xFFFFFFFF});
 
-                NetworkStatsHistory.Entry entry = null;
-                long bucketDuration = networkStatsHistory.getBucketDuration();
-                entry = networkStatsHistory.getValues(startTime, endTime, System.currentTimeMillis(), entry);
-                value = entry != null ? entry.rxBytes + entry.txBytes : 0;
+                //NetworkStatsHistory.Entry entry = null;
+                //long bucketDuration = networkStatsHistory.getBucketDuration();
+                long bucketDuration = (Long) MethodUtils.invokeMethod(networkStatsHistory, "getBucketDuration");
+                //entry = networkStatsHistory.getValues(startTime, endTime, System.currentTimeMillis(), entry);
+                Object entry = MethodUtils.invokeMethod(networkStatsHistory, "getValues", new Object[]{startTime, endTime, System.currentTimeMillis(), null});
+                //value = entry != null ? entry.rxBytes + entry.txBytes : 0;
+                value = entry != null ?
+                         (Long) FieldUtils.readField(FieldUtils.getField(entry.getClass(), "rxBytes"), entry)
+                        + (Long) FieldUtils.readField(FieldUtils.getField(entry.getClass(), "txBytes"), entry) : 0;
                 final String totalPhrase = Formatter.formatFileSize(context, value);
-                long totalBytes = networkStatsHistory.getTotalBytes();
-                int afterBucketCount2 = networkStatsHistory.getIndexAfter(startTime);
-                int beforeBucketCount2 = networkStatsHistory.getIndexBefore(startTime);
+                //long totalBytes = networkStatsHistory.getTotalBytes();
+                long totalBytes = (Long) MethodUtils.invokeMethod(networkStatsHistory, "getTotalBytes");
+                //int afterBucketCount2 = networkStatsHistory.getIndexAfter(startTime);
+                Integer afterBucketCount2 = (Integer) MethodUtils.invokeMethod(networkStatsHistory, "getIndexAfter", new Object[]{startTime});
+                //int beforeBucketCount2 = networkStatsHistory.getIndexBefore(startTime);
+                Integer beforeBucketCount2 = (Integer) MethodUtils.invokeMethod(networkStatsHistory, "getIndexBefore", new Object[]{startTime});
                 android.util.Log.i(TAG, "afterBucketCount2:" + afterBucketCount2 + ",beforeBucketCount2:" + beforeBucketCount2);
                 android.util.Log.i(TAG, "bucketDuration =" + bucketDuration + "totalPhrase:" + totalPhrase + ",totalBytes:" + totalBytes);
             } catch (Exception e) {
