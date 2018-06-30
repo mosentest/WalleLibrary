@@ -11,6 +11,8 @@ import android.os.RemoteException;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 
+import org.wall.mo.utils.ShellUtils;
+import org.wall.mo.utils.log.WLog;
 import org.wall.mo.utils.relect.FieldUtils;
 import org.wall.mo.utils.relect.MethodUtils;
 
@@ -34,9 +36,13 @@ public class DataUsageSummaryHelper {
      * @param endTime
      * @return
      */
-    public static long get_simTotalData(final Context context, final int simNum, final long startTime, final long endTime) {
+    public static long getSimTotalData(final Context context, final int simNum, final long startTime, final long endTime) {
         long value = 0;
         try {
+            if (!ShellUtils.checkRootPermission()) {
+                return -1;
+            }
+            WLog.i(TAG, "getSimTotalData");
             INetworkStatsService mStatsService = null;
             // wait a few seconds before kicking off
             try {
@@ -49,11 +55,13 @@ public class DataUsageSummaryHelper {
             }
             Thread.sleep(2 * 1000);
             //强制更新
-            mStatsService.forceUpdate();
+            mStatsService.forceUpdate();//原有的fragment会每次onResume调用一次，所以我们要主动调用一次
             Object mStatsSession = null;
             try {
                 //INetworkStatsSession mStatsSession = mStatsService.openSession();
+                //这里通过反射获取INetworkStatsSession的实例对象
                 mStatsSession = MethodUtils.invokeMethod(mStatsService, "openSession");
+                //mStatsSession 是为了拿到NetworkStatsHistory的实例，涉及的类太多不好扣出来，这里就开始全反射拿去
                 Class clazzNetworkTemplate = Class.forName("android.net.NetworkTemplate");
                 Class clazzNetworkStatsHistory = Class.forName("android.net.NetworkStatsHistory");
                 //NetworkTemplate mTemplate = NetworkTemplate.buildTemplateMobileAll(getActiveSubscriberId(context));
@@ -69,8 +77,8 @@ public class DataUsageSummaryHelper {
                 Object entry = MethodUtils.invokeMethod(networkStatsHistory, "getValues", new Object[]{startTime, endTime, System.currentTimeMillis(), null});
                 //value = entry != null ? entry.rxBytes + entry.txBytes : 0;
                 value = entry != null ?
-                         (Long) FieldUtils.readField(FieldUtils.getField(entry.getClass(), "rxBytes"), entry)
-                        + (Long) FieldUtils.readField(FieldUtils.getField(entry.getClass(), "txBytes"), entry) : 0;
+                        (Long) FieldUtils.readField(FieldUtils.getField(entry.getClass(), "rxBytes"), entry)
+                                + (Long) FieldUtils.readField(FieldUtils.getField(entry.getClass(), "txBytes"), entry) : 0;
                 final String totalPhrase = Formatter.formatFileSize(context, value);
                 //long totalBytes = networkStatsHistory.getTotalBytes();
                 long totalBytes = (Long) MethodUtils.invokeMethod(networkStatsHistory, "getTotalBytes");
@@ -103,6 +111,8 @@ public class DataUsageSummaryHelper {
     private static final String TEST_SUBSCRIBER_PROP = "test.subscriberid";
 
     /**
+     * 这里为了能正常拿到电话号码
+     *
      * @param context
      * @return
      */
@@ -110,6 +120,7 @@ public class DataUsageSummaryHelper {
         //final TelephonyManager tele = TelephonyManager.from(context);
         final TelephonyManager tele = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         final String actualSubscriberId = tele.getSubscriberId();
+        WLog.i(TAG, "getActiveSubscriberId..actualSubscriberId:" + actualSubscriberId);
         String result = "";
         try {
             Class clazz = Class.forName("android.os.SystemProperties");

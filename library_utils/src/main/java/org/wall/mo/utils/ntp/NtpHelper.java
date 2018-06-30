@@ -53,28 +53,28 @@ public class NtpHelper {
      */
     public static boolean setCurrentTimeMillis(long time) {
         try {
-            //if (ShellUtils.checkRootPermission()) {
-            Process process2 = Runtime.getRuntime().exec("su");
-            DataOutputStream os2 = new DataOutputStream(process2.getOutputStream());
-            os2.writeBytes("settings put global ntp_server ntp1.aliyun.com");
-            os2.flush();
-            //}
-            //if (ShellUtils.checkRootPermission()) {
-            TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
-            Date current = new Date(time);
-            SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd.HHmmss");
-            String datetime = df.format(current);
-            Process process = Runtime.getRuntime().exec("su");
-            DataOutputStream os = new DataOutputStream(process.getOutputStream());
-            //os.writeBytes("setprop persist.sys.timezone GMT\n");
-            os.writeBytes("/system/bin/date -s " + datetime + "\n");
-            os.writeBytes("clock -w\n");
-            os.writeBytes("exit\n");
-            os.flush();
-            return true;
-            // } else {
-            //    return false;
-            // }
+            if (ShellUtils.checkRootPermission()) {
+                Process process2 = Runtime.getRuntime().exec("su");
+                DataOutputStream os2 = new DataOutputStream(process2.getOutputStream());
+                os2.writeBytes("settings put global ntp_server ntp1.aliyun.com");
+                os2.flush();
+            }
+            if (ShellUtils.checkRootPermission()) {
+                TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+                Date current = new Date(time);
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd.HHmmss");
+                String datetime = df.format(current);
+                Process process = Runtime.getRuntime().exec("su");
+                DataOutputStream os = new DataOutputStream(process.getOutputStream());
+                //os.writeBytes("setprop persist.sys.timezone GMT\n");
+                os.writeBytes("/system/bin/date -s " + datetime + "\n");
+                os.writeBytes("clock -w\n");
+                os.writeBytes("exit\n");
+                os.flush();
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;

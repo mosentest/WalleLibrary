@@ -76,5 +76,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".datausage.DataUsageSummaryActivity"></activity>
+
+        <activity android:name=".ntp.NtpActivity"></activity>
     </application>
 </manifest>
