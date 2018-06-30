@@ -1,6 +1,8 @@
 # WalleLibrary
 - 开发一个兼容库，可start，我会持续更新
-- [目录结构](https://github.com/moz1q1/WalleLibrary/blob/master/doc/main.md)
+- [目录结构说明](https://github.com/moz1q1/WalleLibrary/blob/master/doc/main.md)
+
+<img src="img/S80630-17432347.jpg" width = 30% height = 30% />
 
 # 学习站点
 - [Android Blog 周刊 ](http://androidblog.cn/)工具汇总，源码汇总等
