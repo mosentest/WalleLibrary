@@ -16,7 +16,7 @@ public class AutoDensity {
 
     private static AutoDensity instance;
 
-    private double widthPX, heightPX;
+    private float widthPX, heightPX;
 
     private float sNoncompatDensity;
     private float sNoncompatScaledDensity;
@@ -72,6 +72,10 @@ public class AutoDensity {
         //获取宽的dp
         float wdp = (float) (widthPX / (targetDpi / 160));
         float targetDensity = appDisplayMetrics.widthPixels / wdp;
+        //这样可以1:1???试试看？？？？
+        //这样可以1:1???试试看？？？？
+        //这样可以1:1???试试看？？？？
+        //float targetDensity = appDisplayMetrics.widthPixels / widthPX;
         final int targetDensityDpi = (int) (160 * targetDensity);
         float targetScaledDensity = targetDensity * (sNoncompatScaledDensity / sNoncompatDensity);
 
@@ -93,7 +97,7 @@ public class AutoDensity {
      * @param heightPX
      * @param size     手机尺寸 一般都是以苹果设计，4.7寸
      */
-    public void setUiDesign(double widthPX, double heightPX, double size) {
+    public void setUiDesign(float widthPX, float heightPX, float size) {
         this.widthPX = widthPX;
         this.heightPX = heightPX;
         targetDpi = Math.sqrt(this.widthPX * this.widthPX + this.heightPX * this.heightPX) / size;
