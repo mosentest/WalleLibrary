@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.widget.Toast
+import mo.wall.org.autodensity.AutoDensityActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.ntp.NtpActivity
 import org.wall.mo.utils.ntp.NtpHelper
@@ -62,6 +63,19 @@ class MainActivity : AppCompatActivity() {
         itemNtp.type = 1
         itemNtp.clazz = NtpActivity().javaClass.name
         lists?.add(itemNtp)
+
+        val itemUI = Entity()
+        itemUI.content = ""
+        itemUI.title = "UI学习"
+        itemUI.type = 0
+        lists?.add(itemUI)
+
+        val itemAutoDensity = Entity()
+        itemAutoDensity.content = "根据今日头条的方法调整和整理"
+        itemAutoDensity.title = "来自今日头条自适应方案"
+        itemAutoDensity.type = 1
+        itemAutoDensity.clazz = AutoDensityActivity().javaClass.name
+        lists?.add(itemAutoDensity)
 
         adapter!!.setItems(lists)
         adapter!!.setOnItemClickListener(MainAdapter.OnItemClickListener({ view, pos ->

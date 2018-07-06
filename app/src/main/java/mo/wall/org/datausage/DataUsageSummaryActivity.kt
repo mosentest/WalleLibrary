@@ -7,6 +7,7 @@ import android.os.Message
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import mo.wall.org.R
+import mo.wall.org.base.BaseAppCompatActivity
 import org.ziqi.librarydatausagesummary.DataUsageSummaryHelper
 
 /**
@@ -14,29 +15,20 @@ import org.ziqi.librarydatausagesummary.DataUsageSummaryHelper
  * 邮箱 709847739@qq.com
  * 说明
  **/
-class DataUsageSummaryActivity : AppCompatActivity() {
+class DataUsageSummaryActivity : BaseAppCompatActivity() {
 
-    var handler = object : Handler(Looper.getMainLooper()) {
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-        }
+    override fun handleMessageAct(msg: Message?) {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_usage_summary)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
-        val titleExtra = intent.getStringExtra("title")
-        supportActionBar!!.setTitle(titleExtra)
-
         //在这里，应该判断是不是在系统区
         //system/priv-app
         //system/app
         //因为我是从用户区root进去，代码直接判断了是否有root权限
         //我已经没做系统内置应用了 - -..
         //如果不是在这里区，不执行以下代码保证程序不奔溃
-
         var thread = object : Thread() {
             override fun run() {
                 super.run()
@@ -45,14 +37,5 @@ class DataUsageSummaryActivity : AppCompatActivity() {
             }
         }
         thread.start()
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item!!.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 }
