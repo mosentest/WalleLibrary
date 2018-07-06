@@ -3,6 +3,7 @@ package org.wall.mo.ui.autolayout;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 
@@ -10,6 +11,8 @@ import android.util.DisplayMetrics;
  * @author ziqi-mo
  * @dec 来自：https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA
  * 感谢今日头条提供的方案
+ * <p>
+ * https://www.jianshu.com/p/cd66b7e01d4a
  */
 public class AutoDensity {
 
@@ -20,6 +23,7 @@ public class AutoDensity {
     private static double targetUIDpi;
 
     private static float sNonCompatDensity; //原始的Density
+    private static int sNonCompatDensityDpi; //原始的densityDpi
     private static float sNonCompatScaledDensity;//原始的ScaledDensity
 
     /**
@@ -36,6 +40,8 @@ public class AutoDensity {
             densityUI = (float) (targetUIDpi / 160);
             //原本的density
             sNonCompatDensity = appDisplayMetrics.density;
+            //原本的densityDpi
+            sNonCompatDensityDpi = appDisplayMetrics.densityDpi;
             ////原本的scaledDensity
             sNonCompatScaledDensity = appDisplayMetrics.scaledDensity;
             application.registerComponentCallbacks(new ComponentCallbacks() {
@@ -75,6 +81,18 @@ public class AutoDensity {
         activityDisplayMetrics.density = targetDensity;
         activityDisplayMetrics.densityDpi = targetDensityDpi;
         activityDisplayMetrics.scaledDensity = targetScaledDensity;
+    }
+
+    /**
+     * 还原。。
+     *
+     * @param activity
+     */
+    public static void resetDensity(Activity activity) {
+        final DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
+        activityDisplayMetrics.density = sNonCompatDensity;
+        activityDisplayMetrics.densityDpi = sNonCompatDensityDpi;
+        activityDisplayMetrics.scaledDensity = sNonCompatScaledDensity;
     }
 
     /**
