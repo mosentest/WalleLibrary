@@ -37,6 +37,9 @@
 - [Android 目前最稳定和高效的UI适配方案](https://www.jianshu.com/p/a4b8e4c5d9b0)
 - [一种极低成本的Android屏幕适配方式](https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA)
 
+5.其他
+- [Android adb bugreport工具分析和使用](https://blog.csdn.net/createchance/article/details/51954142)
+
 
 # 个人学习计划
 - Android架构组件Lifecycle、LiveData、ViewModel
