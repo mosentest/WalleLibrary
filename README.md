@@ -3,8 +3,8 @@
 - [目录结构说明](https://github.com/moz1q1/WalleLibrary/wiki)
 
 <div>
-<img src="img/Screenshot_2018-07-06-12-05-45.png" width = 30% height = 30% />
 <img src="img/Screenshot_2018-07-13-16-48-01.png" width = 30% height = 30% />
+<img src="img/Screenshot_2018-07-06-12-05-48.png" width = 30% height = 30% />
 <img src="img/ui稿子.png" width = 30% height = 30% />
 </div>
 
