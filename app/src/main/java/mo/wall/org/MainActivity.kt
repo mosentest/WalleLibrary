@@ -13,6 +13,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import mo.wall.org.autodensity.AutoDensityActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
+import mo.wall.org.dropdownmenu.DropDownMenuActivity
 import mo.wall.org.ntp.NtpActivity
 import org.wall.mo.utils.ntp.NtpHelper
 import org.wall.mo.utils.ntp.LowNtpTrustedTime
@@ -76,6 +77,15 @@ class MainActivity : AppCompatActivity() {
         itemAutoDensity.type = 1
         itemAutoDensity.clazz = AutoDensityActivity().javaClass.name
         lists?.add(itemAutoDensity)
+
+        val itemDropDown = Entity()
+        itemDropDown.content = "增加切换搜索功能，tab的文字和图片一起居中，" +
+                "还有单独为每个tab设置不同图片..." +
+                "来源：https://github.com/dongjunkun/DropDownMenu"
+        itemDropDown.title = "DropDownMenu"
+        itemDropDown.type = 1
+        itemDropDown.clazz = DropDownMenuActivity().javaClass.name
+        lists?.add(itemDropDown)
 
         adapter!!.setItems(lists)
         adapter!!.setOnItemClickListener(MainAdapter.OnItemClickListener({ view, pos ->

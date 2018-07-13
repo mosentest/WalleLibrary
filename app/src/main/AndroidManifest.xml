@@ -82,5 +82,6 @@
 
         <activity android:name=".ntp.NtpActivity"></activity>
         <activity android:name=".autodensity.AutoDensityActivity" />
+        <activity android:name=".dropdownmenu.DropDownMenuActivity" />
     </application>
 </manifest>

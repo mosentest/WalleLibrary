@@ -8,6 +8,7 @@ buildscript {
         jcenter()
     }
     dependencies {
+        //fixbug https://stackoverflow.com/questions/49518223/3rd-party-gradle-plug-ins-may-be-the-cause
         classpath 'com.android.tools.build:gradle:3.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         //https://blog.csdn.net/u012678179/article/details/52173444
@@ -24,6 +25,7 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
     }
 }
 
