@@ -4,24 +4,73 @@ apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
     defaultConfig {
         applicationId "mo.wall.org"
-        minSdkVersion 14
-        targetSdkVersion 19
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi'
+            //, 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
     }
+
+    // 多渠道/多环境 的不同配置
+    flavorDimensions "default"
+
+    productFlavors {
+        mainApk {//
+            // 每个环境包名不同
+            applicationId "mo.wall.org"
+            //终端打包命令教程https://www.jianshu.com/p/c5f69437100a
+            //gradlew assembleRelease
+            //gradlew assembleReleaseTest
+            // release模式下，不显示log
+            buildConfigField("boolean", "LOG_DEBUG", "false")//这是log控制，也会影响好多地方的开关控制
+            buildConfigField "String", "bugly_appid", "\"xxxxxx\"" //
+        }
+        textApk {//
+            // 每个环境包名不同
+            applicationId "mo.wall.org.test"
+            //终端打包命令教程https://www.jianshu.com/p/c5f69437100a
+            //gradlew assembleRelease
+            //gradlew assembleReleaseTest
+            // release模式下，不显示log
+            buildConfigField("boolean", "LOG_DEBUG", "false")//这是log控制，也会影响好多地方的开关控制
+            buildConfigField "String", "bugly_appid", "\"xxxxxxxx\"" //测试的appid,为了测试升级
+        }
+    }
+
+    /**
+     * 这前用上面multiDexEnabled true时，
+     * 突然在5.0以下的手机上跑不起来，
+     * 改成下面这种写法就可以了。
+     */
+    dexOptions {
+        jumboMode true
+    }
+
+    dataBinding {
+        enabled true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled true
-    }
+
 }
 
 //kapt {
@@ -33,8 +82,13 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 //    kapt "com.android.databinding:compiler:3.1.0"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+    implementation rootProject.ext.dependencies.appCompat
+    implementation rootProject.ext.dependencies.design
+    implementation rootProject.ext.dependencies.cardview
+    implementation rootProject.ext.dependencies.recyclerview
+    implementation rootProject.ext.dependencies.flexbox
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -42,4 +96,5 @@ dependencies {
     implementation project(':library_ui')
     implementation project(':library_datausagesummary')
     implementation project(':library_dropdownmenu')
+    implementation 'com.google.android:flexbox:0.2.5'
 }

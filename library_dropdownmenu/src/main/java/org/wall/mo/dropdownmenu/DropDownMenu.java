@@ -215,10 +215,10 @@ public class DropDownMenu extends LinearLayout {
                 @Override
                 public void onClick(View v) {
                     closeMenu();
+                    searchView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_out_2));
+                    searchView.setVisibility(VISIBLE);
                     tabMenuView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_out));
                     tabMenuView.setVisibility(GONE);
-                    searchView.setVisibility(VISIBLE);
-                    searchView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_in));
                 }
             });
         }
@@ -261,13 +261,10 @@ public class DropDownMenu extends LinearLayout {
      * 用于展示回来
      */
     public void showTabMenu() {
-        int visibility = tabMenuView.getVisibility();
-        if (visibility == GONE) {
-            tabMenuView.setVisibility(VISIBLE);
-            tabMenuView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_in));
-            searchView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_out));
-            searchView.setVisibility(GONE);
-        }
+        tabMenuView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_in));
+        searchView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_in_2));
+        tabMenuView.setVisibility(VISIBLE);
+        searchView.setVisibility(GONE);
     }
 
     /**
@@ -338,6 +335,18 @@ public class DropDownMenu extends LinearLayout {
                 popupMenuViews.getChildAt(i / 2).setVisibility(View.GONE);
             }
         }
+    }
+
+    /**
+     * 获取顶部菜单
+     * @return
+     */
+    public LinearLayout getTabMenuView() {
+        return tabMenuView;
+    }
+
+    public FrameLayout getSearchView() {
+        return searchView;
     }
 
     public int dpTpPx(float value) {
