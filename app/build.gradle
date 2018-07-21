@@ -97,4 +97,5 @@ dependencies {
     implementation project(':library_datausagesummary')
     implementation project(':library_dropdownmenu')
     implementation project(':library_stickyscrollview')
+    implementation project(':library_ui_refreshlayout')
 }
