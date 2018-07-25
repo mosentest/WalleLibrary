@@ -1,6 +1,6 @@
 # WalleLibrary
-- 开发一个兼容库，可start，我会持续更新
-- [目录结构说明](https://github.com/moz1q1/WalleLibrary/wiki)
+
+[目录结构说明](https://github.com/moz1q1/WalleLibrary/wiki)
 
 <div>
 <img src="img/Screenshot_2018-07-13-16-48-01.png" width = 30% height = 30% />
