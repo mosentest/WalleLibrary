@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.StickyActivity" />
+        <activity android:name=".activity.StickyItemActivity" />
         <activity android:name=".activity.PaddingActivity" />
         <activity android:name=".activity.BottomActivity" />
         <activity android:name=".activity.TotalActivity"></activity>

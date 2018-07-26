@@ -11,6 +11,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.rmyh.recyclerviewsuspend.bean.ConfigBean;
 import com.rmyh.recyclerviewsuspend.utils.DensityUtil;
 import com.rmyh.recyclerviewsuspend.R;
 
@@ -24,7 +25,7 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
 
     private static final String TAG = "SectionDecoration";
 
-    private List<String> dataList;
+    private List<ConfigBean> dataList;
 
     private DecorationCallback callback;
     private TextPaint textPaint;
@@ -34,7 +35,7 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
     private Paint.FontMetrics fontMetrics;
 
 
-    public SectionDecoration(List<String> dataList, Context context, DecorationCallback decorationCallback) {
+    public SectionDecoration(List<ConfigBean> dataList, Context context, DecorationCallback decorationCallback) {
         Resources res = context.getResources();
         this.dataList = dataList;
         this.callback = decorationCallback;
@@ -62,12 +63,16 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
         int pos = parent.getChildAdapterPosition(view);
 
+        int top = outRect.top;
+        int bottom = outRect.bottom;
+        int left = outRect.left;
+        int right = outRect.right;
         String groupId = callback.getGroupId(pos);
         if (groupId.equals("-1")) return;
         //只有是同一组的第一个才显示悬浮栏
         if (pos == 0 || isFirstInGroup(pos)) {
             outRect.top = topGap;
-            if (dataList.get(pos) == "") {
+            if ("".equals(dataList.get(pos).name)) {
                 outRect.top = 0;
             }
         } else {
@@ -88,7 +93,7 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
             String groupId = callback.getGroupId(position);
             if (groupId.equals("-1")) return;
             String textLine = callback.getGroupFirstLine(position).toUpperCase();
-            if (textLine == "") {
+            if ("".equals(textLine)) {
                 float top = view.getTop();
                 float bottom = view.getTop();
                 c.drawRect(left, top, right, bottom, paint);
