@@ -28,4 +28,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly rootProject.ext.dependencies.appCompat
 }
