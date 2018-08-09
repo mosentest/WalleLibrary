@@ -27,14 +27,24 @@ package com.txusballesteros.demo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.txusballesteros.SnakeView;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 public class MainActivity extends AppCompatActivity {
-    private float[] values = new float[] { 60, 70, 80, 90, 100,
-                                          150, 150, 160, 170, 175, 180,
-                                          170, 140, 130, 110, 90, 80, 60};
+    private float[] values = new float[]{60, 70, 80, 90, 100,
+            150, 150, 160, 170, 175, 180,
+            170, 140, 130, 110, 90, 80, 60};
     private TextView text;
     private SnakeView snakeView;
     private int position = 0;
@@ -45,8 +55,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setBackgroundDrawable(null);
-        text = (TextView)findViewById(R.id.text);
-        snakeView = (SnakeView)findViewById(R.id.snake);
+        text = (TextView) findViewById(R.id.text);
+        snakeView = (SnakeView) findViewById(R.id.snake);
+
+        Request.Builder builder = new Request.Builder();
+        Request build = builder.url("https://www.baidu.com").get().build();
+        new OkHttpClient().newCall(build).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("TAG", Log.getStackTraceString(e));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                boolean successful = response.isSuccessful();
+                Log.e("TAG", successful + "");
+            }
+        });
+
+
     }
 
     @Override
@@ -71,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
         float value = values[position];
         snakeView.addValue(value);
-        text.setText(Integer.toString((int)value));
+        text.setText(Integer.toString((int) value));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
