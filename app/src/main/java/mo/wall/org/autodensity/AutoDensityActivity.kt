@@ -24,7 +24,9 @@ class AutoDensityActivity : BaseAppCompatActivity() {
 
 
     override fun handleMessageAct(msg: Message?) {
-
+        val a: Int = 1  // 立即初始化
+        val b = 2   // 推导出Int型
+        var c: Int  // 当没有初始化值时必须声明类型
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
