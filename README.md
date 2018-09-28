@@ -2,6 +2,8 @@
 
 [目录结构说明](https://github.com/moz1q1/WalleLibrary/wiki)
 
+[百度云分享几年来收藏的书籍,永久有效](https://pan.baidu.com/s/1WnWlViRTgXMtSZHaXA4WsA)
+
 <div>
 <img src="img/Screenshot_2018-07-13-16-48-01.png" width = 30% height = 30% />
 <img src="img/Screenshot_2018-07-06-12-05-48.png" width = 30% height = 30% />
