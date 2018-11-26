@@ -2,9 +2,11 @@
 apply from: "config.gradle"
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.2.50'
     repositories {
         google()
+        maven{ url'http://maven.aliyun.com/nexus/content/groups/public/'}
+        mavenCentral();
         jcenter()
     }
     dependencies {
@@ -23,6 +25,8 @@ buildscript {
 allprojects {
     repositories {
         google()
+        maven{ url'http://maven.aliyun.com/nexus/content/groups/public/'}
+        mavenCentral();
         jcenter()
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
