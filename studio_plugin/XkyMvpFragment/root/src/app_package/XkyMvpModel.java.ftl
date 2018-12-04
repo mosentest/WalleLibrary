@@ -1,5 +1,8 @@
 package ${packageName};
 
+import xxxxxxxx.api.HttpApiService;
+import xxxxxxxx.api.base.BaseEntityObserver;
+import java.util.Map;
 
 /**
  * 作者 : 
