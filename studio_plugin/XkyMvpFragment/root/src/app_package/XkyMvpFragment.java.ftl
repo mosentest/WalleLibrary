@@ -15,7 +15,7 @@ import android${SupportPackage}.app.Fragment;
 import ${applicationPackage}.R;
 </#if>
 
-
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import xxxxxxxx.base.BaseMVPFragment;
 import xxxxxxxx.databinding.${fragmentBinding};

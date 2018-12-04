@@ -1,5 +1,5 @@
 package ${packageName};
-
+import java.util.Map;
 import xxxxxxxx.base.core.BaseModel;
 import xxxxxxxx.base.core.BaseModelPresenter;
 import xxxxxxxx.base.core.BaseView;
