@@ -25,4 +25,8 @@ public class ${presenterName} extends ${contractName}.Presenter {
     public void initBundleData(@NonNull Bundle bundle) {
 
     }
+
+    public void ${commonUrlName}() {
+
+    }
 }

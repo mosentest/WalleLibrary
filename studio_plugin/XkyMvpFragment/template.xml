@@ -17,7 +17,14 @@
         name="Common Class Name"
         type="string"
         default="Main"
-        help="The string ,Other class will use for their name." /> 
+        help="The string ,Other class will use for their name." />
+
+    <parameter
+        id="commonUrlName"
+        name="Common url Name"
+        type="string"
+        default="url"
+        help="The string url ,Other class will use for their name." />
 
     <parameter
         id="className"
