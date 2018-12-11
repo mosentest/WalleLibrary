@@ -20,7 +20,8 @@
             android:layout_height="match_parent"
             android:background="@color/color_F9F9F9"/>
             
-            <!--tools:listitem="" 
+            <!--tools:listitem=""
+            ?attr/selectableItemBackground
             android:foreground="?android:selectableItemBackground"
 			android:background="?android:selectableItemBackground"
             -->

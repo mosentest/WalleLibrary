@@ -24,6 +24,7 @@
  */
 package com.txusballesteros.demo;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,9 @@ import android.widget.TextView;
 import com.txusballesteros.SnakeView;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -58,20 +62,35 @@ public class MainActivity extends AppCompatActivity {
         text = (TextView) findViewById(R.id.text);
         snakeView = (SnakeView) findViewById(R.id.snake);
 
-        Request.Builder builder = new Request.Builder();
-        Request build = builder.url("https://www.baidu.com").get().build();
-        new OkHttpClient().newCall(build).enqueue(new Callback() {
+//        Request.Builder builder = new Request.Builder();
+//        Request build = builder.url("https://www.baidu.com").get().build();
+//        new OkHttpClient().newCall(build).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Log.e("TAG", Log.getStackTraceString(e));
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                boolean successful = response.isSuccessful();
+//                Log.e("TAG", successful + "");
+//            }
+//        });
+        new Thread(new Runnable() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("TAG", Log.getStackTraceString(e));
-            }
+            public void run() {
+                try {
+                    URL url = new URL("https://www.baidu.com");
+                    URLConnection urlConnection = url.openConnection();
+                    urlConnection.connect();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                boolean successful = response.isSuccessful();
-                Log.e("TAG", successful + "");
             }
-        });
+        }).start();
 
 
     }
