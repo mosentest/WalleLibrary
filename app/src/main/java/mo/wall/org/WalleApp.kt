@@ -1,6 +1,9 @@
 package mo.wall.org
 
 import android.app.Application
+import android.widget.Toast
+import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper
+import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
 import org.wall.mo.ui.autolayout.AutoDensity
 
 /**
@@ -11,9 +14,21 @@ import org.wall.mo.ui.autolayout.AutoDensity
 
 class WalleApp : Application() {
 
+    var helper: AppFrontBackHelper? = null;
+
     override fun onCreate() {
         super.onCreate()
         ctx = this;
+        helper = AppFrontBackHelper();
+        helper?.register(this, object : OnAppStatusListener {
+            override fun onFront() {
+
+            }
+
+            override fun onBack() {
+                Toast.makeText(ctx, "退出后台", Toast.LENGTH_SHORT).show();
+            }
+        })
         AutoDensity.initApplication(2f, 750f, 1334f, 4.7f)
     }
 

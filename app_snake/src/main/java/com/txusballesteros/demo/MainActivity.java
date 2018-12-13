@@ -34,9 +34,13 @@ import android.widget.TextView;
 import com.txusballesteros.SnakeView;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -80,9 +84,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("https://www.baidu.com");
-                    URLConnection urlConnection = url.openConnection();
+//                    URL url = new URL("https://www.baidu.com");
+                    URL url = new URL("https://raw.githubusercontent.com/chenupt/DragTopLayout/master/imgs/sample-debug-1.2.1.apk");
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setConnectTimeout(5 * 1000);
+                    urlConnection.setReadTimeout(5 * 1000);
+                    Map<String, List<String>> requestProperties = urlConnection.getRequestProperties();
+                    Set<Map.Entry<String, List<String>>> entries = requestProperties.entrySet();
+                    for (Map.Entry<String, List<String>> temp : entries) {
+                        String key = temp.getKey();
+                        Log.e("TAG", "key:" + key);
+                        List<String> value = temp.getValue();
+                        for (String res : value) {
+                            Log.e("TAG", "value:" + res);
+                        }
+                    }
+                    //urlConnection.getInputStream();
                     urlConnection.connect();
+                    int code = urlConnection.getResponseCode();
+                    Log.e("TAG", code + "");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
