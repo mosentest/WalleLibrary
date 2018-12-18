@@ -54,6 +54,8 @@
     <!-- 震动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" />
+
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
@@ -80,8 +82,19 @@
 
         <activity android:name=".datausage.DataUsageSummaryActivity"></activity>
 
+        <activity android:name=".devicemanager.DeviceManagerActivity"></activity>
+
         <activity android:name=".ntp.NtpActivity"></activity>
         <activity android:name=".autodensity.AutoDensityActivity" />
         <activity android:name=".dropdownmenu.DropDownMenuActivity" />
+
+
+        <receiver android:name=".devicemanager.AdminReceiver" >
+            <meta-data android:name="android.app.device_admin"
+                android:resource="@xml/my_admin"/>
+            <intent-filter >
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

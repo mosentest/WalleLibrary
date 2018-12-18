@@ -13,6 +13,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import mo.wall.org.autodensity.AutoDensityActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
+import mo.wall.org.devicemanager.DeviceManagerActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
 import mo.wall.org.ntp.NtpActivity
 import org.wall.mo.utils.ntp.NtpHelper
@@ -65,6 +66,13 @@ class MainActivity : AppCompatActivity() {
         itemNtp.clazz = NtpActivity().javaClass.name
         lists?.add(itemNtp)
 
+        val itemDeviceManager = Entity()
+        itemDeviceManager.content = "激活设备管理器，通过反射激活，需要放在系统区"
+        itemDeviceManager.title = "激活设备管理器"
+        itemDeviceManager.type = 1
+        itemDeviceManager.clazz = DeviceManagerActivity().javaClass.name
+        lists?.add(itemDeviceManager)
+
         val itemUI = Entity()
         itemUI.content = ""
         itemUI.title = "UI学习"
@@ -86,6 +94,8 @@ class MainActivity : AppCompatActivity() {
         itemDropDown.type = 1
         itemDropDown.clazz = DropDownMenuActivity().javaClass.name
         lists?.add(itemDropDown)
+
+
 
         adapter!!.setItems(lists)
         adapter!!.setOnItemClickListener(MainAdapter.OnItemClickListener({ view, pos ->
