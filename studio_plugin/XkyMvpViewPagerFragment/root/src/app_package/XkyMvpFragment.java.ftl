@@ -20,6 +20,17 @@ import android.support.annotation.Nullable;
 import com.xky.app.patient.base.BaseMVPFragment;
 import com.xky.app.patient.databinding.${fragmentBinding};
 
+import com.xky.app.patient.base.adapter.BaseFragmentPagerAdapter;
+import com.xky.app.patient.base.util.DensityUtil;
+import com.xky.app.patient.base.util.ViewUtil;
+import com.xky.app.patient.constant.IntConsts;
+import java.util.ArrayList;
+import java.util.List;
+import android.view.WindowManager;
+import android.widget.Toast;
+import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
+
 
 /**
  *
