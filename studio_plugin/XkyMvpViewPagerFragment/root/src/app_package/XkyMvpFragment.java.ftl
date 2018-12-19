@@ -44,6 +44,10 @@ public class ${className}  extends BaseMVPFragment<${contractName}.View,
     }
 
 
+	private final List<BaseMVPFragment> mListFragments = new ArrayList<>();
+
+    private List<String> titleNames = new ArrayList<>();
+	
 	 @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,11 @@ public class ${className}  extends BaseMVPFragment<${contractName}.View,
         if (arguments != null) {
             //type = arguments.getInt(TAB_NAME, type);
         }
+		
+		//更换ScrollView+adjustResize,适配有输入相关的
+        //getActivity().getWindow().setSoftInputMode(
+        //        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        //);
     }
 
     @Override
@@ -89,6 +98,81 @@ public class ${className}  extends BaseMVPFragment<${contractName}.View,
     @Override
     public void onFirstVisibleToUser() {
 		mViewBindingFgt.setListener(this);
+		
+		//manageResidentHealthBaseFragment = ManageResidentHealthBaseFragment.newInstance(null);
+        //manageResidentHealthHistoryFragment = ManageResidentHealthHistoryFragment.newInstance(null);
+        //manageResidentHealthOtherFragment = ManageResidentHealthOtherFragment.newInstance(null);
+		
+		//设置相应的fragment
+        //设置相应的fragment
+        //设置相应的fragment
+        //mListFragments.add(manageResidentHealthBaseFragment);
+        //mListFragments.add(manageResidentHealthHistoryFragment);
+        //mListFragments.add(manageResidentHealthOtherFragment);
+
+        //titleNames.add("基本情况");
+        //titleNames.add("过往病史");
+        //titleNames.add("其他信息");
+		
+		// tabLayout 标题
+        mViewBindingFgt.includeTabViewpager.customTableLayout.setBackgroundColor(
+                ContextCompat.getColor(getActivity(), R.color.white));
+        mViewBindingFgt.includeTabViewpager.customTableLayout.setSelectedTabIndicatorColor(
+                ContextCompat.getColor(getActivity(), R.color.color_4086ff));
+        mViewBindingFgt.includeTabViewpager.customTableLayout.setSelectedTabIndicatorHeight(
+                DensityUtil.dp2px(getActivity(), 2));
+        mViewBindingFgt.includeTabViewpager.customTableLayout.setTabTextColors(
+                ContextCompat.getColor(getActivity(), R.color.color_999999),
+                ContextCompat.getColor(getActivity(), R.color.color_4086ff));
+        // tab标题不可滑动，默认不可滑动，全部展示
+        mViewBindingFgt.includeTabViewpager.customTableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mViewBindingFgt.includeTabViewpager.customTableLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        // Fragment+ViewPager+FragmentViewPager组合的使用
+        // mViewBindingFgt.includeTabViewpager.customViewPager 在Binding中不为空就不判断空了
+		//这里控制不滑动
+        mViewBindingFgt.includeTabViewpager.customViewPager.setNoScroll(true);
+        mViewBindingFgt.includeTabViewpager.customViewPager.setAdapter(
+                new BaseFragmentPagerAdapter<BaseMVPFragment>(getChildFragmentManager(), mListFragments) {
+                    @Override
+                    public CharSequence getPageTitle(int position) {
+                        return titleNames.get(position);
+                    }
+                });
+
+        // 分割线
+        // mViewBindingFgt.includeTabViewpager.customDividerLine
+
+        // TabLayout关联ViewPager
+        mViewBindingFgt.includeTabViewpager.customTableLayout.setupWithViewPager(
+                mViewBindingFgt.includeTabViewpager.customViewPager);
+
+        // 再之后调用
+        mViewBindingFgt.includeTabViewpager.customTableLayout.post(() ->
+                ViewUtil.setTabLayoutIndicatorWidth(mViewBindingFgt.includeTabViewpager.customTableLayout,
+                        IntConsts.INT_20, IntConsts.INT_20));
+
+
+        mViewBindingFgt.includeTabViewpager.customTableLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                ViewUtil.hideKeyboard(getActivity());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        // 刷新加载界面
+        mViewBindingFgt.includeTabViewpager.customViewPager.getAdapter().notifyDataSetChanged();
+        mViewBindingFgt.includeTabViewpager.customViewPager.setOffscreenPageLimit(3);
     }
 
 
@@ -104,25 +188,27 @@ public class ${className}  extends BaseMVPFragment<${contractName}.View,
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        //if (medicalImgBean != null && medicalImgBean.seqno != null) {
-        //    menu.getItem(0).setTitle(getString(R.string.MedicalImgRecordFragment_detail_delete));
+    }
+	
+	@Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        //MenuItem item = menu.findItem(R.id.menu_toolbar_right_text_btn);
+        //if (item != null) {
+        //    item.setTitle("保存");
         //}
     }
 
     @Override
     public int getMenuResId() {
-        //if (medicalImgBean != null && medicalImgBean.seqno != null) {
-        //    return R.menu.toobar_right_text_btn;
-        //}
+        //return R.menu.toobar_right_text_btn;
         return super.getMenuResId();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //if (medicalImgBean != null && medicalImgBean.seqno != null) {
-        //    String seqno = medicalImgBean.seqno;
         //    if (item.getItemId() == R.id.menu_toolbar_right_text_btn) {
-        //        showDeleteInfoDialog(seqno);
+		//
         //       return true;
         //    }
         //}

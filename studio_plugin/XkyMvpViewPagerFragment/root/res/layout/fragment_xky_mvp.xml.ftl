@@ -9,22 +9,18 @@
             type="android.view.View.OnClickListener" />
     </data>
 
-    <com.xky.app.patient.view.widget.VerticalSwipeRefreshLayout
-        android:id="@+id/sr_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_F9F9F9"/>
+        <include
+            android:id="@+id/include_tab_viewpager"
+            layout="@layout/custom_tab_viewpager" />
+    </LinearLayout>
             
             <!--tools:listitem="" 
             android:foreground="?android:selectableItemBackground"
 			android:background="?android:selectableItemBackground"
             -->
-
-    </com.xky.app.patient.view.widget.VerticalSwipeRefreshLayout>
 
 </layout>
