@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<template
+    format="7"
+    revision="6"
+    name="Fragment (XkyMvpRV)"
+    description="Creates a XkyMvpRV fragment that is compatible back to API level 14. by moziqi"
+    minApi="7"
+    minBuildApi="8">
+
+    <category value="Fragment" />
+
+    <dependency name="android-support-v4" revision="8" />
+
+
+    <parameter
+        id="commonClassName"
+        name="Common Class Name"
+        type="string"
+        default="Main"
+        help="The string ,Other class will use for their name." />
+
+    <parameter
+        id="commonUrlName"
+        name="Common url Name"
+        type="string"
+        default="url"
+        help="The string url ,Other class will use for their name." />
+
+    <parameter
+        id="className"
+        name="Fragment Name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="MvpFragment"
+        suggest="${commonClassName}Fragment"
+        help="The name of the fragment class to create" />
+
+    <parameter
+        id="includeLayout"
+        name="Create layout XML?"
+        type="boolean"
+        default="true"
+        help="Generate a layout XML for the fragment" />
+
+    <parameter
+        id="fragmentName"
+        name="Fragment Layout Name"
+        type="string"
+        constraints="layout|nonempty|unique"
+        default="fragment_mvp"
+        visibility="includeLayout"
+        suggest="fragment_${classToResource(className)}"
+        help="The name of the layout to create" />
+
+    <parameter
+        id="includeFactory"
+        name="Include fragment factory methods?"
+        type="boolean"
+        default="false"
+        help="Generate static fragment factory methods for easy instantiation" />
+
+    <parameter
+        id="includeCallbacks"
+        name="Include interface callbacks?"
+        type="boolean"
+        default="false"
+        help="Generate event callbacks for communication with an Activity or other fragments" />
+
+
+    <parameter
+        id="contractName"
+        name="Contract Name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="XkyMvpContract"
+        suggest="${commonClassName}Contract"
+        help="The name of the contract class to create"/>
+
+    <parameter
+        id="presenterName"
+        name="Presenter Name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="XkyMvpPresenter"
+        suggest="${commonClassName}Presenter"
+        help="The name of the presenter class to create"/>
+
+   <parameter
+        id="modelName"
+        name="Model Name"
+        type="string"
+        constraints="class|nonempty|unique"
+        default="XkyMvpModel"
+        suggest="${commonClassName}Model"
+        help="The name of the model class to create"/>
+
+
+    <parameter
+        id="fragmentBinding"
+        name="fragment xxx Binding"
+        type="string"
+        suggest="Fragment${commonClassName}Binding"
+        default="FragmentXkyMvpBinding"
+        help="" />
+
+    <parameter
+        id="infoName"
+        name="fragment info bean"
+        type="string"
+        suggest="${commonClassName}Info"
+        default="XkyMvpInfo"
+        help="" />
+
+    <thumbs>
+        <thumb>template_xky_mvp_fragment.png</thumb>
+    </thumbs>
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>

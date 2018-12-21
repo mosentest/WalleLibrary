@@ -18,14 +18,16 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_F9F9F9"/>
-            
-            <!--tools:listitem="" 
-            android:foreground="?android:selectableItemBackground"
-			android:background="?android:selectableItemBackground"
-			android:onClick="@{listener::onClick}"
-            -->
+            android:background="@color/color_F9F9F9"
+             />
 
     </com.xky.app.patient.view.widget.VerticalSwipeRefreshLayout>
+
+            
+            <!--
+            android:foreground="?android:selectableItemBackground"
+			android:background="?android:selectableItemBackground"
+            tools:listitem="@layout/fragment_manage_consult_list_item"
+            -->
 
 </layout>
