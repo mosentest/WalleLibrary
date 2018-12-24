@@ -190,8 +190,8 @@ public class ${className}  extends BaseMVPFragment<${contractName}.View,
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) {
-            super.onActivityResult(requestCode, resultCode, data);
             return;
         }
     }

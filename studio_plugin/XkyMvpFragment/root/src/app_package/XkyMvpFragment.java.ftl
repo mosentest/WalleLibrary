@@ -51,6 +51,10 @@ public class ${className}  extends BaseMVPFragment<${contractName}.View,
         if (arguments != null) {
             //type = arguments.getInt(TAB_NAME, type);
         }
+		//更换ScrollView+adjustResize,适配有输入相关的
+        //getActivity().getWindow().setSoftInputMode(
+        //        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        //);
     }
 
     @Override
@@ -95,8 +99,8 @@ public class ${className}  extends BaseMVPFragment<${contractName}.View,
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) {
-            super.onActivityResult(requestCode, resultCode, data);
             return;
         }
     }
