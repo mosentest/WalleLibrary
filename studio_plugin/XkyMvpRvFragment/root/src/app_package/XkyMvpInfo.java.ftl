@@ -11,7 +11,7 @@ import java.util.List;
  * desc   :
  * version: 1.0
  */
-public interface ${infoName} {
+public class ${infoName} {
     
     public String totalpage;
     public String totalrow;
