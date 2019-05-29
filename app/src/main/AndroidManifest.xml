@@ -1,17 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="mo.wall.org">
-
-
     <!-- Optional. Required for location feature -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!-- 手机拨打或接听等状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 读写配置 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 手机拨打或接听等状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 读写配置 -->
     <uses-permission android:name="android.permission.READ_SETTINGS" />
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
@@ -19,24 +14,19 @@
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <!-- 获取网络信息 -->
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" /> <!-- 获取网络信息 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
-    <!-- 读写外部存储 -->
+        tools:ignore="ProtectedPermissions" /> <!-- 读写外部存储 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!--获取位置信息-->
+    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 获取位置信息 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 相机 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 相机 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
@@ -50,17 +40,13 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- 震动 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 震动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" />
-
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
     <uses-permission
         android:name="android.permission.READ_NETWORK_USAGE_HISTORY"
         tools:ignore="ProtectedPermissions" />
@@ -73,28 +59,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".statusbar.StatusbarActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".datausage.DataUsageSummaryActivity"></activity>
-
-        <activity android:name=".devicemanager.DeviceManagerActivity"></activity>
-
-        <activity android:name=".ntp.NtpActivity"></activity>
+        <activity android:name=".datausage.DataUsageSummaryActivity" />
+        <activity android:name=".devicemanager.DeviceManagerActivity" />
+        <activity android:name=".ntp.NtpActivity" />
         <activity android:name=".autodensity.AutoDensityActivity" />
         <activity android:name=".dropdownmenu.DropDownMenuActivity" />
 
+        <receiver android:name=".devicemanager.AdminReceiver">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/my_admin" />
 
-        <receiver android:name=".devicemanager.AdminReceiver" >
-            <meta-data android:name="android.app.device_admin"
-                android:resource="@xml/my_admin"/>
-            <intent-filter >
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
     </application>
+
 </manifest>

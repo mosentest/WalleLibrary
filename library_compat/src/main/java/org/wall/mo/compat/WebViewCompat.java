@@ -16,12 +16,13 @@ import android.webkit.WebView;
 public class WebViewCompat {
 
     /**
+     * 对于Android 4.2以前，需要采用拦截prompt（）的方式进行漏洞修复
      * 移除漏洞
      *
      * @param webView
      */
     public static void removeBug(WebView webView) {
-        // 去除远程代码执行漏洞
+        // 在Android 3.0以下 去除远程代码执行漏洞
         webView.removeJavascriptInterface("searchBoxJavaBridge_");
         webView.removeJavascriptInterface("accessibility");
         webView.removeJavascriptInterface("accessibilityTraversal");
