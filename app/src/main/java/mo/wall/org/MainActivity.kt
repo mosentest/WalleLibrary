@@ -16,6 +16,7 @@ import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
 import mo.wall.org.ntp.NtpActivity
+import mo.wall.org.statusbar.StatusbarActivity
 import org.wall.mo.utils.ntp.NtpHelper
 import org.wall.mo.utils.ntp.LowNtpTrustedTime
 import org.ziqi.librarydatausagesummary.DataUsageSummaryHelper
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         rvMain!!.adapter = adapter;
 
         lists = ArrayList()
+
         val itemFrameWork = Entity()
         itemFrameWork.content = ""
         itemFrameWork.title = "Framework源码学习"
@@ -95,6 +97,12 @@ class MainActivity : AppCompatActivity() {
         itemDropDown.clazz = DropDownMenuActivity().javaClass.name
         lists?.add(itemDropDown)
 
+        val itemStatusbar = Entity()
+        itemStatusbar.content = "有标题的情况"
+        itemStatusbar.title = "状态栏1"
+        itemStatusbar.type = 1
+        itemStatusbar.clazz = StatusbarActivity().javaClass.name
+        lists?.add(itemStatusbar)
 
 
         adapter!!.setItems(lists)

@@ -1,19 +1,28 @@
 package mo.wall.org.statusbar
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
 import mo.wall.org.R
-import mo.wall.org.base.BaseAppCompatActivity
+import org.wall.mo.base.activity.AbsAppCompatActivity
 
-class StatusbarActivity : BaseAppCompatActivity() {
+class StatusbarActivity : AbsAppCompatActivity() {
 
-    override fun handleMessageAct(msg: Message?) {
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_statusbar;
+    }
+
+    override fun initView() {
+        supportFragmentManager.beginTransaction()
+                .addToBackStack("") //回退栈
+                .replace(R.id.fragment_container, StatusbarFragment())
+                .commit();
+    }
+
+    override fun initData(savedInstanceState: Bundle?) {
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_statusbar)
+    override fun initClick() {
+
     }
 }
