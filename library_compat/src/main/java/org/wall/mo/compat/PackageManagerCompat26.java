@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 
+import org.wall.mo.base.StartActivityCompat;
+
 /***
  * 8.0安装适配
  */

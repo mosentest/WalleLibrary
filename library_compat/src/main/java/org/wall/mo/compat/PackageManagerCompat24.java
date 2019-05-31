@@ -2,13 +2,14 @@ package org.wall.mo.compat;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+
+import org.wall.mo.base.StartActivityCompat;
 
 /**
  * 参考链接<br/>

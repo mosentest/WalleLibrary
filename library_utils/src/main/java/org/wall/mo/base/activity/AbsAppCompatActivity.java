@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import org.wall.mo.base.fragment.IAttachActivity;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.log.WLog;
 
@@ -20,7 +21,7 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsAppCompatActivity extends AppCompatActivity {
+public abstract class AbsAppCompatActivity extends AppCompatActivity implements IAttachActivity {
 
     private final static String TAG = AbsAppCompatActivity.class.getSimpleName();
 
@@ -29,8 +30,9 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WLog.i(TAG, getName() + ".onCreate savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         setContentView(getLayoutId());
-        initView();
-        initData(savedInstanceState);
+        parseIntentData();
+        initView(savedInstanceState);
+        initData();
         initClick();
     }
 
@@ -72,6 +74,11 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
         WLog.i(TAG, getName() + ".onAttachFragment fragment is " + (fragment != null ? fragment.getClass().getSimpleName() : "--"));
@@ -108,6 +115,14 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        WLog.i(TAG, getName() + ".onNewIntent");
+        parseIntentData();
+    }
+
+    @Override
     public void onLowMemory() {
         super.onLowMemory();
         WLog.i(TAG, getName() + ".onLowMemory");
@@ -120,9 +135,11 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity {
 
     public abstract int getLayoutId();
 
-    public abstract void initView();
+    public abstract void initView(Bundle savedInstanceState);
 
-    public abstract void initData(Bundle savedInstanceState);
+    public abstract void parseIntentData();
+
+    public abstract void initData();
 
     public abstract void initClick();
 }

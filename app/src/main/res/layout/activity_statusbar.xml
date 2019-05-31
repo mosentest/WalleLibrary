@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical"
     tools:context=".statusbar.StatusbarActivity">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <org.wall.mo.base.view.WallImageView
+            android:id="@+id/ivLeftBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <org.wall.mo.base.view.WallTextView
+            android:id="@+id/tvLeftBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="返回"
+            android:textSize="@dimen/sp_16"
+            android:visibility="visible" />
+
+        <org.wall.mo.base.view.WallTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/dp_10"
+            android:text="我是标题"
+            android:textSize="@dimen/sp_18"
+            android:visibility="visible" />
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
-</FrameLayout>
+</LinearLayout>

@@ -27,15 +27,39 @@ public abstract class AbsV4Fragment extends Fragment {
 
     private Context context;
 
-    private final static String TAG = AbsV4Fragment.class.getSimpleName();
+    public final static String TAG = AbsV4Fragment.class.getSimpleName();
+
+
+    private IAttachActivity iAttachActivity;
+
+    /**
+     * 例子
+     *
+     * @param args
+     * @return
+     */
+    public static Fragment newInstance(Bundle args) {
+        Fragment fragment = null;
+        if (args != null) {
+            args.putString(TAG, TAG);
+        }
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        WLog.i(TAG, getName() + ".onAttach");
+        WLog.i(TAG, getName() + ".onAttach context is " + (context != null ? context.getClass().getSimpleName() : "--"));
         this.context = context;
-        setRetainInstance(true);
+        if (context instanceof IAttachActivity) {
+            iAttachActivity = (IAttachActivity) context;
+        } else {
+            onAbsV4Attach(context);
+        }
     }
+
+    protected abstract void onAbsV4Attach(Context context);
 
     @Override
     public void onAttachFragment(Fragment childFragment) {
@@ -47,6 +71,10 @@ public abstract class AbsV4Fragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WLog.i(TAG, getName() + ".onCreate");
+        /**
+         * 保持Fragment
+         */
+        setRetainInstance(true);
     }
 
     @Nullable
@@ -69,8 +97,8 @@ public abstract class AbsV4Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         WLog.i(TAG, getName() + ".onActivityCreated savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
-        initView();
-        initData(savedInstanceState);
+        initView(savedInstanceState);
+        initData();
         initClick();
     }
 
@@ -114,6 +142,8 @@ public abstract class AbsV4Fragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         WLog.i(TAG, getName() + ".onDetach");
+        context = null;
+        iAttachActivity = null;
     }
 
 
@@ -171,9 +201,9 @@ public abstract class AbsV4Fragment extends Fragment {
 
     public abstract int getLayoutId();
 
-    public abstract void initView();
+    public abstract void initView(Bundle savedInstanceState);
 
-    public abstract void initData(Bundle savedInstanceState);
+    public abstract void initData();
 
     public abstract void initClick();
 }

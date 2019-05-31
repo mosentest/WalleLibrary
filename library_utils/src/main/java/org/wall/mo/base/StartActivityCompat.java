@@ -1,4 +1,4 @@
-package org.wall.mo.compat;
+package org.wall.mo.base;
 
 import android.app.Activity;
 import android.content.Context;
