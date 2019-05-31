@@ -10,16 +10,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import android.widget.Toast
 import mo.wall.org.autodensity.AutoDensityActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
 import mo.wall.org.ntp.NtpActivity
 import mo.wall.org.statusbar.StatusbarActivity
-import org.wall.mo.utils.ntp.NtpHelper
-import org.wall.mo.utils.ntp.LowNtpTrustedTime
-import org.ziqi.librarydatausagesummary.DataUsageSummaryHelper
 
 class MainActivity : AppCompatActivity() {
 
