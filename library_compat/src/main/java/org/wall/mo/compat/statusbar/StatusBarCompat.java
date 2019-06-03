@@ -1,4 +1,4 @@
-package org.wall.mo.compat;
+package org.wall.mo.compat.statusbar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

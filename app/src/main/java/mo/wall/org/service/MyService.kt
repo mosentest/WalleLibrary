@@ -8,9 +8,6 @@ import android.os.IBinder
 import android.widget.Toast
 import mo.wall.org.R
 import mo.wall.org.datausage.DataUsageSummaryActivity
-import mo.wall.org.dropdownmenu.DropDownMenuActivity
-import mo.wall.org.statusbar.StatusbarActivity
-import org.wall.mo.compat.NotificationCompat
 
 class MyService : Service() {
 

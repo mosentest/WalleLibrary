@@ -27,7 +27,7 @@ public abstract class AbsV4Fragment extends Fragment {
 
     protected Context context;
 
-    protected final static String TAG = AbsV4Fragment.class.getSimpleName();
+    public final static String TAG = AbsV4Fragment.class.getSimpleName();
 
 
     protected IAttachActivity iAttachActivity;

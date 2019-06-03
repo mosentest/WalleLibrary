@@ -1,4 +1,4 @@
-package org.wall.mo.compat;
+package org.wall.mo.compat.notification;
 
 import java.lang.reflect.Method;
 

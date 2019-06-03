@@ -1,4 +1,4 @@
-package org.wall.mo.compat;
+package org.wall.mo.compat.notification;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -9,7 +9,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 
-public class NotificationCompat16 {
+public class NotificationCompat11 {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@SuppressLint("NewApi")
 	public static void sendNormal(Context context, NotificationManager notificationManager, PendingIntent pendingIntent,
@@ -27,8 +27,7 @@ public class NotificationCompat16 {
 				.setAutoCancel(autoCannel)// 设置可以清除
 				.setContentTitle(contentTitle) // 设置下拉列表里的标题
 				.setContentText(contentText); // 设置可以清除
-		Notification notification = builder.build();// API
-													// 16添加创建notification的方法
+		Notification notification = builder.getNotification();// API
 		// 通知
 		notificationManager.notify(notifyId, notification);
 	}

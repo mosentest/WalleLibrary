@@ -1,11 +1,14 @@
 package mo.wall.org.statusbar
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import mo.wall.org.R
 import mo.wall.org.service.MyService
 import org.wall.mo.base.activity.AbsWithOneV4FragmentActivity
+import org.wall.mo.compat.statusbar.StatusBarCompat
+import org.wall.mo.compat.statusbar.StatusBarUtil
 
 class StatusbarActivity : AbsWithOneV4FragmentActivity() {
 
@@ -32,6 +35,8 @@ class StatusbarActivity : AbsWithOneV4FragmentActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        StatusBarUtil.setStatusBarColor(this, Color.BLUE)
+        StatusBarUtil.setStatusBarDarkTheme(this,true)
     }
 
     override fun initData() {
