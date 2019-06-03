@@ -25,12 +25,12 @@ import org.wall.mo.utils.log.WLog;
  */
 public abstract class AbsV4Fragment extends Fragment {
 
-    private Context context;
+    protected Context context;
 
-    public final static String TAG = AbsV4Fragment.class.getSimpleName();
+    protected final static String TAG = AbsV4Fragment.class.getSimpleName();
 
 
-    private IAttachActivity iAttachActivity;
+    protected IAttachActivity iAttachActivity;
 
     /**
      * 例子

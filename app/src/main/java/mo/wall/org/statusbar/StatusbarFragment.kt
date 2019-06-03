@@ -4,6 +4,7 @@ package mo.wall.org.statusbar
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.Fragment
 import mo.wall.org.R
 import org.wall.mo.base.fragment.InterceptActBackFragment
@@ -39,7 +40,6 @@ class StatusbarFragment : InterceptActBackFragment() {
     }
 
     override fun initData() {
-
     }
 
     override fun initClick() {
@@ -52,9 +52,11 @@ class StatusbarFragment : InterceptActBackFragment() {
 
 
     override fun onFragmentInterceptGetIntent(intent: Intent?): Boolean {
-        return false;
+        return false
     }
 
+    override fun onFragmentInterceptNextParcelableExtra(parcelableNextExtra: Parcelable?) {
+    }
 
     override fun onAbsV4Attach(context: Context?) {
     }

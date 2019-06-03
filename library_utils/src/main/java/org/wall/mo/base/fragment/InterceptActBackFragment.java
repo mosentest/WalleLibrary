@@ -1,5 +1,7 @@
 package org.wall.mo.base.fragment;
 
+import android.os.Parcelable;
+
 /**
  * Copyright (C), 2018-2019
  * Author: ziqimo
@@ -10,4 +12,5 @@ package org.wall.mo.base.fragment;
  * 作者姓名 修改时间 版本号 描述
  */
 public abstract class InterceptActBackFragment extends AbsV4Fragment implements IFragmentInterceptAct {
+
 }

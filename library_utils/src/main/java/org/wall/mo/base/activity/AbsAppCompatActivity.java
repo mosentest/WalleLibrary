@@ -23,15 +23,15 @@ import org.wall.mo.utils.log.WLog;
  */
 public abstract class AbsAppCompatActivity extends AppCompatActivity implements IAttachActivity {
 
-    private final static String TAG = AbsAppCompatActivity.class.getSimpleName();
+    protected final static String TAG = AbsAppCompatActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WLog.i(TAG, getName() + ".onCreate savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         setContentView(getLayoutId());
-        parseIntentData();
         initView(savedInstanceState);
+        parseIntentData();
         initData();
         initClick();
     }

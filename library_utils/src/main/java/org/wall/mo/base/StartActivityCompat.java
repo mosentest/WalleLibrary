@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 
+import org.wall.mo.utils.StringUtils;
+
 /**
  * 作者 : moziqi
  * 邮箱 : 709847739@qq.com
@@ -17,12 +19,24 @@ import android.support.v4.app.Fragment;
 public class StartActivityCompat {
 
 
+    /**
+     * 封装其他，其他参数都转成parcelable对象，方便代码跟踪
+     */
     public static final String NEXT_PARCELABLE = "next_parcelable";
 
-    public static final String NEXT_EXTRA = "next_extra";
 
     /**
-     * 基本跳转
+     * 下个页面的标题
+     */
+    public static final String NEXT_TITLE = "next_title";
+
+    /**
+     * 控制下个页面是否显示标题
+     */
+    public static final String NEXT_SHOW_BACK = "next_show_back";
+
+    /**
+     * 基本跳转，不带标题和返回处理
      *
      * @param context
      * @param fragment
@@ -32,8 +46,51 @@ public class StartActivityCompat {
         startActivity(context, fragment, intent, -1);
     }
 
-    public static void startActivity(Context context, Fragment fragment, Intent intent, int requestCode) {
-        startActivity(context, fragment, intent, requestCode, null);
+    /**
+     * 基本跳转，带标题和返回处理
+     *
+     * @param context
+     * @param fragment
+     * @param title
+     * @param showBack
+     * @param intent
+     */
+    public static void startActivity(Context context, Fragment fragment, String title, boolean showBack, Intent intent) {
+        startActivity(context, fragment, title, showBack, intent, -1);
+    }
+
+    /**
+     * requestCode跳转，带标题和返回处理
+     *
+     * @param context
+     * @param fragment
+     * @param title
+     * @param showBack
+     * @param intent
+     * @param requestCode
+     */
+    public static void startActivity(Context context,
+                                     Fragment fragment,
+                                     String title,
+                                     boolean showBack,
+                                     Intent intent,
+                                     int requestCode) {
+        startActivity(context, fragment, title, showBack, intent, requestCode, null);
+    }
+
+    /**
+     * requestCode跳转，不带标题和返回处理
+     *
+     * @param context
+     * @param fragment
+     * @param intent
+     * @param requestCode
+     */
+    public static void startActivity(Context context,
+                                     Fragment fragment,
+                                     Intent intent,
+                                     int requestCode) {
+        startActivity(context, fragment, null, false, intent, requestCode, null);
     }
 
     /**
@@ -42,15 +99,29 @@ public class StartActivityCompat {
      * @param context
      * @param fragment
      * @param intent
+     * @param title       是否显示展示标题
+     * @param showBack    是否显示返回按钮
      * @param requestCode
      * @param parcelable
      */
-    public static void startActivity(Context context, Fragment fragment, Intent intent, int requestCode, Parcelable parcelable) {
+    public static void startActivity(Context context,
+                                     Fragment fragment,
+                                     String title,
+                                     boolean showBack,
+                                     Intent intent,
+                                     int requestCode,
+                                     Parcelable parcelable) {
+        //设置相关参数
         if (parcelable != null) {
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(NEXT_PARCELABLE, parcelable);
-            intent.putExtra(NEXT_EXTRA, bundle);
+            intent.putExtra(NEXT_PARCELABLE, parcelable);
         }
+        //设置相关参数
+        if (!StringUtils.isEmpty(title)) {
+            intent.putExtra(NEXT_TITLE, title);
+        }
+        //设置相关参数
+        intent.putExtra(NEXT_SHOW_BACK, showBack);
+
         if (fragment != null) {
             fragment.startActivityForResult(intent, requestCode);
         } else {

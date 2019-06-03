@@ -16,6 +16,7 @@ import mo.wall.org.devicemanager.DeviceManagerActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
 import mo.wall.org.ntp.NtpActivity
 import mo.wall.org.statusbar.StatusbarActivity
+import org.wall.mo.base.StartActivityCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
 
         adapter!!.setItems(lists)
-        adapter!!.setOnItemClickListener(MainAdapter.OnItemClickListener({ view, pos ->
+        adapter!!.setOnItemClickListener { view, pos ->
             val item = lists!!.get(pos)
             val clazz = item.clazz
             if (!TextUtils.isEmpty(clazz)) {
@@ -110,9 +111,10 @@ class MainActivity : AppCompatActivity() {
                 var componet = ComponentName(applicationContext.packageName, clazz)
                 intent.setComponent(componet)
                 intent.putExtra("title", item.title)
-                startActivity(intent)
+//                startActivity(intent)
+                StartActivityCompat.startActivity(this, null, "測試標題", true, intent);
             }
-        }))
+        }
 
         //测试是否正常
         //ACache.get(this).put("aaa", "aaa");

@@ -5,16 +5,23 @@ package org.wall.mo.base.fragment;
  * Author: ziqimo
  * Date: 2019/5/31 11:21 AM
  * Description: ${DESCRIPTION}
- * History: fragment 跟 activity通讯类
+ * History:
+ * fragment 跟 activity通讯类
+ * 还有activity的基础方法
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
 public interface IAttachActivity {
 
-    /**
-     * 这是测试
-     *
-     * @return
-     */
-    public boolean doAttach();
+    public void setTopBarTitle(String title);
+
+    public void setTopBarBack(boolean show);
+
+    public void showShortToast(String msg);
+
+    public void showLongToast(String msg);
+
+    public void showDialog(String msg);
+
+    public void hideDialog();
 }

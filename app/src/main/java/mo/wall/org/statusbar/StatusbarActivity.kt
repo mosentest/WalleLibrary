@@ -3,7 +3,6 @@ package mo.wall.org.statusbar
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.widget.TextView
 import mo.wall.org.R
 import mo.wall.org.service.MyService
 import org.wall.mo.base.activity.AbsWithOneV4FragmentActivity
@@ -14,17 +13,20 @@ class StatusbarActivity : AbsWithOneV4FragmentActivity() {
         return R.id.fragment_container
     }
 
-    override fun createFragment(): Fragment {
-        return StatusbarFragment.newInstance(Bundle())
-    }
-
-    override fun doAttach(): Boolean {
-        return false
-    }
-
-
     override fun getLayoutId(): Int {
         return R.layout.activity_statusbar
+    }
+
+    override fun getTopBarTitleViewId(): Int {
+        return R.id.tvTopBarTitle
+    }
+
+    override fun getTopBarBackViewId(): Int {
+        return R.id.tvTopBarLeftBack;
+    }
+
+    override fun createFragment(): Fragment {
+        return StatusbarFragment.newInstance(Bundle())
     }
 
 
@@ -43,8 +45,19 @@ class StatusbarActivity : AbsWithOneV4FragmentActivity() {
     }
 
     override fun initClick() {
-        findViewById<TextView>(R.id.tvLeftBack).setOnClickListener({
-            onBackPressed()
-        })
+
+    }
+
+    override fun showShortToast(msg: String?) {
+
+    }
+
+    override fun showLongToast(msg: String?) {
+    }
+
+    override fun showDialog(msg: String?) {
+    }
+
+    override fun hideDialog() {
     }
 }

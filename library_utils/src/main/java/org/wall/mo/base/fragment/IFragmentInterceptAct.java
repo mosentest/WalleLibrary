@@ -1,6 +1,7 @@
 package org.wall.mo.base.fragment;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
@@ -35,4 +36,13 @@ public interface IFragmentInterceptAct {
      * @return
      */
     boolean onFragmentInterceptGetIntent(Intent intent);
+
+    /**
+     * 获取startActivity的intent参数
+     * 参数传递
+     *
+     * @param parcelableNextExtra
+     * @return
+     */
+    void onFragmentInterceptNextParcelableExtra(Parcelable parcelableNextExtra);
 }

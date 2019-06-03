@@ -41,8 +41,8 @@ class MyService : Service() {
         val pIntent = PendingIntent.getActivity(this, 1, intent, 0)
         //点击跳转的intent
         builder.setContentIntent(pIntent);
-        builder.setContentText("内容")
-        builder.setContentTitle("标题")
+        builder.setContentText("content")
+        builder.setContentTitle("title")
         //可以点击通知栏的删除按钮删除
         builder.setAutoCancel(true);
         builder.setSmallIcon(R.mipmap.ic_launcher_round)
@@ -50,7 +50,7 @@ class MyService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Toast.makeText(this, "启动成功:" + MyService().javaClass.name, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "start:" + MyService().javaClass.name, Toast.LENGTH_LONG).show()
         return super.onStartCommand(intent, flags, startId)
     }
 
