@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.widget.TextView
 import mo.wall.org.R
+import mo.wall.org.service.MyService
 import org.wall.mo.base.activity.AbsWithOneV4FragmentActivity
 
 class StatusbarActivity : AbsWithOneV4FragmentActivity() {
@@ -32,7 +33,8 @@ class StatusbarActivity : AbsWithOneV4FragmentActivity() {
     }
 
     override fun initData() {
-
+//        startForegroundService(Intent(this, MyService().javaClass))
+        startService(Intent(this, MyService()::class.java))
     }
 
 
