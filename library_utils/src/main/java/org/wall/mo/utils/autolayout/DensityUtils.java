@@ -1,4 +1,4 @@
-package org.wall.mo.ui.autolayout;
+package org.wall.mo.utils.autolayout;
 
 import android.content.Context;
 import android.util.TypedValue;

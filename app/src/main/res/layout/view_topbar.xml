@@ -9,13 +9,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <org.wall.mo.base.view.WallImageView
+        <org.wall.mo.view.WallImageView
             android:id="@+id/ivTopBarLeftBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
-        <org.wall.mo.base.view.WallTextView
+        <org.wall.mo.view.WallTextView
             android:id="@+id/tvTopBarLeftBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:textSize="@dimen/sp_16"
             android:visibility="visible" />
 
-        <org.wall.mo.base.view.WallTextView
+        <org.wall.mo.view.WallTextView
             android:id="@+id/tvTopBarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

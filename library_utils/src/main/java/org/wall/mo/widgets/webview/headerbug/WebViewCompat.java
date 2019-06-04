@@ -1,4 +1,4 @@
-package org.wall.mo.ui.webview.headerbug;
+package org.wall.mo.widgets.webview.headerbug;
 
 
 import android.util.Log;

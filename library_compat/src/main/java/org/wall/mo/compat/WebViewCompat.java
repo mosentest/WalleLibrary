@@ -56,6 +56,7 @@ public class WebViewCompat {
         // But it didn't work for me without this line.
         // UPDATE: no hardcoded path. Thanks to Kevin Hawkins
 
+        //缓存目录
 //        String appCachePath = App.getInstance().getCacheDir().getAbsolutePath();
 //        ws.setAppCachePath(appCachePath);
         // js

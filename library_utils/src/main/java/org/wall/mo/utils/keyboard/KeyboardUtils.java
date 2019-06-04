@@ -1,4 +1,4 @@
-package org.wall.mo.ui.keyboard;
+package org.wall.mo.utils.keyboard;
 
 import android.app.Activity;
 import android.content.Context;

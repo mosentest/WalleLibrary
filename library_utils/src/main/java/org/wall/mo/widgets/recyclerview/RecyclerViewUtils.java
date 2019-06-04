@@ -1,4 +1,4 @@
-package org.wall.mo.ui.recyclerview;
+package org.wall.mo.widgets.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;

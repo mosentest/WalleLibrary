@@ -1,4 +1,4 @@
-package org.wall.mo.ui.webview.systembug;
+package org.wall.mo.widgets.webview.systembug;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

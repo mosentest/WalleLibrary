@@ -1,4 +1,4 @@
-package org.wall.mo.compat.notification;
+package org.wall.mo.compat;
 
 import java.io.File;
 
@@ -9,7 +9,6 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 
-import org.wall.mo.base.StartActivityCompat;
 
 /**
  * 参考链接<br/>
@@ -37,6 +36,11 @@ public class PackageManagerCompat24 {
         } else {
             intent.setDataAndType(Uri.parse("file://" + apkFile.toString()), "application/vnd.android.package-archive");
         }
-        StartActivityCompat.startActivity(context, fragment, intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (fragment != null) {
+            fragment.startActivity(intent);
+        } else {
+            context.startActivity(intent);
+        }
     }
 }

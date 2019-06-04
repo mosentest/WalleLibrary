@@ -1,9 +1,8 @@
-package org.wall.mo.ui.autolayout;
+package org.wall.mo.utils.autolayout;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 

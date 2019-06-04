@@ -1,4 +1,4 @@
-package org.wall.mo.compat.notification;
+package org.wall.mo.compat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 
-import org.wall.mo.base.StartActivityCompat;
 
 /***
  * 8.0安装适配
@@ -30,7 +29,12 @@ public class PackageManagerCompat26 {
                 && context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.O) {
             Uri parse = Uri.parse("package:" + context.getPackageName());
             Intent intent = new Intent("android.settings.MANAGE_UNKNOWN_APP_SOURCES", parse);
-            StartActivityCompat.startActivity(context, fragment, intent);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (fragment != null) {
+                fragment.startActivity(intent);
+            } else {
+                context.startActivity(intent);
+            }
         }
     }
 }

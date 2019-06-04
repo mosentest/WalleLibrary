@@ -30,5 +30,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     compileOnly rootProject.ext.dependencies.appCompat
-    compileOnly project(path: ':library_utils')
+//    compileOnly project(path: ':library_utils')
 }
