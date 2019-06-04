@@ -35,7 +35,7 @@ class StatusbarActivity : AbsWithOneV4FragmentActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        StatusBarUtil.setStatusBarColor(this, Color.BLUE)
+        StatusBarUtil.setStatusBarColor(this, Color.WHITE)
         StatusBarUtil.setStatusBarDarkTheme(this,true)
     }
 

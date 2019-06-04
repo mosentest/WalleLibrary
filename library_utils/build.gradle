@@ -30,4 +30,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     compileOnly rootProject.ext.dependencies.appCompat
+    //https://github.com/SenhLinsh/Utils-Everywhere
+//    implementation 'com.github.SenhLinsh:Utils-Everywhere:2.1.0'
 }

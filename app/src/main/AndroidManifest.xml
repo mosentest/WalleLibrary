@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="mo.wall.org">
-
     <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -43,7 +42,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 震动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" />
+    <!--<uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" />-->
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
@@ -61,10 +60,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".statusbar2.Statusbar2Activity"
+            android:label="@string/title_activity_statusbar"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <service
             android:name=".service.MyService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".statusbar.StatusbarActivity"
@@ -92,6 +97,16 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+
+        <!--全面屏适配-->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+        <!--华为适配-->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" />
+
     </application>
 
 </manifest>
