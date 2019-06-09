@@ -14,6 +14,7 @@ import mo.wall.org.autodensity.AutoDensityActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
+import mo.wall.org.nodisplay.NoDisplayActivity
 import mo.wall.org.ntp.NtpActivity
 import mo.wall.org.statusbar.StatusbarActivity
 import mo.wall.org.statusbar2.Statusbar2Activity
@@ -82,6 +83,8 @@ class MainActivity : AppCompatActivity() {
 
         lists?.add(createEntity("不透明、有自定义标题的情况", "状态栏1", 1, StatusbarActivity().javaClass.name))
         lists?.add(createEntity("透明、有自定义标题的情况", "状态栏2", 1, Statusbar2Activity().javaClass.name))
+
+        lists?.add(createEntity("比透明主题更高级的一种选择", "不展示activity", 1, NoDisplayActivity().javaClass.name))
 
 
         adapter!!.setItems(lists)

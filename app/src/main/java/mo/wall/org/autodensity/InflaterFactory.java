@@ -1,16 +1,11 @@
 package mo.wall.org.autodensity;
 
-import java.lang.reflect.Constructor;
-
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import org.wall.mo.ui.autolayout.AutoDensity;
-
-import mo.wall.org.WalleApp;
+import java.lang.reflect.Constructor;
 
 public class InflaterFactory implements LayoutInflater.Factory {
 
