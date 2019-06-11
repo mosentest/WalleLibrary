@@ -24,7 +24,7 @@ public class SQLiteTemplate {
     protected String mPrimaryKey = "_id";
 
 
-    protected static SQLiteTemplate instance;
+    protected volatile static SQLiteTemplate instance;
 
 
     private SQLiteTemplate() {

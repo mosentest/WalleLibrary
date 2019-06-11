@@ -9,7 +9,7 @@ public class MainThreadExecutor implements IExecutor {
 
     private Handler handler;
 
-    private static MainThreadExecutor executor;
+    private volatile static MainThreadExecutor executor;
 
     public static MainThreadExecutor getExecutor() {
         if (executor == null) {

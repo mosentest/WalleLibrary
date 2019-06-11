@@ -81,8 +81,12 @@ public abstract class AbsV4Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         WLog.i(TAG, getName() + ".onCreateView");
-//        return super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(getLayoutId(), container, false);
+        int layoutId = getLayoutId();
+        if (layoutId > 0) {
+            return inflater.inflate(layoutId, container, false);
+        } else {
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
     }
 
 

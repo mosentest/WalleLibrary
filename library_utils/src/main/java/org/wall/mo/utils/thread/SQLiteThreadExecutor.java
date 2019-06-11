@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
  */
 public class SQLiteThreadExecutor implements IExecutor {
 
-    private static SQLiteThreadExecutor executor;
+    private volatile static SQLiteThreadExecutor executor;
 
     private ExecutorService singleExecutor;
 

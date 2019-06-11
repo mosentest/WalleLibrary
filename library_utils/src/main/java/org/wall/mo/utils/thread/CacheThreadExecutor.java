@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 public class CacheThreadExecutor implements IExecutor {
 
 
-    private static CacheThreadExecutor executor;
+    private volatile static CacheThreadExecutor executor;
 
     private ExecutorService cacheExecutor;
 

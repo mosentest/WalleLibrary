@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class WalleDBManager {
 
-    private static WalleDBManager dBManager = null;
+    private volatile static WalleDBManager dBManager = null;
 
     private SDCardSQLiteOpenHelper mSdCardSQLiteOpenHelper;
 

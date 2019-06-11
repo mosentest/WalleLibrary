@@ -18,11 +18,15 @@ public class DataBaseHelper extends SDCardSQLiteOpenHelper {
 
     private Context context;
 
-    private static DataBaseHelper mInstance;
+    private volatile static DataBaseHelper mInstance;
 
     public static DataBaseHelper getInstance(Context context, String name) {
         if (mInstance == null) {
-            mInstance = new DataBaseHelper(context, name, null);
+            synchronized (DataBaseHelper.class) {
+                if (mInstance == null) {
+                    mInstance = new DataBaseHelper(context, name, null);
+                }
+            }
         }
         return mInstance;
     }

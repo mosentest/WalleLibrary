@@ -29,7 +29,10 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WLog.i(TAG, getName() + ".onCreate savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
-        setContentView(getLayoutId());
+        int layoutId = getLayoutId();
+        if (layoutId > 0) {
+            setContentView(layoutId);
+        }
         initView(savedInstanceState);
         parseIntentData();
         initData();

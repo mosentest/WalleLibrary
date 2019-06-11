@@ -43,25 +43,35 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
             if (fragment == null) {
                 fragment = createFragment();
             }
+            int containerViewId = getContainerViewId();
+            if (fragment == null || containerViewId <= 0) {
+                return;
+            }
             FragmentManager supportFragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
             //用getName作为tag
-            fragmentTransaction.replace(getContainerViewId(), fragment, getName());
+            fragmentTransaction.replace(containerViewId, fragment, getName());
             fragmentTransaction.commit();
         } else {
             FragmentManager supportFragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
             Fragment fragmentByTag = supportFragmentManager.findFragmentByTag(getName());
+            if (fragmentByTag == null) {
+                return;
+            }
             fragmentTransaction.show(fragmentByTag);
             fragmentTransaction.commit();
         }
         //设置返回键
-        findViewById(getTopBarBackViewId()).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        int topBarBackViewId = getTopBarBackViewId();
+        if (topBarBackViewId > 0) {
+            findViewById(topBarBackViewId).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     @Override
@@ -95,13 +105,14 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
 
     /**
      * 替换 fragment 的 container View Id
-     *
+     * 默认值-1
      * @return
      */
     public abstract int getContainerViewId();
 
     /**
      * 获取topBar的标题 id
+     * 默认值-1
      *
      * @return
      */
@@ -109,6 +120,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
 
     /**
      * 获取topBar的返回键 id
+     * 默认值-1
      *
      * @return
      */
@@ -130,7 +142,10 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
     @Override
     public void setTopBarBack(boolean show) {
         showTopBarBack = show;
-        findViewById(getTopBarBackViewId()).setVisibility(show ? View.VISIBLE : View.GONE);
+        int topBarBackViewId = getTopBarBackViewId();
+        if (topBarBackViewId > 0) {
+            findViewById(topBarBackViewId).setVisibility(show ? View.VISIBLE : View.GONE);
+        }
     }
 
     /**
@@ -140,9 +155,12 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
      */
     @Override
     public void setTopBarTitle(String title) {
-        View topBarTitleView = findViewById(getTopBarTitleViewId());
-        if (topBarTitleView instanceof TextView) {
-            ((TextView) topBarTitleView).setText(title);
+        int topBarTitleViewId = getTopBarTitleViewId();
+        if (topBarTitleViewId > 0) {
+            View topBarTitleView = findViewById(topBarTitleViewId);
+            if (topBarTitleView instanceof TextView) {
+                ((TextView) topBarTitleView).setText(title);
+            }
         }
     }
 
