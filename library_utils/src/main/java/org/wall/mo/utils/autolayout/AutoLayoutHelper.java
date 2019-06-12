@@ -38,7 +38,7 @@ public class AutoLayoutHelper {
 
     public static AutoLayoutHelper getInstance(Context context) {
         if (context == null) {
-            throw new RuntimeException("AutoLayoutHelper context null");
+            throw new RuntimeException("AutoLayoutHelper mContext null");
         }
         //不适合，如果考虑横竖，这种方案不好
         if (instance == null) {
@@ -51,7 +51,7 @@ public class AutoLayoutHelper {
         }
         return instance;
         //直接创建对象吧
-        //return new AutoLayoutHelper(context.getApplicationContext());
+        //return new AutoLayoutHelper(mContext.getApplicationContext());
     }
 
     /**

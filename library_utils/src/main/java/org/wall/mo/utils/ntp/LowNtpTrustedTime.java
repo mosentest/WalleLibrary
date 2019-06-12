@@ -83,7 +83,7 @@ public class LowNtpTrustedTime {
             mCachedNtpElapsedRealtime = client.getNtpTimeReference();
             mCachedNtpCertainty = client.getRoundTripTime() / 2;
         }
-//        NtpHelper.setNtpServer(context,defaultServer);
+//        NtpHelper.setNtpServer(mContext,defaultServer);
         // + ":" + mCachedNtpTime
         return result;
     }

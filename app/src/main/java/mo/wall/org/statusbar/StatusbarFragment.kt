@@ -6,8 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.Fragment
+import android.view.View
 import mo.wall.org.R
 import org.wall.mo.base.fragment.InterceptActBackFragment
+import org.wall.mo.utils.log.WLog
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,6 +21,22 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class StatusbarFragment : InterceptActBackFragment() {
+
+    override fun onFragmentFirstVisible() {
+        WLog.i(TAG, "$name.onFragmentFirstVisible")
+    }
+
+    override fun onFragmentResume() {
+        WLog.i(TAG, "$name.onFragmentResume")
+    }
+
+    override fun onFragmentResume(firstResume: Boolean) {
+        WLog.i(TAG, "$name.onFragmentResume firstResume is $firstResume")
+    }
+
+    override fun onFragmentPause() {
+        WLog.i(TAG, "$name.onFragmentPause")
+    }
 
 
     companion object {
@@ -35,7 +53,7 @@ class StatusbarFragment : InterceptActBackFragment() {
     }
 
 
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun initView(rootView: View?, savedInstanceState: Bundle?) {
 
     }
 

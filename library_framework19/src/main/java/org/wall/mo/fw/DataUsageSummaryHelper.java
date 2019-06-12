@@ -59,7 +59,7 @@ public class DataUsageSummaryHelper {
                 //mStatsSession 是为了拿到NetworkStatsHistory的实例，涉及的类太多不好扣出来，这里就开始全反射拿去
                 Class clazzNetworkTemplate = Class.forName("android.net.NetworkTemplate");
                 Class clazzNetworkStatsHistory = Class.forName("android.net.NetworkStatsHistory");
-                //NetworkTemplate mTemplate = NetworkTemplate.buildTemplateMobileAll(getActiveSubscriberId(context));
+                //NetworkTemplate mTemplate = NetworkTemplate.buildTemplateMobileAll(getActiveSubscriberId(mContext));
                 Object mTemplate = MethodUtils.invokeStaticMethod(clazzNetworkTemplate, "buildTemplateMobileAll", new Object[]{getActiveSubscriberId(context)});
                 //NetworkStatsHistory.FIELD_ALL
                 //NetworkStatsHistory networkStatsHistory = mStatsSession.getHistoryForNetwork(mTemplate, /*FIELD_RX_BYTES | FIELD_TX_BYTES*/0xFFFFFFFF);
@@ -112,7 +112,7 @@ public class DataUsageSummaryHelper {
      * @return
      */
     private static String getActiveSubscriberId(Context context) {
-        //final TelephonyManager tele = TelephonyManager.from(context);
+        //final TelephonyManager tele = TelephonyManager.from(mContext);
         final TelephonyManager tele = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         final String actualSubscriberId = tele.getSubscriberId();
         WLog.i(TAG, "getActiveSubscriberId..actualSubscriberId:" + actualSubscriberId);

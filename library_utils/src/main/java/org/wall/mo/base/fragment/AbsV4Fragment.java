@@ -25,12 +25,13 @@ import org.wall.mo.utils.log.WLog;
  */
 public abstract class AbsV4Fragment extends Fragment {
 
-    protected Context context;
-
     public final static String TAG = AbsV4Fragment.class.getSimpleName();
 
+    protected Context mContext;
 
     protected IAttachActivity iAttachActivity;
+
+    protected View rootView;
 
     /**
      * 例子
@@ -50,8 +51,8 @@ public abstract class AbsV4Fragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        WLog.i(TAG, getName() + ".onAttach context is " + (context != null ? context.getClass().getSimpleName() : "--"));
-        this.context = context;
+        WLog.i(TAG, getName() + ".onAttach mContext is " + (context != null ? context.getClass().getSimpleName() : "--"));
+        this.mContext = context;
         if (context instanceof IAttachActivity) {
             iAttachActivity = (IAttachActivity) context;
         } else {
@@ -67,6 +68,22 @@ public abstract class AbsV4Fragment extends Fragment {
         WLog.i(TAG, getName() + ".onAttachFragment");
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        WLog.i(TAG, getName() + ".setUserVisibleHint isVisibleToUser is" + isVisibleToUser);
+//        LogUtils.i(TAG,getName() + "  isResumed() " + isResumed());
+//        LogUtils.i(TAG,getName() + "  isAdded() " + isAdded());
+//        LogUtils.i(TAG, getName() + "  setUserVisibleHint getParentFragment != null  " + (getParentFragment() != null));
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        WLog.i(TAG, getName() + ".onHiddenChanged hidden is " + hidden);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,20 +97,38 @@ public abstract class AbsV4Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        WLog.i(TAG, getName() + ".onCreateView");
+        WLog.i(TAG, getName() + ".onCreateView savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         int layoutId = getLayoutId();
         if (layoutId > 0) {
-            return inflater.inflate(layoutId, container, false);
+            if (rootView == null) {
+                rootView = inflater.inflate(layoutId, container, false);
+            }
+            //在这里findViewById
+            initView(rootView, savedInstanceState);
+            return rootView;
         } else {
             return super.onCreateView(inflater, container, savedInstanceState);
         }
     }
 
+    /**
+     * 实现一个findViewById的方法
+     *
+     * @param idRes
+     * @param <T>
+     * @return
+     */
+    public <T extends View> T findViewById(int idRes) {
+        if (idRes == View.NO_ID) {
+            return null;
+        }
+        return rootView.findViewById(idRes);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        WLog.i(TAG, getName() + ".onViewCreated");
+        WLog.i(TAG, getName() + ".onViewCreated savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
     }
 
 
@@ -101,7 +136,6 @@ public abstract class AbsV4Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         WLog.i(TAG, getName() + ".onActivityCreated savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
-        initView(savedInstanceState);
         initData();
         initClick();
     }
@@ -146,7 +180,7 @@ public abstract class AbsV4Fragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         WLog.i(TAG, getName() + ".onDetach");
-        context = null;
+        mContext = null;
         iAttachActivity = null;
     }
 
@@ -194,8 +228,8 @@ public abstract class AbsV4Fragment extends Fragment {
      *
      * @return
      */
-    public Context getCtx() {
-        return context;
+    public Context getCurActivity() {
+        return mContext;
     }
 
     public String getName() {
@@ -203,9 +237,20 @@ public abstract class AbsV4Fragment extends Fragment {
     }
 
 
+    /**
+     * 默认返回-1
+     *
+     * @return
+     */
     public abstract int getLayoutId();
 
-    public abstract void initView(Bundle savedInstanceState);
+    /**
+     * 初始化view
+     *
+     * @param rootView
+     * @param savedInstanceState
+     */
+    public abstract void initView(View rootView, Bundle savedInstanceState);
 
     public abstract void initData();
 

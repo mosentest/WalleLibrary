@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.Fragment
+import android.view.View
 import mo.wall.org.R
 import org.wall.mo.base.fragment.InterceptActBackFragment
 
@@ -12,6 +13,22 @@ import org.wall.mo.base.fragment.InterceptActBackFragment
  * A placeholder fragment containing a simple view.
  */
 class StatusbarActivity2Fragment : InterceptActBackFragment() {
+
+    override fun onFragmentFirstVisible() {
+
+    }
+
+    override fun onFragmentResume() {
+
+    }
+
+    override fun onFragmentResume(firstResume: Boolean) {
+
+    }
+
+    override fun onFragmentPause() {
+
+    }
 
 
     companion object {
@@ -23,7 +40,7 @@ class StatusbarActivity2Fragment : InterceptActBackFragment() {
         }
     }
 
-    override fun initView(savedInstanceState: Bundle?) {
+    override fun initView(rootView: View?, savedInstanceState: Bundle?) {
 
     }
 
