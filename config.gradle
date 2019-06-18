@@ -9,7 +9,7 @@ ext {
     android = [
             applicationId    : "moziqi_devok",
             compileSdkVersion: 28,
-            buildToolsVersion: "27.0.3",
+            buildToolsVersion: "28.0.1",
             minSdkVersion    : 14,
             targetSdkVersion : 19,
             versionCode      : 2,
@@ -17,12 +17,12 @@ ext {
     ]
 
     dependencies = [
-            fragment : 'com.android.support:support-fragment:27.1.1',
-            appCompat: 'com.android.support:appcompat-v7:27.1.1',
-            cardview : 'com.android.support:cardview-v7:27.1.1',
-            cardview : 'com.android.support:cardview-v7:27.1.1',
-            recyclerview : 'com.android.support:recyclerview-v7:27.1.1',
-            design   : 'com.android.support:design:27.1.1',
+            fragment : 'com.android.support:support-fragment:28.0.0',
+            appCompat: 'com.android.support:appcompat-v7:28.0.0',
+            cardview : 'com.android.support:cardview-v7:28.0.0',
+            cardview : 'com.android.support:cardview-v7:28.0.0',
+            recyclerview : 'com.android.support:recyclerview-v7:28.0.0',
+            design   : 'com.android.support:design:28.0.0',
             flexbox   : 'com.google.android:flexbox:0.3.2'
     ]
 }
