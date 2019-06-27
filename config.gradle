@@ -13,16 +13,17 @@ ext {
             minSdkVersion    : 14,
             targetSdkVersion : 19,
             versionCode      : 2,
-            versionName      : "1.0.0"
+            versionName      : "1.0.0",
+            compat_version   : "27.1.1"
     ]
 
     dependencies = [
-            fragment : 'com.android.support:support-fragment:28.0.0',
-            appCompat: 'com.android.support:appcompat-v7:28.0.0',
-            cardview : 'com.android.support:cardview-v7:28.0.0',
-            cardview : 'com.android.support:cardview-v7:28.0.0',
-            recyclerview : 'com.android.support:recyclerview-v7:28.0.0',
-            design   : 'com.android.support:design:28.0.0',
-            flexbox   : 'com.google.android:flexbox:0.3.2'
+            fragment    : "com.android.support:support-fragment:$rootProject.ext.android.compat_version",
+            appCompat   : "com.android.support:appcompat-v7:$rootProject.ext.android.compat_version",
+            cardview    : "com.android.support:cardview-v7:$rootProject.ext.android.compat_version",
+            cardview    : "com.android.support:cardview-v7:$rootProject.ext.android.compat_version",
+            recyclerview: "com.android.support:recyclerview-v7:$rootProject.ext.android.compat_version",
+            design      : "com.android.support:design:$rootProject.ext.android.compat_version",
+            flexbox     : "com.google.android:flexbox:0.3.2"
     ]
 }
