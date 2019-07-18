@@ -94,7 +94,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 //    kapt "com.android.databinding:compiler:3.1.0"
 
-    implementation rootProject.ext.dependencies.appCompat
+    implementation (rootProject.ext.dependencies.appCompat){
+        force true
+    }
     implementation rootProject.ext.dependencies.design
     implementation rootProject.ext.dependencies.cardview
     implementation rootProject.ext.dependencies.recyclerview
