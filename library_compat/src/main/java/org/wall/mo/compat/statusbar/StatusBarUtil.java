@@ -47,6 +47,7 @@ public class StatusBarUtil {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //使用SystemBarTintManager,需要先将状态栏设置为透明
             setTranslucentStatus(activity);
+            setRootViewFitsSystemWindows(activity, true);
             SystemBarTintManager systemBarTintManager = new SystemBarTintManager(activity);
             systemBarTintManager.setStatusBarTintEnabled(true);//显示状态栏
             systemBarTintManager.setStatusBarTintColor(colorId);//设置状态栏颜色
@@ -96,41 +97,28 @@ public class StatusBarUtil {
                 }
             }
         }
-
     }
 
     /**
+     * 不建议在低版本4.4和5.0设置白色主题，不然状态栏适配很麻烦无法做到很好看
      * 设置状态栏深色浅色切换
      */
     public static boolean setStatusBarDarkTheme(Activity activity, boolean dark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                setStatusBarFontIconDark(activity, TYPE_M, dark);
+                setCommonUI(activity, dark);
             } else if (OSUtils.isMiui()) {
-                setStatusBarFontIconDark(activity, TYPE_MIUI, dark);
+                setMiuiUI(activity, dark);
             } else if (OSUtils.isFlyme()) {
-                setStatusBarFontIconDark(activity, TYPE_FLYME, dark);
+                setFlymeUI(activity, dark);
+            } else if (OSUtils.isOppo()) {
+                setOppoUI(activity, dark);
             } else {//其他情况
                 return false;
             }
             return true;
         }
         return false;
-    }
-
-    /**
-     * 设置 状态栏深色浅色切换
-     */
-    private static boolean setStatusBarFontIconDark(Activity activity, @ViewType int type, boolean dark) {
-        switch (type) {
-            case TYPE_MIUI:
-                return setMiuiUI(activity, dark);
-            case TYPE_FLYME:
-                return setFlymeUI(activity, dark);
-            case TYPE_M:
-            default:
-                return setCommonUI(activity, dark);
-        }
     }
 
     //设置6.0 状态栏深色浅色切换
@@ -154,6 +142,13 @@ public class StatusBarUtil {
 
     }
 
+    /**
+     * http://open-wiki.flyme.cn/doc-wiki/index#id?79
+     *
+     * @param activity
+     * @param dark
+     * @return
+     */
     //设置Flyme 状态栏深色浅色切换
     private static boolean setFlymeUI(Activity activity, boolean dark) {
         try {
@@ -179,15 +174,23 @@ public class StatusBarUtil {
         }
     }
 
+    /**
+     * https://dev.mi.com/console/doc/detail?pId=1159
+     *
+     * @param activity
+     * @param dark
+     * @return
+     */
     //设置MIUI 状态栏深色浅色切换
     private static boolean setMiuiUI(Activity activity, boolean dark) {
         try {
             Window window = activity.getWindow();
             Class<?> clazz = activity.getWindow().getClass();
-            @SuppressLint("PrivateApi") Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+            @SuppressLint("PrivateApi")
+            Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
             Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
             int darkModeFlag = field.getInt(layoutParams);
-            Method extraFlagField = clazz.getDeclaredMethod("setExtraFlags", int.class, int.class);
+            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
             extraFlagField.setAccessible(true);
             if (dark) {    //状态栏亮色且黑色字体
                 extraFlagField.invoke(window, darkModeFlag, darkModeFlag);
@@ -199,6 +202,38 @@ public class StatusBarUtil {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+    private static final int SYSTEM_UI_FLAG_OP_STATUS_BAR_TINT = 0x00000010;
+
+    /**
+     * https://open.oppomobile.com/wiki/doc#id=10161
+     * 注：对Android 4.4及以前的版本的机型不支持状态栏反色。
+     *
+     * @param activity
+     * @param dark
+     * @return
+     */
+    private static boolean setOppoUI(Activity activity, boolean dark) {
+        Window window = activity.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        int vis = window.getDecorView().getSystemUiVisibility();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (dark) {
+                vis |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            } else {
+                vis &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (dark) {
+                vis |= SYSTEM_UI_FLAG_OP_STATUS_BAR_TINT;
+            } else {
+                vis &= ~SYSTEM_UI_FLAG_OP_STATUS_BAR_TINT;
+            }
+        }
+        window.getDecorView().setSystemUiVisibility(vis);
+        return true;
     }
 
     //获取状态栏高度

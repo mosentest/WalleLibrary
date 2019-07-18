@@ -71,6 +71,20 @@ android {
         }
     }
 
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        pickFirst 'lib/armeabi-v7a/libsecsdk.so'
+        exclude "lib/armeabi-v7a/libRSSupport.so"
+        exclude "lib/arm64-v8a/librsjni.so"
+        exclude "lib/arm64-v8a/libRSSupport.so"
+        exclude "lib/x86_64/libRSSupport.so"
+        exclude "lib/x86/librsjni.so"
+        exclude "lib/x86_64/librsjni.so"
+        exclude "lib/armeabi-v7a/librsjni.so"
+        exclude "lib/x86/libRSSupport.so"
+    }
 }
 
 //kapt {
@@ -84,17 +98,16 @@ dependencies {
     def paging_version = "1.0.0"
     def lifecycle_version = "1.1.1"
 
-
     //Paging的依赖
-    implementation "android.arch.paging:runtime:$paging_version"
+//    implementation "android.arch.paging:runtime:$paging_version"
     //Paging对RxJava2的原生支持
-    implementation "android.arch.paging:rxjava2:1.0.0-rc1"
+//    implementation "android.arch.paging:rxjava2:1.0.0-rc1"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 //    kapt "com.android.databinding:compiler:3.1.0"
 
-    implementation (rootProject.ext.dependencies.appCompat){
+    implementation(rootProject.ext.dependencies.appCompat) {
         force true
     }
     implementation rootProject.ext.dependencies.design
@@ -103,7 +116,10 @@ dependencies {
     implementation rootProject.ext.dependencies.flexbox
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-//    implementation 'com.android.support:support-v4:27.1.1'
+
+//    implementation 'com.android.support:multidex:1.0.2'
+//    implementation 'com.android.support:multidex-instrumentation:1.0.2'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -111,4 +127,22 @@ dependencies {
     implementation project(':library_ui')
     implementation project(':library_compat')
     implementation project(path: ':library_framework19')
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+}
+
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.contains("multidex")) {
+                println(requested.name)
+                details.useVersion rootProject.ext.android.compat_version
+            }
+        }
+    }
 }

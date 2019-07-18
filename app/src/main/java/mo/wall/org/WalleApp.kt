@@ -1,7 +1,10 @@
 package mo.wall.org
 
 import android.app.Application
+import android.content.Context
+import android.support.multidex.MultiDex
 import android.widget.Toast
+import com.squareup.leakcanary.LeakCanary
 import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper
 import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
 import org.wall.mo.utils.autolayout.AutoDensity
@@ -19,6 +22,14 @@ class WalleApp : Application() {
     override fun onCreate() {
         super.onCreate()
         ctx = this;
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
         helper = AppFrontBackHelper();
         helper?.register(this, object : OnAppStatusListener {
             override fun onFront() {
@@ -30,6 +41,11 @@ class WalleApp : Application() {
             }
         })
         AutoDensity.initApplication(2f, 750f, 1334f, 4.7f)
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(base)
     }
 
     /**

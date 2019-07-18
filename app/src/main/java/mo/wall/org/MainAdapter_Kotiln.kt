@@ -33,7 +33,7 @@ class MainAdapter_Kotiln : RecyclerView.Adapter<MainAdapter_Kotiln.Holder> {
         this.context = context
     }
 
-    public class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    public class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
 
