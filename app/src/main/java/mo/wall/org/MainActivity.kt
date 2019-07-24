@@ -16,6 +16,7 @@ import mo.wall.org.devicemanager.DeviceManagerActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
 import mo.wall.org.nodisplay.NoDisplayActivity
 import mo.wall.org.ntp.NtpActivity
+import mo.wall.org.scroll.ScrollActivity
 import mo.wall.org.statusbar.StatusbarActivity
 import mo.wall.org.statusbar2.Statusbar2Activity
 import org.wall.mo.base.StartActivityCompat
@@ -85,6 +86,9 @@ class MainActivity : AppCompatActivity() {
         lists?.add(createEntity("透明、有自定义标题的情况", "状态栏2", 1, Statusbar2Activity().javaClass.name))
 
         lists?.add(createEntity("比透明主题更高级的一种选择", "不展示activity", 1, NoDisplayActivity().javaClass.name))
+
+
+        lists?.add(createEntity("关于Android实现View滑动的9种方式姿势", "View滑动", 1, ScrollActivity().javaClass.name))
 
 
         adapter!!.setItems(lists)

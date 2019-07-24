@@ -91,4 +91,7 @@ dependencies {
 
     //从底部往上滑的对话框 https://github.com/orhanobut/dialogpl  us
     implementation 'com.orhanobut:dialogplus:1.11@aar'
+
+
+    //https://github.com/JavaNoober/AutoSave A framework can automatically generate OnSaveInstanceState code
 }
