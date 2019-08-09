@@ -22,12 +22,13 @@ class CirclePercentActivity : BaseAppCompatActivity() {
 
         mCpv.setTotalNum(12)
         mCpv.setCirclePercentDatas(Arrays.asList(
-                CirclePercentView.createCirclePercentData(1, "1", resources.getColor(R.color.google_red)),
-                CirclePercentView.createCirclePercentData(2,  "1", resources.getColor(R.color.google_green)),
-                CirclePercentView.createCirclePercentData(3,  "1", resources.getColor(R.color.google_yellow)),
-                CirclePercentView.createCirclePercentData(3,  "1", resources.getColor(R.color.google_blue)),
-                CirclePercentView.createCirclePercentData(2,  "1", resources.getColor(R.color.colorAccent)),
-                CirclePercentView.createCirclePercentData(1,  "1", resources.getColor(R.color.colorPrimaryDark))))
+                CirclePercentView.createCirclePercentData(1, "11", resources.getColor(R.color.google_red)),
+                CirclePercentView.createCirclePercentData(2,  "22", resources.getColor(R.color.google_green)),
+                CirclePercentView.createCirclePercentData(3,  "33", resources.getColor(R.color.google_yellow)),
+                CirclePercentView.createCirclePercentData(3,  "44", resources.getColor(R.color.google_blue)),
+                CirclePercentView.createCirclePercentData(2,  "55", resources.getColor(R.color.colorAccent)),
+                CirclePercentView.createCirclePercentData(1,  "66", resources.getColor(R.color.colorPrimaryDark))))
+        mCpv.start()
     }
 
 

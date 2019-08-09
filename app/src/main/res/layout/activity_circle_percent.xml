@@ -7,9 +7,10 @@
     tools:context=".circlepercent.CirclePercentActivity">
 
 
+    <!--
+        android:background="@android:color/darker_gray"-->
     <mo.wall.org.circlepercent.CirclePercentView
         android:id="@+id/cpv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_300"
-        android:background="@android:color/darker_gray" />
+        android:layout_height="@dimen/dp_300" />
 </LinearLayout>
