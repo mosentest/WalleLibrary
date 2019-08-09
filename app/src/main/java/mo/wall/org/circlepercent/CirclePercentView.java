@@ -56,10 +56,14 @@ public class CirclePercentView extends View {
     private int startX;
 
 
-    private ValueAnimator valueAnimator = null;
+    private ValueAnimator circlePercentAnimator = null;
+    private ValueAnimator circlePercentPointAnimator = null;
+    private ValueAnimator circlePercentLineAnimator = null;
 
     //当前位置
-    private int pos;
+    private int circlePercentPos;
+    private int circlePercentPointPos;
+    private int circlePercentLinePos;
 
     public CirclePercentView(Context context) {
         super(context);
@@ -93,13 +97,13 @@ public class CirclePercentView extends View {
         }
         circlePaint.setStyle(Paint.Style.STROKE);
         circlePaint.setAntiAlias(true);
-        circlePaint.setStrokeWidth(100);
+        circlePaint.setStrokeWidth(dip2px(getContext(), 50));
 
         if (pointPaint == null) {
             pointPaint = new Paint();
         }
         pointPaint.setColor(getResources().getColor(R.color.mask_color));
-        pointPaint.setStrokeWidth(30);
+        pointPaint.setStrokeWidth(dip2px(getContext(), 2));
         pointPaint.setStyle(Paint.Style.STROKE);
         pointPaint.setAntiAlias(true);
 
@@ -107,7 +111,7 @@ public class CirclePercentView extends View {
             linePaint = new Paint();
         }
         linePaint.setColor(getResources().getColor(R.color.mask_color));
-        linePaint.setStrokeWidth(8);
+        linePaint.setStrokeWidth(dip2px(getContext(), 1));
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setAntiAlias(true);
 
@@ -115,31 +119,66 @@ public class CirclePercentView extends View {
             textPaint = new Paint();
         }
         textPaint.setColor(getResources().getColor(R.color.mask_color));
-        textPaint.setTextSize(35);
-        textPaint.setStrokeWidth(2);
+        textPaint.setTextSize(sp2px(getContext(), 18));
+        textPaint.setStrokeWidth(dip2px(getContext(), 2));
     }
 
-
-    //改为作为成员变量
-    float startAngle = -30;
-    float preAngle = -30;
-    float preV = 0f;
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawCirclePercent(canvas);
+        drawCirclePercentPoint(canvas);
+        drawCirclePercentLine(canvas);
+    }
+
+    /**
+     * 绘制圆的占比
+     *
+     * @param canvas
+     */
+    private void drawCirclePercent(Canvas canvas) {
+        //改为作为成员变量
+        float startAngle = -30;
+        //遍历画占比
+        for (int i = 0; i < circlePercentPos; i++) {
+//        int i = pos;
+            CirclePercentData circlePercentData = circlePercentDatas.get(i);
+            float v = circlePercentData.num / totalNum * 360;
+
+            circlePaint.setColor(circlePercentData.resIdColor);
+            //画弧度
+            canvas.drawArc(oval,
+                    startAngle,
+                    v,
+                    false,
+                    circlePaint);
+
+            //当前位置和
+            startAngle = startAngle + v;
+        }
+    }
+
+
+    /**
+     * 这是画点
+     *
+     * @param canvas
+     */
+    private void drawCirclePercentPoint(Canvas canvas) {
+        //改为作为成员变量
+        float startAngle = -30;
+        float preAngle = -30;
+        float preV = 0f;
 
         int centerX = getWidth() / 2;
 
         int centerY = getHeight() / 2;
 
-        //画圆心
-//        canvas.drawCircle(centerX, centerY, 1, pointPaint);
-
-        float radius = (getWidth() - startX) / 2 - 80;
+        float radius = (getWidth() - startX) / 2 - dip2px(getContext(), 20);
 
         //遍历画占比
-        for (int i = 0; i < circlePercentDatas.size(); i++) {
+        for (int i = 0; i < circlePercentPointPos; i++) {
 //        int i = pos;
             CirclePercentData circlePercentData = circlePercentDatas.get(i);
             float v = circlePercentData.num / totalNum * 360;
@@ -150,14 +189,6 @@ public class CirclePercentView extends View {
             }
             //获取前一个位置和
             preAngle = preAngle + preV;
-
-            circlePaint.setColor(circlePercentData.resIdColor);
-            //画弧度
-            canvas.drawArc(oval,
-                    startAngle,
-                    v,
-                    false,
-                    circlePaint);
 
             //当前位置和
             startAngle = startAngle + v;
@@ -178,7 +209,56 @@ public class CirclePercentView extends View {
             //设置颜色
             pointPaint.setColor(circlePercentData.resIdColor);
             //画出点的位置
-            canvas.drawCircle(x, y, 1, pointPaint);
+            canvas.drawCircle(x, y, dip2px(getContext(), 1), pointPaint);
+        }
+    }
+
+    /**
+     * 最后画线跟文字
+     *
+     * @param canvas
+     */
+    private void drawCirclePercentLine(Canvas canvas) {
+        //改为作为成员变量
+        float startAngle = -30;
+        float preAngle = -30;
+        float preV = 0f;
+
+        int centerX = getWidth() / 2;
+
+        int centerY = getHeight() / 2;
+
+        float radius = (getWidth() - startX) / 2 - dip2px(getContext(), 20);
+
+        //遍历画占比
+        for (int i = 0; i < circlePercentLinePos; i++) {
+//        int i = pos;
+            CirclePercentData circlePercentData = circlePercentDatas.get(i);
+            float v = circlePercentData.num / totalNum * 360;
+            //获取前一个
+            if (i > 0) {
+                CirclePercentData preCirclePercentData = circlePercentDatas.get(i - 1);
+                preV = preCirclePercentData.num / totalNum * 360;
+            }
+            //获取前一个位置和
+            preAngle = preAngle + preV;
+
+            //当前位置和
+            startAngle = startAngle + v;
+
+            //获取弧度中心位置
+            float halfAngle = (startAngle - preAngle) / 2 + preAngle;
+
+            Log.i(TAG, "onDraw.preAngle>>" + preAngle + ",startAngle>>" + startAngle + ",halfAngle>>" + halfAngle);
+
+            //https://www.jianshu.com/p/754b356239c1
+            //https://blog.csdn.net/liaoyi_/article/details/61914388
+            // 弧度＝度×π/180
+            //Math.toRadians()
+            float x = centerX + (float) (Math.cos(halfAngle * Math.PI / 180) * radius);
+            float y = centerY + (float) (Math.sin(halfAngle * Math.PI / 180) * radius);
+
+            Log.i(TAG, "onDraw.x>>" + x + ",y>>" + y);
 
             //下面是画线的处理
             //设置颜色
@@ -187,22 +267,86 @@ public class CirclePercentView extends View {
             Path path = new Path();
             path.moveTo(x, y);
             if (x > centerX) {
+
                 //右边画线
-                path.lineTo(x + 200, y);
-                //设置文字
-                canvas.drawText(df.format(circlePercentData.num / totalNum), x + 160, y - 20, textPaint);
-                canvas.drawText(circlePercentData.name, x + 160, y + 40, textPaint);
+                if (y > centerY) {
+                    //设置一个倾向角度
+                    path.lineTo(x + dip2px(getContext(), 10), y + dip2px(getContext(), 10));
+                    path.lineTo(x + dip2px(getContext(), 80), y + dip2px(getContext(), 10));
+
+                    //设置文字
+                    canvas.drawText(
+                            df.format(circlePercentData.num / totalNum),
+                            x + dip2px(getContext(), 50),
+                            y,
+                            textPaint);
+                    canvas.drawText(
+                            circlePercentData.name,
+                            x + dip2px(getContext(), 50),
+                            y + dip2px(getContext(), 30),
+                            textPaint);
+
+                } else {
+                    //设置一个倾向角度
+                    path.lineTo(x + dip2px(getContext(), 10), y - dip2px(getContext(), 10));
+                    path.lineTo(x + dip2px(getContext(), 80), y - dip2px(getContext(), 10));
+
+                    //设置文字
+                    canvas.drawText(
+                            df.format(circlePercentData.num / totalNum),
+                            x + dip2px(getContext(), 50),
+                            y - dip2px(getContext(), 20),
+                            textPaint);
+                    canvas.drawText(
+                            circlePercentData.name,
+                            x + dip2px(getContext(), 50),
+                            y + dip2px(getContext(), 10),
+                            textPaint);
+                }
+
             } else {
                 //左边画线
-                path.lineTo(x - 200, y);
-                //设置文字
+                if (y > centerY) {
+                    path.lineTo(x - dip2px(getContext(), 10), y + dip2px(getContext(), 10));
+                    path.lineTo(x - dip2px(getContext(), 80), y + dip2px(getContext(), 10));
 
-                canvas.drawText(df.format(circlePercentData.num / totalNum), x - 200, y - 20, textPaint);
-                canvas.drawText(circlePercentData.name, x - 200, y + 40, textPaint);
+
+                    //设置文字
+                    //百分比
+                    canvas.drawText(
+                            df.format(circlePercentData.num / totalNum),
+                            x - dip2px(getContext(), 80),
+                            y,
+                            textPaint);
+                    //标题
+                    canvas.drawText(
+                            circlePercentData.name,
+                            x - dip2px(getContext(), 80),
+                            y + dip2px(getContext(), 30),
+                            textPaint);
+
+                } else {
+                    path.lineTo(x - dip2px(getContext(), 10), y - dip2px(getContext(), 10));
+                    path.lineTo(x - dip2px(getContext(), 80), y - dip2px(getContext(), 10));
+
+                    //设置文字
+                    //百分比
+                    canvas.drawText(
+                            df.format(circlePercentData.num / totalNum),
+                            x - dip2px(getContext(), 80),
+                            y - dip2px(getContext(), 20),
+                            textPaint);
+                    //标题
+                    canvas.drawText(
+                            circlePercentData.name,
+                            x - dip2px(getContext(), 80),
+                            y + dip2px(getContext(), 10),
+                            textPaint);
+                }
+
             }
             canvas.drawPath(path, linePaint);
         }
-
     }
 
     public void setTotalNum(int totalNum) {
@@ -214,28 +358,56 @@ public class CirclePercentView extends View {
     }
 
     public void start() {
-        if (valueAnimator != null) {
-            valueAnimator.cancel();
-            valueAnimator = null;
+        if (circlePercentAnimator != null) {
+            circlePercentAnimator.cancel();
+            circlePercentAnimator = null;
         }
-        //重置位置
-        startAngle = -30;
-        preAngle = -30;
-        preV = 0f;
+        if (circlePercentPointAnimator != null) {
+            circlePercentPointAnimator.cancel();
+            circlePercentPointAnimator = null;
+        }
+        if (circlePercentLineAnimator != null) {
+            circlePercentLineAnimator.cancel();
+            circlePercentLineAnimator = null;
+        }
         if (circlePercentDatas.isEmpty()) {
             return;
         }
-        valueAnimator = ValueAnimator.ofInt(0, circlePercentDatas.size() - 1);
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        circlePercentAnimator = ValueAnimator.ofInt(0, circlePercentDatas.size());
+        circlePercentAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 Object animatedValue = animation.getAnimatedValue();
-                pos = (int) animatedValue;
+                circlePercentPos = (int) animatedValue;
+                postInvalidate();
+                if (circlePercentPos == circlePercentDatas.size()) {
+                    circlePercentPointAnimator.start();
+                }
+            }
+        });
+        circlePercentPointAnimator = ValueAnimator.ofInt(0, circlePercentDatas.size());
+        circlePercentPointAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Object animatedValue = animation.getAnimatedValue();
+                circlePercentPointPos = (int) animatedValue;
+                postInvalidate();
+                if (circlePercentPointPos == circlePercentDatas.size()) {
+                    circlePercentLineAnimator.start();
+                }
+            }
+        });
+        circlePercentLineAnimator = ValueAnimator.ofInt(0, circlePercentDatas.size());
+        circlePercentLineAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Object animatedValue = animation.getAnimatedValue();
+                circlePercentLinePos = (int) animatedValue;
                 postInvalidate();
             }
         });
-        valueAnimator.setDuration(3000);
-        valueAnimator.start();
+        circlePercentAnimator.setDuration(circlePercentDatas.size() * 100);
+        circlePercentAnimator.start();
     }
 
     public static class CirclePercentData {
@@ -261,5 +433,19 @@ public class CirclePercentView extends View {
     public static CirclePercentData createCirclePercentData(int num, String name, int resIdColor) {
         CirclePercentData circlePercentData = new CirclePercentData(num, name, resIdColor);
         return circlePercentData;
+    }
+
+
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 }

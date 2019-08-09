@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity() {
                 0,
                 ""))
 
+        lists?.add(createEntity("圆盘占比", "画个圆", 1, CirclePercentActivity().javaClass.name))
+
         lists?.add(createEntity("根据今日头条的方法调整和整理",
                 "来自今日头条自适应方案",
                 1,
@@ -92,7 +94,6 @@ class MainActivity : AppCompatActivity() {
         lists?.add(createEntity("关于Android实现View滑动的9种方式姿势", "View滑动", 1, ScrollActivity().javaClass.name))
 
 
-        lists?.add(createEntity("圆盘占比", "画个圆", 1, CirclePercentActivity().javaClass.name))
 
 
         adapter!!.setItems(lists)
