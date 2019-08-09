@@ -59,6 +59,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".circlepercent.CirclePercentActivity"></activity>
         <activity
             android:name=".scroll.ScrollActivity"
             android:theme="@style/AppTheme.NoActionBar" />
