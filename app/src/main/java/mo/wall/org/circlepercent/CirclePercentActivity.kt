@@ -21,14 +21,15 @@ class CirclePercentActivity : BaseAppCompatActivity() {
         mCpv = findViewById<CirclePercentView>(R.id.cpv)
 
         mCpv.setTotalNum(12)
-        mCpv.setCirclePercentDatas(Arrays.asList(
-                CirclePercentView.createCirclePercentData(1, "11", resources.getColor(R.color.google_red)),
-                CirclePercentView.createCirclePercentData(2,  "22", resources.getColor(R.color.google_green)),
-                CirclePercentView.createCirclePercentData(3,  "33", resources.getColor(R.color.google_yellow)),
-                CirclePercentView.createCirclePercentData(3,  "44", resources.getColor(R.color.google_blue)),
-                CirclePercentView.createCirclePercentData(2,  "55", resources.getColor(R.color.colorAccent)),
-                CirclePercentView.createCirclePercentData(1,  "66", resources.getColor(R.color.colorPrimaryDark))))
-        mCpv.start()
+                .setCirclePercentDatas(
+                        Arrays.asList(
+                                CirclePercentView.createCirclePercentData(1, "我是红色人", resources.getColor(R.color.google_red)),
+                                CirclePercentView.createCirclePercentData(2, "我是绿色人", resources.getColor(R.color.google_green)),
+                                CirclePercentView.createCirclePercentData(3, "我是黄色人", resources.getColor(R.color.google_yellow)),
+                                CirclePercentView.createCirclePercentData(3, "我是蓝色人", resources.getColor(R.color.google_blue)),
+                                CirclePercentView.createCirclePercentData(2, "我不知道自己干嘛", resources.getColor(R.color.colorAccent)),
+                                CirclePercentView.createCirclePercentData(1, "我好像是什么颜色", resources.getColor(R.color.colorPrimaryDark))))
+                .start()
     }
 
 
