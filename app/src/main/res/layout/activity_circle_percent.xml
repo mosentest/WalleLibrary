@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".circlepercent.CirclePercentActivity">
 
 
@@ -11,6 +12,12 @@
         android:background="@android:color/darker_gray"-->
     <mo.wall.org.circlepercent.CirclePercentView
         android:id="@+id/cpv"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_300" />
+
+    <mo.wall.org.circlepercent.ColumnarView
+        android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_300" />
 </LinearLayout>

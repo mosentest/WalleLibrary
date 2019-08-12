@@ -14,6 +14,7 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -62,7 +63,7 @@ public class CirclePercentView extends View {
     private int startX;
 
 
-    private ValueAnimator circlePercentAnimator = null;
+    //    private ValueAnimator circlePercentAnimator = null;
     private ValueAnimator circlePercentPointAnimator = null;
     private ValueAnimator circlePercentLineAnimator = null;
 
@@ -70,6 +71,8 @@ public class CirclePercentView extends View {
     private int circlePercentPos;
     private int circlePercentPointPos;
     private int circlePercentLinePos;
+
+    private int[] currentProgress;
 
     public CirclePercentView(Context context) {
         super(context);
@@ -136,7 +139,6 @@ public class CirclePercentView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas.drawRect(rectF, pointPaint);
         drawCirclePercent(canvas);
         drawCirclePercentPoint(canvas);
         drawCirclePercentLine(canvas);
@@ -148,25 +150,36 @@ public class CirclePercentView extends View {
      * @param canvas
      */
     private void drawCirclePercent(Canvas canvas) {
+//        if (circlePercentPos == circlePercentDatas.size() - 1) {
+//            return;
+//        }
         //改为作为成员变量
         float startAngle = -30;
         //遍历画占比
-        for (int i = 0; i < circlePercentPos; i++) {
+        for (int i = 0; i < circlePercentDatas.size(); i++) {
 //        int i = pos;
             CirclePercentData circlePercentData = circlePercentDatas.get(i);
-            float v = circlePercentData.num / totalNum * 360;
+            int v = (int) (circlePercentData.num / totalNum * 360);
+            //v+1为了重合在一起
+            if (currentProgress[i] < v + 1) {
+                currentProgress[i] += 5;
+                postInvalidateDelayed(10);
+            }
 
             circlePaint.setColor(circlePercentData.resIdColor);
             //画弧度
             canvas.drawArc(rectF,
                     startAngle,
-                    v,
+                    currentProgress[i],
                     false,
                     circlePaint);
 
             //当前位置和
             startAngle = startAngle + v;
+            //刷新这个位置
+            circlePercentPos = i;
         }
+
     }
 
 
@@ -487,6 +500,8 @@ public class CirclePercentView extends View {
 
     public CirclePercentView setCirclePercentDatas(List<CirclePercentData> circlePercentDatas) {
         this.circlePercentDatas = circlePercentDatas;
+        int size = circlePercentDatas.size();
+        currentProgress = new int[size];
         return this;
     }
 
@@ -495,46 +510,33 @@ public class CirclePercentView extends View {
         if (circlePercentDatas.isEmpty()) {
             return;
         }
-        circlePercentAnimator = ValueAnimator.ofInt(0, circlePercentDatas.size());
-        circlePercentAnimator.setDuration(circlePercentDatas.size() * 100);
-        circlePercentAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                Object animatedValue = animation.getAnimatedValue();
-                circlePercentPos = (int) animatedValue;
-                postInvalidate();
-                if (circlePercentPos == circlePercentDatas.size()) {
-                    circlePercentPointAnimator.start();
-                }
-            }
-        });
-
-        circlePercentPointAnimator = ValueAnimator.ofInt(0, circlePercentDatas.size());
-        circlePercentPointAnimator.setDuration(circlePercentDatas.size() * 100);
+        final int size = circlePercentDatas.size();
+        postInvalidate();
+        circlePercentPointAnimator = ValueAnimator.ofInt(0, size);
+        circlePercentPointAnimator.setDuration(size * 100);
+        circlePercentPointAnimator.setInterpolator(new LinearInterpolator());
         circlePercentPointAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                Object animatedValue = animation.getAnimatedValue();
-                circlePercentPointPos = (int) animatedValue;
+                circlePercentPointPos = (int) animation.getAnimatedValue();
                 postInvalidate();
-                if (circlePercentPointPos == circlePercentDatas.size()) {
+                if (circlePercentPointPos == size) {
                     circlePercentLineAnimator.start();
                 }
             }
         });
+        circlePercentPointAnimator.start();
 
-        circlePercentLineAnimator = ValueAnimator.ofInt(0, circlePercentDatas.size());
-        circlePercentLineAnimator.setDuration(circlePercentDatas.size() * 100);
+        circlePercentLineAnimator = ValueAnimator.ofInt(0, size);
+        circlePercentLineAnimator.setDuration(size * 100);
+        circlePercentLineAnimator.setInterpolator(new LinearInterpolator());
         circlePercentLineAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                Object animatedValue = animation.getAnimatedValue();
-                circlePercentLinePos = (int) animatedValue;
+                circlePercentLinePos = (int) animation.getAnimatedValue();
                 postInvalidate();
             }
         });
-
-        circlePercentAnimator.start();
     }
 
     public void onDestroy() {
@@ -556,10 +558,10 @@ public class CirclePercentView extends View {
     }
 
     public void cancel() {
-        if (circlePercentAnimator != null) {
-            circlePercentAnimator.cancel();
-            circlePercentAnimator = null;
-        }
+//        if (circlePercentAnimator != null) {
+//            circlePercentAnimator.cancel();
+//            circlePercentAnimator = null;
+//        }
         if (circlePercentPointAnimator != null) {
             circlePercentPointAnimator.cancel();
             circlePercentPointAnimator = null;
