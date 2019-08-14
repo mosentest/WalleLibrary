@@ -16,7 +16,7 @@ import android.view.ViewGroup;
  * Date: 2019/8/12 4:06 PM
  * Description: ${DESCRIPTION}
  * History:
- * 参考学习资料
+ * 参考学习资料 这个仅仅实现接口，用于下次复制
  * https://www.cnblogs.com/wjtaigwh/p/6398562.html
  *
  * <author> <time> <version> <desc>
@@ -135,10 +135,10 @@ public class NestedScrollingParentViewGroup extends ViewGroup implements NestedS
     /**
      * 停止嵌套滚动
      *
-     * @param axes
+     * @param type
      */
     @Override
-    public void stopNestedScroll(int axes) {
+    public void stopNestedScroll(int type) {
 
     }
 
