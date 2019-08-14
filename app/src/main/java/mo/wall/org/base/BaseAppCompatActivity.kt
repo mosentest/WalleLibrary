@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import mo.wall.org.R
+import org.wall.mo.compat.statusbar.StatusBarUtil
 
 /**
  * 作者 create by moziqi on 2018/7/6
@@ -24,6 +26,10 @@ open abstract class BaseAppCompatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        StatusBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark))
+//        StatusBarUtil.setStatusBarDarkTheme(this, false)
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeButtonEnabled(true)
         val titleExtra = intent.getStringExtra("title")

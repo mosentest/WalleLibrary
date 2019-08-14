@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,12 +16,14 @@ import mo.wall.org.circlepercent.CirclePercentActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
+import mo.wall.org.nestedscrolling.NestedScrollingActivity
 import mo.wall.org.nodisplay.NoDisplayActivity
 import mo.wall.org.ntp.NtpActivity
 import mo.wall.org.scroll.ScrollActivity
 import mo.wall.org.statusbar.StatusbarActivity
 import mo.wall.org.statusbar2.Statusbar2Activity
 import org.wall.mo.base.StartActivityCompat
+import org.wall.mo.compat.statusbar.StatusBarUtil
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +42,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        StatusBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark))
+        StatusBarUtil.setStatusBarDarkTheme(this, false)
+
 
         rvMain = findViewById(R.id.rv_main)
         rvMain!!.layoutManager = LinearLayoutManager(this);
@@ -74,6 +81,8 @@ class MainActivity : AppCompatActivity() {
                 ""))
 
         lists?.add(createEntity("圆盘占比", "画个圆", 1, CirclePercentActivity().javaClass.name))
+
+        lists?.add(createEntity("NestedScroll学习", "NestedScroll", 1, NestedScrollingActivity().javaClass.name))
 
         lists?.add(createEntity("根据今日头条的方法调整和整理",
                 "来自今日头条自适应方案",
