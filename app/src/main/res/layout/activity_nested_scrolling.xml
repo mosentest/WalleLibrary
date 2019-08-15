@@ -6,71 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".nestedscrolling.NestedScrollingActivity">
 
-
-    <mo.wall.org.nestedscrolling.MyNestedScrollChild
+    <mo.wall.org.nestedscrolling.MyNestedScrollParent
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+
+        <ImageView
+            android:id="@+id/iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1\n2\n3\n4\n5\n6" />
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="21\n32\n43\n54\n65\n76" />
+            android:text="g滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚广告" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="11\n22\n33\n44\n55\n66" />
+        <mo.wall.org.nestedscrolling.MyNestedScrollChild
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="111\n222\n333\n444\n555\n666" />
+            <TextView
+                android:id="@+id/tvAAA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1\n2\n3\n4\n5\n6" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="221\n332\n443\n554\n665\n776" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21\n32\n43\n54\n65\n76" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="131\n232\n333\n434\n535\n636" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11\n22\n33\n44\n55\n66" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1161\n2262\n3363\n4464\n5565\n6666" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="111\n222\n333\n444\n555\n666" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2291\n3392\n4493\n5594\n6695\n7796" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="221\n332\n443\n554\n665\n776" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1391\n2392\n3393\n4394\n5395\n6396" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="131\n232\n333\n434\n535\n636" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1161\n2262\n3363\n4464\n5565\n6666" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2291\n3392\n4493\n5594\n6695\n7796" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1391\n2392\n3393\n4394\n5395\n6396" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1231231\n1231231232\n123123123\n1231234\n123123125\n123123126" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1231231\n1231231232\n123123123\n1231234\n123123125\n123123126" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="21\n32\n43\n54\n65\n76" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21\n32\n43\n54\n65\n76" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="11\n22\n33\n44\n55\n66" />
-    </mo.wall.org.nestedscrolling.MyNestedScrollChild>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11\n22\n33\n44\n55\n66" />
+        </mo.wall.org.nestedscrolling.MyNestedScrollChild>
+    </mo.wall.org.nestedscrolling.MyNestedScrollParent>
+
+
 </LinearLayout>
