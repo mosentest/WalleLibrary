@@ -19,6 +19,8 @@ import android.view.ViewGroup;
  * 参考学习资料 这个仅仅实现接口，用于下次复制
  * https://www.cnblogs.com/wjtaigwh/p/6398562.html
  *
+ * https://github.com/543441727/MyNestedScrolling
+ *
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
