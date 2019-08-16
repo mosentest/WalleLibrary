@@ -64,7 +64,7 @@ public class MyNestedScrollChild extends LinearLayout implements NestedScrolling
 
         //第二次测量，对高度没有任何限制，那么测量出来的就是完全展示内容所需要的高度
 //        heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(showHeight, MeasureSpec.UNSPECIFIED);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
