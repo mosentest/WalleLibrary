@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.log.WLog;
 
@@ -51,7 +52,9 @@ public abstract class AbsV4Fragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        WLog.i(TAG, getName() + ".onAttach mContext is " + (context != null ? context.getClass().getSimpleName() : "--"));
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onAttach mContext is " + (context != null ? context.getClass().getSimpleName() : "--"));
+        }
         this.mContext = context;
         if (context instanceof IAttachActivity) {
             iAttachActivity = (IAttachActivity) context;
@@ -65,14 +68,18 @@ public abstract class AbsV4Fragment extends Fragment {
     @Override
     public void onAttachFragment(Fragment childFragment) {
         super.onAttachFragment(childFragment);
-        WLog.i(TAG, getName() + ".onAttachFragment");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onAttachFragment");
+        }
     }
 
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        WLog.i(TAG, getName() + ".setUserVisibleHint isVisibleToUser is" + isVisibleToUser);
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".setUserVisibleHint isVisibleToUser is" + isVisibleToUser);
+        }
 //        LogUtils.i(TAG,getName() + "  isResumed() " + isResumed());
 //        LogUtils.i(TAG,getName() + "  isAdded() " + isAdded());
 //        LogUtils.i(TAG, getName() + "  setUserVisibleHint getParentFragment != null  " + (getParentFragment() != null));
@@ -81,13 +88,17 @@ public abstract class AbsV4Fragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        WLog.i(TAG, getName() + ".onHiddenChanged hidden is " + hidden);
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onHiddenChanged hidden is " + hidden);
+        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WLog.i(TAG, getName() + ".onCreate");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onCreate");
+        }
         /**
          * 保持Fragment
          */
@@ -97,9 +108,11 @@ public abstract class AbsV4Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        WLog.i(TAG, getName() + ".onCreateView savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onCreateView savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        }
         int layoutId = getLayoutId();
-        if (layoutId > 0) {
+        if (layoutId != -1) {
             if (rootView == null) {
                 rootView = inflater.inflate(layoutId, container, false);
             }
@@ -128,14 +141,18 @@ public abstract class AbsV4Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        WLog.i(TAG, getName() + ".onViewCreated savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onViewCreated savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        }
     }
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        WLog.i(TAG, getName() + ".onActivityCreated savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onActivityCreated savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        }
         initData();
         initClick();
     }
@@ -143,43 +160,57 @@ public abstract class AbsV4Fragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        WLog.i(TAG, getName() + ".onStart");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onStart");
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        WLog.i(TAG, getName() + ".onResume");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onResume");
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        WLog.i(TAG, getName() + ".onPause");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onPause");
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        WLog.i(TAG, getName() + ".onPause");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onPause");
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        WLog.i(TAG, getName() + ".onDestroyView");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onDestroyView");
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        WLog.i(TAG, getName() + ".onDestroy");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onDestroy");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        WLog.i(TAG, getName() + ".onDetach");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onDetach");
+        }
         mContext = null;
         iAttachActivity = null;
     }
@@ -188,39 +219,51 @@ public abstract class AbsV4Fragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        WLog.i(TAG, getName() + ".onSaveInstanceState outState is " + StringUtils.isNULL(outState));
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onSaveInstanceState outState is " + StringUtils.isNULL(outState));
+        }
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        WLog.i(TAG, getName() + ".onViewStateRestored savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onViewStateRestored savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        }
     }
 
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        WLog.i(TAG, getName() + ".onConfigurationChanged");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onConfigurationChanged");
+        }
     }
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        WLog.i(TAG, getName() + ".onRequestPermissionsResult");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onRequestPermissionsResult");
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        WLog.i(TAG, getName() + ".onActivityResult");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onActivityResult");
+        }
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        WLog.i(TAG, getName() + ".onLowMemory");
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onLowMemory");
+        }
     }
 
     /**

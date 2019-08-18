@@ -1,4 +1,4 @@
-package org.wall.mo.utils.textview;
+package org.wall.mo.widgets.textview;
 
 import android.graphics.Color;
 import android.graphics.Paint;

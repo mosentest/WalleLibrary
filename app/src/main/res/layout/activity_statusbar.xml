@@ -9,7 +9,7 @@
     tools:context=".statusbar.StatusbarActivity">
 
 
-    <include layout="@layout/view_topbar" />
+    <include layout="@layout/w_view_topbar" />
 
     <FrameLayout
         android:id="@+id/fragment_container"

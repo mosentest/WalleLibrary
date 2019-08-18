@@ -10,12 +10,12 @@
 
     <org.wall.mo.compat.statusbar.view.StatusBarHeightRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200"
+        android:layout_height="@dimen/w_dp_200"
         android:background="@color/colorAccent">
 
     </org.wall.mo.compat.statusbar.view.StatusBarHeightRelativeLayout>
 
-    <include layout="@layout/view_topbar" />
+    <include layout="@layout/w_view_topbar" />
 
     <FrameLayout
         android:id="@+id/fragment_container"

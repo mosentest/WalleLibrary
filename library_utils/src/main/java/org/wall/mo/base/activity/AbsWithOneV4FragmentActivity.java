@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import org.wall.mo.base.StartActivityCompat;
 import org.wall.mo.base.fragment.IFragmentInterceptAct;
+import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.log.WLog;
 
 /**
@@ -44,7 +45,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
                 fragment = createFragment();
             }
             int containerViewId = getContainerViewId();
-            if (fragment == null || containerViewId <= 0) {
+            if (fragment == null || containerViewId == -1) {
                 return;
             }
             FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -64,7 +65,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
         }
         //设置返回键
         int topBarBackViewId = getTopBarBackViewId();
-        if (topBarBackViewId > 0) {
+        if (topBarBackViewId != -1) {
             findViewById(topBarBackViewId).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,7 +95,9 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
         //其他参数
         if (fragment instanceof IFragmentInterceptAct
                 && ((IFragmentInterceptAct) fragment).onFragmentInterceptGetIntent(intent)) {
-            WLog.i(TAG, "Fragment getIntent");
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, "Fragment getIntent");
+            }
         } else {
             parseIntentData(intent);
         }
@@ -106,6 +109,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
     /**
      * 替换 fragment 的 container View Id
      * 默认值-1
+     *
      * @return
      */
     public abstract int getContainerViewId();
@@ -143,7 +147,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
     public void setTopBarBack(boolean show) {
         showTopBarBack = show;
         int topBarBackViewId = getTopBarBackViewId();
-        if (topBarBackViewId > 0) {
+        if (topBarBackViewId != -1) {
             findViewById(topBarBackViewId).setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
@@ -156,7 +160,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
     @Override
     public void setTopBarTitle(String title) {
         int topBarTitleViewId = getTopBarTitleViewId();
-        if (topBarTitleViewId > 0) {
+        if (topBarTitleViewId != -1) {
             View topBarTitleView = findViewById(topBarTitleViewId);
             if (topBarTitleView instanceof TextView) {
                 ((TextView) topBarTitleView).setText(title);
@@ -171,7 +175,9 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
         }
         if (fragment instanceof IFragmentInterceptAct
                 && ((IFragmentInterceptAct) fragment).onFragmentInterceptOnBackPressed()) {
-            WLog.i(TAG, "Fragment onBackPressed");
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, "Fragment onBackPressed");
+            }
         } else {
             super.onBackPressed();
         }

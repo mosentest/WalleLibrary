@@ -10,14 +10,38 @@ package org.wall.mo.base.mvp;
  * version: 1.0
  */
 public interface BaseContract {
-    public interface BasePresenter {
+
+    public interface BasePresenter<T> {
         /**
          * 放在onResume方法里面
          */
         void start();
     }
 
-    public interface BaseView {
+    public interface BaseView<T> {
 
+
+        /**
+         * 标记 来源
+         *
+         * @param flag
+         */
+        public void onRequestStart(int flag);
+
+        /**
+         * 请求成功
+         *
+         * @param flag
+         * @param t
+         */
+        public void onRequestSuccess(int flag, T t);
+
+        /**
+         * 请求失败
+         *
+         * @param flag
+         * @param msg
+         */
+        public void onRequestFail(int flag, String msg);
     }
 }

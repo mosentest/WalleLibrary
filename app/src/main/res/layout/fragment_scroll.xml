@@ -24,8 +24,8 @@
                 android:textColor="@android:color/black" />
 
             <mo.wall.org.scroll.LayoutView
-                android:layout_width="@dimen/dp_150"
-                android:layout_height="@dimen/dp_150"
+                android:layout_width="@dimen/w_dp_150"
+                android:layout_height="@dimen/w_dp_150"
                 android:background="@color/check_bg" />
         </LinearLayout>
 
@@ -43,8 +43,8 @@
                 android:textColor="@android:color/black" />
 
             <mo.wall.org.scroll.LayoutParamsView
-                android:layout_width="@dimen/dp_150"
-                android:layout_height="@dimen/dp_150"
+                android:layout_width="@dimen/w_dp_150"
+                android:layout_height="@dimen/w_dp_150"
                 android:background="@color/check_bg" />
         </LinearLayout>
     </LinearLayout>
