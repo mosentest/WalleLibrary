@@ -23,7 +23,7 @@ import org.wall.mo.utils.log.WLog;
  * * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity {
+public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity  {
 
     protected static final String TAG = AbsWithOneV4FragmentActivity.class.getSimpleName();
 
@@ -45,7 +45,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
                 fragment = createFragment();
             }
             int containerViewId = getContainerViewId();
-            if (fragment == null || containerViewId == -1) {
+            if (fragment == null || containerViewId == 0) {
                 return;
             }
             FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -65,7 +65,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
         }
         //设置返回键
         int topBarBackViewId = getTopBarBackViewId();
-        if (topBarBackViewId != -1) {
+        if (topBarBackViewId != 0) {
             findViewById(topBarBackViewId).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

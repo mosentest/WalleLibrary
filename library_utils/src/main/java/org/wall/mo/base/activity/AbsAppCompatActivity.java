@@ -3,10 +3,14 @@ package org.wall.mo.base.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import org.wall.mo.base.fragment.IAttachActivity;
 import org.wall.mo.utils.BuildConfig;
@@ -22,9 +26,11 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsAppCompatActivity extends AppCompatActivity implements IAttachActivity {
+public abstract class AbsAppCompatActivity extends AppCompatActivity implements IAttachActivity , View.OnClickListener {
 
     protected final static String TAG = AbsAppCompatActivity.class.getSimpleName();
+
+    protected Handler mHandler = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +38,18 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         }
+        //创建一个handler
+        if (mHandler == null) {
+            mHandler = new Handler(Looper.getMainLooper()) {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    handleSubMessage(msg);
+                }
+            };
+        }
         int layoutId = getLayoutId();
-        if (layoutId != -1) {
+        if (layoutId != 0) {
             setContentView(layoutId);
         }
         initView(savedInstanceState);
@@ -88,6 +104,10 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
         super.onDestroy();
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
+        }
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
         }
     }
 
@@ -176,4 +196,6 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
     public abstract void initData();
 
     public abstract void initClick();
+
+    public abstract void handleSubMessage(Message msg);
 }

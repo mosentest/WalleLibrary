@@ -22,7 +22,8 @@ import android.view.ViewGroup;
  * https://github.com/543441727/MyNestedScrolling
  *
  *
- * 下一期学习https://blog.csdn.net/lib739449500/article/details/51850276
+ * 下一期学习
+ * https://blog.csdn.net/lib739449500/article/details/51850276
  *
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述

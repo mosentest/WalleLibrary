@@ -4,6 +4,7 @@ package mo.wall.org.statusbar
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Message
 import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.view.View
@@ -21,6 +22,9 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class StatusbarFragment : InterceptActBackFragment() {
+    override fun handleSubMessage(msg: Message?) {
+
+    }
 
     override fun onFragmentFirstVisible() {
         WLog.i(TAG, "$name.onFragmentFirstVisible")

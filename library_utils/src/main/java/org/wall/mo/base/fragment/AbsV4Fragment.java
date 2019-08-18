@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,6 +36,8 @@ public abstract class AbsV4Fragment extends Fragment {
     protected IAttachActivity iAttachActivity;
 
     protected View rootView;
+
+    protected Handler mHandler = null;
 
     /**
      * 例子
@@ -99,6 +104,17 @@ public abstract class AbsV4Fragment extends Fragment {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate");
         }
+        //创建一个handler
+        if (mHandler == null) {
+            mHandler = new Handler(Looper.getMainLooper()) {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    handleSubMessage(msg);
+                }
+            };
+        }
+
         /**
          * 保持Fragment
          */
@@ -112,7 +128,7 @@ public abstract class AbsV4Fragment extends Fragment {
             WLog.i(TAG, getName() + ".onCreateView savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         }
         int layoutId = getLayoutId();
-        if (layoutId != -1) {
+        if (layoutId != 0) {
             if (rootView == null) {
                 rootView = inflater.inflate(layoutId, container, false);
             }
@@ -203,6 +219,13 @@ public abstract class AbsV4Fragment extends Fragment {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
         }
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
+        }
+        rootView = null;
+        iAttachActivity = null;
+        mContext = null;
     }
 
     @Override
@@ -211,8 +234,6 @@ public abstract class AbsV4Fragment extends Fragment {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDetach");
         }
-        mContext = null;
-        iAttachActivity = null;
     }
 
 
@@ -298,4 +319,6 @@ public abstract class AbsV4Fragment extends Fragment {
     public abstract void initData();
 
     public abstract void initClick();
+
+    public abstract void handleSubMessage(Message msg);
 }

@@ -3,8 +3,10 @@ package mo.wall.org.statusbar
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Message
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.view.View
 import mo.wall.org.R
 import mo.wall.org.service.MyService
 import org.wall.mo.base.activity.AbsWithOneV4FragmentActivity
@@ -12,6 +14,13 @@ import org.wall.mo.compat.statusbar.StatusBarCompat
 import org.wall.mo.compat.statusbar.StatusBarUtil
 
 class StatusbarActivity : AbsWithOneV4FragmentActivity() {
+    override fun onClick(v: View?) {
+        
+    }
+
+    override fun handleSubMessage(msg: Message?) {
+        
+    }
 
     override fun getContainerViewId(): Int {
         return R.id.fragment_container
