@@ -7,8 +7,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.view.NestedScrollingChild2;
 import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.ViewConfiguration;
 import android.widget.LinearLayout;
 
 /**
@@ -33,6 +35,8 @@ public class MyNestedScrollChild extends LinearLayout implements NestedScrolling
 
     private int lastY;
     private int showHeight;
+
+    private int mTouchSlop;
 
     public MyNestedScrollChild(Context context) {
         super(context);
@@ -79,6 +83,10 @@ public class MyNestedScrollChild extends LinearLayout implements NestedScrolling
             case MotionEvent.ACTION_MOVE:
                 int y = (int) (event.getRawY());
                 int dy = y - lastY;
+                float diff = Math.abs(dy);
+                if (diff < mTouchSlop) {
+                    return super.onTouchEvent(event);
+                }
                 //ACTION_DOWN调用了startNestedScroll；ACTION_MOVE中调用了dispatchNestedPreScroll
                 if (startNestedScroll(ViewCompat.SCROLL_AXIS_HORIZONTAL, ViewCompat.TYPE_TOUCH)
                         && dispatchNestedPreScroll(0, dy, consumed, offset, ViewCompat.TYPE_TOUCH)) {
@@ -112,6 +120,10 @@ public class MyNestedScrollChild extends LinearLayout implements NestedScrolling
     private void init() {
         mNestedScrollingChildHelper = new NestedScrollingChildHelper(this);
         mNestedScrollingChildHelper.setNestedScrollingEnabled(true);
+
+        ViewConfiguration configuration = ViewConfiguration.get(getContext());
+        // 获取TouchSlop值
+        mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
     }
 
     @Override

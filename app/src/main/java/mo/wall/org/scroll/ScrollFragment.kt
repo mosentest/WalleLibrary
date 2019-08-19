@@ -28,8 +28,7 @@ class ScrollFragment : Fragment() {
         arguments?.let {
 
         }
-        StatusBarUtil.setStatusBarColor(activity, ContextCompat.getColor(activity!!,
-                R.color.colorPrimaryDark))
+        StatusBarUtil.setStatusBarColor(activity, ContextCompat.getColor(activity!!, R.color.colorPrimaryDark))
         StatusBarUtil.setStatusBarDarkTheme(activity, false)
     }
 

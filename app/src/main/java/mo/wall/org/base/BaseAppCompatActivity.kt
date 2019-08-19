@@ -7,6 +7,7 @@ import android.os.Message
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.View
 import mo.wall.org.R
 import org.wall.mo.compat.statusbar.StatusBarUtil
 
@@ -36,6 +37,19 @@ open abstract class BaseAppCompatActivity : AppCompatActivity() {
         supportActionBar!!.setTitle(titleExtra)
     }
 
+    override fun setContentView(layoutResID: Int) {
+        super.setContentView(layoutResID)
+        //在这里设置
+        StatusBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark))
+        StatusBarUtil.setStatusBarDarkTheme(this, false)
+    }
+
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
+        //在这里设置
+        StatusBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark))
+        StatusBarUtil.setStatusBarDarkTheme(this, false)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item!!.itemId == android.R.id.home) {

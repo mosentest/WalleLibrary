@@ -15,11 +15,11 @@ import org.wall.mo.compat.statusbar.StatusBarUtil
 
 class StatusbarActivity : AbsWithOneV4FragmentActivity() {
     override fun onClick(v: View?) {
-        
+
     }
 
     override fun handleSubMessage(msg: Message?) {
-        
+
     }
 
     override fun getContainerViewId(): Int {
@@ -45,8 +45,8 @@ class StatusbarActivity : AbsWithOneV4FragmentActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        StatusBarUtil.setStatusBarColor(this,ContextCompat.getColor(this,R.color.colorPrimary))
-        StatusBarUtil.setStatusBarDarkTheme(this,true)
+        StatusBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimaryDark))
+        StatusBarUtil.setStatusBarDarkTheme(this, true)
     }
 
     override fun initData() {

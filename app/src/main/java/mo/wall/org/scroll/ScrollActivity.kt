@@ -2,11 +2,21 @@ package mo.wall.org.scroll
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Message
 import android.support.v4.app.Fragment
+import android.view.View
 import mo.wall.org.R
 import org.wall.mo.base.activity.AbsWithOneV4FragmentActivity
 
 class ScrollActivity : AbsWithOneV4FragmentActivity() {
+    override fun onClick(v: View?) {
+
+    }
+
+    override fun handleSubMessage(msg: Message?) {
+
+    }
+
     override fun showDialog(msg: String?) {
     }
 
@@ -45,10 +55,9 @@ class ScrollActivity : AbsWithOneV4FragmentActivity() {
     override fun initData() {
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
     }
-
 
     override fun showShortToast(msg: String?) {
     }
