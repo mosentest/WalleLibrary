@@ -74,6 +74,22 @@ public class CirclePercentView extends View {
 
     private int[] currentProgress;
 
+
+    private final static float START_ANGLE = -45;
+
+    private int centerX;
+    private int centerY;
+    private int radius;
+
+    private int qianxiejiaoduY;
+    private int qianxiejiaoduX;
+
+    private int textNeedHeight;
+
+    private int paddingLeftAndRight;
+
+    private int textLeftRight;
+
     public CirclePercentView(Context context) {
         super(context);
         init();
@@ -105,6 +121,21 @@ public class CirclePercentView extends View {
         if (rectF == null) {
             rectF = new RectF(startX, startY, getWidth() - startX, getHeight() - startY);
         }
+
+
+        centerX = getWidth() / 2;
+        centerY = getHeight() / 2;
+        radius = (Math.min(getWidth(), getHeight()) - Math.min(startX, startY)) / 2 - dip2px(getContext(), 10);
+        //设置倾斜角度的距离
+        qianxiejiaoduY = dip2px(getContext(), 14);
+        qianxiejiaoduX = dip2px(getContext(), 14);
+        //文字上下的距离
+        textNeedHeight = dip2px(getContext(), 4);
+        //左右内边距
+        paddingLeftAndRight = dip2px(getContext(), 16);
+        //下面字体离左右的距离
+        textLeftRight = dip2px(getContext(), 20);
+
     }
 
     private void init() {
@@ -131,7 +162,7 @@ public class CirclePercentView extends View {
         textPaint = new TextPaint();
 
         textPaint.setColor(getResources().getColor(R.color.mask_color));
-        textPaint.setTextSize(sp2px(getContext(), 12));
+        textPaint.setTextSize(sp2px(getContext(), 13));
         textPaint.setStrokeWidth(dip2px(getContext(), 2));
     }
 
@@ -154,7 +185,7 @@ public class CirclePercentView extends View {
 //            return;
 //        }
         //改为作为成员变量
-        float startAngle = -30;
+        float startAngle = START_ANGLE;
         //遍历画占比
         for (int i = 0; i < circlePercentDatas.size(); i++) {
 //        int i = pos;
@@ -190,16 +221,9 @@ public class CirclePercentView extends View {
      */
     private void drawCirclePercentPoint(Canvas canvas) {
         //改为作为成员变量
-        float startAngle = -30;
-        float preAngle = -30;
+        float startAngle = START_ANGLE;
+        float preAngle = START_ANGLE;
         float preV = 0f;
-
-        int centerX = getWidth() / 2;
-
-        int centerY = getHeight() / 2;
-
-        float radius = (Math.min(getWidth(), getHeight()) - Math.min(startX, startY)) / 2 - dip2px(getContext(), 10);
-        //- dip2px(getContext(), 30)
 
         //遍历画占比
         for (int i = 0; i < circlePercentPointPos; i++) {
@@ -244,19 +268,9 @@ public class CirclePercentView extends View {
      */
     private void drawCirclePercentLine(Canvas canvas) {
         //改为作为成员变量
-        float startAngle = -30;
-        float preAngle = -30;
+        float startAngle = START_ANGLE;
+        float preAngle = START_ANGLE;
         float preV = 0f;
-
-        int centerX = getWidth() / 2;
-
-        int centerY = getHeight() / 2;
-
-        float radius = (Math.min(getWidth(), getHeight()) - Math.min(startX, startY)) / 2 - dip2px(getContext(), 10);//
-
-
-        int qianxiejiaoduY = dip2px(getContext(), 14);
-        int qianxiejiaoduX = dip2px(getContext(), 14);
 
         //遍历画占比
         for (int i = 0; i < circlePercentLinePos; i++) {
@@ -311,15 +325,16 @@ public class CirclePercentView extends View {
                     leanX = x + qianxiejiaoduX;
                     leanY = y + qianxiejiaoduY;
 
-                    offsetX = getWidth() - dip2px(getContext(), 16);
+                    offsetX = getWidth() - paddingLeftAndRight;
                     offsetY = y + qianxiejiaoduY;
 
+                    textPaint.setColor(getResources().getColor(R.color.color_333333));
                     //设置文字
                     //百分比
                     canvas.drawText(
                             df.format(circlePercentData.num / totalNum),
                             offsetX,
-                            leanY - dip2px(getContext(), 4),
+                            leanY - textNeedHeight,
                             textPaint);
 
                     //标题
@@ -332,13 +347,15 @@ public class CirclePercentView extends View {
                     //保存图层
                     canvas.save();
 
-                    canvas.translate(offsetX, leanY + dip2px(getContext(), 4));
+                    canvas.translate(offsetX, leanY + textNeedHeight);
+
+                    textPaint.setColor(getResources().getColor(R.color.color_999999));
 
                     //实现文字换行显示
                     StaticLayout myStaticLayout
                             = new StaticLayout(circlePercentData.name,
                             textPaint,
-                            (int) (getWidth() - leanX),
+                            (int) (getWidth() - leanX - textLeftRight),
                             Layout.Alignment.ALIGN_NORMAL,
                             1.0f,
                             0.0f,
@@ -354,15 +371,16 @@ public class CirclePercentView extends View {
                     leanX = x + qianxiejiaoduX;
                     leanY = y - qianxiejiaoduY;
 
-                    offsetX = getWidth() - dip2px(getContext(), 16);
+                    offsetX = getWidth() - paddingLeftAndRight;
                     offsetY = y - qianxiejiaoduY;
 
+                    textPaint.setColor(getResources().getColor(R.color.color_333333));
                     //设置文字
                     //百分比
                     canvas.drawText(
                             df.format(circlePercentData.num / totalNum),
                             offsetX,
-                            leanY - dip2px(getContext(), 4),
+                            leanY - textNeedHeight,
                             textPaint);
 
                     //标题
@@ -375,13 +393,14 @@ public class CirclePercentView extends View {
                     //保存图层
                     canvas.save();
 
-                    canvas.translate(offsetX, leanY + dip2px(getContext(), 4));
+                    canvas.translate(offsetX, leanY + textNeedHeight);
 
+                    textPaint.setColor(getResources().getColor(R.color.color_999999));
                     //实现文字换行显示
                     StaticLayout myStaticLayout
                             = new StaticLayout(circlePercentData.name,
                             textPaint,
-                            (int) (getWidth() - leanX - dip2px(getContext(), 20)),
+                            (int) (getWidth() - leanX - textLeftRight),
                             Layout.Alignment.ALIGN_NORMAL,
                             1.0f,
                             0.0f,
@@ -405,16 +424,17 @@ public class CirclePercentView extends View {
                     leanX = x - qianxiejiaoduX;
                     leanY = y + qianxiejiaoduY;
 
-                    offsetX = 0 + dip2px(getContext(), 16);
+                    offsetX = 0 + paddingLeftAndRight;
                     offsetY = y + qianxiejiaoduY;
 
 
+                    textPaint.setColor(getResources().getColor(R.color.color_333333));
                     //设置文字
                     //百分比
                     canvas.drawText(
                             df.format(circlePercentData.num / totalNum),
                             offsetX,
-                            leanY - dip2px(getContext(), 4),
+                            leanY - textNeedHeight,
                             textPaint);
 
                     //标题
@@ -426,13 +446,15 @@ public class CirclePercentView extends View {
                     //保存图层
                     canvas.save();
 
-                    canvas.translate(offsetX, leanY + dip2px(getContext(), 4));
+                    canvas.translate(offsetX, leanY + textNeedHeight);
+
+                    textPaint.setColor(getResources().getColor(R.color.color_999999));
 
                     //实现文字换行显示
                     StaticLayout myStaticLayout
                             = new StaticLayout(circlePercentData.name,
                             textPaint,
-                            (int) leanX,
+                            (int) leanX - textLeftRight,
                             Layout.Alignment.ALIGN_NORMAL,
                             1.0f,
                             0.0f,
@@ -449,15 +471,16 @@ public class CirclePercentView extends View {
                     leanX = x - qianxiejiaoduX;
                     leanY = y - qianxiejiaoduY;
 
-                    offsetX = 0 + dip2px(getContext(), 16);
+                    offsetX = 0 + paddingLeftAndRight;
                     offsetY = y - qianxiejiaoduY;
 
+                    textPaint.setColor(getResources().getColor(R.color.color_333333));
                     //设置文字
                     //百分比
                     canvas.drawText(
                             df.format(circlePercentData.num / totalNum),
                             offsetX,
-                            leanY - dip2px(getContext(), 4),
+                            leanY - textNeedHeight,
                             textPaint);
 
 
@@ -470,13 +493,15 @@ public class CirclePercentView extends View {
                     //保存图层
                     canvas.save();
 
-                    canvas.translate(offsetX, leanY + dip2px(getContext(), 4));
+                    canvas.translate(offsetX, leanY + textNeedHeight);
+
+                    textPaint.setColor(getResources().getColor(R.color.color_999999));
 
                     //实现文字换行显示
                     StaticLayout myStaticLayout
                             = new StaticLayout(circlePercentData.name,
                             textPaint,
-                            (int) leanX - dip2px(getContext(), 20),
+                            (int) leanX - textLeftRight,
                             Layout.Alignment.ALIGN_NORMAL,
                             1.0f,
                             0.0f,
