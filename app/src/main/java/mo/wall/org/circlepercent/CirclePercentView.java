@@ -131,7 +131,7 @@ public class CirclePercentView extends View {
         textPaint = new TextPaint();
 
         textPaint.setColor(getResources().getColor(R.color.mask_color));
-        textPaint.setTextSize(sp2px(getContext(), 14));
+        textPaint.setTextSize(sp2px(getContext(), 12));
         textPaint.setStrokeWidth(dip2px(getContext(), 2));
     }
 
@@ -198,7 +198,8 @@ public class CirclePercentView extends View {
 
         int centerY = getHeight() / 2;
 
-        float radius = (getWidth() - startX) / 2 - dip2px(getContext(), 30);
+        float radius = (Math.min(getWidth(), getHeight()) - Math.min(startX, startY)) / 2 - dip2px(getContext(), 10);
+        //- dip2px(getContext(), 30)
 
         //遍历画占比
         for (int i = 0; i < circlePercentPointPos; i++) {
@@ -251,7 +252,11 @@ public class CirclePercentView extends View {
 
         int centerY = getHeight() / 2;
 
-        float radius = (getWidth() - startX) / 2 - dip2px(getContext(), 30);
+        float radius = (Math.min(getWidth(), getHeight()) - Math.min(startX, startY)) / 2 - dip2px(getContext(), 10);//
+
+
+        int qianxiejiaoduY = dip2px(getContext(), 14);
+        int qianxiejiaoduX = dip2px(getContext(), 14);
 
         //遍历画占比
         for (int i = 0; i < circlePercentLinePos; i++) {
@@ -303,18 +308,18 @@ public class CirclePercentView extends View {
                 if (y > centerY) {
 
                     //设置一个倾向角度
-                    leanX = x + dip2px(getContext(), 10);
-                    leanY = y + dip2px(getContext(), 10);
+                    leanX = x + qianxiejiaoduX;
+                    leanY = y + qianxiejiaoduY;
 
                     offsetX = getWidth() - dip2px(getContext(), 16);
-                    offsetY = y + dip2px(getContext(), 10);
+                    offsetY = y + qianxiejiaoduY;
 
                     //设置文字
                     //百分比
                     canvas.drawText(
                             df.format(circlePercentData.num / totalNum),
                             offsetX,
-                            y,
+                            leanY - dip2px(getContext(), 4),
                             textPaint);
 
                     //标题
@@ -327,7 +332,7 @@ public class CirclePercentView extends View {
                     //保存图层
                     canvas.save();
 
-                    canvas.translate(offsetX, y + dip2px(getContext(), 20));
+                    canvas.translate(offsetX, leanY + dip2px(getContext(), 4));
 
                     //实现文字换行显示
                     StaticLayout myStaticLayout
@@ -346,18 +351,18 @@ public class CirclePercentView extends View {
 
                 } else {
                     //设置一个倾向角度
-                    leanX = x + dip2px(getContext(), 10);
-                    leanY = y - dip2px(getContext(), 10);
+                    leanX = x + qianxiejiaoduX;
+                    leanY = y - qianxiejiaoduY;
 
                     offsetX = getWidth() - dip2px(getContext(), 16);
-                    offsetY = y - dip2px(getContext(), 10);
+                    offsetY = y - qianxiejiaoduY;
 
                     //设置文字
                     //百分比
                     canvas.drawText(
                             df.format(circlePercentData.num / totalNum),
                             offsetX,
-                            y - dip2px(getContext(), 20),
+                            leanY - dip2px(getContext(), 4),
                             textPaint);
 
                     //标题
@@ -370,13 +375,13 @@ public class CirclePercentView extends View {
                     //保存图层
                     canvas.save();
 
-                    canvas.translate(offsetX, y);
+                    canvas.translate(offsetX, leanY + dip2px(getContext(), 4));
 
                     //实现文字换行显示
                     StaticLayout myStaticLayout
                             = new StaticLayout(circlePercentData.name,
                             textPaint,
-                            (int) (getWidth() - leanX),
+                            (int) (getWidth() - leanX - dip2px(getContext(), 20)),
                             Layout.Alignment.ALIGN_NORMAL,
                             1.0f,
                             0.0f,
@@ -397,11 +402,11 @@ public class CirclePercentView extends View {
                 if (y > centerY) {
 
                     //设置一个倾向角度
-                    leanX = x - dip2px(getContext(), 10);
-                    leanY = y + dip2px(getContext(), 10);
+                    leanX = x - qianxiejiaoduX;
+                    leanY = y + qianxiejiaoduY;
 
                     offsetX = 0 + dip2px(getContext(), 16);
-                    offsetY = y + dip2px(getContext(), 10);
+                    offsetY = y + qianxiejiaoduY;
 
 
                     //设置文字
@@ -409,7 +414,7 @@ public class CirclePercentView extends View {
                     canvas.drawText(
                             df.format(circlePercentData.num / totalNum),
                             offsetX,
-                            y,
+                            leanY - dip2px(getContext(), 4),
                             textPaint);
 
                     //标题
@@ -421,7 +426,7 @@ public class CirclePercentView extends View {
                     //保存图层
                     canvas.save();
 
-                    canvas.translate(offsetX, y + dip2px(getContext(), 20));
+                    canvas.translate(offsetX, leanY + dip2px(getContext(), 4));
 
                     //实现文字换行显示
                     StaticLayout myStaticLayout
@@ -441,18 +446,18 @@ public class CirclePercentView extends View {
                 } else {
 
                     //设置一个倾向角度
-                    leanX = x - dip2px(getContext(), 10);
-                    leanY = y - dip2px(getContext(), 10);
+                    leanX = x - qianxiejiaoduX;
+                    leanY = y - qianxiejiaoduY;
 
                     offsetX = 0 + dip2px(getContext(), 16);
-                    offsetY = y - dip2px(getContext(), 10);
+                    offsetY = y - qianxiejiaoduY;
 
                     //设置文字
                     //百分比
                     canvas.drawText(
                             df.format(circlePercentData.num / totalNum),
                             offsetX,
-                            y - dip2px(getContext(), 20),
+                            leanY - dip2px(getContext(), 4),
                             textPaint);
 
 
@@ -465,13 +470,13 @@ public class CirclePercentView extends View {
                     //保存图层
                     canvas.save();
 
-                    canvas.translate(offsetX, y);
+                    canvas.translate(offsetX, leanY + dip2px(getContext(), 4));
 
                     //实现文字换行显示
                     StaticLayout myStaticLayout
                             = new StaticLayout(circlePercentData.name,
                             textPaint,
-                            (int) leanX,
+                            (int) leanX - dip2px(getContext(), 20),
                             Layout.Alignment.ALIGN_NORMAL,
                             1.0f,
                             0.0f,

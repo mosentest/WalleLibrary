@@ -77,7 +77,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
         pickFirst 'lib/armeabi-v7a/libsecsdk.so'
         pickFirst "lib/armeabi-v7a/libRSSupport.so"
-        exclude "lib/armeabi-v7a/libRSSupport.so"
+//        exclude "lib/armeabi-v7a/libRSSupport.so"
         exclude "lib/arm64-v8a/librsjni.so"
         exclude "lib/arm64-v8a/libRSSupport.so"
         exclude "lib/x86_64/libRSSupport.so"

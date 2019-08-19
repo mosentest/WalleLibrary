@@ -13,11 +13,12 @@
     <mo.wall.org.circlepercent.CirclePercentView
         android:id="@+id/cpv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/w_dp_300"
-        android:visibility="gone" />
+        android:layout_height="@dimen/w_dp_250"
+        android:visibility="visible" />
 
     <mo.wall.org.circlepercent.VerticalColumnarView
         android:id="@+id/cv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/w_dp_500" />
+        android:layout_height="@dimen/w_dp_500"
+        android:visibility="gone"/>
 </LinearLayout>
