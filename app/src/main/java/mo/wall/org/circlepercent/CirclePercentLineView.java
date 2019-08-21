@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import mo.wall.org.R;
@@ -29,20 +30,22 @@ import mo.wall.org.R;
  * Date: 2019/8/9 10:39 AM
  * Description: ${DESCRIPTION}
  * History:
+ * c参考这个
+ * https://www.cnblogs.com/yishujun/p/5560838.html
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class CirclePercentView extends View {
+public class CirclePercentLineView extends View {
 
 
-    private final static String TAG = CirclePercentView.class.getSimpleName();
+    private final static String TAG = CirclePercentLineView.class.getSimpleName();
 
     /**
      * 总数
      */
     private float totalNum;
 
-    private List<CirclePercentData> circlePercentDatas;
+    private List<CirclePercentData> circlePercentDatas = new ArrayList<>();
 
     /**
      * 圆的位置
@@ -76,7 +79,7 @@ public class CirclePercentView extends View {
     private int[] currentProgress;
 
 
-    private final static float START_ANGLE = -45;
+    private final static float START_ANGLE = -90;
 
     private int centerX;
     private int centerY;
@@ -91,26 +94,117 @@ public class CirclePercentView extends View {
 
     private int textLeftRight;
 
-    public CirclePercentView(Context context) {
+    private int position = 0;
+
+    private int textSp;//字体大小也算一个高度
+
+    public CirclePercentLineView(Context context) {
         super(context);
         init();
     }
 
-    public CirclePercentView(Context context, @Nullable AttributeSet attrs) {
+    public CirclePercentLineView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CirclePercentView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CirclePercentLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public CirclePercentView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CirclePercentLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
+
+
+    /**
+     * 比onDraw先执行
+     * <p>
+     * 一个MeasureSpec封装了父布局传递给子布局的布局要求，每个MeasureSpec代表了一组宽度和高度的要求。
+     * 一个MeasureSpec由大小和模式组成
+     * 它有三种模式：UNSPECIFIED(未指定),父元素部队自元素施加任何束缚，子元素可以得到任意想要的大小;
+     * EXACTLY(完全)，父元素决定自元素的确切大小，子元素将被限定在给定的边界里而忽略它本身大小；
+     * AT_MOST(至多)，子元素至多达到指定大小的值。
+     * <p>
+     * 它常用的三个函数：
+     * 1.static int getMode(int measureSpec):根据提供的测量值(格式)提取模式(上述三个模式之一)
+     * 2.static int getSize(int measureSpec):根据提供的测量值(格式)提取大小值(这个大小也就是我们通常所说的大小)
+     * 3.static int makeMeasureSpec(int size,int mode):根据提供的大小值和模式创建一个测量值(格式)
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        final int minimumWidth = getSuggestedMinimumWidth();
+        final int minimumHeight = getSuggestedMinimumHeight();
+        Log.e("YView", "---minimumWidth = " + minimumWidth + "");
+        Log.e("YView", "---minimumHeight = " + minimumHeight + "");
+        int width = measureWidth(minimumWidth, widthMeasureSpec);
+        int height = measureHeight(minimumHeight, heightMeasureSpec);
+        setMeasuredDimension(width, height);
+    }
+
+    private int measureWidth(int defaultWidth, int measureSpec) {
+
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        Log.e("YViewWidth", "---speSize = " + specSize + "");
+
+
+        switch (specMode) {
+            //wrap_content
+            case MeasureSpec.AT_MOST:
+                defaultWidth = specSize;
+
+                Log.e("YViewWidth", "---speMode = AT_MOST");
+                break;
+            //match_parent
+            case MeasureSpec.EXACTLY:
+                Log.e("YViewWidth", "---speMode = EXACTLY");
+                defaultWidth = specSize;
+                break;
+            case MeasureSpec.UNSPECIFIED:
+                Log.e("YViewWidth", "---speMode = UNSPECIFIED");
+                defaultWidth = Math.max(defaultWidth, specSize);
+        }
+        return defaultWidth;
+    }
+
+
+    private int measureHeight(int defaultHeight, int measureSpec) {
+
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        Log.e("YViewHeight", "---speSize = " + specSize + "");
+
+        switch (specMode) {
+            case MeasureSpec.AT_MOST:
+                defaultHeight = specSize;
+                Log.e("YViewHeight", "---speMode = AT_MOST");
+                break;
+            case MeasureSpec.EXACTLY:
+                defaultHeight = specSize;
+                Log.e("YViewHeight", "---speSize = EXACTLY");
+                break;
+            case MeasureSpec.UNSPECIFIED:
+                defaultHeight = Math.max(defaultHeight, specSize);
+                Log.e("YViewHeight", "---speSize = UNSPECIFIED");
+//        1.基准点是baseline
+//        2.ascent：是baseline之上至字符最高处的距离
+//        3.descent：是baseline之下至字符最低处的距离
+//        4.leading：是上一行字符的descent到下一行的ascent之间的距离,也就是相邻行间的空白距离
+//        5.top：是指的是最高字符到baseline的值,即ascent的最大值
+//        6.bottom：是指最低字符到baseline的值,即descent的最大值
+
+                break;
+        }
+        return defaultHeight;
+
+
+    }
+
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -137,6 +231,10 @@ public class CirclePercentView extends View {
         //下面字体离左右的距离
         textLeftRight = dip2px(getContext(), 20);
 
+        textSp = sp2px(getContext(), 13);
+        if (textPaint != null) {
+            textPaint.setTextSize(textSp);
+        }
     }
 
     private void init() {
@@ -163,7 +261,7 @@ public class CirclePercentView extends View {
         textPaint = new TextPaint();
 
         textPaint.setColor(getResources().getColor(R.color.mask_color));
-        textPaint.setTextSize(sp2px(getContext(), 13));
+        textPaint.setTextSize(textSp);
         textPaint.setStrokeWidth(dip2px(getContext(), 2));
     }
 
@@ -190,7 +288,7 @@ public class CirclePercentView extends View {
         //遍历画占比
         for (int i = 0; i < circlePercentDatas.size(); i++) {
 //        int i = pos;
-            CirclePercentData circlePercentData = circlePercentDatas.get(i);
+            CirclePercentLineView.CirclePercentData circlePercentData = circlePercentDatas.get(i);
             int v = (int) (circlePercentData.num / totalNum * 360);
             //v+1为了重合在一起
             if (currentProgress[i] < v + 1) {
@@ -272,8 +370,13 @@ public class CirclePercentView extends View {
         float preAngle = START_ANGLE;
         float preV = 0f;
 
+        int baseTopTextHeight = textSp + getPaddingTop(); //基础上线
+        int nextRightTopTextHeight = baseTopTextHeight;
+        int baseLefBottomTextHeight = getHeight() - textSp - getPaddingBottom();//基础下线
+        int nextLeftBottomTextHeight = baseLefBottomTextHeight;
+
         //遍历画占比
-        for (int i = 0; i < circlePercentLinePos; i++) {
+        for (int i = 0; i < circlePercentDatas.size(); i++) {
 //        int i = pos;
             CirclePercentData circlePercentData = circlePercentDatas.get(i);
             float v = circlePercentData.num / totalNum * 360;
@@ -313,243 +416,96 @@ public class CirclePercentView extends View {
             float endOffsetY = 0;
             Path path = new Path();
             path.moveTo(x, y);
-            if (x > centerX) {
 
+            if (x > centerX) {
                 //控制位置的对齐方向
                 textPaint.setTextAlign(Paint.Align.RIGHT);
+                //设置一个倾向角度
+                leanX = x + qianxiejiaoduX + dip2px(getContext(), 2) * (i + 1);
+                leanY = nextRightTopTextHeight;
 
-                //右边画线
-                if (y > centerY) {
+                endOffsetX = getWidth() - paddingLeftAndRight;
+                endOffsetY = nextRightTopTextHeight;
 
-                    if (halfAngle >= 15 && halfAngle <= 45) {
-                        leanX = x;
-                        leanY = y;
+                textPaint.setColor(getResources().getColor(R.color.color_333333));
+                //设置文字
+                //百分比
+                canvas.drawText(
+                        df.format(circlePercentData.num / totalNum),
+                        endOffsetX,
+                        leanY - textNeedHeight,
+                        textPaint);
 
-                        endOffsetX = getWidth() - paddingLeftAndRight;
-                        endOffsetY = y ;
-                    } else {
-                        //设置一个倾向角度
-                        leanX = x + qianxiejiaoduX;
-                        leanY = y + qianxiejiaoduY;
+                //保存图层
+                canvas.save();
 
-                        endOffsetX = getWidth() - paddingLeftAndRight;
-                        endOffsetY = y + qianxiejiaoduY;
-                    }
+                canvas.translate(endOffsetX, leanY + textNeedHeight);
 
-                    textPaint.setColor(getResources().getColor(R.color.color_333333));
-                    //设置文字
-                    //百分比
-                    canvas.drawText(
-                            df.format(circlePercentData.num / totalNum),
-                            endOffsetX,
-                            leanY - textNeedHeight,
-                            textPaint);
+                textPaint.setColor(getResources().getColor(R.color.color_999999));
+                //实现文字换行显示
+                StaticLayout myStaticLayout
+                        = new StaticLayout(circlePercentData.name,
+                        textPaint,
+                        (int) (getWidth() - leanX - textLeftRight),
+                        Layout.Alignment.ALIGN_NORMAL,
+                        1.0f,
+                        0.0f,
+                        false);
 
-                    //标题
-//                    canvas.drawText(
-//                            circlePercentData.name,
-//                            endOffsetX,
-//                            y + dip2px(getContext(), 30),
-//                            textPaint);
+                myStaticLayout.draw(canvas);
 
-                    //保存图层
-                    canvas.save();
-
-                    canvas.translate(endOffsetX, leanY + textNeedHeight);
-
-                    textPaint.setColor(getResources().getColor(R.color.color_999999));
-
-                    //实现文字换行显示
-                    StaticLayout myStaticLayout
-                            = new StaticLayout(circlePercentData.name,
-                            textPaint,
-                            (int) (getWidth() - leanX - textLeftRight),
-                            Layout.Alignment.ALIGN_NORMAL,
-                            1.0f,
-                            0.0f,
-                            false);
-
-                    myStaticLayout.draw(canvas);
-
-                    //恢复图层
-                    canvas.restore();
-
-                } else {
-
-                    if (halfAngle >= -30 && halfAngle <= 0) {
-                        leanX = x;
-                        leanY = y;
-
-                        endOffsetX = getWidth() - paddingLeftAndRight;
-                        endOffsetY = y;
-                    } else {
-                        //设置一个倾向角度
-                        leanX = x + qianxiejiaoduX;
-                        leanY = y - qianxiejiaoduY;
-
-                        endOffsetX = getWidth() - paddingLeftAndRight;
-                        endOffsetY = y - qianxiejiaoduY;
-                    }
-
-                    textPaint.setColor(getResources().getColor(R.color.color_333333));
-                    //设置文字
-                    //百分比
-                    canvas.drawText(
-                            df.format(circlePercentData.num / totalNum),
-                            endOffsetX,
-                            leanY - textNeedHeight,
-                            textPaint);
-
-                    //标题
-//                    canvas.drawText(
-//                            circlePercentData.name,
-//                            endOffsetX,
-//                            y + dip2px(getContext(), 10),
-//                            textPaint);
-
-                    //保存图层
-                    canvas.save();
-
-                    canvas.translate(endOffsetX, leanY + textNeedHeight);
-
-                    textPaint.setColor(getResources().getColor(R.color.color_999999));
-                    //实现文字换行显示
-                    StaticLayout myStaticLayout
-                            = new StaticLayout(circlePercentData.name,
-                            textPaint,
-                            (int) (getWidth() - leanX - textLeftRight),
-                            Layout.Alignment.ALIGN_NORMAL,
-                            1.0f,
-                            0.0f,
-                            false);
-
-                    myStaticLayout.draw(canvas);
-
-                    //恢复图层
-                    canvas.restore();
-
-                }
+                //恢复图层
+                canvas.restore();
+                //累加高度
+                nextRightTopTextHeight = nextRightTopTextHeight
+                        + baseTopTextHeight + baseTopTextHeight * myStaticLayout.getLineCount() + textNeedHeight * (i + 2);
 
             } else {
 
                 textPaint.setTextAlign(Paint.Align.LEFT);
+                //设置一个倾向角度
+                leanX = x - dip2px(getContext(), 2) * (i + 1);
 
-                //左边画线
-                if (y > centerY) {
+                //实现文字换行显示
+                StaticLayout myStaticLayout
+                        = new StaticLayout(circlePercentData.name,
+                        textPaint,
+                        (int) leanX - textLeftRight,
+                        Layout.Alignment.ALIGN_NORMAL,
+                        1.0f,
+                        0.0f,
+                        false);
 
+                nextLeftBottomTextHeight = nextLeftBottomTextHeight - textSp * myStaticLayout.getLineCount();
 
+                leanY = nextLeftBottomTextHeight;
 
-                    if (halfAngle >= 135) {
-                        leanX = x;
-                        leanY = y;
+                endOffsetX = 0 + paddingLeftAndRight;
+                endOffsetY = nextLeftBottomTextHeight;
 
-                        endOffsetX =  0 + paddingLeftAndRight;
-                        endOffsetY = y;
-                    } else {
-                        //设置一个倾向角度
-                        leanX = x - qianxiejiaoduX;
-                        leanY = y + qianxiejiaoduY;
+                textPaint.setColor(getResources().getColor(R.color.color_333333));
+                //设置文字
+                //百分比
+                canvas.drawText(
+                        df.format(circlePercentData.num / totalNum),
+                        endOffsetX,
+                        leanY - textNeedHeight,
+                        textPaint);
 
-                        endOffsetX = 0 + paddingLeftAndRight;
-                        endOffsetY = y + qianxiejiaoduY;
-                    }
+                //保存图层
+                canvas.save();
 
-                    textPaint.setColor(getResources().getColor(R.color.color_333333));
-                    //设置文字
-                    //百分比
-                    canvas.drawText(
-                            df.format(circlePercentData.num / totalNum),
-                            endOffsetX,
-                            leanY - textNeedHeight,
-                            textPaint);
+                canvas.translate(endOffsetX, leanY + textNeedHeight);
 
-                    //标题
-//                    canvas.drawText(
-//                            circlePercentData.name,
-//                            endOffsetX,
-//                            y + dip2px(getContext(), 30),
-//                            textPaint);
-                    //保存图层
-                    canvas.save();
+                textPaint.setColor(getResources().getColor(R.color.color_999999));
 
-                    canvas.translate(endOffsetX, leanY + textNeedHeight);
+                myStaticLayout.draw(canvas);
 
-                    textPaint.setColor(getResources().getColor(R.color.color_999999));
+                //恢复图层
+                canvas.restore();
 
-                    //实现文字换行显示
-                    StaticLayout myStaticLayout
-                            = new StaticLayout(circlePercentData.name,
-                            textPaint,
-                            (int) leanX - textLeftRight,
-                            Layout.Alignment.ALIGN_NORMAL,
-                            1.0f,
-                            0.0f,
-                            false);
-
-                    myStaticLayout.draw(canvas);
-
-                    //恢复图层
-                    canvas.restore();
-
-                } else {
-
-
-
-                    if (halfAngle <= 250) {
-                        leanX = x;
-                        leanY = y;
-
-                        endOffsetX =  0 + paddingLeftAndRight;
-                        endOffsetY = y;
-                    } else {
-                        //设置一个倾向角度
-                        leanX = x - qianxiejiaoduX;
-                        leanY = y - qianxiejiaoduY;
-
-                        endOffsetX = 0 + paddingLeftAndRight;
-                        endOffsetY = y - qianxiejiaoduY;
-                    }
-
-                    textPaint.setColor(getResources().getColor(R.color.color_333333));
-                    //设置文字
-                    //百分比
-                    canvas.drawText(
-                            df.format(circlePercentData.num / totalNum),
-                            endOffsetX,
-                            leanY - textNeedHeight,
-                            textPaint);
-
-
-                    //标题
-//                    canvas.drawText(
-//                            circlePercentData.name,
-//                            endOffsetX,
-//                            y + dip2px(getContext(), 10),
-//                            textPaint);
-                    //保存图层
-                    canvas.save();
-
-                    canvas.translate(endOffsetX, leanY + textNeedHeight);
-
-                    textPaint.setColor(getResources().getColor(R.color.color_999999));
-
-                    //实现文字换行显示
-                    StaticLayout myStaticLayout
-                            = new StaticLayout(circlePercentData.name,
-                            textPaint,
-                            (int) leanX - textLeftRight,
-                            Layout.Alignment.ALIGN_NORMAL,
-                            1.0f,
-                            0.0f,
-                            false);
-
-                    myStaticLayout.draw(canvas);
-
-                    //恢复图层
-                    canvas.restore();
-                }
-
-
+                //累加高度
+                nextLeftBottomTextHeight = nextLeftBottomTextHeight  - textNeedHeight * (i + 1);
             }
 
             path.lineTo(leanX, leanY);
@@ -559,14 +515,18 @@ public class CirclePercentView extends View {
         }
     }
 
-    public CirclePercentView setTotalNum(int totalNum) {
+    public CirclePercentLineView setTotalNum(int totalNum) {
         this.totalNum = totalNum;
         return this;
     }
 
-    public CirclePercentView setCirclePercentDatas(List<CirclePercentData> circlePercentDatas) {
-        this.circlePercentDatas = circlePercentDatas;
-        int size = circlePercentDatas.size();
+    public CirclePercentLineView setCirclePercentDatas(List<CirclePercentData> circlePercentDatas) {
+        if (circlePercentDatas == null || circlePercentDatas.isEmpty()) {
+            return this;
+        }
+        this.circlePercentDatas.clear();
+        this.circlePercentDatas.addAll(circlePercentDatas);
+        int size = this.circlePercentDatas.size();
         currentProgress = new int[size];
         return this;
     }

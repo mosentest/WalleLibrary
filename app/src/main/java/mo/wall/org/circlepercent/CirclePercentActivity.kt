@@ -8,7 +8,7 @@ import java.util.*
 
 class CirclePercentActivity : BaseAppCompatActivity() {
 
-    private lateinit var mCpv: CirclePercentView
+    private lateinit var mCpv: CirclePercentLineView
 
     private lateinit var mCv: ColumnarView
 
@@ -21,23 +21,23 @@ class CirclePercentActivity : BaseAppCompatActivity() {
         setContentView(R.layout.activity_circle_percent)
 
 
-        mCpv = findViewById<CirclePercentView>(R.id.cpv)
+        mCpv = findViewById<CirclePercentLineView>(R.id.cpv)
 
         mCv = findViewById<ColumnarView>(R.id.cv)
 
         mCpv.setTotalNum(100)
                 .setCirclePercentDatas(
                         Arrays.asList(
-                                CirclePercentView.createCirclePercentData(5, "我是红色人,我是红色人", resources.getColor(R.color.google_red)),
-                                CirclePercentView.createCirclePercentData(5, "我是绿色人,我是绿色人", resources.getColor(R.color.google_green)),
-                                CirclePercentView.createCirclePercentData(1, "我是黄色人,我是黄色人,我是黄色人,我是黄色人", resources.getColor(R.color.google_yellow)),
-                                CirclePercentView.createCirclePercentData(30, "我是蓝色人,我是蓝色人", resources.getColor(R.color.google_blue)),
-                                CirclePercentView.createCirclePercentData(10, "我不知道自己干嘛，我不知道自己干嘛", resources.getColor(R.color.colorAccent)),
-                                CirclePercentView.createCirclePercentData(10, "我不知道自己干嘛，我不知道自己干嘛", resources.getColor(R.color.colorAccent)),
-                                CirclePercentView.createCirclePercentData(10, "我不知道自己干嘛，我不知道自己干嘛", resources.getColor(R.color.colorAccent)),
-                                CirclePercentView.createCirclePercentData(10, "我不知道自己干嘛，我不知道自己干嘛", resources.getColor(R.color.colorAccent)),
-                                CirclePercentView.createCirclePercentData(10, "我不知道自己干嘛，我不知道自己干嘛", resources.getColor(R.color.colorAccent)),
-                                CirclePercentView.createCirclePercentData(9, "我好像是什么颜色,我好像是什么颜色", resources.getColor(R.color.colorPrimaryDark))))
+                                CirclePercentLineView.createCirclePercentData(5, "我不红色人我", resources.getColor(R.color.google_red)),
+                                CirclePercentLineView.createCirclePercentData(5, "我是红色人我", resources.getColor(R.color.google_green)),
+                                CirclePercentLineView.createCirclePercentData(20, "我好红色人我", resources.getColor(R.color.google_yellow)),
+                                CirclePercentLineView.createCirclePercentData(20, "我人红色人我", resources.getColor(R.color.google_blue)),
+                                CirclePercentLineView.createCirclePercentData(8, "我你红色人我", resources.getColor(R.color.colorAccent)),
+                                CirclePercentLineView.createCirclePercentData(4, "我走红色人我", resources.getColor(R.color.google_yellow)),
+                                CirclePercentLineView.createCirclePercentData(4, "我开红色人我", resources.getColor(R.color.google_green)),
+                                CirclePercentLineView.createCirclePercentData(4, "我别红色人我", resources.getColor(R.color.google_red)),
+                                CirclePercentLineView.createCirclePercentData(4, "我碰红色人我", resources.getColor(R.color.google_green)),
+                                CirclePercentLineView.createCirclePercentData(20, "我我红色人我", resources.getColor(R.color.colorPrimaryDark))))
                 .start()
 
         mCv.setTotalCount(60f).setColumnarDatas(
