@@ -19,6 +19,7 @@
     <mo.wall.org.circlepercent.ColumnarView
         android:id="@+id/cv"
         android:layout_width="match_parent"
+        android:padding="@dimen/w_dp_8"
         android:layout_height="@dimen/w_dp_250"
         android:visibility="visible" />
 </LinearLayout>

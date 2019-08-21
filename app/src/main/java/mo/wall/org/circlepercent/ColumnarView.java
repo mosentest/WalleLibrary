@@ -115,41 +115,69 @@ public class ColumnarView extends View {
         int spacing = dip2px(getContext(), 12);
         int columnarHeight = dip2px(getContext(), 40);
 
-        int left = startLeftOffset + mWidth / 4;
+        int left = getPaddingLeft() + mWidth / 4;
 
         int top = 0;
 
         for (int i = 0; i < columnarDatas.size(); i++) {
 
 
-            top = startLeftOffset + columnarHeight * i + spacing * i;
+            top = getPaddingTop() + columnarHeight * i + spacing * i;
 
             ColumnarData columnarData = columnarDatas.get(i);
 
-            canvas.save();
+            float textWidth = textPaint.measureText(columnarData.name);
+            if (getPaddingLeft() + textWidth < left + startLeftOffset) {
+                //不需要换行
+                textPaint.setTextAlign(Paint.Align.RIGHT);
+                canvas.drawText(columnarData.name,
+                        getPaddingLeft() + textWidth,
+                        top + dip2px(getContext(), 25),
+                        textPaint);
+            } else {
+                textPaint.setTextAlign(Paint.Align.LEFT);
 
-            canvas.translate(startLeftOffset, top + dip2px(getContext(), 5));
-            //实现文字换行显示
-            StaticLayout myStaticLayout
-                    = new StaticLayout(columnarData.name,
-                    textPaint,
-                    left,
-                    Layout.Alignment.ALIGN_NORMAL,
-                    1.0f,
-                    0.0f,
-                    false);
+                canvas.save();
 
-            myStaticLayout.draw(canvas);
+                canvas.translate(getPaddingLeft(), top + dip2px(getContext(), 5));
+                //实现文字换行显示
+                StaticLayout myStaticLayout
+                        = new StaticLayout(columnarData.name,
+                        textPaint,
+                        left,
+                        Layout.Alignment.ALIGN_NORMAL,
+                        1.0f,
+                        0.0f,
+                        false);
 
-            //恢复图层
-            canvas.restore();
+                myStaticLayout.draw(canvas);
+
+                //恢复图层
+                canvas.restore();
+            }
 
 
             columnarPaint.setColor(columnarData.resIdColor);
 
-            if (currentBarProgress[i] < (mWidth - (mWidth / 2 + startLeftOffset)) * columnarData.count / totalCount) {
+            //left - startLeftOffset 左边的距离
+            //getPaddingRight() - getPaddingLeft() 左右内边距
+            //spacing 文字的空间
+            String formatNum = String.format("%d次", currentCount[i]);
+            //获取次数的长度
+            float measureTextFormatNum = textPaint.measureText(formatNum);
+            float total = (mWidth
+                    - left - startLeftOffset
+                    - getPaddingRight() - getPaddingLeft()
+                    - spacing
+                    - measureTextFormatNum) * columnarData.count / totalCount;
+            if (currentBarProgress[i] < total) {
                 currentBarProgress[i] += 5;
                 postInvalidateDelayed(10);
+                //不需要
+//                columnarPaint.setAlpha((int) (currentBarProgress[i] / total * 255));
+            } else {
+                //不需要
+//                columnarPaint.setAlpha(255);
             }
             //这是画圆柱
             //float left, float top, float right, float bottom, @NonNull Paint paint
@@ -171,11 +199,15 @@ public class ColumnarView extends View {
 
             if (currentCount[i] < (int) columnarData.count) {
                 currentCount[i] += 1;
+                textPaint.setTextScaleX(currentCount[i] / columnarData.count * 1);
                 postInvalidateDelayed(20);
+            } else {
+                textPaint.setTextScaleX(1);
             }
             //这是画字体
-            canvas.drawText(String.format("%d次", currentCount[i]),
-                    left + startLeftOffset + currentBarProgress[i] + startLeftOffset,
+            textPaint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText(formatNum,
+                    left + startLeftOffset + currentBarProgress[i] + spacing,
                     top + dip2px(getContext(), 25), textPaint);
         }
     }
