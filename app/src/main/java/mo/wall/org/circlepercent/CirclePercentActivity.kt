@@ -28,16 +28,25 @@ class CirclePercentActivity : BaseAppCompatActivity() {
         mCpv.setTotalNum(100)
                 .setCirclePercentDatas(
                         Arrays.asList(
-                                CirclePercentLineView.createCirclePercentData(5, "我不红色人我", resources.getColor(R.color.google_red)),
-                                CirclePercentLineView.createCirclePercentData(5, "我是红色人我", resources.getColor(R.color.google_green)),
-                                CirclePercentLineView.createCirclePercentData(20, "我好红色人我", resources.getColor(R.color.google_yellow)),
-                                CirclePercentLineView.createCirclePercentData(20, "我人红色人我", resources.getColor(R.color.google_blue)),
-                                CirclePercentLineView.createCirclePercentData(8, "我你红色人我", resources.getColor(R.color.colorAccent)),
-                                CirclePercentLineView.createCirclePercentData(4, "我走红色人我", resources.getColor(R.color.google_yellow)),
-                                CirclePercentLineView.createCirclePercentData(4, "我开红色人我", resources.getColor(R.color.google_green)),
-                                CirclePercentLineView.createCirclePercentData(4, "我别红色人我", resources.getColor(R.color.google_red)),
-                                CirclePercentLineView.createCirclePercentData(4, "我碰红色人我", resources.getColor(R.color.google_green)),
-                                CirclePercentLineView.createCirclePercentData(20, "我我红色人我", resources.getColor(R.color.colorPrimaryDark))))
+                                CirclePercentLineView.createCirclePercentData(1, "我不红色人我", resources.getColor(R.color.google_red)),
+                                CirclePercentLineView.createCirclePercentData(1, "我是红色人我", resources.getColor(R.color.google_green)),
+                                CirclePercentLineView.createCirclePercentData(1, "我好红色人我", resources.getColor(R.color.google_yellow)),
+                                CirclePercentLineView.createCirclePercentData(1, "我人红色人我", resources.getColor(R.color.google_blue)),
+                                CirclePercentLineView.createCirclePercentData(1, "我你红色人我", resources.getColor(R.color.colorAccent)),
+                                CirclePercentLineView.createCirclePercentData(1, "我走红色人我", resources.getColor(R.color.google_yellow)),
+                                CirclePercentLineView.createCirclePercentData(1, "我开红色人我", resources.getColor(R.color.google_green)),
+                                CirclePercentLineView.createCirclePercentData(10, "我别红色人我", resources.getColor(R.color.google_red)),
+                                CirclePercentLineView.createCirclePercentData(10, "我碰红色人我", resources.getColor(R.color.google_green)),
+                                CirclePercentLineView.createCirclePercentData(10, "我我红色人我", resources.getColor(R.color.colorPrimaryDark)),
+                                CirclePercentLineView.createCirclePercentData(10, "我不红色人我", resources.getColor(R.color.google_red)),
+                                CirclePercentLineView.createCirclePercentData(10, "我是红色人我", resources.getColor(R.color.google_green)),
+//                                CirclePercentLineView.createCirclePercentData(5, "我好红色人我", resources.getColor(R.color.google_yellow)),
+//                                CirclePercentLineView.createCirclePercentData(5, "我人红色人我", resources.getColor(R.color.google_blue)),
+//                                CirclePercentLineView.createCirclePercentData(5, "我你红色人我", resources.getColor(R.color.colorAccent)),
+//                                CirclePercentLineView.createCirclePercentData(5, "我走红色人我", resources.getColor(R.color.google_yellow)),
+                                CirclePercentLineView.createCirclePercentData(10, "我开红色人我", resources.getColor(R.color.google_green)),
+                                CirclePercentLineView.createCirclePercentData(10, "我别红色人我", resources.getColor(R.color.google_red)),
+                                CirclePercentLineView.createCirclePercentData(10, "我碰红色人我", resources.getColor(R.color.google_green))))
                 .start()
 
         mCv.setTotalCount(60f).setColumnarDatas(
