@@ -3,6 +3,7 @@ package mo.wall.org.circlepercent;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -10,8 +11,11 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mo.wall.org.R;
@@ -36,7 +40,7 @@ public class ColumnarView extends View {
 
     private float totalCount;
 
-    private List<ColumnarData> columnarDatas;
+    private List<ColumnarData> mColumnarDatas = new ArrayList<>();
 
     private TextPaint textPaint;//文字画笔
 
@@ -50,6 +54,9 @@ public class ColumnarView extends View {
     private int[] currentBarProgress;
     private int[] currentCount;
 
+    private Point[] mPoint;
+
+    private CallBack mCallBack;
 
     public ColumnarView(Context context) {
         super(context);
@@ -85,8 +92,8 @@ public class ColumnarView extends View {
 
         textPaint = new TextPaint();
 
-        textPaint.setColor(getResources().getColor(R.color.mask_color));
-        textPaint.setTextSize(sp2px(getContext(), 14));
+        textPaint.setColor(getResources().getColor(R.color.color_666666));
+        textPaint.setTextSize(sp2px(getContext(), 12));
         textPaint.setStrokeWidth(dip2px(getContext(), 1));
     }
 
@@ -96,6 +103,41 @@ public class ColumnarView extends View {
         super.onLayout(changed, left, top, right, bottom);
         mWidth = getWidth();
         mHeight = getHeight();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //实现点击效果
+                float y = event.getY();
+                for (int i = 1; i < mPoint.length; i++) {
+                    if (y > mPoint[i - 1].y && y <= mPoint[i].y) {
+                        if (mCallBack != null) {
+                            mCallBack.onClick(i);
+                        }
+                        Toast.makeText(getContext(), "i=" + i, Toast.LENGTH_SHORT).show();
+                    } else if (y <= mPoint[i - 1].y && (i - 1) == 0) {
+                        if (mCallBack != null) {
+                            mCallBack.onClick(i);
+                        }
+                        Toast.makeText(getContext(), "i=" + (i - 1), Toast.LENGTH_SHORT).show();
+                    }
+//                    else if (y <= getHeight() && y > mPoint[i].y && i == mPoint.length - 1) {
+//                        if (mCallBack != null) {
+//                            mCallBack.onClick(i);
+//                        }
+//                        Toast.makeText(getContext(), "i=" + i, Toast.LENGTH_SHORT).show();
+//                    }
+                }
+                return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+
+    public interface CallBack {
+        public void onClick(int pos);
     }
 
     /**
@@ -113,18 +155,19 @@ public class ColumnarView extends View {
 
         int startLeftOffset = dip2px(getContext(), 16);
         int spacing = dip2px(getContext(), 12);
-        int columnarHeight = dip2px(getContext(), 40);
+        int columnarHeight = dip2px(getContext(), 20);
+        int columnarBottom = dip2px(getContext(), 30);
 
         int left = getPaddingLeft() + mWidth / 4;
 
         int top = 0;
 
-        for (int i = 0; i < columnarDatas.size(); i++) {
+        for (int i = 0; i < mColumnarDatas.size(); i++) {
 
 
-            top = getPaddingTop() + columnarHeight * i + spacing * i;
+            top = columnarHeight * i + columnarBottom * i;
 
-            ColumnarData columnarData = columnarDatas.get(i);
+            ColumnarData columnarData = mColumnarDatas.get(i);
 
             float textWidth = textPaint.measureText(columnarData.name);
             if (getPaddingLeft() + textWidth < left + startLeftOffset) {
@@ -132,14 +175,14 @@ public class ColumnarView extends View {
                 textPaint.setTextAlign(Paint.Align.RIGHT);
                 canvas.drawText(columnarData.name,
                         getPaddingLeft() + textWidth,
-                        top + dip2px(getContext(), 25),
+                        getPaddingTop() + top + dip2px(getContext(), 20),
                         textPaint);
             } else {
                 textPaint.setTextAlign(Paint.Align.LEFT);
 
                 canvas.save();
 
-                canvas.translate(getPaddingLeft(), top + dip2px(getContext(), 5));
+                canvas.translate(getPaddingLeft(), getPaddingTop() + top + dip2px(getContext(), 2));
                 //实现文字换行显示
                 StaticLayout myStaticLayout
                         = new StaticLayout(columnarData.name,
@@ -183,17 +226,17 @@ public class ColumnarView extends View {
             //float left, float top, float right, float bottom, @NonNull Paint paint
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 canvas.drawRoundRect(left + startLeftOffset,
-                        top,
+                        getPaddingTop() + top,
                         left + startLeftOffset + currentBarProgress[i],
-                        columnarHeight + top,
+                        getPaddingTop() + columnarBottom + top,
                         (float) dip2px(getContext(), 2),
                         (float) dip2px(getContext(), 2),
                         columnarPaint);
             } else {
                 canvas.drawRect(left + startLeftOffset,
-                        top,
+                        getPaddingTop() + top,
                         left + startLeftOffset + currentBarProgress[i],
-                        columnarHeight + top,
+                        getPaddingTop() + columnarBottom + top,
                         columnarPaint);
             }
 
@@ -208,7 +251,11 @@ public class ColumnarView extends View {
             textPaint.setTextAlign(Paint.Align.LEFT);
             canvas.drawText(formatNum,
                     left + startLeftOffset + currentBarProgress[i] + spacing,
-                    top + dip2px(getContext(), 25), textPaint);
+                    getPaddingTop() + top + dip2px(getContext(), 20), textPaint);
+
+            mPoint[i] = new Point();
+            mPoint[i].x = (int) (getPaddingTop() + top);
+            mPoint[i].y = (int) (getPaddingTop() + columnarBottom + top);
         }
     }
 
@@ -217,12 +264,21 @@ public class ColumnarView extends View {
         return this;
     }
 
-    public void setColumnarDatas(List<ColumnarData> columnarDatas) {
-        this.columnarDatas = columnarDatas;
-        int size = columnarDatas.size();
+    public void setmColumnarDatas(List<ColumnarData> columnarDatas) {
+        if (columnarDatas == null || columnarDatas.isEmpty()) {
+            return;
+        }
+        this.mColumnarDatas.clear();
+        this.mColumnarDatas.addAll(columnarDatas);
+        int size = this.mColumnarDatas.size();
         currentBarProgress = new int[size];
         currentCount = new int[size];
+        mPoint = new Point[size];
         postInvalidate();
+    }
+
+    public void setCallBack(CallBack callBack) {
+        this.mCallBack = callBack;
     }
 
     public static class ColumnarData {
