@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,7 @@ public class CirclePercentView extends View {
     /**
      * 总数
      */
-    private float totalNum;
+//    private float totalNum = 100.0f;
 
     private List<CirclePercentData> circlePercentDatas;
 
@@ -73,7 +74,7 @@ public class CirclePercentView extends View {
     private int circlePercentPointPos;
     private int circlePercentLinePos;
 
-    private int[] currentProgress;
+    private float[] currentProgress;
 
 
     private final static float START_ANGLE = -45;
@@ -126,7 +127,7 @@ public class CirclePercentView extends View {
 
         centerX = getWidth() / 2;
         centerY = getHeight() / 2;
-        radius = (Math.min(getWidth(), getHeight()) - Math.min(startX, startY)) / 2 - dip2px(getContext(), 10);
+        radius = (Math.min(getWidth(), getHeight()) - Math.min(startX, startY)) / 2 - dip2px(getContext(), 14);
         //设置倾斜角度的距离
         qianxiejiaoduY = dip2px(getContext(), 14);
         qianxiejiaoduX = dip2px(getContext(), 14);
@@ -182,16 +183,12 @@ public class CirclePercentView extends View {
      * @param canvas
      */
     private void drawCirclePercent(Canvas canvas) {
-//        if (circlePercentPos == circlePercentDatas.size() - 1) {
-//            return;
-//        }
         //改为作为成员变量
         float startAngle = START_ANGLE;
         //遍历画占比
         for (int i = 0; i < circlePercentDatas.size(); i++) {
-//        int i = pos;
             CirclePercentData circlePercentData = circlePercentDatas.get(i);
-            int v = (int) (circlePercentData.num / totalNum * 360);
+            float v = circlePercentData.percentage * 360;
             //v+1为了重合在一起
             if (currentProgress[i] < v + 1) {
                 currentProgress[i] += 5;
@@ -227,13 +224,13 @@ public class CirclePercentView extends View {
 
         //遍历画占比
         for (int i = 0; i < circlePercentPointPos; i++) {
-//        int i = pos;
+
             CirclePercentData circlePercentData = circlePercentDatas.get(i);
-            float v = circlePercentData.num / totalNum * 360;
+            float v = circlePercentData.percentage * 360;
             //获取前一个
             if (i > 0) {
                 CirclePercentData preCirclePercentData = circlePercentDatas.get(i - 1);
-                preV = preCirclePercentData.num / totalNum * 360;
+                preV = preCirclePercentData.percentage * 360;
             }
             //获取前一个位置和
             preAngle = preAngle + preV;
@@ -257,7 +254,9 @@ public class CirclePercentView extends View {
             //设置颜色
             pointPaint.setColor(circlePercentData.resIdColor);
             //画出点的位置
-            canvas.drawCircle(x, y, dip2px(getContext(), 1), pointPaint);
+            if (circlePercentData.showLine) {
+                canvas.drawCircle(x, y, dip2px(getContext(), 1), pointPaint);
+            }
         }
     }
 
@@ -274,13 +273,12 @@ public class CirclePercentView extends View {
 
         //遍历画占比
         for (int i = 0; i < circlePercentLinePos; i++) {
-//        int i = pos;
             CirclePercentData circlePercentData = circlePercentDatas.get(i);
-            float v = circlePercentData.num / totalNum * 360;
+            float v = circlePercentData.percentage * 360;
             //获取前一个
             if (i > 0) {
                 CirclePercentData preCirclePercentData = circlePercentDatas.get(i - 1);
-                preV = preCirclePercentData.num / totalNum * 360;
+                preV = preCirclePercentData.percentage * 360;
             }
             //获取前一个位置和
             preAngle = preAngle + preV;
@@ -325,25 +323,27 @@ public class CirclePercentView extends View {
                         leanX = x;
                         leanY = y;
 
-                        endOffsetX = getWidth() - paddingLeftAndRight;
-                        endOffsetY = y ;
+                        endOffsetX = getWidth() - getPaddingRight();
+                        endOffsetY = y;
                     } else {
                         //设置一个倾向角度
                         leanX = x + qianxiejiaoduX;
                         leanY = y + qianxiejiaoduY;
 
-                        endOffsetX = getWidth() - paddingLeftAndRight;
+                        endOffsetX = getWidth() - getPaddingRight();
                         endOffsetY = y + qianxiejiaoduY;
                     }
 
                     textPaint.setColor(getResources().getColor(R.color.color_333333));
                     //设置文字
                     //百分比
-                    canvas.drawText(
-                            df.format(circlePercentData.num / totalNum),
-                            endOffsetX,
-                            leanY - textNeedHeight,
-                            textPaint);
+                    if (circlePercentData.showLine) {
+                        canvas.drawText(
+                                circlePercentData.percentageName,
+                                endOffsetX,
+                                leanY - textNeedHeight,
+                                textPaint);
+                    }
 
                     //标题
 //                    canvas.drawText(
@@ -369,7 +369,9 @@ public class CirclePercentView extends View {
                             0.0f,
                             false);
 
-                    myStaticLayout.draw(canvas);
+                    if (circlePercentData.showLine) {
+                        myStaticLayout.draw(canvas);
+                    }
 
                     //恢复图层
                     canvas.restore();
@@ -380,25 +382,27 @@ public class CirclePercentView extends View {
                         leanX = x;
                         leanY = y;
 
-                        endOffsetX = getWidth() - paddingLeftAndRight;
+                        endOffsetX = getWidth() - getPaddingRight();
                         endOffsetY = y;
                     } else {
                         //设置一个倾向角度
                         leanX = x + qianxiejiaoduX;
                         leanY = y - qianxiejiaoduY;
 
-                        endOffsetX = getWidth() - paddingLeftAndRight;
+                        endOffsetX = getWidth() - getPaddingRight();
                         endOffsetY = y - qianxiejiaoduY;
                     }
 
                     textPaint.setColor(getResources().getColor(R.color.color_333333));
                     //设置文字
                     //百分比
-                    canvas.drawText(
-                            df.format(circlePercentData.num / totalNum),
-                            endOffsetX,
-                            leanY - textNeedHeight,
-                            textPaint);
+                    if (circlePercentData.showLine) {
+                        canvas.drawText(
+                                circlePercentData.percentageName,
+                                endOffsetX,
+                                leanY - textNeedHeight,
+                                textPaint);
+                    }
 
                     //标题
 //                    canvas.drawText(
@@ -423,7 +427,9 @@ public class CirclePercentView extends View {
                             0.0f,
                             false);
 
-                    myStaticLayout.draw(canvas);
+                    if (circlePercentData.showLine) {
+                        myStaticLayout.draw(canvas);
+                    }
 
                     //恢复图层
                     canvas.restore();
@@ -438,30 +444,31 @@ public class CirclePercentView extends View {
                 if (y > centerY) {
 
 
-
                     if (halfAngle >= 135) {
                         leanX = x;
                         leanY = y;
 
-                        endOffsetX =  0 + paddingLeftAndRight;
+                        endOffsetX = 0 + getPaddingLeft();
                         endOffsetY = y;
                     } else {
                         //设置一个倾向角度
                         leanX = x - qianxiejiaoduX;
                         leanY = y + qianxiejiaoduY;
 
-                        endOffsetX = 0 + paddingLeftAndRight;
+                        endOffsetX = 0 + getPaddingLeft();
                         endOffsetY = y + qianxiejiaoduY;
                     }
 
                     textPaint.setColor(getResources().getColor(R.color.color_333333));
                     //设置文字
                     //百分比
-                    canvas.drawText(
-                            df.format(circlePercentData.num / totalNum),
-                            endOffsetX,
-                            leanY - textNeedHeight,
-                            textPaint);
+                    if (circlePercentData.showLine) {
+                        canvas.drawText(
+                                circlePercentData.percentageName,
+                                endOffsetX,
+                                leanY - textNeedHeight,
+                                textPaint);
+                    }
 
                     //标题
 //                    canvas.drawText(
@@ -486,7 +493,9 @@ public class CirclePercentView extends View {
                             0.0f,
                             false);
 
-                    myStaticLayout.draw(canvas);
+                    if (circlePercentData.showLine) {
+                        myStaticLayout.draw(canvas);
+                    }
 
                     //恢复图层
                     canvas.restore();
@@ -494,30 +503,31 @@ public class CirclePercentView extends View {
                 } else {
 
 
-
                     if (halfAngle <= 250) {
                         leanX = x;
                         leanY = y;
 
-                        endOffsetX =  0 + paddingLeftAndRight;
+                        endOffsetX = 0 + getPaddingLeft();
                         endOffsetY = y;
                     } else {
                         //设置一个倾向角度
                         leanX = x - qianxiejiaoduX;
                         leanY = y - qianxiejiaoduY;
 
-                        endOffsetX = 0 + paddingLeftAndRight;
+                        endOffsetX = 0 + getPaddingLeft();
                         endOffsetY = y - qianxiejiaoduY;
                     }
 
                     textPaint.setColor(getResources().getColor(R.color.color_333333));
                     //设置文字
                     //百分比
-                    canvas.drawText(
-                            df.format(circlePercentData.num / totalNum),
-                            endOffsetX,
-                            leanY - textNeedHeight,
-                            textPaint);
+                    if (circlePercentData.showLine) {
+                        canvas.drawText(
+                                circlePercentData.percentageName,
+                                endOffsetX,
+                                leanY - textNeedHeight,
+                                textPaint);
+                    }
 
 
                     //标题
@@ -543,7 +553,9 @@ public class CirclePercentView extends View {
                             0.0f,
                             false);
 
-                    myStaticLayout.draw(canvas);
+                    if (circlePercentData.showLine) {
+                        myStaticLayout.draw(canvas);
+                    }
 
                     //恢复图层
                     canvas.restore();
@@ -555,19 +567,16 @@ public class CirclePercentView extends View {
             path.lineTo(leanX, leanY);
             path.lineTo(endOffsetX, endOffsetY);
 
-            canvas.drawPath(path, linePaint);
+            if (circlePercentData.showLine) {
+                canvas.drawPath(path, linePaint);
+            }
         }
-    }
-
-    public CirclePercentView setTotalNum(int totalNum) {
-        this.totalNum = totalNum;
-        return this;
     }
 
     public CirclePercentView setCirclePercentDatas(List<CirclePercentData> circlePercentDatas) {
         this.circlePercentDatas = circlePercentDatas;
         int size = circlePercentDatas.size();
-        currentProgress = new int[size];
+        currentProgress = new float[size];
         return this;
     }
 
@@ -579,7 +588,7 @@ public class CirclePercentView extends View {
         final int size = circlePercentDatas.size();
         postInvalidate();
         circlePercentPointAnimator = ValueAnimator.ofInt(0, size);
-        circlePercentPointAnimator.setDuration(size * 100);
+        circlePercentPointAnimator.setDuration(size * 10);
         circlePercentPointAnimator.setInterpolator(new LinearInterpolator());
         circlePercentPointAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -594,7 +603,7 @@ public class CirclePercentView extends View {
         circlePercentPointAnimator.start();
 
         circlePercentLineAnimator = ValueAnimator.ofInt(0, size);
-        circlePercentLineAnimator.setDuration(size * 100);
+        circlePercentLineAnimator.setDuration(size * 10);
         circlePercentLineAnimator.setInterpolator(new LinearInterpolator());
         circlePercentLineAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -624,10 +633,6 @@ public class CirclePercentView extends View {
     }
 
     public void cancel() {
-//        if (circlePercentAnimator != null) {
-//            circlePercentAnimator.cancel();
-//            circlePercentAnimator = null;
-//        }
         if (circlePercentPointAnimator != null) {
             circlePercentPointAnimator.cancel();
             circlePercentPointAnimator = null;
@@ -639,27 +644,45 @@ public class CirclePercentView extends View {
     }
 
     public static class CirclePercentData {
-        public float num;//当前的数量
         public String name;//科目类型
         public int resIdColor;//圆盘的颜色
+        public float percentage;//百分比
+        public String percentageName;//百分比
+        public boolean showLine = true;//是否展示线
 
-        public CirclePercentData(int num, String name, int resIdColor) {
-            this.num = num;
+        public CirclePercentData(String name, int resIdColor, float percentage) {
             this.name = name;
             this.resIdColor = resIdColor;
+            this.percentage = percentage < 0 ? 0 : percentage;
+        }
+
+        public CirclePercentData(String name, int resIdColor, float percentage, boolean showLine) {
+            this.name = name;
+            this.resIdColor = resIdColor;
+            this.percentage = percentage < 0 ? 0 : percentage;
+            this.showLine = showLine;
+        }
+
+        public CirclePercentData(String name, int resIdColor, float percentage, String percentageName, boolean showLine) {
+            this.name = name;
+            this.resIdColor = resIdColor;
+            this.percentage = percentage < 0 ? 0 : percentage;
+            this.percentageName = percentageName;
+            this.showLine = showLine;
         }
     }
 
     /**
      * 提供构建方法创建
      *
-     * @param num
      * @param name
-     * @param resIdColor
+     * @param name
+     * @param percentage
+     * @param percentageName
      * @return
      */
-    public static CirclePercentData createCirclePercentData(int num, String name, int resIdColor) {
-        CirclePercentData circlePercentData = new CirclePercentData(num, name, resIdColor);
+    public static CirclePercentData createCirclePercentData(String name, int resIdColor, float percentage, String percentageName, boolean showLine) {
+        CirclePercentData circlePercentData = new CirclePercentData(name, resIdColor, percentage, percentageName, showLine);
         return circlePercentData;
     }
 

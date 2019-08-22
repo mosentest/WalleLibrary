@@ -10,16 +10,16 @@
 
     <!--
         android:background="@android:color/darker_gray"-->
-    <mo.wall.org.circlepercent.CirclePercentLineView
+    <mo.wall.org.circlepercent.CirclePercentView
         android:id="@+id/cpv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/w_dp_300"
         android:visibility="visible" />
 
     <mo.wall.org.circlepercent.ColumnarView
         android:id="@+id/cv"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/w_dp_1"
-        android:layout_height="@dimen/w_dp_250"
         android:visibility="visible" />
 </LinearLayout>
