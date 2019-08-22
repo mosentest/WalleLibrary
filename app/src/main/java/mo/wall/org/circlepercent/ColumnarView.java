@@ -264,7 +264,7 @@ public class ColumnarView extends View {
         return this;
     }
 
-    public void setmColumnarDatas(List<ColumnarData> columnarDatas) {
+    public void setColumnarDatas(List<ColumnarData> columnarDatas) {
         if (columnarDatas == null || columnarDatas.isEmpty()) {
             return;
         }
