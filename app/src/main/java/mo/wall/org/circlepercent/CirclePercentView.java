@@ -88,7 +88,7 @@ public class CirclePercentView extends View {
 
     private int textNeedHeight;
 
-    private int paddingLeftAndRight;
+//    private int paddingLeftAndRight;
 
     private int textLeftRight;
 
@@ -134,9 +134,9 @@ public class CirclePercentView extends View {
         //文字上下的距离
         textNeedHeight = dip2px(getContext(), 4);
         //左右内边距
-        paddingLeftAndRight = dip2px(getContext(), 16);
+//        paddingLeftAndRight = dip2px(getContext(), 16);
         //下面字体离左右的距离
-        textLeftRight = dip2px(getContext(), 20);
+        textLeftRight = dip2px(getContext(), 10);
 
     }
 
