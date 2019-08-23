@@ -74,32 +74,18 @@ public class ColumnarView extends View {
     private int columnarBottom;
 
 
+    private float lastUpX;
     private float lastUpY;
+
+
+    private static long mLastClickTime;
+    private final static long timeInterval = 1000L;
+
 
     /**
      * 判定为拖动的最小移动像素数
      */
     private int mTouchSlop;
-
-    private boolean clickEnable = true;
-
-    private Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    Toast.makeText(getContext(), "i=" + msg.arg1, Toast.LENGTH_SHORT).show();
-                    if (mCallBack != null) {
-                        mCallBack.onClick(msg.arg1);
-                        clickEnable = true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 
     public ColumnarView(Context context) {
         super(context);
@@ -251,45 +237,47 @@ public class ColumnarView extends View {
         return getPaddingTop() + columnarBottom + top + getPaddingBottom();
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        float absY;
+        float absX;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //实现点击效果
                 lastUpY = event.getY();
-                for (int i = 1; i < mPoint.length; i++) {
-                    if (lastUpY > mPoint[i - 1].y && lastUpY <= mPoint[i].y) {
-                        if (handler != null && !handler.hasMessages(0) && clickEnable) {
-                            Message message = handler.obtainMessage();
-                            message.what = 0;
-                            message.arg1 = i;
-                            handler.sendMessageDelayed(message, 500);
-                            clickEnable = false;
+                lastUpX = event.getX();
+                return true;
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                absY = Math.abs(event.getY() - lastUpY);
+                absX = Math.abs(event.getX() - lastUpX);
+                //在区域内，才响应事件
+                if (absY < mTouchSlop && absX < mTouchSlop) {
+                    //遍历位置
+                    int pos = -1;
+                    for (int i = 1; i < mPoint.length; i++) {
+                        if (lastUpY > mPoint[i - 1].y && lastUpY <= mPoint[i].y) {
+                            //1-end位置
+                            pos = i;
+                        } else if (lastUpY <= mPoint[i - 1].y && (i - 1) == 0) {
+                            ////第一个位置
+                            pos = i - 1;
                         }
-                    } else if (lastUpY <= mPoint[i - 1].y && (i - 1) == 0) {
-                        if (handler != null && !handler.hasMessages(0) && clickEnable) {
-                            Message message = handler.obtainMessage();
-                            message.what = 0;
-                            message.arg1 = i - 1;
-                            handler.sendMessageDelayed(message, 500);
-                            clickEnable = false;
+                    }
+                    long nowTime = System.currentTimeMillis();
+                    if (pos != -1 && nowTime - mLastClickTime > timeInterval) {
+                        mLastClickTime = nowTime;
+                        Toast.makeText(getContext(), "i=" + pos + ",nowTime:" + nowTime, Toast.LENGTH_SHORT).show();
+                        if (mCallBack != null) {
+                            // 单次点击事件
+                            mCallBack.onClick(pos);
                         }
                     }
                 }
                 return true;
-            case MotionEvent.ACTION_CANCEL:
-            case MotionEvent.ACTION_MOVE:
-                float abs = Math.abs(event.getY() - lastUpY);
-                if (mTouchSlop < abs) {
-                    if (handler != null) {
-                        handler.removeCallbacksAndMessages(null);
-                    }
-                }
-                clickEnable = true;
-                break;
-            case MotionEvent.ACTION_UP:
-                clickEnable = true;
-                break;
         }
         return super.onTouchEvent(event);
     }
@@ -445,9 +433,9 @@ public class ColumnarView extends View {
         this.mCallBack = callBack;
     }
 
-    private void setClickEnable(boolean clickEnable) {
-        this.clickEnable = clickEnable;
-    }
+//    private void setClickEnable(boolean clickEnable) {
+//        this.clickEnable = clickEnable;
+//    }
 
     public interface CallBack {
         public void onClick(int pos);
