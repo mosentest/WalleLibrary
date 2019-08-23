@@ -48,12 +48,12 @@ class CirclePercentActivity : BaseAppCompatActivity() {
                         CirclePercentView.createCirclePercentData("我碰红色人我", resources.getColor(R.color.google_green), 0.1f, "10%", true)))
                 .start()
 
-        mCv.setTotalCount(60f).setColumnarDatas(
+        mCv.setTotalCount(70f).setColumnarDatas(
                 Arrays.asList(
                         ColumnarView.createColumnarData("我爱中", 30f, resources.getColor(R.color.google_red)),
-                        ColumnarView.createColumnarData("2我爱中国，爱共产党，我爱中国", 40f, resources.getColor(R.color.google_green)),
+                        ColumnarView.createColumnarData("2我爱中国，爱共产党，我爱中国qeaaa", 40f, resources.getColor(R.color.google_green)),
                         ColumnarView.createColumnarData("3我爱中国，爱", 50f, resources.getColor(R.color.google_yellow)),
-                        ColumnarView.createColumnarData("4我爱中国，", 60f, resources.getColor(R.color.google_blue)),
+                        ColumnarView.createColumnarData("4我爱中国，", 70f, resources.getColor(R.color.google_blue)),
                         ColumnarView.createColumnarData("5我爱中国，爱共", 50f, resources.getColor(R.color.colorAccent))
                 )
         );

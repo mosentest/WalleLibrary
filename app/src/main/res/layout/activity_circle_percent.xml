@@ -20,6 +20,7 @@
         android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
         android:padding="@dimen/w_dp_1"
         android:visibility="visible" />
 </LinearLayout>

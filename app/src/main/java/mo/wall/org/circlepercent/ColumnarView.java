@@ -5,16 +5,26 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
+import android.text.TextDirectionHeuristic;
+import android.text.TextDirectionHeuristics;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +68,39 @@ public class ColumnarView extends View {
 
     private CallBack mCallBack;
 
+    private int startLeftOffset;
+    private int spacing;
+    private int columnarHeight;
+    private int columnarBottom;
+
+
+    private float lastUpY;
+
+    /**
+     * 判定为拖动的最小移动像素数
+     */
+    private int mTouchSlop;
+
+    private boolean clickEnable = true;
+
+    private Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(getContext(), "i=" + msg.arg1, Toast.LENGTH_SHORT).show();
+                    if (mCallBack != null) {
+                        mCallBack.onClick(msg.arg1);
+                        clickEnable = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     public ColumnarView(Context context) {
         super(context);
         init();
@@ -82,6 +125,15 @@ public class ColumnarView extends View {
 
     private void init() {
 
+        ViewConfiguration configuration = ViewConfiguration.get(getContext());
+        // 获取TouchSlop值
+        mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+
+        startLeftOffset = dip2px(getContext(), 10);
+        spacing = dip2px(getContext(), 12);
+        columnarHeight = dip2px(getContext(), 25);
+        columnarBottom = dip2px(getContext(), 30);
+
         columnarPaint = new Paint();
 
         columnarPaint.setStyle(Paint.Style.FILL);
@@ -105,40 +157,143 @@ public class ColumnarView extends View {
         mHeight = getHeight();
     }
 
+
+    /**
+     * 比onDraw先执行
+     * <p>
+     * 一个MeasureSpec封装了父布局传递给子布局的布局要求，每个MeasureSpec代表了一组宽度和高度的要求。
+     * 一个MeasureSpec由大小和模式组成
+     * 它有三种模式：UNSPECIFIED(未指定),父元素部队自元素施加任何束缚，子元素可以得到任意想要的大小;
+     * EXACTLY(完全)，父元素决定自元素的确切大小，子元素将被限定在给定的边界里而忽略它本身大小；
+     * AT_MOST(至多)，子元素至多达到指定大小的值。
+     * <p>
+     * 它常用的三个函数：
+     * 1.static int getMode(int measureSpec):根据提供的测量值(格式)提取模式(上述三个模式之一)
+     * 2.static int getSize(int measureSpec):根据提供的测量值(格式)提取大小值(这个大小也就是我们通常所说的大小)
+     * 3.static int makeMeasureSpec(int size,int mode):根据提供的大小值和模式创建一个测量值(格式)
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        final int minimumWidth = getSuggestedMinimumWidth();
+        final int minimumHeight = getSuggestedMinimumHeight();
+        Log.e(TAG, "---minimumWidth = " + minimumWidth + "");
+        Log.e(TAG, "---minimumHeight = " + minimumHeight + "");
+        int width = measureWidth(minimumWidth, widthMeasureSpec);
+        int height = measureHeight(minimumHeight, heightMeasureSpec);
+        setMeasuredDimension(width, height);
+    }
+
+    private int measureWidth(int defaultWidth, int measureSpec) {
+
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        Log.e(TAG, "---speSize = " + specSize + "");
+
+        switch (specMode) {
+            //wrap_content
+            case MeasureSpec.AT_MOST:
+                defaultWidth = specSize;
+
+                Log.e(TAG, "---speMode = AT_MOST");
+                break;
+            //match_parent
+            case MeasureSpec.EXACTLY:
+                Log.e(TAG, "---speMode = EXACTLY");
+                defaultWidth = specSize;
+                break;
+            case MeasureSpec.UNSPECIFIED:
+                Log.e(TAG, "---speMode = UNSPECIFIED");
+                defaultWidth = Math.max(defaultWidth, specSize);
+        }
+        return defaultWidth;
+    }
+
+
+    private int measureHeight(int defaultHeight, int measureSpec) {
+
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        Log.e(TAG, "---speSize = " + specSize + "");
+
+        switch (specMode) {
+            case MeasureSpec.AT_MOST:
+                int calculateHeight = calculateHeight();
+                defaultHeight = Math.max(1, calculateHeight);
+                Log.e(TAG, "---speMode = AT_MOST");
+                break;
+            case MeasureSpec.EXACTLY:
+                defaultHeight = specSize;
+                Log.e(TAG, "---speSize = EXACTLY");
+                break;
+            case MeasureSpec.UNSPECIFIED:
+                defaultHeight = Math.max(defaultHeight, specSize);
+                Log.e(TAG, "---speSize = UNSPECIFIED");
+//        1.基准点是baseline
+//        2.ascent：是baseline之上至字符最高处的距离
+//        3.descent：是baseline之下至字符最低处的距离
+//        4.leading：是上一行字符的descent到下一行的ascent之间的距离,也就是相邻行间的空白距离
+//        5.top：是指的是最高字符到baseline的值,即ascent的最大值
+//        6.bottom：是指最低字符到baseline的值,即descent的最大值
+
+                break;
+        }
+        return defaultHeight;
+
+
+    }
+
+    private int calculateHeight() {
+        int top = 0;
+        for (int i = 0; i < mColumnarDatas.size(); i++) {
+            top = columnarHeight * i + columnarBottom * i;
+        }
+        return getPaddingTop() + columnarBottom + top + getPaddingBottom();
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //实现点击效果
-                float y = event.getY();
+                lastUpY = event.getY();
                 for (int i = 1; i < mPoint.length; i++) {
-                    if (y > mPoint[i - 1].y && y <= mPoint[i].y) {
-                        if (mCallBack != null) {
-                            mCallBack.onClick(i);
+                    if (lastUpY > mPoint[i - 1].y && lastUpY <= mPoint[i].y) {
+                        if (handler != null && !handler.hasMessages(0) && clickEnable) {
+                            Message message = handler.obtainMessage();
+                            message.what = 0;
+                            message.arg1 = i;
+                            handler.sendMessageDelayed(message, 500);
+                            clickEnable = false;
                         }
-                        Toast.makeText(getContext(), "i=" + i, Toast.LENGTH_SHORT).show();
-                    } else if (y <= mPoint[i - 1].y && (i - 1) == 0) {
-                        if (mCallBack != null) {
-                            mCallBack.onClick(i);
+                    } else if (lastUpY <= mPoint[i - 1].y && (i - 1) == 0) {
+                        if (handler != null && !handler.hasMessages(0) && clickEnable) {
+                            Message message = handler.obtainMessage();
+                            message.what = 0;
+                            message.arg1 = i - 1;
+                            handler.sendMessageDelayed(message, 500);
+                            clickEnable = false;
                         }
-                        Toast.makeText(getContext(), "i=" + (i - 1), Toast.LENGTH_SHORT).show();
                     }
-//                    else if (y <= getHeight() && y > mPoint[i].y && i == mPoint.length - 1) {
-//                        if (mCallBack != null) {
-//                            mCallBack.onClick(i);
-//                        }
-//                        Toast.makeText(getContext(), "i=" + i, Toast.LENGTH_SHORT).show();
-//                    }
                 }
                 return true;
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_MOVE:
+                float abs = Math.abs(event.getY() - lastUpY);
+                if (mTouchSlop < abs) {
+                    if (handler != null) {
+                        handler.removeCallbacksAndMessages(null);
+                    }
+                }
+                clickEnable = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                clickEnable = true;
+                break;
         }
         return super.onTouchEvent(event);
     }
 
-
-    public interface CallBack {
-        public void onClick(int pos);
-    }
 
     /**
      * ==================================
@@ -153,12 +308,8 @@ public class ColumnarView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int startLeftOffset = dip2px(getContext(), 16);
-        int spacing = dip2px(getContext(), 12);
-        int columnarHeight = dip2px(getContext(), 20);
-        int columnarBottom = dip2px(getContext(), 30);
-
-        int left = getPaddingLeft() + mWidth / 4;
+        int size = mWidth / 4;
+        int left = getPaddingLeft() + size;
 
         int top = 0;
 
@@ -183,18 +334,31 @@ public class ColumnarView extends View {
                 canvas.save();
 
                 canvas.translate(getPaddingLeft(), getPaddingTop() + top + dip2px(getContext(), 2));
+
                 //实现文字换行显示
+                //为了忽悠设置2行的长度...
+                CharSequence ellipsize = TextUtils.ellipsize(columnarData.name,
+                        textPaint,
+                        left + size - startLeftOffset,
+                        TextUtils.TruncateAt.END);
+                Log.i(TAG, "ellipsize>>" + ellipsize);
                 StaticLayout myStaticLayout
-                        = new StaticLayout(columnarData.name,
+                        = new StaticLayout(ellipsize.toString(),
                         textPaint,
                         left,
                         Layout.Alignment.ALIGN_NORMAL,
-                        1.0f,
-                        0.0f,
+                        1.0F,
+                        0.0F,
                         false);
-
+                //为了反射，想控制2行...
+                try {
+                    Field mMaxLines = myStaticLayout.getClass().getDeclaredField("mLineCount");
+                    mMaxLines.setAccessible(true);
+                    mMaxLines.setInt(myStaticLayout, 2);
+                } catch (Exception e) {
+                    Log.wtf(TAG, e);
+                }
                 myStaticLayout.draw(canvas);
-
                 //恢复图层
                 canvas.restore();
             }
@@ -242,10 +406,10 @@ public class ColumnarView extends View {
 
             if (currentCount[i] < (int) columnarData.count) {
                 currentCount[i] += 1;
-                textPaint.setTextScaleX(currentCount[i] / columnarData.count * 1);
+//                textPaint.setTextScaleX(currentCount[i] / columnarData.count * 1);
                 postInvalidateDelayed(20);
             } else {
-                textPaint.setTextScaleX(1);
+//                textPaint.setTextScaleX(1);
             }
             //这是画字体
             textPaint.setTextAlign(Paint.Align.LEFT);
@@ -279,6 +443,14 @@ public class ColumnarView extends View {
 
     public void setCallBack(CallBack callBack) {
         this.mCallBack = callBack;
+    }
+
+    private void setClickEnable(boolean clickEnable) {
+        this.clickEnable = clickEnable;
+    }
+
+    public interface CallBack {
+        public void onClick(int pos);
     }
 
     public static class ColumnarData {
