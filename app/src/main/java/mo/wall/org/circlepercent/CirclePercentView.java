@@ -425,10 +425,10 @@ public class CirclePercentView extends View {
 
                     //设置一个倾向角度
                     leanX = x - qianxiejiaoduX;
-                    leanY = y + yLeftPy - (yBottomPx < 80 ? yBottomPx / 2 : 0);
+                    leanY = y + yLeftPy - (yBottomPx < 80 ? yBottomPx / 2 : -yBottomPx * 1 / 3);
 
                     endOffsetX = 0 + getPaddingLeft();
-                    endOffsetY = y + yLeftPy - (yBottomPx < 80 ? yBottomPx / 2 : 0);
+                    endOffsetY = y + yLeftPy - (yBottomPx < 80 ? yBottomPx / 2 : -yBottomPx * 1 / 3);
 
 
                     textPaint.setColor(getResources().getColor(R.color.color_333333));
