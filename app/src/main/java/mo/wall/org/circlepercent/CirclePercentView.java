@@ -13,9 +13,7 @@ import android.support.annotation.RequiresApi;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -294,7 +292,7 @@ public class CirclePercentView extends View {
             //获取弧度中心位置
             float halfAngle = (startAngle - preAngle) / 2 + preAngle;
 
-            Log.i(TAG, "onDraw.preAngle>>" + preAngle + ",startAngle>>" + startAngle + ",halfAngle>>" + halfAngle);
+            //Log.i(TAG, "onDraw.preAngle>>" + preAngle + ",startAngle>>" + startAngle + ",halfAngle>>" + halfAngle);
 
             //https://www.jianshu.com/p/754b356239c1
             //https://blog.csdn.net/liaoyi_/article/details/61914388
@@ -316,9 +314,12 @@ public class CirclePercentView extends View {
             float endOffsetY = 0;
             Path path = new Path();
             path.moveTo(x, y);
+
             float yRightPy = (1 - x / (getWidth() * 0.75f)) * 100;
             float yLeftPy = x / (getWidth() * 0.75f) * 100;
+
             float yBottomPx = y / (getHeight() * 0.85f) * 100;
+
             if (x > centerX) {
 
                 //控制位置的对齐方向
@@ -330,10 +331,10 @@ public class CirclePercentView extends View {
 
                     //设置一个倾向角度
                     leanX = x + qianxiejiaoduX;
-                    leanY = y + yRightPy + (yBottomPx > 85 ? yBottomPx : 0);
+                    leanY = y + yRightPy + (yBottomPx > 85 ? yBottomPx : yBottomPx / 2);
 
                     endOffsetX = getWidth() - getPaddingRight();
-                    endOffsetY = y + yRightPy + (yBottomPx > 85 ? yBottomPx : 0);
+                    endOffsetY = y + yRightPy + (yBottomPx > 85 ? yBottomPx : yBottomPx / 2);
 
 
                     textPaint.setColor(getResources().getColor(R.color.color_333333));
@@ -425,10 +426,10 @@ public class CirclePercentView extends View {
 
                     //设置一个倾向角度
                     leanX = x - qianxiejiaoduX;
-                    leanY = y + yLeftPy - (yBottomPx < 80 ? yBottomPx / 2 : -yBottomPx * 1 / 3);
+                    leanY = y + yLeftPy - (yBottomPx < 80 ? yBottomPx / 2 : yBottomPx < 90 ? yBottomPx / 3 : -yBottomPx * 1 / 3);
 
                     endOffsetX = 0 + getPaddingLeft();
-                    endOffsetY = y + yLeftPy - (yBottomPx < 80 ? yBottomPx / 2 : -yBottomPx * 1 / 3);
+                    endOffsetY = y + yLeftPy - (yBottomPx < 80 ? yBottomPx / 2 : yBottomPx < 90 ? yBottomPx / 3 : -yBottomPx * 1 / 3);
 
 
                     textPaint.setColor(getResources().getColor(R.color.color_333333));
