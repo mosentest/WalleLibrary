@@ -19,6 +19,7 @@ import mo.wall.org.dropdownmenu.DropDownMenuActivity
 import mo.wall.org.nestedscrolling.NestedScrollingActivity
 import mo.wall.org.nodisplay.NoDisplayActivity
 import mo.wall.org.ntp.NtpActivity
+import mo.wall.org.opengl.OpenGLActivity
 import mo.wall.org.scroll.ScrollActivity
 import mo.wall.org.statusbar.StatusbarActivity
 import mo.wall.org.statusbar2.Statusbar2Activity
@@ -79,6 +80,8 @@ class MainActivity : AppCompatActivity() {
                 "UI学习",
                 0,
                 ""))
+
+        lists?.add(createEntity("opengl", "音视频", 1, OpenGLActivity().javaClass.name))
 
         lists?.add(createEntity("圆盘占比", "画个圆", 1, CirclePercentActivity().javaClass.name))
 
