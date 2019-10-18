@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.hardware.Camera;
 import android.view.Surface;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -65,9 +67,9 @@ public class FixCameraUtils {
      * @param cameraId
      * @param camera
      */
-    public static void setCameraDisplayOrientation(Activity activity,
-                                                   int cameraId,
-                                                   android.hardware.Camera camera) {
+    public static int setCameraDisplayOrientation(Activity activity,
+                                                  int cameraId,
+                                                  android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info =
                 new android.hardware.Camera.CameraInfo();
         android.hardware.Camera.getCameraInfo(cameraId, info);
@@ -97,36 +99,55 @@ public class FixCameraUtils {
             result = (info.orientation - degrees + 360) % 360;
         }
         camera.setDisplayOrientation(result);
+        return result;
     }
 
 
     /**
-     * val sizes = parameters.getSupportedPreviewSizes()
+     * https://blog.csdn.net/qqchenjian318/article/details/77396653
      * <p>
-     * //minWidth 最小起的尺寸
+     * picSize = getPropPictureSize(param.getSupportedPictureSizes(), mConfig.rate, mConfig.minPictureWidth);
+     * param.setPictureSize(picSize.width, picSize.height);
      *
      * @param list
+     * @param th
      * @param minWidth
-     * @param scale
      * @return
      */
-    public Camera.Size getPreviewSize(List<Camera.Size> list, int minWidth, float scale) {
-        for (int i = 0; i < list.size(); i++) {
-            Camera.Size size = list.get(i);
-            if ((size.width > minWidth) && equalRate(size, scale)) {
-                return size;
+    private Camera.Size getPropPreviewSize(List<Camera.Size> list, float th, int minWidth) {
+        Collections.sort(list, sizeComparator);
+
+        int i = 0;
+        for (Camera.Size s : list) {
+            if ((s.height >= minWidth) && equalRate(s, th)) {
+                break;
             }
+            i++;
         }
-        //有可能出现找不到合适的分辨率
-        return null;
+        if (i == list.size()) {
+            i = 0;
+        }
+        return list.get(i);
     }
 
-    public boolean equalRate(Camera.Size s, float rate) {
+    private static boolean equalRate(Camera.Size s, float rate) {
         float r = (float) (s.width) / (float) (s.height);
-        if (Math.abs(r - rate) <= 0.2) {
+        if (Math.abs(r - rate) <= 0.03) {
             return true;
         } else {
             return false;
         }
     }
+
+    private Comparator<Camera.Size> sizeComparator = new Comparator<Camera.Size>() {
+        public int compare(Camera.Size lhs, Camera.Size rhs) {
+            if (lhs.height == rhs.height) {
+                return 0;
+            } else if (lhs.height > rhs.height) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    };
 }

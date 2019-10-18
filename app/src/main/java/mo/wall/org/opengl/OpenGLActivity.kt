@@ -15,7 +15,11 @@ import android.view.TextureView
 import java.io.IOException
 import android.graphics.ImageFormat
 
-
+/**
+ * 1、OpenGL已经诞生很长时间了，1992年7月，SGI公司发布了OpenGL的1.0版本。
+ * 2、应用领域：视频、图形、图片处理，2D/3D游戏引擎开发，科学可视化，医学软件的开发 ，CAD(计算机辅助技术)，
+ * 虚拟实境(AR VR)，AI人工智能
+ */
 class OpenGLActivity : BaseAppCompatActivity(), TextureView.SurfaceTextureListener {
 
 
@@ -68,7 +72,6 @@ class OpenGLActivity : BaseAppCompatActivity(), TextureView.SurfaceTextureListen
         setContentView(R.layout.activity_open_gl)
 
         mIv = findViewById<ImageView>(R.id.iv)
-
 
         val bitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
         mIv.setImageBitmap(bitmap)
@@ -143,6 +146,8 @@ class OpenGLActivity : BaseAppCompatActivity(), TextureView.SurfaceTextureListen
     override fun onDestroy() {
         super.onDestroy()
         if (camera != null) {
+            camera.setPreviewCallback(null)
+            camera.stopPreview()
             camera.release()
         }
     }

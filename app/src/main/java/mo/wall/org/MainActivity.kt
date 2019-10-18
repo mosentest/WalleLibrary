@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import mo.wall.org.autodensity.AutoDensityActivity
+import mo.wall.org.camera1.MedioRecorderCamera1Activity
 import mo.wall.org.circlepercent.CirclePercentActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
@@ -81,7 +82,8 @@ class MainActivity : AppCompatActivity() {
                 0,
                 ""))
 
-        lists?.add(createEntity("opengl", "音视频", 1, OpenGLActivity().javaClass.name))
+        lists?.add(createEntity("TextureView方式", "录视频", 1, MedioRecorderCamera1Activity().javaClass.name))
+        lists?.add(createEntity("opengl入门学习", "音视频", 1, OpenGLActivity().javaClass.name))
 
         lists?.add(createEntity("圆盘占比", "画个圆", 1, CirclePercentActivity().javaClass.name))
 

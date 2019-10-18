@@ -6,30 +6,29 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 手机拨打或接听等状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 读写配置 -->
-    <uses-permission android:name="android.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SETTINGS" /><!-- 读写配置 -->
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" /> <!-- 获取网络信息 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.INTERNET" /><!-- 获取网络信息 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" /> <!-- 读写外部存储 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        tools:ignore="ProtectedPermissions" /><!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读写外部存储 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 获取位置信息 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 相机 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!--录音-->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /><!-- 获取位置信息 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 相机 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!--录音-->
 
     <uses-feature
         android:name="android.hardware.camera.front"
@@ -42,8 +41,11 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 震动 -->
-    <uses-permission android:name="android.permission.VIBRATE" /> <!-- <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" /> -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />  <!-- 震动 -->
+    <uses-permission
+        android:name="android.permission.MANAGE_DEVICE_ADMINS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
@@ -52,6 +54,15 @@
         android:name="android.permission.READ_NETWORK_USAGE_HISTORY"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+
+    <!--0x00020000代表OpenGL ES 2.0版本，3.0版本是0x00030000，3.1版本是0x00030001-->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" /><!--应用程序能够使用OpenGL ES 2.0的API-->
+
+    <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" /><!--使用纹理压缩-->
+    <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
 
     <application
         android:name=".WalleApp"
@@ -62,6 +73,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".opengl.OpenGLActivity"></activity>
+        <activity android:name=".camera1.MedioRecorderCamera1Activity"></activity>
         <activity android:name=".nestedscrolling.NestedScrollingActivity" />
         <activity android:name=".circlepercent.CirclePercentActivity" />
         <activity
