@@ -74,6 +74,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".opengl.OpenGLActivity"></activity>
         <activity android:name=".camera1.MedioRecorderCamera1Activity"></activity>
+        <activity android:name=".opengl2.OpenGLES20Activity"></activity>
+        <activity android:name=".camera2.Camera2Activity"></activity>
         <activity android:name=".nestedscrolling.NestedScrollingActivity" />
         <activity android:name=".circlepercent.CirclePercentActivity" />
         <activity

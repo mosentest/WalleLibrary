@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.wall.mo.utils" />
+    package="org.wall.mo.utils" >
+
+    <uses-permission android:name="android.permission.CAMERA" />
+</manifest>

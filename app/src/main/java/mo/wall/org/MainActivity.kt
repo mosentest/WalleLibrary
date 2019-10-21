@@ -2,10 +2,7 @@ package mo.wall.org
 
 import android.content.ComponentName
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
+import android.os.*
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -13,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import mo.wall.org.autodensity.AutoDensityActivity
 import mo.wall.org.camera1.MedioRecorderCamera1Activity
+import mo.wall.org.camera2.Camera2Activity
 import mo.wall.org.circlepercent.CirclePercentActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
@@ -21,6 +19,7 @@ import mo.wall.org.nestedscrolling.NestedScrollingActivity
 import mo.wall.org.nodisplay.NoDisplayActivity
 import mo.wall.org.ntp.NtpActivity
 import mo.wall.org.opengl.OpenGLActivity
+import mo.wall.org.opengl2.OpenGLES20Activity
 import mo.wall.org.scroll.ScrollActivity
 import mo.wall.org.statusbar.StatusbarActivity
 import mo.wall.org.statusbar2.Statusbar2Activity
@@ -82,32 +81,20 @@ class MainActivity : AppCompatActivity() {
                 0,
                 ""))
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            lists?.add(createEntity("Camera2拍照", "Camera2", 1, Camera2Activity().javaClass.name))
+        }
+        lists?.add(createEntity("绘制三角形", "OpenGL", 1, OpenGLES20Activity().javaClass.name))
         lists?.add(createEntity("TextureView方式", "录视频", 1, MedioRecorderCamera1Activity().javaClass.name))
         lists?.add(createEntity("opengl入门学习", "音视频", 1, OpenGLActivity().javaClass.name))
-
         lists?.add(createEntity("圆盘占比", "画个圆", 1, CirclePercentActivity().javaClass.name))
-
         lists?.add(createEntity("NestedScroll学习", "NestedScroll", 1, NestedScrollingActivity().javaClass.name))
-
-        lists?.add(createEntity("根据今日头条的方法调整和整理",
-                "来自今日头条自适应方案",
-                1,
-                AutoDensityActivity().javaClass.name))
-
-        lists?.add(createEntity("增加切换搜索功能，tab的文字和图片一起居中，还有单独为每个tab设置不同图片...来源：https://github.com/dongjunkun/DropDownMenu",
-                "DropDownMenu",
-                1,
-                DropDownMenuActivity().javaClass.name))
-
+        lists?.add(createEntity("根据今日头条的方法调整和整理", "来自今日头条自适应方案", 1, AutoDensityActivity().javaClass.name))
+        lists?.add(createEntity("增加切换搜索功能，tab的文字和图片一起居中，还有单独为每个tab设置不同图片...来源：https://github.com/dongjunkun/DropDownMenu", "DropDownMenu", 1, DropDownMenuActivity().javaClass.name))
         lists?.add(createEntity("不透明、有自定义标题的情况", "状态栏1", 1, StatusbarActivity().javaClass.name))
         lists?.add(createEntity("透明、有自定义标题的情况", "状态栏2", 1, Statusbar2Activity().javaClass.name))
-
         lists?.add(createEntity("比透明主题更高级的一种选择", "不展示activity", 1, NoDisplayActivity().javaClass.name))
-
-
         lists?.add(createEntity("关于Android实现View滑动的9种方式姿势", "View滑动", 1, ScrollActivity().javaClass.name))
-
-
 
 
         adapter!!.setItems(lists)
