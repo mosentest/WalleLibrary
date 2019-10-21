@@ -11,6 +11,7 @@ import android.text.TextUtils
 import mo.wall.org.autodensity.AutoDensityActivity
 import mo.wall.org.camera1.MedioRecorderCamera1Activity
 import mo.wall.org.camera2.Camera2Activity
+import mo.wall.org.camera2.CameraV2GLSurfaceViewActivity
 import mo.wall.org.circlepercent.CirclePercentActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
@@ -82,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                 ""))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            lists?.add(createEntity("Camera2-openGL", "Camera2", 1, CameraV2GLSurfaceViewActivity().javaClass.name))
             lists?.add(createEntity("Camera2拍照", "Camera2", 1, Camera2Activity().javaClass.name))
         }
         lists?.add(createEntity("绘制三角形", "OpenGL", 1, OpenGLES20Activity().javaClass.name))

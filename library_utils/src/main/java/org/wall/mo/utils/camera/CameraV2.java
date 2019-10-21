@@ -167,4 +167,23 @@ public class CameraV2 {
             e.printStackTrace();
         }
     }
+
+    public void onDestroy() {
+        if (mCameraHandler != null) {
+            mCameraHandler.removeCallbacksAndMessages(null);
+            mCameraHandler = null;
+        }
+        if (mCameraThread != null) {
+            mCameraThread.quit();
+            mCameraThread = null;
+        }
+        if (mCameraDevice != null) {
+            mCameraDevice.close();
+            mCameraDevice = null;
+        }
+        if (mCameraCaptureSession != null) {
+            mCameraCaptureSession.close();
+            mCameraCaptureSession = null;
+        }
+    }
 }

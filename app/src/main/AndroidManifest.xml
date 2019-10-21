@@ -76,6 +76,7 @@
         <activity android:name=".camera1.MedioRecorderCamera1Activity"></activity>
         <activity android:name=".opengl2.OpenGLES20Activity"></activity>
         <activity android:name=".camera2.Camera2Activity"></activity>
+        <activity android:name=".camera2.CameraV2GLSurfaceViewActivity"></activity>
         <activity android:name=".nestedscrolling.NestedScrollingActivity" />
         <activity android:name=".circlepercent.CirclePercentActivity" />
         <activity
