@@ -76,12 +76,15 @@ public abstract class BaseMVPActivity<view extends BaseContract.BaseView,
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        onCurDestroy();
         if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter.onDestroy();
         }
         mPresenter = null;
     }
+
+    public abstract void onCurDestroy();
 
 
     public abstract presenter createPresenter();

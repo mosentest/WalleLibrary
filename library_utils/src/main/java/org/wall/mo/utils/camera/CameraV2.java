@@ -169,14 +169,6 @@ public class CameraV2 {
     }
 
     public void onDestroy() {
-        if (mCameraHandler != null) {
-            mCameraHandler.removeCallbacksAndMessages(null);
-            mCameraHandler = null;
-        }
-        if (mCameraThread != null) {
-            mCameraThread.quit();
-            mCameraThread = null;
-        }
         if (mCameraDevice != null) {
             mCameraDevice.close();
             mCameraDevice = null;
@@ -185,5 +177,19 @@ public class CameraV2 {
             mCameraCaptureSession.close();
             mCameraCaptureSession = null;
         }
+        if (mSurfaceTexture != null) {
+            mSurfaceTexture.release();
+            mSurfaceTexture = null;
+        }
+        if (mCameraHandler != null) {
+            mCameraHandler.removeCallbacksAndMessages(null);
+            mCameraHandler = null;
+        }
+        if (mCameraThread != null) {
+            mCameraThread.quit();
+            mCameraThread = null;
+        }
+
+
     }
 }

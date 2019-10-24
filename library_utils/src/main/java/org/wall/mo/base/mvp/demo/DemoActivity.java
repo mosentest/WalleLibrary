@@ -20,6 +20,11 @@ public class DemoActivity extends BaseMVPActivity<DemoContract.View, DemoContrac
         implements DemoContract.View {
 
     @Override
+    public void onCurDestroy() {
+
+    }
+
+    @Override
     public DemoContract.Presenter createPresenter() {
         return new DemoPresenter();
     }

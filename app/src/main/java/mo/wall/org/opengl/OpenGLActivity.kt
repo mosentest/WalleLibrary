@@ -1,5 +1,6 @@
 package mo.wall.org.opengl
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.os.Message
 import android.widget.ImageView
@@ -14,6 +15,8 @@ import android.view.SurfaceView
 import android.view.TextureView
 import java.io.IOException
 import android.graphics.ImageFormat
+import android.provider.MediaStore
+import java.io.OutputStream
 
 /**
  * 1、OpenGL已经诞生很长时间了，1992年7月，SGI公司发布了OpenGL的1.0版本。
@@ -32,7 +35,7 @@ class OpenGLActivity : BaseAppCompatActivity(), TextureView.SurfaceTextureListen
     private lateinit var mTexture: TextureView
 
 
-    private lateinit var camera: Camera
+    private lateinit var mCamera: Camera
 
     override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {
 
@@ -47,12 +50,12 @@ class OpenGLActivity : BaseAppCompatActivity(), TextureView.SurfaceTextureListen
 
     override fun onSurfaceTextureAvailable(surface: SurfaceTexture?, width: Int, height: Int) {
         try {
-            if (camera != null) {
-                camera.setPreviewTexture(surface)
-                FixCameraUtils.setCameraDisplayOrientation(this, findBackCamera, camera)
-                camera.startPreview()
+            if (mCamera != null) {
+                mCamera.setPreviewTexture(surface)
+                FixCameraUtils.setCameraDisplayOrientation(this, findBackCamera, mCamera)
+                mCamera.startPreview()
 
-                camera.autoFocus { success, camera ->
+                mCamera.autoFocus { success, camera ->
 
                 }
             }
@@ -108,47 +111,73 @@ class OpenGLActivity : BaseAppCompatActivity(), TextureView.SurfaceTextureListen
         mTexture.surfaceTextureListener = this
 
         findBackCamera = FixCameraUtils.findBackCamera()
-        camera = Camera.open(findBackCamera)
-        FixCameraUtils.setCameraDisplayOrientation(this, findBackCamera, camera)
+        mCamera = Camera.open(findBackCamera)
+        FixCameraUtils.setCameraDisplayOrientation(this, findBackCamera, mCamera)
 
-        val parameters = camera.parameters
+        val parameters = mCamera.parameters
         parameters.previewFormat = ImageFormat.NV21
         //如果不设置会按照系统默认配置最低160x120分辨率
         //val displayMetrics = resources.displayMetrics
         //parameters.setPictureSize(displayMetrics.widthPixels, displayMetrics.heightPixels)
-        camera.parameters = parameters
+        mCamera.parameters = parameters
 
-        camera.setPreviewCallback(object : Camera.PreviewCallback {
+        mCamera.setPreviewCallback(object : Camera.PreviewCallback {
             override fun onPreviewFrame(data: ByteArray?, camera: Camera?) {
 
             }
 
+        })
+
+
+    }
+
+    /**
+     * 实现拍照
+     */
+    fun takePicture() {
+        mCamera.takePicture(null, null, object : Camera.PictureCallback {
+            override fun onPictureTaken(data: ByteArray?, camera: Camera?) {
+                var outputStream: OutputStream? = null
+                try {
+                    var fileUrl = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, ContentValues())
+                    outputStream = contentResolver.openOutputStream(fileUrl)
+                    outputStream.write(data)
+                    outputStream.flush()
+                } catch (e: Exception) {
+
+                } finally {
+                    if (outputStream != null) {
+                        outputStream.close()
+                    }
+                    mCamera.startPreview()
+                }
+            }
         })
     }
 
 
     override fun onStart() {
         super.onStart()
-        if (camera != null) {
-            camera.startPreview()
+        if (mCamera != null) {
+            mCamera.startPreview()
         }
     }
 
 
     override fun onStop() {
         super.onStop()
-        if (camera != null) {
-            camera.stopPreview()
+        if (mCamera != null) {
+            mCamera.stopPreview()
         }
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
-        if (camera != null) {
-            camera.setPreviewCallback(null)
-            camera.stopPreview()
-            camera.release()
+        if (mCamera != null) {
+            mCamera.setPreviewCallback(null)
+            mCamera.stopPreview()
+            mCamera.release()
         }
     }
 

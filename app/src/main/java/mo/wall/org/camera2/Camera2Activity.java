@@ -76,6 +76,7 @@ public class Camera2Activity extends BaseAppCompatActivity {
     private CaptureRequest.Builder mCaptureRequestBuilder;
     private CaptureRequest mCaptureRequest;
     private CameraCaptureSession mCameraCaptureSession;
+    private SurfaceTexture mSurfaceTexture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,7 +251,9 @@ public class Camera2Activity extends BaseAppCompatActivity {
     };
 
     private void startPreview() {
-        SurfaceTexture mSurfaceTexture = mTextureView.getSurfaceTexture();
+        if (mSurfaceTexture == null) {
+            mSurfaceTexture = mTextureView.getSurfaceTexture();
+        }
         mSurfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
         Surface previewSurface = new Surface(mSurfaceTexture);
         try {
@@ -348,6 +351,10 @@ public class Camera2Activity extends BaseAppCompatActivity {
         if (mImageReader != null) {
             mImageReader.close();
             mImageReader = null;
+        }
+        if (mSurfaceTexture != null) {
+            mSurfaceTexture.release();
+            mSurfaceTexture = null;
         }
     }
 

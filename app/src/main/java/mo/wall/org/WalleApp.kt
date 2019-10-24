@@ -2,9 +2,9 @@ package mo.wall.org
 
 import android.app.Application
 import android.content.Context
+import android.os.StrictMode
 import android.support.multidex.MultiDex
 import android.widget.Toast
-import com.squareup.leakcanary.LeakCanary
 import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper
 import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
 import org.wall.mo.utils.autolayout.AutoDensity
@@ -23,12 +23,34 @@ class WalleApp : Application() {
         super.onCreate()
         ctx = this;
 
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
+//        LeakCanary.install(this);
+
+        if (BuildConfig.DEBUG) {
+            //线程策略
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectCustomSlowCalls() //API等级11，使用StrictMode.noteSlowCode
+                    .detectDiskReads()  //磁盘读写 影响sp使用
+                    .detectDiskWrites()
+                    .detectCustomSlowCalls()//检测自定义耗时操作
+                    .detectNetwork()   // or .detectAll() for all detectable problems
+                    .penaltyDialog() //弹出违规提示对话框
+                    .penaltyLog() //在Logcat 中打印违规异常信息
+                    .penaltyFlashScreen() //API等级11
+                    .build())
+            //虚拟机策略
+            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects() //API等级11
+                    .detectActivityLeaks()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build())
         }
-        LeakCanary.install(this);
 
         helper = AppFrontBackHelper();
         helper?.register(this, object : OnAppStatusListener {
