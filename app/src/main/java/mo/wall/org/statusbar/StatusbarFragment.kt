@@ -22,6 +22,13 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class StatusbarFragment : InterceptActBackFragment() {
+    override fun initLazyClick() {
+    }
+
+    override fun initLazyData() {
+
+    }
+
     override fun handleSubMessage(msg: Message?) {
 
     }

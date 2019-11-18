@@ -14,6 +14,13 @@ import org.wall.mo.base.fragment.InterceptActBackFragment
  * A placeholder fragment containing a simple view.
  */
 class StatusbarActivity2Fragment : InterceptActBackFragment() {
+    override fun initLazyData() {
+
+    }
+
+    override fun initLazyClick() {
+    }
+
     override fun handleSubMessage(msg: Message?) {
 
     }

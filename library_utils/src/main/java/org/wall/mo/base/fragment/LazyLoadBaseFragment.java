@@ -25,6 +25,8 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
 
     private boolean currentVisibleState = false;
 
+    private boolean isDataLoaded;
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -39,6 +41,9 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
                 dispatchUserVisibleHint(false);
             }
         }
+        //可见的时候才初始化
+        //https://blog.csdn.net/zzq272804553/article/details/79928654
+        tryInitLazy();
     }
 
     @Override
@@ -51,7 +56,27 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
             // 这里的限制只能限制 A - > B 两层嵌套
             dispatchUserVisibleHint(true);
         }
+        //可见的时候才初始化
+        //https://blog.csdn.net/zzq272804553/article/details/79928654
+        tryInitLazy();
     }
+
+    /**
+     * https://www.jianshu.com/p/0e2d746e3a3d
+     */
+    private void tryInitLazy() {
+        if (isViewCreated && getUserVisibleHint() && !isDataLoaded) {
+            initLazyData();
+            initLazyClick();
+            isDataLoaded = true;
+        }
+    }
+
+
+    public abstract void initLazyData();
+
+    public abstract void initLazyClick();
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -135,13 +160,13 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
         });
     }
 
-    private Handler mHandler;
+    private Handler mInnerHandler;
 
     private Handler getHandler() {
-        if (mHandler == null) {
-            mHandler = new Handler(Looper.getMainLooper());
+        if (mInnerHandler == null) {
+            mInnerHandler = new Handler(Looper.getMainLooper());
         }
-        return mHandler;
+        return mInnerHandler;
     }
 
 
@@ -231,6 +256,8 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getHandler().removeCallbacksAndMessages(null);
+        if (getHandler() != null) {
+            getHandler().removeCallbacksAndMessages(null);
+        }
     }
 }
