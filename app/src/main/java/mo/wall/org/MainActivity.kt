@@ -25,6 +25,7 @@ import mo.wall.org.scroll.ScrollActivity
 import mo.wall.org.statusbar.StatusbarActivity
 import mo.wall.org.statusbar2.Statusbar2Activity
 import mo.wall.org.throwcard.ThrowCardActivity
+import mo.wall.org.webviewinscrollview.WebInScrollActivity
 import org.wall.mo.base.StartActivityCompat
 import org.wall.mo.compat.statusbar.StatusBarUtil
 
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 ""))
 
+        lists?.add(createEntity("解决webview固定高度在scrollview问题", "scrollview嵌套webview", 1, WebInScrollActivity().javaClass.name))
         lists?.add(createEntity("卡片扔出去效果", "卡片动画", 1, ThrowCardActivity().javaClass.name))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             lists?.add(createEntity("Camera2-openGL", "Camera2", 1, CameraV2GLSurfaceViewActivity().javaClass.name))
