@@ -55,7 +55,35 @@ class KtLearn {
 
     fun testWhile() {
         while (1 > 0) {
+            val mathFunc = getMathFunc("a")
+            val func = mathFunc(5)
+        }
 
+
+        var square = { n: Int -> n * n }
+
+
+        square(5)
+    }
+
+    fun area(x: Double, y: Double) = x * y
+
+
+    fun getMathFunc(type: String): (Int) -> Int {
+
+        fun square(n: Int): Int {
+            return n * n
+        }
+
+
+        fun cub(n: Int): Int {
+            return n * n * n
+        }
+
+
+        when (type) {
+            "square" -> return ::cub
+            else -> return ::square
         }
     }
 }
