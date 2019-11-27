@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
+import mo.wall.org.apkinfo.ApkInfoActivity
 import mo.wall.org.autodensity.AutoDensityActivity
 import mo.wall.org.camera1.MedioRecorderCamera1Activity
 import mo.wall.org.camera2.Camera2Activity
@@ -101,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         lists?.add(createEntity("透明、有自定义标题的情况", "状态栏2", 1, Statusbar2Activity().javaClass.name))
         lists?.add(createEntity("比透明主题更高级的一种选择", "不展示activity", 1, NoDisplayActivity().javaClass.name))
         lists?.add(createEntity("关于Android实现View滑动的9种方式姿势", "View滑动", 1, ScrollActivity().javaClass.name))
+        lists?.add(createEntity("fb读取apk信息总结", "读取apk信息", 1, ApkInfoActivity().javaClass.name))
 
 
         adapter!!.setItems(lists)
