@@ -36,13 +36,4 @@ public interface IFragmentInterceptAct {
      * @return
      */
     boolean onFragmentInterceptGetIntent(Intent intent);
-
-    /**
-     * 获取startActivity的intent参数
-     * 参数传递
-     *
-     * @param parcelableNextExtra
-     * @return
-     */
-    void onFragmentInterceptNextParcelableExtra(Parcelable parcelableNextExtra);
 }

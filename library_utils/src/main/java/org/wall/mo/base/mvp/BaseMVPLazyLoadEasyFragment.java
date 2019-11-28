@@ -2,42 +2,53 @@ package org.wall.mo.base.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
-import org.wall.mo.base.activity.AbsWithOneV4FragmentActivity;
+import org.wall.mo.base.fragment.LazyLoadEasyFragment;
 
 /**
  * Copyright (C), 2018-2019
  * Author: ziqimo
- * Date: 2019-08-18 15:07
- * Description: ${DESCRIPTION}
- * History:
+ * Date: 2019-11-28 15:09
+ * Description:
+ * History: 基础的LazyLoadEasyFragment mvp
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPActivity<view extends BaseContract.BaseView,
-        presenter extends BaseContract.BasePresenter> extends AbsWithOneV4FragmentActivity
+public abstract class BaseMVPLazyLoadEasyFragment<view extends BaseContract.BaseView,
+        presenter extends BaseContract.BasePresenter>
+        extends LazyLoadEasyFragment
         implements BaseContract.BaseView {
+
 
     public presenter mPresenter;
 
     /**
      * 展示dialog次数
      */
-    private int showDialogCount = 0;
+    private volatile int showDialogCount = 0;
+
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView(View rootView, Bundle savedInstanceState) {
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
             mPresenter.attachView((view) this);
-            mPresenter.onCreate();
+            mPresenter.onCreate(savedInstanceState);
         }
     }
 
+
     @Override
-    protected void onStart() {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        mPresenter.onRestoreInstanceState(savedInstanceState);
+    }
+
+
+    @Override
+    public void onStart() {
         super.onStart();
         if (mPresenter != null) {
             mPresenter.onStart();
@@ -45,7 +56,7 @@ public abstract class BaseMVPActivity<view extends BaseContract.BaseView,
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (mPresenter != null) {
             boolean viewNull = mPresenter.onResume();
@@ -58,7 +69,7 @@ public abstract class BaseMVPActivity<view extends BaseContract.BaseView,
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (mPresenter != null) {
             mPresenter.onPause();
@@ -66,7 +77,7 @@ public abstract class BaseMVPActivity<view extends BaseContract.BaseView,
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         if (mPresenter != null) {
             mPresenter.onStop();
@@ -74,7 +85,7 @@ public abstract class BaseMVPActivity<view extends BaseContract.BaseView,
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         onCurDestroy();
         if (mPresenter != null) {
@@ -84,10 +95,10 @@ public abstract class BaseMVPActivity<view extends BaseContract.BaseView,
         mPresenter = null;
     }
 
-    public abstract void onCurDestroy();
+    protected abstract void onCurDestroy();
 
 
-    public abstract presenter createPresenter();
+    protected abstract presenter createPresenter();
 
     @Override
     public void onRequestFail(int flag, String msg) {
@@ -116,3 +127,4 @@ public abstract class BaseMVPActivity<view extends BaseContract.BaseView,
         }
     }
 }
+

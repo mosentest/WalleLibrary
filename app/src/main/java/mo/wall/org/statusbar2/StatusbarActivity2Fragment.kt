@@ -8,12 +8,11 @@ import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.view.View
 import mo.wall.org.R
-import org.wall.mo.base.fragment.InterceptActBackFragment
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class StatusbarActivity2Fragment : InterceptActBackFragment() {
+class StatusbarActivity2Fragment : InterceptActBackLazyLoadFragment() {
     override fun initLazyData() {
 
     }

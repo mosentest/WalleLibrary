@@ -5,7 +5,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import org.wall.mo.base.mvp.BaseMVPActivity;
+import org.wall.mo.base.mvp.BaseMVPWithV4FragmentActivity;
 
 /**
  * Copyright (C), 2018-2019
@@ -16,7 +16,7 @@ import org.wall.mo.base.mvp.BaseMVPActivity;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class DemoActivity extends BaseMVPActivity<DemoContract.View, DemoContract.Presenter>
+public class DemoActivity extends BaseMVPWithV4FragmentActivity<DemoContract.View, DemoContract.Presenter>
         implements DemoContract.View {
 
     @Override

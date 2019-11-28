@@ -27,7 +27,7 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsV4Fragment extends Fragment {
+public abstract class AbsV4Fragment extends Fragment implements IFragment {
 
     public final static String TAG = AbsV4Fragment.class.getSimpleName();
 
@@ -38,6 +38,10 @@ public abstract class AbsV4Fragment extends Fragment {
     protected View rootView;
 
     protected Handler mHandler = null;
+
+    public Handler getHandler() {
+        return mHandler;
+    }
 
     /**
      * 例子
@@ -116,9 +120,15 @@ public abstract class AbsV4Fragment extends Fragment {
         }
 
         /**
+         * https://blog.csdn.net/airk000/article/details/38557605
          * 保持Fragment
          */
-        setRetainInstance(true);
+        setRetainInstance(setCurRetainInstance());
+    }
+
+
+    protected boolean setCurRetainInstance() {
+        return true;
     }
 
     @Nullable

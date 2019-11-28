@@ -2,7 +2,6 @@ package org.wall.mo.base.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import org.wall.mo.base.StartActivityCompat;
 import org.wall.mo.base.fragment.IFragmentInterceptAct;
+import org.wall.mo.base.nextextra.AbsNextExtra;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.log.WLog;
 
@@ -23,9 +23,9 @@ import org.wall.mo.utils.log.WLog;
  * * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity  {
+public abstract class AbsWithV4FragmentActivity extends AbsAppCompatActivity {
 
-    protected static final String TAG = AbsWithOneV4FragmentActivity.class.getSimpleName();
+    protected static final String TAG = AbsWithV4FragmentActivity.class.getSimpleName();
 
     protected Fragment fragment;
 
@@ -36,7 +36,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
     /**
      * 上个页面传递的参数集合对象
      */
-    protected Parcelable parcelableNextExtra;
+    protected AbsNextExtra parcelableNextExtra;
 
     @Override
     public void initView(Bundle savedInstanceState) {
@@ -81,17 +81,6 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
         if (intent == null) {
             return;
         }
-        //解析参数
-        String title = intent.getStringExtra(StartActivityCompat.NEXT_TITLE);
-        boolean showBack = intent.getBooleanExtra(StartActivityCompat.NEXT_SHOW_BACK, true);
-        parcelableNextExtra = intent.getParcelableExtra(StartActivityCompat.NEXT_PARCELABLE);
-        //消费参数
-        setTopBarTitle(title);
-        setTopBarBack(showBack);
-        this.showTopBarBack = showBack;
-        if (fragment instanceof IFragmentInterceptAct) {
-            ((IFragmentInterceptAct) fragment).onFragmentInterceptNextParcelableExtra(parcelableNextExtra);
-        }
         //其他参数
         if (fragment instanceof IFragmentInterceptAct
                 && ((IFragmentInterceptAct) fragment).onFragmentInterceptGetIntent(intent)) {
@@ -99,6 +88,15 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
                 WLog.i(TAG, "Fragment getIntent");
             }
         } else {
+            //解析参数
+            String title = intent.getStringExtra(StartActivityCompat.NEXT_TITLE);
+            boolean showBack = intent.getBooleanExtra(StartActivityCompat.NEXT_SHOW_BACK, true);
+            parcelableNextExtra = intent.getParcelableExtra(StartActivityCompat.NEXT_PARCELABLE);
+            //消费参数
+            setTopBarTitle(title);
+            setTopBarBack(showBack);
+            this.showTopBarBack = showBack;
+            //其他值
             parseIntentData(intent);
         }
     }
@@ -186,6 +184,7 @@ public abstract class AbsWithOneV4FragmentActivity extends AbsAppCompatActivity 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        parcelableNextExtra = null;
         fragment = null;
     }
 

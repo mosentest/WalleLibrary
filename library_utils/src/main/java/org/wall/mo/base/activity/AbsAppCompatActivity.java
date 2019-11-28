@@ -113,7 +113,7 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
 
     @Override
     public void onBackPressed() {
-        finish();
+        super.onBackPressed();
     }
 
     @Override

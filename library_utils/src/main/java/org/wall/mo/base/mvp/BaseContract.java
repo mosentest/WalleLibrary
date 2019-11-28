@@ -1,5 +1,7 @@
 package org.wall.mo.base.mvp;
 
+import android.os.Bundle;
+
 import org.wall.mo.base.mvp.demo.DemoContract;
 
 import java.lang.ref.WeakReference;
@@ -20,9 +22,12 @@ public interface BaseContract {
         /**
          * 弱引用持有view
          */
-        private WeakReference<View> viewReference;
+        protected WeakReference<View> viewReference;
 
-        protected abstract void onCreate();
+        protected abstract void onCreate(Bundle savedInstanceState);
+
+
+        protected abstract void onRestoreInstanceState(Bundle savedInstanceState);
 
         protected abstract void onStart();
 
@@ -72,6 +77,7 @@ public interface BaseContract {
                 viewReference = null;
             }
         }
+
     }
 
     public interface BaseView {

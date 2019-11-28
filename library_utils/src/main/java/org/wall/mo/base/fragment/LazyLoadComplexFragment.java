@@ -1,8 +1,6 @@
 package org.wall.mo.base.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,19 +11,18 @@ import java.util.List;
  * 作者 : moziqi
  * 邮箱 : 709847739@qq.com
  * 时间   : 2019/6/11-10:19
+ * 复杂的fragment
  * https://github.com/YoKeyword/Fragmentation
  * desc   : https://github.com/ImportEffort/FragmentLiftCycle/blob/master/app/src/main/java/com/wangshijia/www/fragmentliftcycle/LazyLoadBaseFragment.java
  * version: 1.0
  */
-public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
+public abstract class LazyLoadComplexFragment extends AbsV4Fragment {
 
     private boolean mIsFirstVisible = true;
 
     private boolean isViewCreated = false;
 
     private boolean currentVisibleState = false;
-
-    private boolean isDataLoaded;
 
 
     @Override
@@ -41,9 +38,6 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
                 dispatchUserVisibleHint(false);
             }
         }
-        //可见的时候才初始化
-        //https://blog.csdn.net/zzq272804553/article/details/79928654
-        tryInitLazy();
     }
 
     @Override
@@ -56,27 +50,8 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
             // 这里的限制只能限制 A - > B 两层嵌套
             dispatchUserVisibleHint(true);
         }
-        //可见的时候才初始化
-        //https://blog.csdn.net/zzq272804553/article/details/79928654
-        tryInitLazy();
+
     }
-
-    /**
-     * https://www.jianshu.com/p/0e2d746e3a3d
-     */
-    private void tryInitLazy() {
-        if (isViewCreated && getUserVisibleHint() && !isDataLoaded) {
-            initLazyData();
-            initLazyClick();
-            isDataLoaded = true;
-        }
-    }
-
-
-    public abstract void initLazyData();
-
-    public abstract void initLazyClick();
-
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -160,16 +135,6 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
         });
     }
 
-    private Handler mInnerHandler;
-
-    private Handler getHandler() {
-        if (mInnerHandler == null) {
-            mInnerHandler = new Handler(Looper.getMainLooper());
-        }
-        return mInnerHandler;
-    }
-
-
     /**
      * 用于分发可见时间的时候父获取 fragment 是否隐藏
      *
@@ -177,8 +142,8 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
      */
     private boolean isParentInvisible() {
         Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof LazyLoadBaseFragment) {
-            LazyLoadBaseFragment fragment = (LazyLoadBaseFragment) parentFragment;
+        if (parentFragment instanceof LazyLoadComplexFragment) {
+            LazyLoadComplexFragment fragment = (LazyLoadComplexFragment) parentFragment;
             return !fragment.isSupportVisible();
         } else {
             return false;
@@ -211,8 +176,8 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
         List<Fragment> fragments = childFragmentManager.getFragments();
         if (!fragments.isEmpty()) {
             for (Fragment child : fragments) {
-                if (child instanceof LazyLoadBaseFragment && child.isAdded() && !child.isHidden() && child.getUserVisibleHint()) {
-                    ((LazyLoadBaseFragment) child).dispatchUserVisibleHint(visible);
+                if (child instanceof LazyLoadComplexFragment && child.isAdded() && !child.isHidden() && child.getUserVisibleHint()) {
+                    ((LazyLoadComplexFragment) child).dispatchUserVisibleHint(visible);
                 }
             }
         }
@@ -229,21 +194,25 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
         return !mIsFirstVisible;
     }
 
-    public abstract void onFragmentFirstVisible();
+    public void onFragmentFirstVisible() {
+    }
 
     /**
      * 每次可见都回调
      */
-    public abstract void onFragmentResume();
+    public void onFragmentResume() {
+    }
 
     /**
      * 添加是否是第一次可见的标识 切勿和 onFragmentResume 同时使用因为两个方法回调时机一样
      *
      * @param firstResume true 是第一次可见 == onFirstVisible  false 去除第一次回调
      */
-    public abstract void onFragmentResume(boolean firstResume);
+    public void onFragmentResume(boolean firstResume) {
+    }
 
-    public abstract void onFragmentPause();
+    public void onFragmentPause() {
+    }
 
 
     @Override
@@ -253,11 +222,4 @@ public abstract class LazyLoadBaseFragment extends AbsV4Fragment {
         mIsFirstVisible = true;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (getHandler() != null) {
-            getHandler().removeCallbacksAndMessages(null);
-        }
-    }
 }

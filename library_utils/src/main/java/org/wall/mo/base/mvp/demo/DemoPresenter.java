@@ -1,5 +1,7 @@
 package org.wall.mo.base.mvp.demo;
 
+import android.os.Bundle;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -21,7 +23,12 @@ public class DemoPresenter extends DemoContract.Presenter {
     }
 
     @Override
-    protected void onCreate() {
+    protected void onCreate(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
 
     }
 

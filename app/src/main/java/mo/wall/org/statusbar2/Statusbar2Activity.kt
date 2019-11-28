@@ -6,10 +6,10 @@ import android.os.Message
 import android.support.v4.app.Fragment
 import android.view.View
 import mo.wall.org.R
-import org.wall.mo.base.activity.AbsWithOneV4FragmentActivity
+import org.wall.mo.base.activity.AbsWithV4FragmentActivity
 import org.wall.mo.compat.statusbar.StatusBarUtil
 
-class Statusbar2Activity : AbsWithOneV4FragmentActivity() {
+class Statusbar2Activity : AbsWithV4FragmentActivity() {
     override fun onClick(v: View?) {
 
     }

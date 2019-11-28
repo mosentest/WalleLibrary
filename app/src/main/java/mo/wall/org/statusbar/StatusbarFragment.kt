@@ -9,7 +9,6 @@ import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.view.View
 import mo.wall.org.R
-import org.wall.mo.base.fragment.InterceptActBackFragment
 import org.wall.mo.utils.log.WLog
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,7 +20,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class StatusbarFragment : InterceptActBackFragment() {
+class StatusbarFragment : InterceptActBackLazyLoadFragment() {
     override fun initLazyClick() {
     }
 
