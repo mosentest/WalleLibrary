@@ -9,6 +9,7 @@ import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.view.View
 import mo.wall.org.R
+import org.wall.mo.base.fragment.InterceptActBackFragment
 import org.wall.mo.utils.log.WLog
 
 // TODO: Rename parameter arguments, choose names that match
@@ -20,32 +21,38 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class StatusbarFragment : InterceptActBackLazyLoadFragment() {
-    override fun initLazyClick() {
+class StatusbarFragment : InterceptActBackFragment() {
+    override fun showDialog(msg: String?) {
+        
     }
 
-    override fun initLazyData() {
-
+    override fun getTopBarTitleViewId(): Int {
+        return -1
     }
+
+    override fun getTopBarBackViewId(): Int {
+        return -1
+    }
+
+    override fun showShortToast(msg: String?) {
+        
+    }
+
+    override fun showLongToast(msg: String?) {
+        
+    }
+
+    override fun hideDialog() {
+        
+    }
+
+    override fun parseIntentData(intent: Intent?) {
+        
+    }
+
 
     override fun handleSubMessage(msg: Message?) {
 
-    }
-
-    override fun onFragmentFirstVisible() {
-        WLog.i(TAG, "$name.onFragmentFirstVisible")
-    }
-
-    override fun onFragmentResume() {
-        WLog.i(TAG, "$name.onFragmentResume")
-    }
-
-    override fun onFragmentResume(firstResume: Boolean) {
-        WLog.i(TAG, "$name.onFragmentResume firstResume is $firstResume")
-    }
-
-    override fun onFragmentPause() {
-        WLog.i(TAG, "$name.onFragmentPause")
     }
 
 
@@ -81,9 +88,6 @@ class StatusbarFragment : InterceptActBackLazyLoadFragment() {
 
     override fun onFragmentInterceptGetIntent(intent: Intent?): Boolean {
         return false
-    }
-
-    override fun onFragmentInterceptNextParcelableExtra(parcelableNextExtra: Parcelable?) {
     }
 
     override fun onAbsV4Attach(context: Context?) {

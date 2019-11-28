@@ -8,35 +8,42 @@ import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.view.View
 import mo.wall.org.R
+import org.wall.mo.base.fragment.InterceptActBackFragment
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class StatusbarActivity2Fragment : InterceptActBackLazyLoadFragment() {
-    override fun initLazyData() {
+class StatusbarActivity2Fragment : InterceptActBackFragment() {
+    override fun getTopBarTitleViewId(): Int {
+        return -1
+    }
+
+    override fun getTopBarBackViewId(): Int {
+        return -1
+    }
+
+    override fun showLongToast(msg: String?) {
 
     }
 
-    override fun initLazyClick() {
+    override fun parseIntentData(intent: Intent?) {
+
     }
+
+    override fun showShortToast(msg: String?) {
+
+    }
+
+    override fun hideDialog() {
+
+    }
+
+    override fun showDialog(msg: String?) {
+
+    }
+
 
     override fun handleSubMessage(msg: Message?) {
-
-    }
-
-    override fun onFragmentFirstVisible() {
-
-    }
-
-    override fun onFragmentResume() {
-
-    }
-
-    override fun onFragmentResume(firstResume: Boolean) {
-
-    }
-
-    override fun onFragmentPause() {
 
     }
 
@@ -58,9 +65,6 @@ class StatusbarActivity2Fragment : InterceptActBackLazyLoadFragment() {
 
     }
 
-    override fun onFragmentInterceptNextParcelableExtra(parcelableNextExtra: Parcelable?) {
-
-    }
 
     override fun initData() {
 
