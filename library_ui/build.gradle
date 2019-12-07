@@ -87,7 +87,7 @@ dependencies {
     implementation 'com.yanzhenjie.permission:support:2.0.1'
 
     //高仿ios的dialog 对话框 https://github.com/kongzue/DialogV3
-    implementation 'com.kongzue.dialog_v3:dialog:3.1.0'
+//    implementation 'com.kongzue.dialog_v3:dialog:3.1.0'
 
     //从底部往上滑的对话框 https://github.com/orhanobut/dialogpl  us
     implementation 'com.orhanobut:dialogplus:1.11@aar'

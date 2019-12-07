@@ -17,6 +17,7 @@ import mo.wall.org.circlepercent.CirclePercentActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
+import mo.wall.org.markerview.MarkerViewAct
 import mo.wall.org.nestedscrolling.NestedScrollingActivity
 import mo.wall.org.nodisplay.NoDisplayActivity
 import mo.wall.org.ntp.NtpActivity
@@ -85,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 ""))
 
+        lists?.add(createEntity("MarkerView绘制和学习", "MarkerView", 1, MarkerViewAct().javaClass.name))
         lists?.add(createEntity("解决webview固定高度在scrollview问题", "scrollview嵌套webview", 1, WebInScrollActivity().javaClass.name))
         lists?.add(createEntity("卡片扔出去效果", "卡片动画", 1, ThrowCardActivity().javaClass.name))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
