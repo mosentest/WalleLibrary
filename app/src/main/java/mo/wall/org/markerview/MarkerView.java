@@ -57,12 +57,7 @@ public class MarkerView extends View {
      */
     private Paint contentPaint = null;
 
-    private Paint circlePaint = null;
-
     private Path contentPath = null;
-
-
-    private final static int unit = 100;
 
     private int radius;
     private int radiusCenter;
