@@ -195,9 +195,9 @@ public class MarkerView extends View {
         //这是合并的效果，暂时不需要
         //这是合并的效果，暂时不需要
         //这是合并的效果，暂时不需要
-        contentPath.lineTo(points.get(points.size() - 1).x, height - getPaddingBottom() - getPaddingTop() - textH / 2);
-        contentPath.lineTo(startX + getPaddingLeft(), height - getPaddingBottom() - getPaddingTop() - textH / 2);
-        contentPath.close();
+//        contentPath.lineTo(points.get(points.size() - 1).x, height - getPaddingBottom() - getPaddingTop() - textH / 2);
+//        contentPath.lineTo(startX + getPaddingLeft(), height - getPaddingBottom() - getPaddingTop() - textH / 2);
+//        contentPath.close();
         //这是合并的效果，暂时不需要
         //这是合并的效果，暂时不需要
         //这是合并的效果，暂时不需要
@@ -242,7 +242,7 @@ public class MarkerView extends View {
         contentPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         contentPaint.setColor(Color.parseColor("#303F9F"));
         contentPaint.setStrokeWidth(dip2px(getContext(), 3));
-        contentPaint.setStyle(Paint.Style.FILL);
+        contentPaint.setStyle(Paint.Style.STROKE);
 
 
         contentPath = new Path();

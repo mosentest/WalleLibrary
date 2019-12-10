@@ -68,6 +68,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".apkinfo.ApkInfoActivity"></activity>
+        <activity android:name=".headerimg.HeaderImgAct"></activity>
         <activity android:name=".markerview.MarkerViewAct"></activity>
         <activity android:name=".webviewinscrollview.WebInScrollActivity"></activity>
         <activity android:name=".throwcard.ThrowCardActivity"></activity>
