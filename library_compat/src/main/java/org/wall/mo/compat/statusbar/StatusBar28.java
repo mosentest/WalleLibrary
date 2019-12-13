@@ -18,6 +18,9 @@ public class StatusBar28 {
 
     public void splash(Activity activity) {
         /**
+         * 还是设置主题会比较靠谱的
+         * 还是设置主题会比较靠谱的
+         * 还是设置主题会比较靠谱的
          * https://www.jianshu.com/p/87e74de4eaf2
          * 适配9.0启动页面的问题
          */
