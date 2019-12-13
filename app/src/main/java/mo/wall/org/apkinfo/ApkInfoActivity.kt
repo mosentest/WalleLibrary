@@ -24,6 +24,13 @@ class ApkInfoActivity : BaseAppCompatActivity() {
     private lateinit var mEdAfp: EditText
     private lateinit var mEdAsha: EditText
     private lateinit var mEdSize: EditText
+
+
+    private lateinit var mEdVerCode: EditText
+    private lateinit var mEdVerName: EditText
+    private lateinit var mEdAppName: EditText
+    private lateinit var mEdMinsdkversion: EditText
+
     private lateinit var mBtn: Button
 
 
@@ -39,6 +46,13 @@ class ApkInfoActivity : BaseAppCompatActivity() {
         mEdAfp = findViewById<EditText>(R.id.ed_afp)
         mEdAsha = findViewById<EditText>(R.id.ed_asha)
         mEdSize = findViewById<EditText>(R.id.ed_size)
+
+
+        mEdVerCode = findViewById<EditText>(R.id.ed_ver_code)
+        mEdVerName = findViewById<EditText>(R.id.ed_ver_name)
+        mEdAppName = findViewById<EditText>(R.id.ed_app_name)
+        mEdMinsdkversion = findViewById<EditText>(R.id.ed_minsdkversion)
+
         mBtn = findViewById<Button>(R.id.btn)
 
 
@@ -58,6 +72,15 @@ class ApkInfoActivity : BaseAppCompatActivity() {
             val d = apk_sizeUtils.D(this@ApkInfoActivity, packageName)
             mEdSize.setText("" + d)
             Log.i("d", d.toString())
+
+
+            mEdVerCode.setText("" + AppInfo.getVersionCode(this@ApkInfoActivity, packageName))
+
+            mEdVerName.setText("" + AppInfo.getversionName(this@ApkInfoActivity, packageName))
+
+            mEdAppName.setText("" + AppInfo.getAppName(this@ApkInfoActivity, packageName))
+
+            mEdMinsdkversion.setText("" + AppInfo.getMinSdkVersion(this@ApkInfoActivity, packageName))
         }
     }
 
