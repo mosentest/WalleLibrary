@@ -12,19 +12,23 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+
+import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.FileProvider;
 import androidx.core.os.EnvironmentCompat;
+
 import android.util.DisplayMetrics;
 
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -332,6 +336,50 @@ public class MediaStoreCompat {
                 return null;
             }
         }
+    }
+
+
+    /**
+     * 质量压缩并存到SD卡中
+     *
+     * @param bitmap
+     * @param reqSize 需要的大小
+     * @return
+     */
+
+    public String qualityCompress(Context context, Bitmap bitmap, int reqSize) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //这里100表示不压缩，把压缩后的数据存放到baos中
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        int options = 95;
+        //如果压缩后的大小超出所要求的，继续压缩
+        while (baos.toByteArray().length / 1024 > reqSize) {
+            baos.reset();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
+            //每次减少5%质量
+            if (options > 5) {//避免出现options<=0
+                options -= 5;
+            } else {
+                break;
+            }
+        }
+        File outputFile = createImageFile(context);
+        if (!outputFile.exists()) {
+            outputFile.getParentFile().mkdirs();
+        } else {
+            outputFile.delete();
+        }
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(outputFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, options, out);
+
+        return outputFile.getPath();
+
     }
 
 }
