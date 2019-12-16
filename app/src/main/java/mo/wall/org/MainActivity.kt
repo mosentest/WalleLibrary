@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import mo.wall.org.apkinfo.ApkInfoActivity
 import mo.wall.org.autodensity.AutoDensityActivity
+import mo.wall.org.behavior.BehaviorActivity
 import mo.wall.org.camera1.MedioRecorderCamera1Activity
 import mo.wall.org.camera2.Camera2Activity
 import mo.wall.org.camera2.CameraV2GLSurfaceViewActivity
@@ -86,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 ""))
 
+        lists?.add(createEntity("Behavior入门学习", "Behavior", 1, BehaviorActivity().javaClass.name))
         lists?.add(createEntity("MarkerView绘制和学习", "MarkerView", 1, MarkerViewAct().javaClass.name))
         lists?.add(createEntity("解决webview固定高度在scrollview问题", "scrollview嵌套webview", 1, WebInScrollActivity().javaClass.name))
         lists?.add(createEntity("卡片扔出去效果", "卡片动画", 1, ThrowCardActivity().javaClass.name))
