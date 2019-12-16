@@ -29,10 +29,34 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compileOnly (rootProject.ext.dependencies.appCompat){
+    compileOnly(rootProject.ext.dependencies.appCompat) {
         force true
     }
-    compileOnly rootProject.ext.dependencies.recyclerview
+    compileOnly(rootProject.ext.dependencies.design) {
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.cardview) {
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.recyclerview) {
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.annotation) {
+        force true
+    }
+    //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    compileOnly(rootProject.ext.dependencies.constraintlayout) {
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.legacy) {
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.flexbox) {
+        force true
+    }
+    compileOnly('com.squareup.okhttp3:okhttp:3.10.0') {
+        force true
+    }
     //https://github.com/SenhLinsh/Utils-Everywhere
 //    implementation 'com.github.SenhLinsh:Utils-Everywhere:2.1.0'
 }
