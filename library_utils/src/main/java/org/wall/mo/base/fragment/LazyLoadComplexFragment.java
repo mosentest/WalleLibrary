@@ -194,25 +194,21 @@ public abstract class LazyLoadComplexFragment extends AbsV4Fragment {
         return !mIsFirstVisible;
     }
 
-    public void onFragmentFirstVisible() {
-    }
+    public abstract void onFragmentFirstVisible();
 
     /**
      * 每次可见都回调
      */
-    public void onFragmentResume() {
-    }
+    public abstract void onFragmentResume();
 
     /**
      * 添加是否是第一次可见的标识 切勿和 onFragmentResume 同时使用因为两个方法回调时机一样
      *
      * @param firstResume true 是第一次可见 == onFirstVisible  false 去除第一次回调
      */
-    public void onFragmentResume(boolean firstResume) {
-    }
+    public abstract void onFragmentResume(boolean firstResume);
 
-    public void onFragmentPause() {
-    }
+    public abstract void onFragmentPause();
 
 
     @Override

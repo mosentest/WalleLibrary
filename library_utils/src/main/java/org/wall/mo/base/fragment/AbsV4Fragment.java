@@ -128,7 +128,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
 
 
     protected boolean setCurRetainInstance() {
-        return true;
+        return false;
     }
 
     @Nullable
