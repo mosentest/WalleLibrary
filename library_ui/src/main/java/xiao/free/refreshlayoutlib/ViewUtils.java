@@ -1,8 +1,10 @@
 package xiao.free.refreshlayoutlib;
 
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import android.view.View;
 import android.widget.AbsListView;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * Created by robincxiao on 2017/2/22.
@@ -10,7 +12,7 @@ import android.widget.AbsListView;
 
 public class ViewUtils {
     /**
-     * copy from {@link android.support.v4.widget.SwipeRefreshLayout#canChildScrollUp()}
+     * copy from {@link SwipeRefreshLayout#canChildScrollUp()}
      *
      * @return Whether it is possible for the child view of this layout to
      * scroll up. Override this if the child view is a custom view.

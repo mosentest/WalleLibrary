@@ -1,10 +1,9 @@
 package com.rmyh.recyclerviewsuspend.common;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.SimpleCursorTreeAdapter;
 
 /**
  * Created by wen on 2017/8/8.

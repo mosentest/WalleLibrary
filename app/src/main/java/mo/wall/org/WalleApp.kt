@@ -3,7 +3,7 @@ package mo.wall.org
 import android.app.Application
 import android.content.Context
 import android.os.StrictMode
-import android.support.multidex.MultiDex
+import androidx.multidex.MultiDex
 import android.widget.Toast
 import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper
 import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener

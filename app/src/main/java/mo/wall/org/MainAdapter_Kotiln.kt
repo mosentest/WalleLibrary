@@ -1,7 +1,7 @@
 package mo.wall.org
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import android.view.ViewGroup
  * 邮箱 709847739@qq.com
  * 说明
  **/
-class MainAdapter_Kotiln : RecyclerView.Adapter<MainAdapter_Kotiln.Holder> {
+class MainAdapter_Kotiln : androidx.recyclerview.widget.RecyclerView.Adapter<MainAdapter_Kotiln.Holder> {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         var view: View = LayoutInflater.from(context)
                 .inflate(R.layout.activity_main_item_content, null, false);
@@ -33,7 +33,7 @@ class MainAdapter_Kotiln : RecyclerView.Adapter<MainAdapter_Kotiln.Holder> {
         this.context = context
     }
 
-    public class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    public class Holder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
     }
 
 

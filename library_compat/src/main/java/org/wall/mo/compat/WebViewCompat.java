@@ -1,8 +1,8 @@
 package org.wall.mo.compat;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.text.Html;
+import androidx.annotation.NonNull;
+
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 

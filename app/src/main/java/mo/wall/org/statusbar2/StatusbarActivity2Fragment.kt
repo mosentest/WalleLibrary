@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import mo.wall.org.R
 import org.wall.mo.base.fragment.InterceptActBackFragment
@@ -49,8 +49,8 @@ class StatusbarActivity2Fragment : InterceptActBackFragment() {
 
 
     companion object {
-        fun newInstance(args: Bundle?): Fragment {
-            val fragment: Fragment? = StatusbarActivity2Fragment()
+        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
+            val fragment: androidx.fragment.app.Fragment? = StatusbarActivity2Fragment()
             args?.putString(TAG, TAG)
             fragment!!.arguments = args
             return fragment

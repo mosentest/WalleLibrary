@@ -2,7 +2,7 @@ package org.wall.mo.base.mvp.demo;
 
 import android.content.Intent;
 import android.os.Message;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.View;
 
 import org.wall.mo.base.mvp.BaseMVPWithV4FragmentActivity;

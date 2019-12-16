@@ -1,14 +1,12 @@
 package com.rmyh.recyclerviewsuspend.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.rmyh.recyclerviewsuspend.ItemDecoration.DeviderDecoration;
-import com.rmyh.recyclerviewsuspend.ItemDecoration.SectionDecoration;
 import com.rmyh.recyclerviewsuspend.R;
 import com.rmyh.recyclerviewsuspend.common.MyItemTouchHelper;
 import com.rmyh.recyclerviewsuspend.common.OnRecyclerItemClickListener;

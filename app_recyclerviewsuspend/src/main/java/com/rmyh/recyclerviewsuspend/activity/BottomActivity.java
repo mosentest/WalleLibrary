@@ -1,13 +1,11 @@
 package com.rmyh.recyclerviewsuspend.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.rmyh.recyclerviewsuspend.ItemDecoration.DeviderDecoration;
-import com.rmyh.recyclerviewsuspend.ItemDecoration.PaddingDecoration;
 import com.rmyh.recyclerviewsuspend.R;
 
 import java.util.ArrayList;

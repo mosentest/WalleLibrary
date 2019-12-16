@@ -3,7 +3,7 @@ package org.wall.mo.ucrop;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;

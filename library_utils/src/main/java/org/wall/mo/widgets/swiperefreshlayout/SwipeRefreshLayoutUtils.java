@@ -1,7 +1,7 @@
 package org.wall.mo.widgets.swiperefreshlayout;
 
-import android.support.annotation.ColorRes;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.annotation.ColorRes;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * 作者 create by moziqi on 2018/7/12

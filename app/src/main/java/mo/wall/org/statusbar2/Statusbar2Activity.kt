@@ -3,7 +3,7 @@ package mo.wall.org.statusbar2
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import mo.wall.org.R
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity
@@ -53,7 +53,7 @@ class Statusbar2Activity : AbsWithV4FragmentActivity() {
     }
 
 
-    override fun createFragment(): Fragment {
+    override fun createFragment(): androidx.fragment.app.Fragment {
         return StatusbarActivity2Fragment.newInstance(Bundle())
     }
 

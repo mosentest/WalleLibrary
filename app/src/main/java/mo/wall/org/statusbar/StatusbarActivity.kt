@@ -3,8 +3,8 @@ package mo.wall.org.statusbar
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.view.View
 import mo.wall.org.R
 import mo.wall.org.service.MyService
@@ -36,7 +36,7 @@ class StatusbarActivity : AbsWithV4FragmentActivity() {
         return R.id.tvTopBarLeftBack;
     }
 
-    override fun createFragment(): Fragment {
+    override fun createFragment(): androidx.fragment.app.Fragment {
         return StatusbarFragment.newInstance(Bundle())
     }
 

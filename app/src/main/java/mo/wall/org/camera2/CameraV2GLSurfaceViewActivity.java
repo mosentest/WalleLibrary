@@ -3,8 +3,8 @@ package mo.wall.org.camera2;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 
 import org.wall.mo.utils.camera.CameraV2;

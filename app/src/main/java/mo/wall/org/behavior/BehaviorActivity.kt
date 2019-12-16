@@ -2,10 +2,10 @@ package mo.wall.org.behavior
 
 import android.os.Bundle
 import android.os.Message
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewCompat
-import android.support.v4.view.ViewPager
+import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
+import androidx.core.view.ViewCompat
+import androidx.viewpager.widget.ViewPager
 import android.widget.BaseAdapter
 import android.widget.Button
 import mo.wall.org.R
@@ -26,10 +26,10 @@ class BehaviorActivity : BaseAppCompatActivity() {
 
 
     private lateinit var mTabLayout: TabLayout
-    private lateinit var mViewPager: ViewPager
+    private lateinit var mViewPager: androidx.viewpager.widget.ViewPager
 
 
-    private lateinit var fragments: ArrayList<Fragment>
+    private lateinit var fragments: ArrayList<androidx.fragment.app.Fragment>
     private lateinit var titles: ArrayList<String>
 
 
@@ -43,9 +43,9 @@ class BehaviorActivity : BaseAppCompatActivity() {
 
 
         mTabLayout = findViewById<TabLayout>(R.id.tabLayout)
-        mViewPager = findViewById<ViewPager>(R.id.viewPager)
+        mViewPager = findViewById<androidx.viewpager.widget.ViewPager>(R.id.viewPager)
 
-        fragments = ArrayList<Fragment>()
+        fragments = ArrayList<androidx.fragment.app.Fragment>()
         titles = ArrayList<String>()
 
         titles.add("button简单使用")

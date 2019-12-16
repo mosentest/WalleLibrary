@@ -2,8 +2,8 @@ package mo.wall.org.scroll
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +11,12 @@ import mo.wall.org.R
 import org.wall.mo.base.fragment.AbsV4Fragment.TAG
 import org.wall.mo.compat.statusbar.StatusBarUtil
 
-class ScrollFragment : Fragment() {
+class ScrollFragment : androidx.fragment.app.Fragment() {
 
 
     companion object {
-        fun newInstance(args: Bundle?): Fragment {
-            val fragment: Fragment? = ScrollFragment()
+        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
+            val fragment: androidx.fragment.app.Fragment? = ScrollFragment()
             args?.putString(TAG, TAG)
             fragment!!.arguments = args
             return fragment

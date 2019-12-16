@@ -2,7 +2,7 @@ package com.rmyh.recyclerviewsuspend.common;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by wen on 2017/8/8.

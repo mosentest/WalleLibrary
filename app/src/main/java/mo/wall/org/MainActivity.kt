@@ -3,10 +3,10 @@ package mo.wall.org
 import android.content.ComponentName
 import android.content.Intent
 import android.os.*
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.text.TextUtils
 import mo.wall.org.apkinfo.ApkInfoActivity
 import mo.wall.org.autodensity.AutoDensityActivity
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    var rvMain: RecyclerView? = null;
+    var rvMain: androidx.recyclerview.widget.RecyclerView? = null;
 
     var lists: ArrayList<Entity>? = null;
 

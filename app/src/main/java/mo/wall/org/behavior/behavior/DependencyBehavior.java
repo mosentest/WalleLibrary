@@ -1,13 +1,11 @@
 package mo.wall.org.behavior.behavior;
 
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.view.ViewCompat;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-
-import mo.wall.org.R;
 
 /**
  * https://blog.csdn.net/King1425/article/details/61923877

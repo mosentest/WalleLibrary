@@ -2,7 +2,7 @@ package mo.wall.org.nestedscrolling
 
 import android.os.Bundle
 import android.os.Message
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.widget.TextView
 import android.widget.Toast
 import mo.wall.org.R
