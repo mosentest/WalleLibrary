@@ -30,6 +30,18 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     compileOnly(rootProject.ext.dependencies.appCompat) {
+        exclude group: 'androidx.fragment'
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.fragment) {
+        exclude group: 'androidx.loader'
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.legacy) {
+        exclude group: 'androidx.loader'
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.loader) {
         force true
     }
     compileOnly(rootProject.ext.dependencies.cardview) {

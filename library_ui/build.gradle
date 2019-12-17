@@ -31,15 +31,26 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     compileOnly(rootProject.ext.dependencies.appCompat) {
+        exclude group: 'androidx.fragment'
         force true
     }
     compileOnly(rootProject.ext.dependencies.fragment) {
+        exclude group: 'androidx.loader'
         force true
     }
-    compileOnly(rootProject.ext.dependencies.exifinterface) {
+    compileOnly(rootProject.ext.dependencies.legacy) {
+        exclude group: 'androidx.loader'
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.loader) {
         force true
     }
     compileOnly(rootProject.ext.dependencies.design) {
+        exclude group: 'androidx.loader'
+        exclude group: 'androidx.legacy'
+        force true
+    }
+    compileOnly(rootProject.ext.dependencies.exifinterface) {
         force true
     }
     compileOnly(rootProject.ext.dependencies.cardview) {
@@ -51,11 +62,7 @@ dependencies {
     compileOnly(rootProject.ext.dependencies.annotation) {
         force true
     }
-    //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     compileOnly(rootProject.ext.dependencies.constraintlayout) {
-        force true
-    }
-    compileOnly(rootProject.ext.dependencies.legacy) {
         force true
     }
     compileOnly(rootProject.ext.dependencies.flexbox) {
@@ -76,6 +83,7 @@ dependencies {
         exclude group: 'androidx.appcompat'
         exclude group: 'androidx.fragment'
         exclude group: 'androidx.vectordrawable'
+        exclude group: 'androidx.annotation'
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
     //设置图片圆角角度
