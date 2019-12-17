@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +89,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (BuildConfig.DEBUG) {
-            WLog.i(TAG, getName() + ".setUserVisibleHint isVisibleToUser is" + isVisibleToUser);
+            WLog.i(TAG, getName() + ".setUserVisibleHint isVisibleToUser is " + isVisibleToUser);
         }
 //        LogUtils.i(TAG,getName() + "  isResumed() " + isResumed());
 //        LogUtils.i(TAG,getName() + "  isAdded() " + isAdded());
@@ -179,6 +181,9 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onActivityCreated savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         }
+        /**
+         * 废弃这2个方法
+         */
         initData();
         initClick();
     }
@@ -326,9 +331,21 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
      */
     public abstract void initView(View rootView, Bundle savedInstanceState);
 
-    public abstract void initData();
+    /**
+     * 废弃这2个方法
+     */
+    @Deprecated
+    public void initData() {
 
-    public abstract void initClick();
+    }
+
+    /**
+     * 废弃这2个方法
+     */
+    @Deprecated
+    public void initClick() {
+
+    }
 
     public abstract void handleSubMessage(Message msg);
 }

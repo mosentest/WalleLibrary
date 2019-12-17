@@ -5,12 +5,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import org.wall.mo.utils.log.WLog;
+
 import java.util.List;
 
 /**
  * https://github.com/SheHuan/LazyLoadFragment/blob/master/app/src/main/java/com/shh/fragmentdemo/base/LazyLoadFragment.java
  */
 public abstract class LazyLoadEasyProFragment extends AbsV4Fragment {
+
+    public final static String TAG = LazyLoadEasyProFragment.class.getSimpleName();
+
     private boolean isViewCreated; // 界面是否已创建完成
     private boolean isVisibleToUser; // 是否对用户可见
     private boolean isDataLoaded; // 数据是否已请求, isNeedReload()返回false的时起作用
@@ -97,6 +102,7 @@ public abstract class LazyLoadEasyProFragment extends AbsV4Fragment {
      */
     public void tryLoadData() {
         if (isViewCreated && isVisibleToUser && isParentVisible() && (isNeedReload() || !isDataLoaded)) {
+            WLog.i(TAG, getName() + ".tryLoadData");
             loadData();
             isDataLoaded = true;
             dispatchParentVisibleState();
@@ -139,6 +145,7 @@ public abstract class LazyLoadEasyProFragment extends AbsV4Fragment {
      */
     public void tryLoadData1() {
         if (!isParentHidden() && (isNeedReload() || !isDataLoaded)) {
+            WLog.i(TAG, getName() + ".tryLoadData1");
             loadData();
             isDataLoaded = true;
             dispatchParentHiddenState();

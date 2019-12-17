@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/depentent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="top|left"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="depentent"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom|right"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="auto"
+        android:textColor="@android:color/white"
+        app:layout_behavior="mo.wall.org.behavior.behavior.DependencyBehavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

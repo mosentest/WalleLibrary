@@ -11,6 +11,8 @@ import android.widget.Button
 import mo.wall.org.R
 import mo.wall.org.base.BaseAppCompatActivity
 import mo.wall.org.behavior.fragment.FirstFragment
+import mo.wall.org.behavior.fragment.ScrollFragment
+import org.wall.mo.base.adapter.MaxLifecyclePagerAdapter
 import org.wall.mo.base.adapter.SubPagerAdapter
 
 /**
@@ -49,9 +51,11 @@ class BehaviorActivity : BaseAppCompatActivity() {
         titles = ArrayList<String>()
 
         titles.add("button简单使用")
+        titles.add("Scroll滚动通知")
         fragments.add(FirstFragment.newInstance(Bundle()))
+        fragments.add(ScrollFragment.newInstance(Bundle()))
 
-        mViewPager.adapter = SubPagerAdapter(supportFragmentManager).apply {
+        mViewPager.adapter = MaxLifecyclePagerAdapter(supportFragmentManager).apply {
             setData(fragments, titles)
         }
 

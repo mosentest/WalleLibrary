@@ -18,7 +18,7 @@ public class WLog {
     private static final File sDir = new File(Environment.getExternalStorageDirectory(), ".app/.log_conf");
 
     static {
-        IS_DEBUG = sDir.exists() && sDir.isDirectory();
+        //IS_DEBUG = sDir.exists() && sDir.isDirectory();
     }
 
     public static void setIsDebug(boolean is_Debug) {

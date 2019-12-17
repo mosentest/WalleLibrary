@@ -3,10 +3,16 @@ package org.wall.mo.base.fragment;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
+import org.wall.mo.utils.log.WLog;
+
 /**
  * https://www.jianshu.com/p/0e2d746e3a3d
  */
 public abstract class LazyLoadEasyFragment extends AbsV4Fragment {
+
+    public final static String TAG = LazyLoadEasyFragment.class.getSimpleName();
+
+
     private boolean isViewCreated; // 界面是否已创建完成
     private boolean isVisibleToUser; // 是否对用户可见
     private boolean isDataLoaded; // 数据是否已请求
@@ -30,6 +36,7 @@ public abstract class LazyLoadEasyFragment extends AbsV4Fragment {
 
     public void tryLoadData() {
         if (isViewCreated && isVisibleToUser && !isDataLoaded) {
+            WLog.i(TAG, getName() + ".tryLoadData");
             loadData();
             isDataLoaded = true;
         }

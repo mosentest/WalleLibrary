@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import org.wall.mo.utils.log.WLog;
+
 import java.util.List;
 
 /**
@@ -17,6 +19,8 @@ import java.util.List;
  * version: 1.0
  */
 public abstract class LazyLoadComplexFragment extends AbsV4Fragment {
+
+    public final static String TAG = LazyLoadComplexFragment.class.getSimpleName();
 
     private boolean mIsFirstVisible = true;
 
@@ -93,6 +97,8 @@ public abstract class LazyLoadComplexFragment extends AbsV4Fragment {
         //当前 Fragment 是 child 时候 作为缓存 Fragment 的子 fragment getUserVisibleHint = true
         //但当父 fragment 不可见所以 currentVisibleState = false 直接 return 掉
         // 这里限制则可以限制多层嵌套的时候子 Fragment 的分发
+        WLog.i(TAG, getName() + ".dispatchUserVisibleHint visible is " + visible);
+
         if (visible && isParentInvisible()) {
             return;
         }
@@ -108,6 +114,7 @@ public abstract class LazyLoadComplexFragment extends AbsV4Fragment {
                 return;
             }
             if (mIsFirstVisible) {
+                WLog.i(TAG, getName() + ".dispatchUserVisibleHint onFragmentFirstVisible ");
                 onFragmentFirstVisible();
                 onFragmentResume(true);
                 mIsFirstVisible = false;
