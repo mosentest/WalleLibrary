@@ -16,7 +16,7 @@ import android.view.WindowManager;
 public class StatusBar28 {
 
 
-    public void splash(Activity activity) {
+    public static void splash(Activity activity) {
         /**
          * 还是设置主题会比较靠谱的
          * 还是设置主题会比较靠谱的

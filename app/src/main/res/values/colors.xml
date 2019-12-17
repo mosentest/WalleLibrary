@@ -7,7 +7,6 @@
     <color name="colorMainItemPress">#D7D7D7</color>
 
 
-
     <color name="google_blue">#4285F4</color>
     <color name="google_red">#EA4335</color>
     <color name="google_green">#34A853</color>
@@ -16,5 +15,7 @@
     <color name="color_333333">#333333</color>
     <color name="color_666666">#666666</color>
     <color name="color_999999">#999999</color>
+
+    <color name="black_overlay">#66000000</color>
 
 </resources>

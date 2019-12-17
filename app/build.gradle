@@ -158,6 +158,7 @@ dependencies {
 //    implementation 'com.android.support:multidex-instrumentation:1.0.2'
 
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -200,15 +201,15 @@ configurations.all {
                 details.useVersion rootProject.ext.android.compat_version
             }
         } else if (requested.group == 'androidx.appcompat'
-        || requested.group == 'androidx.annotation'
-        || requested.group == 'androidx.recyclerview'
-        || requested.group == 'androidx.fragment'
-        || requested.group == 'androidx.collection'
-        || requested.group == 'androidx.exifinterface'
-        || requested.group == 'androidx.loader'
-        || requested.group == 'androidx.core'
-        || requested.group == 'androidx.vectordrawable'
-        || requested.group == 'androidx.collection'
+                || requested.group == 'androidx.annotation'
+                || requested.group == 'androidx.recyclerview'
+                || requested.group == 'androidx.fragment'
+                || requested.group == 'androidx.collection'
+                || requested.group == 'androidx.exifinterface'
+                || requested.group == 'androidx.loader'
+                || requested.group == 'androidx.core'
+                || requested.group == 'androidx.vectordrawable'
+                || requested.group == 'androidx.collection'
         ) {
             println("androidx----" + requested.name)
             details.useVersion rootProject.ext.android.compatx_version
