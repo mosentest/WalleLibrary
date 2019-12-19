@@ -23,6 +23,8 @@ android {
             //, 'armeabi-v7a', 'arm64-v8a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
+
+        vectorDrawables.useSupportLibrary = true
     }
 
     // 多渠道/多环境 的不同配置
@@ -175,6 +177,8 @@ dependencies {
     // debugImplementation because LeakCanary should only run in debug builds.
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
 
+//    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:2.0.1'
+//    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit-leakcanary:2.0.1'
 
     // 原本：`RxJava 1.0` 依赖
     //implementation 'io.reactivex:rxandroid:1.2.0'

@@ -30,6 +30,8 @@ class WalleApp : Application() {
 //        }
 //        LeakCanary.install(this);
 
+//        DoraemonKit.install(this)
+
         if (BuildConfig.DEBUG) {
             //线程策略
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
