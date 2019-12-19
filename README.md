@@ -4,7 +4,7 @@
 
 [日常开发积累doc](https://github.com/moz1q1/WalleLibrary/tree/master/doc)
 
-#[百度云分享几年来收藏的书籍,永久有效](https://pan.baidu.com/s/1WnWlViRTgXMtSZHaXA4WsA)
+
 
 <div>
 <img src="img/Screenshot_2018-07-13-16-48-01.png" width = 30% height = 30% />
