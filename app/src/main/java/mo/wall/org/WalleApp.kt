@@ -61,7 +61,8 @@ class WalleApp : Application() {
             }
 
             override fun onBack() {
-                Toast.makeText(ctx, "退出后台", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "${getString(R.string.app_name)}退出后台"
+                        , Toast.LENGTH_SHORT).show();
             }
         })
         AutoDensity.initApplication(2f, 750f, 1334f, 4.7f)
