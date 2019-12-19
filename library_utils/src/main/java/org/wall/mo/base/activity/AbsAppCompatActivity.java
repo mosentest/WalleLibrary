@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.os.Message;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -31,6 +32,13 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
     protected final static String TAG = AbsAppCompatActivity.class.getSimpleName();
 
     protected Handler mHandler = null;
+
+    static {
+        /**
+         * https://www.jianshu.com/p/0972a0d290e9
+         */
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

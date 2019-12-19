@@ -31,8 +31,14 @@ import mo.wall.org.throwcard.ThrowCardActivity
 import mo.wall.org.webviewinscrollview.WebInScrollActivity
 import org.wall.mo.base.StartActivityCompat
 import org.wall.mo.compat.statusbar.StatusBarUtil
+import androidx.appcompat.app.AppCompatDelegate
+
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+
+    }
 
     var handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message?) {
