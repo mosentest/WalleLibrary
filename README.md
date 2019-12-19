@@ -13,11 +13,6 @@
 </div>
 
 
-<div>
-<img src="img/Screenshot_2018-07-13-16-48-10.png" width = 30% height = 30% />
-<img src="img/Screenshot_2018-07-13-16-48-13.png" width = 30% height = 30% />
-<img src="img/Screenshot_2018-07-13-16-48-16.png" width = 30% height = 30% />
-</div>
 
 # 学习站点
 - [Android Blog 周刊 ](http://androidblog.cn/)工具汇总，源码汇总等
