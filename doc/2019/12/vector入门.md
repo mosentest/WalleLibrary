@@ -35,6 +35,8 @@ public class VectorEnabledTintResources extends Resources {
 
 至于使用的教程网上挺多的，记录下关键的
 
+[Android矢量图(一)--VectorDrawable基础](https://www.jianshu.com/p/0972a0d290e9)
+
 1，SVG何以可以任意缩放而不会失真，
 drawable-(m|h|xh|xxh|xxxh)dpi和mipmap-(m|h|xh|xxh|xxxh)dpi这俩货就可以省省了；
 2，SVG文件一般都比较小，省去很去资源达到apk缩包的目的；
@@ -53,7 +55,3 @@ minSdkVersion<21情况下在非app:srcCompat属性的地方使用矢量图时，
 org.xmlpull.v1.XmlPullParserException: Binary XML file line #0: invalid drawable tag vector。
 minSdkVersion>=21则没有任何限制。
 
-作者：宛丘之上兮
-链接：https://www.jianshu.com/p/0972a0d290e9
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
