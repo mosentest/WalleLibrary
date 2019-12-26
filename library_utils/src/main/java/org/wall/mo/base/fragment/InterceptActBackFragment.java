@@ -17,7 +17,7 @@ import org.wall.mo.base.nextextra.AbsNextExtra;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class InterceptActBackFragment extends AbsV4Fragment implements IFragmentInterceptAct {
+public abstract class InterceptActBackFragment extends AbsDataBindingV4Fragment implements IFragmentInterceptAct {
 
     private AbsNextExtra parcelableNextExtra;
 

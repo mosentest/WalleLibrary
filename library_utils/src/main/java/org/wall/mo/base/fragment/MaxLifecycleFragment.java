@@ -11,7 +11,7 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class MaxLifecycleFragment extends AbsV4Fragment {
+public abstract class MaxLifecycleFragment extends AbsDataBindingV4Fragment {
 
     public final static String TAG = MaxLifecycleFragment.class.getSimpleName();
 
@@ -26,10 +26,10 @@ public abstract class MaxLifecycleFragment extends AbsV4Fragment {
     private void tryLoad() {
         if (!isLoad) {
             WLog.i(TAG, getName() + ".tryLoad");
-            loadData();
+            onFragmentFirstVisible();
             isLoad = true;
         }
     }
 
-    public abstract void loadData();
+    public abstract void onFragmentFirstVisible();
 }

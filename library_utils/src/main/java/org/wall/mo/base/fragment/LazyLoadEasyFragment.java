@@ -8,7 +8,7 @@ import org.wall.mo.utils.log.WLog;
 /**
  * https://www.jianshu.com/p/0e2d746e3a3d
  */
-public abstract class LazyLoadEasyFragment extends AbsV4Fragment {
+public abstract class LazyLoadEasyFragment extends AbsDataBindingV4Fragment {
 
     public final static String TAG = LazyLoadEasyFragment.class.getSimpleName();
 

@@ -23,6 +23,18 @@ android {
         }
     }
 
+    /**
+     * 这前用上面multiDexEnabled true时，
+     * 突然在5.0以下的手机上跑不起来，
+     * 改成下面这种写法就可以了。
+     */
+    dexOptions {
+        jumboMode true
+    }
+
+    dataBinding {
+        enabled true
+    }
 }
 
 dependencies {

@@ -21,7 +21,7 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
 </desc></version></time></author> */
 public class FirstFragment : MaxLifecycleFragment() {
 
-    override fun loadData() {
+    override fun onFragmentFirstVisible() {
         if (mDepentent != null) {
             mDepentent.setOnClickListener { v ->
                 ViewCompat.offsetTopAndBottom(v, 5);

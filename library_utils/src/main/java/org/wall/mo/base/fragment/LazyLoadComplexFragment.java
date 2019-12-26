@@ -18,7 +18,7 @@ import java.util.List;
  * desc   : https://github.com/ImportEffort/FragmentLiftCycle/blob/master/app/src/main/java/com/wangshijia/www/fragmentliftcycle/LazyLoadBaseFragment.java
  * version: 1.0
  */
-public abstract class LazyLoadComplexFragment extends AbsV4Fragment {
+public abstract class LazyLoadComplexFragment extends AbsDataBindingV4Fragment {
 
     public final static String TAG = LazyLoadComplexFragment.class.getSimpleName();
 

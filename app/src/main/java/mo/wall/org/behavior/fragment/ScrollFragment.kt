@@ -19,7 +19,7 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
 </desc></version></time></author> */
 class ScrollFragment : MaxLifecycleFragment() {
 
-    override fun loadData() {
+    override fun onFragmentFirstVisible() {
 
     }
 

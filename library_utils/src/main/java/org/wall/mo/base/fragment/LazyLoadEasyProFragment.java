@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * https://github.com/SheHuan/LazyLoadFragment/blob/master/app/src/main/java/com/shh/fragmentdemo/base/LazyLoadFragment.java
  */
-public abstract class LazyLoadEasyProFragment extends AbsV4Fragment {
+public abstract class LazyLoadEasyProFragment extends AbsDataBindingV4Fragment {
 
     public final static String TAG = LazyLoadEasyProFragment.class.getSimpleName();
 

@@ -23,7 +23,7 @@ import org.wall.mo.utils.log.WLog;
  * * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsWithV4FragmentActivity extends AbsAppCompatActivity {
+public abstract class AbsWithV4FragmentActivity extends AbsDataBindingAppCompatActivity {
 
     protected static final String TAG = AbsWithV4FragmentActivity.class.getSimpleName();
 
