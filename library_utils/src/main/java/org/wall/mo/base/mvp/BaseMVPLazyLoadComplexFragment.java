@@ -1,7 +1,9 @@
 package org.wall.mo.base.mvp;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.view.View;
 
 import org.wall.mo.base.fragment.LazyLoadComplexFragment;
@@ -34,7 +36,7 @@ public abstract class BaseMVPLazyLoadComplexFragment<view extends BaseContract.B
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
-            mPresenter.attachView((view) this);
+            mPresenter.attachView(this);
             mPresenter.onCreate(savedInstanceState);
         }
     }
@@ -63,7 +65,7 @@ public abstract class BaseMVPLazyLoadComplexFragment<view extends BaseContract.B
             if (!viewNull) {
                 mPresenter.detachView();
                 //这里处理再一次
-                mPresenter.attachView((view) this);
+                mPresenter.attachView(this);
             }
         }
     }
@@ -101,7 +103,7 @@ public abstract class BaseMVPLazyLoadComplexFragment<view extends BaseContract.B
     protected abstract presenter createPresenter();
 
     @Override
-    public void onRequestFail(int flag, String msg) {
+    public void onRequestFail(int flag) {
         //错误提示，让自己实现，不在底层处理
         showDialogCount--;
         if (showDialogCount < 0) {

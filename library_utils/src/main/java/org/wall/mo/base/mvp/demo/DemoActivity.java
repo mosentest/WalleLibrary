@@ -2,7 +2,9 @@ package org.wall.mo.base.mvp.demo;
 
 import android.content.Intent;
 import android.os.Message;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.View;
 
 import org.wall.mo.base.mvp.BaseMVPWithV4FragmentActivity;
@@ -100,17 +102,17 @@ public class DemoActivity extends BaseMVPWithV4FragmentActivity<DemoContract.Vie
     }
 
     @Override
-    public void onRequestSuccess(int flag, Object model) {
-        super.onRequestSuccess(flag, model);
+    public void onRequestDialogFail(int flag, Object failObj) {
+        showDialog((String) failObj);
     }
 
     @Override
-    public void onRequestFail(int flag, String msg) {
-        super.onRequestFail(flag, msg);
+    public void onRequestToastFail(int flag, Object failObj) {
+        showShortToast((String) failObj);
     }
 
     @Override
-    public void onRequestStart(int flag, String tipMsg) {
-        super.onRequestStart(flag, tipMsg);
+    public void onRequestInterceptFail(int flag, Object failObj) {
+
     }
 }

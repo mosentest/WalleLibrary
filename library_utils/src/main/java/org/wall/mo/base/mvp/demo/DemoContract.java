@@ -16,7 +16,7 @@ public class DemoContract {
 
     public static abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void postMsg();
+        public abstract void postMsg(final int flag);
     }
 
     public interface View extends BaseContract.BaseView {

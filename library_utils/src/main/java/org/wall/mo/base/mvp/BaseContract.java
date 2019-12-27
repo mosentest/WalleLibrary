@@ -58,6 +58,17 @@ public interface BaseContract {
         }
 
         /**
+         * 网络请求回来判断这个是否为空
+         * <p>
+         * 因为不感知生命周期，所以需要判断当前是否绑定
+         *
+         * @return
+         */
+        protected boolean isAttach() {
+            return getView() != null;
+        }
+
+        /**
          * 关联View对象
          *
          * @param view View层实例
@@ -95,16 +106,37 @@ public interface BaseContract {
          * 请求成功
          *
          * @param flag
-         * @param model 数据类型
          */
-        public void onRequestSuccess(int flag, Object model);
+        public void onRequestSuccess(int flag, Object o);
 
         /**
          * 请求失败
          *
          * @param flag
-         * @param msg  错误信息
+         * @param failObj 错误对象
          */
-        public void onRequestFail(int flag, String msg);
+        public void onRequestDialogFail(int flag, Object failObj);
+
+        /**
+         * 请求失败
+         *
+         * @param flag
+         * @param failObj 错误对象
+         */
+        public void onRequestToastFail(int flag, Object failObj);
+
+        /**
+         * 请求失败
+         *
+         * @param flag
+         */
+        public void onRequestFail(int flag);
+
+        /**
+         * 请求失败 拦截自定义处理
+         *
+         * @param flag
+         */
+        public void onRequestInterceptFail(int flag, Object failObj);
     }
 }

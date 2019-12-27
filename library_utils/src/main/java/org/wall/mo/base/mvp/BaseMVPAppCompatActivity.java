@@ -1,9 +1,11 @@
 package org.wall.mo.base.mvp;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 
 import org.wall.mo.base.activity.AbsAppCompatActivity;
+import org.wall.mo.base.activity.AbsDataBindingAppCompatActivity;
 
 /**
  * Copyright (C), 2018-2019
@@ -15,7 +17,7 @@ import org.wall.mo.base.activity.AbsAppCompatActivity;
  * 作者姓名 修改时间 版本号 描述
  */
 public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseView,
-        presenter extends BaseContract.BasePresenter> extends AbsAppCompatActivity
+        presenter extends BaseContract.BasePresenter> extends AbsDataBindingAppCompatActivity
         implements BaseContract.BaseView {
 
     protected presenter mPresenter;
@@ -31,7 +33,7 @@ public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseVie
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
-            mPresenter.attachView((view) this);
+            mPresenter.attachView(this);
             mPresenter.onCreate(savedInstanceState);
         }
     }
@@ -60,7 +62,7 @@ public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseVie
             if (!viewNull) {
                 mPresenter.detachView();
                 //这里处理再一次
-                mPresenter.attachView((view) this);
+                mPresenter.attachView(this);
             }
         }
     }
@@ -98,7 +100,7 @@ public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseVie
     public abstract presenter createPresenter();
 
     @Override
-    public void onRequestFail(int flag, String msg) {
+    public void onRequestFail(int flag) {
         //错误提示，让自己实现，不在底层处理
         showDialogCount--;
         if (showDialogCount < 0) {

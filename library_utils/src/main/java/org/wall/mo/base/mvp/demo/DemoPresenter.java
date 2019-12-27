@@ -16,10 +16,10 @@ import java.lang.ref.WeakReference;
 public class DemoPresenter extends DemoContract.Presenter {
 
     @Override
-    public void postMsg() {
-        if (getView() != null) {
-            getView().onRequestStart(1, "");
-        }
+    public void postMsg(final int flag) {
+        DemoRepository.getInstance().loadUserInfo(new RepositoryCallBack<Object, Object>(getView(), flag) {
+
+        });
     }
 
     @Override
