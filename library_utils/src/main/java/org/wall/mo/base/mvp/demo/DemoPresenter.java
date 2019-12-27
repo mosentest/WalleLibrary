@@ -18,7 +18,30 @@ public class DemoPresenter extends DemoContract.Presenter {
     @Override
     public void postMsg(final int flag) {
         DemoRepository.getInstance().loadUserInfo(new RepositoryCallBack<Object, Object>(getView(), flag) {
+            @Override
+            public void onSuccess(Object bean) {
+                super.onSuccess(bean);
+            }
 
+            @Override
+            public void onFail(Object bean) {
+                super.onFail(bean);
+            }
+
+            @Override
+            public boolean interceptError() {
+                return super.interceptError();
+            }
+
+            @Override
+            public boolean showError() {
+                return super.showError();
+            }
+
+            @Override
+            public boolean toast() {
+                return super.toast();
+            }
         });
     }
 
