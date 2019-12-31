@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -40,9 +39,9 @@ import java.util.concurrent.TimeUnit;
  * desc   :
  * version: 1.0
  */
-public class PackageManagerCompatQ {
+public class PackageManagerCompatP {
 
-    private final static String TAG = PackageManagerCompatQ.class.getSimpleName();
+    private final static String TAG = PackageManagerCompatP.class.getSimpleName();
 
 
     public static final long MAX_WAIT_TIME = 25 * 1000;
@@ -53,7 +52,7 @@ public class PackageManagerCompatQ {
 
     private Context mContext;
 
-    public PackageManagerCompatQ(Context context) {
+    public PackageManagerCompatP(Context context) {
         this.mContext = context;
     }
 

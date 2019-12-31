@@ -10,7 +10,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
-            new PackageManagerCompatQ(this).testReplaceFlagSdcardInternal("", "");
+            new PackageManagerCompatP(this).testReplaceFlagSdcardInternal("", "");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import org.wall.mo.base.activity.AbsAppCompatActivity;
 import org.wall.mo.base.activity.AbsDataBindingAppCompatActivity;
 
 /**
