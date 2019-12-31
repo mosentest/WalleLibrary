@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.wall.mo.utils.StringUtils;
+
 /**
  * Copyright (C), 2018-2019
  * Author: ziqimo
@@ -67,13 +69,37 @@ public class EditTextUtils {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(s.toString())) {
+                if (StringUtils.isEmpty(s.toString())) {
                     editText.setCompoundDrawables(null, null, null, null);
                 } else {
+                    //Resources resources = editText.getContext().getResources();
+                    //Drawable drawable = resources.getDrawable(R.drawable.icon_delete_registered);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     editText.setCompoundDrawables(null, null, drawable, null);
                 }
             }
         });
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    checkValue(editText, drawable);
+                } else {
+                    editText.setCompoundDrawables(null, null, null, null);
+                }
+            }
+        });
+    }
+
+
+    private static void checkValue(EditText editText, final Drawable drawable) {
+        if (StringUtils.isEmpty(editText.getText().toString())) {
+            editText.setCompoundDrawables(null, null, null, null);
+        } else {
+            //Resources resources = editText.getContext().getResources();
+            //Drawable drawable = resources.getDrawable(R.drawable.icon_delete_registered);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            editText.setCompoundDrawables(null, null, drawable, null);
+        }
     }
 }
