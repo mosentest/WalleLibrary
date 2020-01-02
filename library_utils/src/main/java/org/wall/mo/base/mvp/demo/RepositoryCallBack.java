@@ -13,31 +13,37 @@ import org.wall.mo.base.mvp.BaseContract;
  */
 public abstract class RepositoryCallBack<T, F> {
 
+    /**
+     * 为了感知activity的生命周期
+     */
     private BaseContract.BaseView mBaseView;
 
     private int mFlag;
 
-    public RepositoryCallBack(BaseContract.BaseView baseView, int flag, String tipMsg) {
+    protected boolean mLoading;
+
+    public RepositoryCallBack(BaseContract.BaseView baseView, int flag, String tipMsg, boolean loading) {
         this.mBaseView = baseView;
         this.mFlag = flag;
+        this.mLoading = loading;
         if (mBaseView != null) {
-            mBaseView.onRequestStart(mFlag, tipMsg);
+            mBaseView.onRequestStart(mLoading, mFlag, tipMsg);
         }
     }
 
     public RepositoryCallBack(BaseContract.BaseView baseView, int flag) {
-        this(baseView, flag, "");
+        this(baseView, flag, "", false);
     }
 
     public void onSuccess(T bean) {
         if (mBaseView != null) {
-            mBaseView.onRequestSuccess(mFlag, bean);
+            mBaseView.onRequestSuccess(mLoading, mFlag, bean);
         }
     }
 
     public void onFail(F bean) {
         if (mBaseView != null) {
-            mBaseView.onRequestFail(mFlag);
+            mBaseView.onRequestFail(mLoading, mFlag);
         }
         if (interceptError()) {
             if (mBaseView != null) {

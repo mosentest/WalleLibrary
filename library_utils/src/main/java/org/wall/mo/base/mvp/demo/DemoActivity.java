@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import android.view.View;
 
+import org.wall.mo.base.activity.AbsWithV4FragmentActivity;
 import org.wall.mo.base.mvp.BaseMVPWithV4FragmentActivity;
 
 /**
@@ -15,21 +16,13 @@ import org.wall.mo.base.mvp.BaseMVPWithV4FragmentActivity;
  * Date: 2019-08-18 15:35
  * Description: ${DESCRIPTION}
  * History:
+ * <p>
+ * activity只是做一个架
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class DemoActivity extends BaseMVPWithV4FragmentActivity<DemoContract.View, DemoContract.Presenter>
-        implements DemoContract.View {
+public class DemoActivity extends AbsWithV4FragmentActivity {
 
-    @Override
-    public void onCurDestroy() {
-
-    }
-
-    @Override
-    public DemoContract.Presenter createPresenter() {
-        return new DemoPresenter();
-    }
 
     @Override
     public void parseIntentData(Intent intent) {
@@ -53,7 +46,7 @@ public class DemoActivity extends BaseMVPWithV4FragmentActivity<DemoContract.Vie
 
     @Override
     public Fragment createFragment() {
-        return null;
+        return DemoFragment.newInstance(null);
     }
 
     @Override
@@ -77,6 +70,11 @@ public class DemoActivity extends BaseMVPWithV4FragmentActivity<DemoContract.Vie
     }
 
     @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
     public void showShortToast(String msg) {
 
     }
@@ -93,26 +91,6 @@ public class DemoActivity extends BaseMVPWithV4FragmentActivity<DemoContract.Vie
 
     @Override
     public void hideDialog() {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onRequestDialogFail(int flag, Object failObj) {
-        showDialog((String) failObj);
-    }
-
-    @Override
-    public void onRequestToastFail(int flag, Object failObj) {
-        showShortToast((String) failObj);
-    }
-
-    @Override
-    public void onRequestInterceptFail(int flag, Object failObj) {
 
     }
 }

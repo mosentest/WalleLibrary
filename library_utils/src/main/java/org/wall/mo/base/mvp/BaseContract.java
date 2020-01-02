@@ -91,23 +91,41 @@ public interface BaseContract {
 
     }
 
-    public interface BaseView {
+    public interface BaseView extends BaseRequestView {
 
 
+    }
+
+    public interface BaseRequestView {
         /**
          * 请求前
          *
          * @param flag   标记来源
          * @param tipMsg 加载的提示
          */
-        public void onRequestStart(int flag, String tipMsg);
+        public void onRequestStart(boolean showLoading, int flag, String tipMsg);
 
         /**
          * 请求成功
          *
          * @param flag
          */
-        public void onRequestSuccess(int flag, Object o);
+        public void onRequestSuccess(boolean showLoading, int flag, Object o);
+
+
+        /**
+         * 请求失败
+         *
+         * @param flag
+         */
+        public void onRequestFail(boolean showLoading, int flag);
+
+        /**
+         * 请求失败 拦截自定义处理
+         *
+         * @param flag
+         */
+        public void onRequestInterceptFail(int flag, Object failObj);
 
         /**
          * 请求失败
@@ -124,19 +142,5 @@ public interface BaseContract {
          * @param failObj 错误对象
          */
         public void onRequestToastFail(int flag, Object failObj);
-
-        /**
-         * 请求失败
-         *
-         * @param flag
-         */
-        public void onRequestFail(int flag);
-
-        /**
-         * 请求失败 拦截自定义处理
-         *
-         * @param flag
-         */
-        public void onRequestInterceptFail(int flag, Object failObj);
     }
 }

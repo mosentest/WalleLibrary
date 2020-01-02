@@ -17,8 +17,7 @@ import org.wall.mo.base.fragment.LazyLoadComplexFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPLazyLoadComplexFragment<view extends BaseContract.BaseView,
-        presenter extends BaseContract.BasePresenter>
+public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContract.BasePresenter>
         extends LazyLoadComplexFragment
         implements BaseContract.BaseView {
 
@@ -30,6 +29,7 @@ public abstract class BaseMVPLazyLoadComplexFragment<view extends BaseContract.B
      */
     private volatile int showDialogCount = 0;
 
+    protected abstract presenter createPresenter();
 
     @Override
     public void initView(View rootView, Bundle savedInstanceState) {
@@ -100,10 +100,11 @@ public abstract class BaseMVPLazyLoadComplexFragment<view extends BaseContract.B
     protected abstract void onCurDestroy();
 
 
-    protected abstract presenter createPresenter();
-
     @Override
-    public void onRequestFail(int flag) {
+    public void onRequestFail(boolean showLoading, int flag) {
+        if (!showLoading) {
+            return;
+        }
         //错误提示，让自己实现，不在底层处理
         showDialogCount--;
         if (showDialogCount < 0) {
@@ -113,7 +114,10 @@ public abstract class BaseMVPLazyLoadComplexFragment<view extends BaseContract.B
     }
 
     @Override
-    public void onRequestStart(int flag, String tipMsg) {
+    public void onRequestStart(boolean showLoading, int flag, String tipMsg) {
+        if (!showLoading) {
+            return;
+        }
         showDialogCount++;
         if (showDialogCount == 1) {
             showDialog(tipMsg);
@@ -121,7 +125,10 @@ public abstract class BaseMVPLazyLoadComplexFragment<view extends BaseContract.B
     }
 
     @Override
-    public void onRequestSuccess(int flag, Object model) {
+    public void onRequestSuccess(boolean showLoading, int flag, Object model) {
+        if (!showLoading) {
+            return;
+        }
         showDialogCount--;
         if (showDialogCount < 0) {
             showDialogCount = 0;

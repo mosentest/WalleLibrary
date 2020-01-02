@@ -11,7 +11,7 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class MaxLifecycleFragment extends AbsDataBindingV4Fragment {
+public abstract class MaxLifecycleFragment extends InterceptActBackFragment {
 
     public final static String TAG = MaxLifecycleFragment.class.getSimpleName();
 

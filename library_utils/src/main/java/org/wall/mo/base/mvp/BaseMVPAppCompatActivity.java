@@ -15,8 +15,8 @@ import org.wall.mo.base.activity.AbsDataBindingAppCompatActivity;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseView,
-        presenter extends BaseContract.BasePresenter> extends AbsDataBindingAppCompatActivity
+public abstract class BaseMVPAppCompatActivity<presenter extends BaseContract.BasePresenter>
+        extends AbsDataBindingAppCompatActivity
         implements BaseContract.BaseView {
 
     protected presenter mPresenter;
@@ -25,6 +25,9 @@ public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseVie
      * 展示dialog次数
      */
     protected volatile int showDialogCount = 0;
+
+
+    public abstract presenter createPresenter();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,10 +99,11 @@ public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseVie
     public abstract void onCurDestroy();
 
 
-    public abstract presenter createPresenter();
-
     @Override
-    public void onRequestFail(int flag) {
+    public void onRequestFail(boolean showLoading, int flag) {
+        if (!showLoading) {
+            return;
+        }
         //错误提示，让自己实现，不在底层处理
         showDialogCount--;
         if (showDialogCount < 0) {
@@ -109,7 +113,10 @@ public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseVie
     }
 
     @Override
-    public void onRequestStart(int flag, String tipMsg) {
+    public void onRequestStart(boolean showLoading, int flag, String tipMsg) {
+        if (!showLoading) {
+            return;
+        }
         showDialogCount++;
         if (showDialogCount == 1) {
             showDialog(tipMsg);
@@ -117,7 +124,10 @@ public abstract class BaseMVPAppCompatActivity<view extends BaseContract.BaseVie
     }
 
     @Override
-    public void onRequestSuccess(int flag, Object model) {
+    public void onRequestSuccess(boolean showLoading, int flag, Object model) {
+        if (!showLoading) {
+            return;
+        }
         showDialogCount--;
         if (showDialogCount < 0) {
             showDialogCount = 0;
