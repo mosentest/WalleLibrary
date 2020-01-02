@@ -18,7 +18,7 @@ import org.wall.mo.base.mvp.BaseMVPMaxLifecycleFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.View, DemoContract.Presenter>
+public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Presenter>
         implements DemoContract.View {
 
 
@@ -27,10 +27,6 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.View,
         return null;
     }
 
-    @Override
-    protected void onCurDestroy() {
-
-    }
 
     @Override
     protected void onAbsV4Attach(Context context) {
@@ -44,11 +40,6 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.View,
 
     @Override
     public void handleSubMessage(Message msg) {
-
-    }
-
-    @Override
-    public void setTopBarTitle(String title) {
 
     }
 
@@ -67,10 +58,6 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.View,
 
     }
 
-    @Override
-    public void setTopBarBack(boolean show) {
-
-    }
 
     @Override
     public void showShortToast(String msg) {
@@ -111,4 +98,10 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.View,
     public void onFragmentFirstVisible() {
 
     }
+
+    @Override
+    protected void onCurDestroy() {
+
+    }
+
 }

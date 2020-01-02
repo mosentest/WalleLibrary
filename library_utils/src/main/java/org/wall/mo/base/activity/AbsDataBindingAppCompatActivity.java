@@ -211,9 +211,21 @@ public abstract class AbsDataBindingAppCompatActivity extends AppCompatActivity 
 
     public abstract void parseIntentData();
 
-    public abstract void initData();
+    /**
+     * 废弃这2个方法
+     */
+    @Deprecated
+    public void initData() {
 
-    public abstract void initClick();
+    }
+
+    /**
+     * 废弃这2个方法
+     */
+    @Deprecated
+    public void initClick() {
+
+    }
 
     public abstract void handleSubMessage(Message msg);
 }

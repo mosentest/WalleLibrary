@@ -1,6 +1,7 @@
 package mo.wall.org.behavior.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Message
 import android.view.View
@@ -20,6 +21,17 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
  * 作者姓名 修改时间 版本号 描述
 </desc></version></time></author> */
 public class FirstFragment : MaxLifecycleFragment() {
+    override fun getTopBarBackViewId(): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun parseIntentData(intent: Intent?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getTopBarTitleViewId(): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onFragmentFirstVisible() {
         if (mDepentent != null) {
@@ -62,14 +74,6 @@ public class FirstFragment : MaxLifecycleFragment() {
     }
 
     override fun handleSubMessage(msg: Message) {
-
-    }
-
-    override fun setTopBarTitle(title: String) {
-
-    }
-
-    override fun setTopBarBack(show: Boolean) {
 
     }
 

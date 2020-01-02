@@ -1,5 +1,7 @@
 package org.wall.mo.base.fragment;
 
+import android.os.Parcelable;
+
 /**
  * Copyright (C), 2018-2019
  * Author: ziqimo
@@ -13,9 +15,9 @@ package org.wall.mo.base.fragment;
  */
 public interface IAttachActivity {
 
-    public void setTopBarTitle(String title);
+    public void setTopBarTitle();
 
-    public void setTopBarBack(boolean show);
+    public void setTopBarBack();
 
     public void showShortToast(String msg);
 
@@ -24,4 +26,6 @@ public interface IAttachActivity {
     public void showDialog(String msg);
 
     public void hideDialog();
+
+    public Parcelable getNextExtra();
 }

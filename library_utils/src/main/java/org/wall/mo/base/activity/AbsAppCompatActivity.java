@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 
 import org.wall.mo.base.fragment.IAttachActivity;
@@ -27,7 +29,7 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsAppCompatActivity extends AppCompatActivity implements IAttachActivity , View.OnClickListener {
+public abstract class AbsAppCompatActivity extends AppCompatActivity implements IAttachActivity, View.OnClickListener {
 
     protected final static String TAG = AbsAppCompatActivity.class.getSimpleName();
 
@@ -201,9 +203,21 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
 
     public abstract void parseIntentData();
 
-    public abstract void initData();
+    /**
+     * 废弃这2个方法
+     */
+    @Deprecated
+    public void initData() {
 
-    public abstract void initClick();
+    }
+
+    /**
+     * 废弃这2个方法
+     */
+    @Deprecated
+    public void initClick() {
+
+    }
 
     public abstract void handleSubMessage(Message msg);
 }

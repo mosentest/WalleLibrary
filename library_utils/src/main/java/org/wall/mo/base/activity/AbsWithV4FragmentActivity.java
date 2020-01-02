@@ -2,15 +2,20 @@ package org.wall.mo.base.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
 import org.wall.mo.base.StartActivityCompat;
 import org.wall.mo.base.fragment.IFragmentInterceptAct;
-import org.wall.mo.base.nextextra.AbsNextExtra;
+import org.wall.mo.base.nextextra.BaseNextExtra;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.log.WLog;
 
@@ -30,13 +35,16 @@ public abstract class AbsWithV4FragmentActivity extends AbsDataBindingAppCompatA
     protected Fragment fragment;
 
     /**
-     * 展示返回键按钮
-     */
-    protected boolean showTopBarBack;
-    /**
      * 上个页面传递的参数集合对象
      */
-    protected AbsNextExtra parcelableNextExtra;
+    private BaseNextExtra mNextParcelable;
+
+    private String mTitle;
+    /**
+     * 展示返回键按钮
+     */
+    private boolean mShowBack;
+
 
     @Override
     public void initView(Bundle savedInstanceState) {
@@ -89,19 +97,42 @@ public abstract class AbsWithV4FragmentActivity extends AbsDataBindingAppCompatA
             }
         } else {
             //解析参数
-            String title = intent.getStringExtra(StartActivityCompat.NEXT_TITLE);
-            boolean showBack = intent.getBooleanExtra(StartActivityCompat.NEXT_SHOW_BACK, true);
-            parcelableNextExtra = intent.getParcelableExtra(StartActivityCompat.NEXT_PARCELABLE);
+            Bundle extras = intent.getExtras();
+            this.mTitle = extras.getString(StartActivityCompat.NEXT_TITLE);
+            this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
+            this.mNextParcelable = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
             //消费参数
-            setTopBarTitle(title);
-            setTopBarBack(showBack);
-            this.showTopBarBack = showBack;
+            setTopBarTitle();
+            setTopBarBack();
             //其他值
             parseIntentData(intent);
         }
     }
 
     public abstract void parseIntentData(Intent intent);
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (outState != null) {
+            outState.putString(StartActivityCompat.NEXT_TITLE, mTitle);
+            outState.putBoolean(StartActivityCompat.NEXT_SHOW_BACK, mShowBack);
+            outState.putParcelable(StartActivityCompat.NEXT_PARCELABLE, mNextParcelable);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            this.mTitle = savedInstanceState.getString(StartActivityCompat.NEXT_TITLE);
+            this.mShowBack = savedInstanceState.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
+            this.mNextParcelable = savedInstanceState.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
+            setTopBarTitle();
+            setTopBarBack();
+        }
+    }
 
 
     /**
@@ -138,37 +169,32 @@ public abstract class AbsWithV4FragmentActivity extends AbsDataBindingAppCompatA
 
     /**
      * 设置返回键是否显示
-     *
-     * @param show
      */
     @Override
-    public void setTopBarBack(boolean show) {
-        showTopBarBack = show;
+    public void setTopBarBack() {
         int topBarBackViewId = getTopBarBackViewId();
-        if (topBarBackViewId != -1) {
-            findViewById(topBarBackViewId).setVisibility(show ? View.VISIBLE : View.GONE);
+        if (topBarBackViewId != 0) {
+            findViewById(topBarBackViewId).setVisibility(mShowBack ? View.VISIBLE : View.GONE);
         }
     }
 
     /**
      * 设置标题
-     *
-     * @param title
      */
     @Override
-    public void setTopBarTitle(String title) {
+    public void setTopBarTitle() {
         int topBarTitleViewId = getTopBarTitleViewId();
-        if (topBarTitleViewId != -1) {
+        if (topBarTitleViewId != 0) {
             View topBarTitleView = findViewById(topBarTitleViewId);
             if (topBarTitleView instanceof TextView) {
-                ((TextView) topBarTitleView).setText(title);
+                ((TextView) topBarTitleView).setText(mTitle);
             }
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (!showTopBarBack) {
+        if (!mShowBack) {
             return;
         }
         if (fragment instanceof IFragmentInterceptAct
@@ -182,10 +208,16 @@ public abstract class AbsWithV4FragmentActivity extends AbsDataBindingAppCompatA
     }
 
     @Override
+    public Parcelable getNextExtra() {
+        return mNextParcelable;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        parcelableNextExtra = null;
+        mNextParcelable = null;
         fragment = null;
     }
+
 
 }

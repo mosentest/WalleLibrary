@@ -3,7 +3,9 @@ package org.wall.mo.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
+
 import androidx.fragment.app.Fragment;
 
 import org.wall.mo.utils.StringUtils;
@@ -17,6 +19,8 @@ import org.wall.mo.utils.StringUtils;
  */
 public class StartActivityCompat {
 
+
+    //public static final String NEXT_EXTRA = "next_extra";
 
     /**
      * 封装其他，其他参数都转成parcelable对象，方便代码跟踪
@@ -110,16 +114,19 @@ public class StartActivityCompat {
                                      Intent intent,
                                      int requestCode,
                                      Parcelable parcelable) {
+        Bundle bundle = new Bundle();
         //设置相关参数
         if (parcelable != null) {
-            intent.putExtra(NEXT_PARCELABLE, parcelable);
+            bundle.putParcelable(NEXT_PARCELABLE, parcelable);
         }
         //设置相关参数
         if (!StringUtils.isEmpty(title)) {
-            intent.putExtra(NEXT_TITLE, title);
+            bundle.putString(NEXT_TITLE, title);
         }
         //设置相关参数
-        intent.putExtra(NEXT_SHOW_BACK, showBack);
+        bundle.putBoolean(NEXT_SHOW_BACK, showBack);
+
+        intent.putExtras(bundle);
 
         if (fragment != null) {
             fragment.startActivityForResult(intent, requestCode);
@@ -127,7 +134,7 @@ public class StartActivityCompat {
             if (context instanceof Activity) {
                 ((Activity) context).startActivityForResult(intent, requestCode);
             } else {
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         }

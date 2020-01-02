@@ -5,7 +5,6 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import org.wall.mo.base.fragment.LazyLoadEasyProFragment;
 import org.wall.mo.base.fragment.MaxLifecycleFragment;
 
 /**

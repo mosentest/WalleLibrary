@@ -12,21 +12,21 @@ import android.os.Parcelable;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class AbsNextExtra implements Parcelable {
+public class BaseNextExtra implements Parcelable {
 
 
-    protected AbsNextExtra(Parcel in) {
+    protected BaseNextExtra(Parcel in) {
     }
 
-    public static final Creator<AbsNextExtra> CREATOR = new Creator<AbsNextExtra>() {
+    public static final Creator<BaseNextExtra> CREATOR = new Creator<BaseNextExtra>() {
         @Override
-        public AbsNextExtra createFromParcel(Parcel in) {
-            return new AbsNextExtra(in);
+        public BaseNextExtra createFromParcel(Parcel in) {
+            return new BaseNextExtra(in);
         }
 
         @Override
-        public AbsNextExtra[] newArray(int size) {
-            return new AbsNextExtra[size];
+        public BaseNextExtra[] newArray(int size) {
+            return new BaseNextExtra[size];
         }
     };
 

@@ -13,9 +13,9 @@ package org.wall.mo.base.fragment;
  */
 public interface IFragment {
 
-    public void setTopBarTitle(String title);
+    public void setTopBarTitle();
 
-    public void setTopBarBack(boolean show);
+    public void setTopBarBack();
 
     public void showShortToast(String msg);
 

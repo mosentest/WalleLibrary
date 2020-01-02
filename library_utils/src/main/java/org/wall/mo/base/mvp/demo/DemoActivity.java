@@ -2,13 +2,11 @@ package org.wall.mo.base.mvp.demo;
 
 import android.content.Intent;
 import android.os.Message;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
-import android.view.View;
-
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity;
-import org.wall.mo.base.mvp.BaseMVPWithV4FragmentActivity;
 
 /**
  * Copyright (C), 2018-2019
@@ -46,7 +44,7 @@ public class DemoActivity extends AbsWithV4FragmentActivity {
 
     @Override
     public Fragment createFragment() {
-        return DemoFragment.newInstance(null);
+        return DemoFragment.newInstance(getIntent().getExtras());
     }
 
     @Override
@@ -54,15 +52,6 @@ public class DemoActivity extends AbsWithV4FragmentActivity {
         return 0;
     }
 
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
-    public void initClick() {
-
-    }
 
     @Override
     public void handleSubMessage(Message msg) {

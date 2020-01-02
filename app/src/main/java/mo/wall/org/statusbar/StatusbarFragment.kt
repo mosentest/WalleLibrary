@@ -27,11 +27,11 @@ class StatusbarFragment : InterceptActBackFragment() {
     }
 
     override fun getTopBarTitleViewId(): Int {
-        return -1
+        return 0
     }
 
     override fun getTopBarBackViewId(): Int {
-        return -1
+        return 0
     }
 
     override fun showShortToast(msg: String?) {

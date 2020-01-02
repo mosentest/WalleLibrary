@@ -13,11 +13,11 @@ import org.wall.mo.base.fragment.InterceptActBackFragment
  */
 class StatusbarActivity2Fragment : InterceptActBackFragment() {
     override fun getTopBarTitleViewId(): Int {
-        return -1
+        return 0
     }
 
     override fun getTopBarBackViewId(): Int {
-        return -1
+        return 0
     }
 
     override fun showLongToast(msg: String?) {
