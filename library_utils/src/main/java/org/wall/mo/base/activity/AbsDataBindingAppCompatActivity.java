@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -18,7 +20,9 @@ import androidx.fragment.app.Fragment;
 
 import org.wall.mo.base.fragment.IAttachActivity;
 import org.wall.mo.utils.BuildConfig;
+import org.wall.mo.utils.ClickUtil;
 import org.wall.mo.utils.StringUtils;
+import org.wall.mo.utils.keyboard.KeyboardUtils;
 import org.wall.mo.utils.log.WLog;
 
 /**
@@ -131,6 +135,7 @@ public abstract class AbsDataBindingAppCompatActivity extends AppCompatActivity 
 
     @Override
     public void onBackPressed() {
+        KeyboardUtils.hideKeyboard(this);
         super.onBackPressed();
     }
 
@@ -199,6 +204,95 @@ public abstract class AbsDataBindingAppCompatActivity extends AppCompatActivity 
             WLog.i(TAG, getName() + ".onLowMemory");
         }
     }
+
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // ----------事件分发-------->-------事件处理--------->
+        // activity -> 父view -> 子view -> 父view -> activity
+        // 在activity的事件分发处对用户高频率点击进行判断拦截，避免用户拿app消遣
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 界面上多个控件都需要添加防抖操作
+            if (!onFastDoubleClickEnable() && ClickUtil.isFastDoubleClick()) {
+                if (BuildConfig.DEBUG) {
+                    WLog.i(TAG, getName() + "dispatchTouchEvent 不允许（不启用）快速点击");
+                }
+                return true;
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    protected boolean onFastDoubleClickEnable() {
+        return true;
+    }
+
+    //控制startactivity 参考这个哥们https://www.jianshu.com/p/579f1f118161
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + "》》》startActivityForResult -- 开始 --");
+        }
+        if (startActivitySelfCheck(intent)) {
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, getName() + "》》》startActivityForResult -- 满足 --");
+            }
+            // 查看源码得知 startActivity 最终也会调用 startActivityForResult
+            super.startActivityForResult(intent, requestCode, options);
+        }
+    }
+
+    private String mActivityJumpTag;
+
+    private long mActivityJumpTime;
+
+    /**
+     * 检查当前 Activity 是否重复跳转了，不需要检查则重写此方法并返回 true 即可
+     *
+     * @param intent 用于跳转的 Intent 对象
+     * @return 检查通过返回true, 检查不通过返回false
+     */
+    protected boolean startActivitySelfCheck(Intent intent) {
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- 开始 --");
+        }
+        // 默认检查通过
+        boolean result = true;
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- intent --" + (intent == null));
+        }
+        if (intent == null) {
+            return result;
+        }
+        // 标记对象
+        String tag;
+        if (intent.getComponent() != null) { // 显式跳转
+            tag = intent.getComponent().getClassName();
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- 显式跳转 --" + tag);
+            }
+        } else if (intent.getAction() != null) { // 隐式跳转
+            tag = intent.getAction();
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- 隐式跳转 --" + tag);
+            }
+        } else {
+            return result;
+        }
+        if (tag.equals(mActivityJumpTag) && (mActivityJumpTime >= SystemClock.uptimeMillis() - 500)) {
+            // 检查不通过
+            result = false;
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- result --" + result);
+            }
+        }
+        // 记录启动标记和时间
+        mActivityJumpTag = tag;
+        mActivityJumpTime = SystemClock.uptimeMillis();
+        return result;
+    }
+
 
     public String getName() {
         return getClass().getSimpleName();
