@@ -312,6 +312,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
         }
         if (startActivitySelfCheck(intent)) {
             if (BuildConfig.DEBUG) {
+
                 WLog.i(TAG, getName() + "》》》startActivity options -- 满足 --");
             }
             // 查看源码得知 startActivity 最终也会调用 startActivityForResult
