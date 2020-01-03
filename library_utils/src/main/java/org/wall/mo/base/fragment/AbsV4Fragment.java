@@ -301,7 +301,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
     public void onLowMemory() {
         super.onLowMemory();
         if (BuildConfig.DEBUG) {
-            WLog.i(TAG, getName() + ".onLowMemory");
+            WLog.i(TAG , getName() + ".onLowMemory");
         }
     }
 
