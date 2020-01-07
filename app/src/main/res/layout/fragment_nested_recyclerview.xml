@@ -11,12 +11,8 @@
         android:orientation="vertical">
 
 
-        <include
-            android:id="@+id/topView"
-            layout="@layout/w_view_topbar" />
-
-        <mo.wall.org.nestedrecyclerview.view.ParentRecyclerView
-            android:id="@+id/parentView"
+        <mo.wall.org.nestedrecyclerview.view.ChildRecyclerView
+            android:id="@+id/childView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

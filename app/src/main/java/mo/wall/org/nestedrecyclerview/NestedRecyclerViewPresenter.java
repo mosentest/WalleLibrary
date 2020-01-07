@@ -18,40 +18,40 @@ public class NestedRecyclerViewPresenter extends NestedRecyclerViewContract.Pres
     protected void onCreate(Bundle savedInstanceState) {
         if (getView() != null) {
             getView().showData(Arrays.asList(
-                    new NestedMultiItemEntity.Builder().type(1).build(),
+                    new NestedParentMultiItemEntity.Builder().type(1).build(),
 
-                    new NestedMultiItemEntity.Builder().type(3).build(),
+                    new NestedParentMultiItemEntity.Builder().type(3).build(),
 
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
 
-                    new NestedMultiItemEntity.Builder().type(3).build(),
+                    new NestedParentMultiItemEntity.Builder().type(3).build(),
 
-                    new NestedMultiItemEntity.Builder().type(4).build(),
-                    new NestedMultiItemEntity.Builder().type(4).build(),
-                    new NestedMultiItemEntity.Builder().type(4).build(),
-                    new NestedMultiItemEntity.Builder().type(4).build(),
-                    new NestedMultiItemEntity.Builder().type(4).build(),
-                    new NestedMultiItemEntity.Builder().type(4).build(),
+                    new NestedParentMultiItemEntity.Builder().type(4).build(),
+                    new NestedParentMultiItemEntity.Builder().type(4).build(),
+                    new NestedParentMultiItemEntity.Builder().type(4).build(),
+                    new NestedParentMultiItemEntity.Builder().type(4).build(),
+                    new NestedParentMultiItemEntity.Builder().type(4).build(),
+                    new NestedParentMultiItemEntity.Builder().type(4).build(),
 
-                    new NestedMultiItemEntity.Builder().type(3).build(),
+                    new NestedParentMultiItemEntity.Builder().type(3).build(),
 
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
-                    new NestedMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
+                    new NestedParentMultiItemEntity.Builder().type(2).build(),
 
-                    new NestedMultiItemEntity.Builder().type(5).build()
+                    new NestedParentMultiItemEntity.Builder().type(5).build()
             ));
         }
     }

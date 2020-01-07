@@ -4,13 +4,8 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 
 import org.wall.mo.base.mvp.BaseMVPAppCompatActivity;
 
@@ -32,17 +27,13 @@ public class NestedRecyclerViewActivity extends
         BaseMVPAppCompatActivity<NestedRecyclerViewPresenter, ActivityNestedRecyclerviewBinding>
         implements NestedRecyclerViewContract.View {
 
-    NestedMultiItemQuickAdapter multiItemQuickAdapter;
+    NestedParentMultiItemQuickAdapter multiItemQuickAdapter;
 
     @Override
     public NestedRecyclerViewPresenter createPresenter() {
         return new NestedRecyclerViewPresenter();
     }
 
-    @Override
-    public void onCurDestroy() {
-
-    }
 
     @Override
     public int getLayoutId() {
@@ -58,17 +49,15 @@ public class NestedRecyclerViewActivity extends
         mViewDataBinding.topView.tvTopBarTitle.setText("NestedRecyclerView");
 
 
-        multiItemQuickAdapter = new NestedMultiItemQuickAdapter(null);
-        mViewDataBinding.parentView.setAdapter(multiItemQuickAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(
-                this,
-                12,
-                RecyclerView.VERTICAL,
-                false);
+        multiItemQuickAdapter = new NestedParentMultiItemQuickAdapter(this, null);
+
+        multiItemQuickAdapter.bindToRecyclerView(mViewDataBinding.parentView);
+
+        GridLayoutManager gridLayoutManager = mViewDataBinding.parentView.initLayoutManager(12);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                NestedMultiItemEntity nestedMultiItemEntity = multiItemQuickAdapter.getData().get(position);
+                NestedParentMultiItemEntity nestedMultiItemEntity = multiItemQuickAdapter.getData().get(position);
                 int itemType = nestedMultiItemEntity.getItemType();
                 switch (itemType) {
                     case 1:
@@ -82,8 +71,9 @@ public class NestedRecyclerViewActivity extends
                 return 3;
             }
         });
-        mViewDataBinding.parentView.setLayoutManager(gridLayoutManager);
 
+        //监听生命周期
+        getLifecycle().addObserver(multiItemQuickAdapter);
     }
 
     @Override
@@ -151,8 +141,14 @@ public class NestedRecyclerViewActivity extends
 
     }
 
+
     @Override
-    public void showData(List<NestedMultiItemEntity> itemEntityList) {
+    public void onCurDestroy() {
+
+    }
+
+    @Override
+    public void showData(List<NestedParentMultiItemEntity> itemEntityList) {
         multiItemQuickAdapter.setNewData(itemEntityList);
     }
 }

@@ -1,4 +1,4 @@
-package mo.wall.org.nestedrecyclerview;
+package mo.wall.org.nestedrecyclerview.fragment;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
@@ -11,12 +11,15 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class NestedMultiItemEntity implements MultiItemEntity {
+public class NestedChildMultiItemEntity implements MultiItemEntity {
 
-    private int type;
+    public int type;
 
-    private NestedMultiItemEntity(Builder builder) {
+    public String title;
+
+    private NestedChildMultiItemEntity(Builder builder) {
         type = builder.type;
+        title = builder.title;
     }
 
     @Override
@@ -26,6 +29,7 @@ public class NestedMultiItemEntity implements MultiItemEntity {
 
     public static final class Builder {
         private int type;
+        private String title;
 
         public Builder() {
         }
@@ -35,8 +39,13 @@ public class NestedMultiItemEntity implements MultiItemEntity {
             return this;
         }
 
-        public NestedMultiItemEntity build() {
-            return new NestedMultiItemEntity(this);
+        public Builder title(String val) {
+            title = val;
+            return this;
+        }
+
+        public NestedChildMultiItemEntity build() {
+            return new NestedChildMultiItemEntity(this);
         }
     }
 }

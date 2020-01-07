@@ -1,8 +1,10 @@
-package mo.wall.org.nestedrecyclerview;
+package mo.wall.org.nestedrecyclerview.fragment;
 
 import org.wall.mo.base.mvp.BaseContract;
 
 import java.util.List;
+
+import mo.wall.org.nestedrecyclerview.NestedParentMultiItemEntity;
 
 /**
  * Copyright (C), 2018-2020
@@ -16,10 +18,12 @@ import java.util.List;
 public class NestedRecyclerViewContract {
 
     public static abstract class Presenter extends BaseContract.BasePresenter<View> {
+
+        public abstract void loadData();
     }
 
     public interface View extends BaseContract.BaseView {
 
-        public void showData(List<NestedParentMultiItemEntity> itemEntityList);
+        public void showData(List<NestedChildMultiItemEntity> itemEntityList);
     }
 }
