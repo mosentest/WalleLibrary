@@ -1,73 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:id="@+id/rvTopBar"
+    <data>
+
+    </data>
+
+    <merge
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
-        <org.wall.mo.widgets.view.WImageView
-            android:id="@+id/ivTopBarLeftBack"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rvTopBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:background="@color/white">
 
-        <org.wall.mo.widgets.view.WTextView
-            android:id="@+id/tvTopBarLeftBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/w_dp_10"
-            android:text="返回"
-            android:textSize="@dimen/w_sp_16"
-            android:visibility="gone" />
 
-        <org.wall.mo.widgets.view.WTextView
-            android:id="@+id/tvTopBarTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="@dimen/w_dp_10"
-            android:text="我是标题"
-            android:textSize="@dimen/w_sp_18"
-            android:visibility="visible" />
+            <org.wall.mo.widgets.view.WImageView
+                android:id="@+id/ivTopBarLeftBack"
+                android:layout_width="@dimen/w_dp_40"
+                android:layout_height="@dimen/w_dp_40"
+                android:layout_marginLeft="@dimen/w_dp_10"
+                android:visibility="gone"
+                tools:background="@color/black_overlay"
+                tools:visibility="visible" />
 
-        <org.wall.mo.widgets.view.WTextView
-            android:id="@+id/tvTopBarRight2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/tvTopBarRight1"
-            android:padding="@dimen/w_dp_10"
-            android:text="标题1"
-            android:textSize="@dimen/w_sp_16"
-            android:visibility="gone" />
+            <org.wall.mo.widgets.view.WTextView
+                android:id="@+id/tvTopBarLeftBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/w_dp_10"
+                android:text="返回"
+                android:textSize="@dimen/w_sp_16"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
-        <org.wall.mo.widgets.view.WTextView
-            android:id="@+id/tvTopBarRight1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/w_dp_10"
-            android:text="标题1"
-            android:textSize="@dimen/w_sp_16"
-            android:visibility="gone" />
 
-        <org.wall.mo.widgets.view.WImageView
-            android:id="@+id/ivTopBarRight2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/ivTopBarRight1"
-            android:padding="@dimen/w_dp_10"
-            android:visibility="gone" />
+            <org.wall.mo.widgets.view.WTextView
+                android:id="@+id/tvTopBarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/w_dp_10"
+                android:text="我是标题"
+                android:textSize="@dimen/w_sp_18"
+                android:visibility="visible" />
 
-        <org.wall.mo.widgets.view.WImageView
-            android:id="@+id/ivTopBarRight1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/w_dp_10"
-            android:visibility="gone" />
-    </RelativeLayout>
-</merge>
+
+            <org.wall.mo.widgets.view.WImageView
+                android:id="@+id/ivTopBarRight2"
+                android:layout_width="@dimen/w_dp_40"
+                android:layout_height="@dimen/w_dp_40"
+                android:layout_marginRight="@dimen/w_dp_10"
+                android:layout_toLeftOf="@+id/ivTopBarRight1"
+                android:visibility="gone"
+                tools:background="@color/black_overlay"
+                tools:visibility="visible" />
+
+            <org.wall.mo.widgets.view.WImageView
+                android:id="@+id/ivTopBarRight1"
+                android:layout_width="@dimen/w_dp_40"
+                android:layout_height="@dimen/w_dp_40"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/w_dp_10"
+                android:visibility="gone"
+                tools:background="@color/black_overlay"
+                tools:visibility="visible" />
+
+
+            <org.wall.mo.widgets.view.WTextView
+                android:id="@+id/tvTopBarRight2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tvTopBarRight1"
+                android:padding="@dimen/w_dp_10"
+                android:text="标题2"
+                android:textSize="@dimen/w_sp_16"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <org.wall.mo.widgets.view.WTextView
+                android:id="@+id/tvTopBarRight1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/w_dp_10"
+                android:text="标题1"
+                android:textSize="@dimen/w_sp_16"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+
+        </RelativeLayout>
+    </merge>
+</layout>

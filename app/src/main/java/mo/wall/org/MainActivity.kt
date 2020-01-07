@@ -32,6 +32,7 @@ import mo.wall.org.webviewinscrollview.WebInScrollActivity
 import org.wall.mo.base.StartActivityCompat
 import org.wall.mo.compat.statusbar.StatusBarUtil
 import androidx.appcompat.app.AppCompatDelegate
+import mo.wall.org.nestedrecyclerview.NestedRecyclerViewActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 ""))
 
+        lists?.add(createEntity("NestedRecyclerView，仿淘宝、京东首页，通过两层嵌套的RecyclerView实现tab的吸顶效果。", "NestedRecyclerView", 1, NestedRecyclerViewActivity().javaClass.name))
         lists?.add(createEntity("Behavior入门学习", "Behavior", 1, BehaviorActivity().javaClass.name))
         lists?.add(createEntity("MarkerView绘制和学习", "MarkerView", 1, MarkerViewAct().javaClass.name))
         lists?.add(createEntity("解决webview固定高度在scrollview问题", "scrollview嵌套webview", 1, WebInScrollActivity().javaClass.name))

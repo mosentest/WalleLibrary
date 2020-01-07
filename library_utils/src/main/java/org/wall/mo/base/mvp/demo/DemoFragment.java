@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 
+import androidx.databinding.ViewDataBinding;
+
 import org.wall.mo.base.mvp.BaseMVPMaxLifecycleFragment;
 
 /**
@@ -18,7 +20,7 @@ import org.wall.mo.base.mvp.BaseMVPMaxLifecycleFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Presenter>
+public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Presenter, ViewDataBinding>
         implements DemoContract.View {
 
 

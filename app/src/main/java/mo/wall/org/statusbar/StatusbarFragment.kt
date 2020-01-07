@@ -8,6 +8,7 @@ import android.os.Message
 import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import mo.wall.org.R
 import org.wall.mo.base.fragment.InterceptActBackFragment
 import org.wall.mo.utils.log.WLog
@@ -21,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class StatusbarFragment : InterceptActBackFragment() {
+class StatusbarFragment : InterceptActBackFragment<ViewDataBinding>() {
     override fun showDialog(msg: String?) {
         
     }

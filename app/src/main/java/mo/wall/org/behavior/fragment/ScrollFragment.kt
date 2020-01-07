@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Message
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import mo.wall.org.R
+import mo.wall.org.databinding.FragmentBehaviorFristBinding
 import org.wall.mo.base.fragment.MaxLifecycleFragment
 
 /**
@@ -18,7 +20,7 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
 </desc></version></time></author> */
-class ScrollFragment : MaxLifecycleFragment() {
+class ScrollFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding>() {
     override fun getTopBarTitleViewId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

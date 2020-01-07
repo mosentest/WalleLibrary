@@ -7,8 +7,10 @@ import android.os.Message
 import android.view.View
 import android.widget.Button
 import androidx.core.view.ViewCompat
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import mo.wall.org.R
+import mo.wall.org.databinding.FragmentBehaviorFristBinding
 import org.wall.mo.base.fragment.MaxLifecycleFragment
 
 /**
@@ -20,7 +22,7 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
 </desc></version></time></author> */
-public class FirstFragment : MaxLifecycleFragment() {
+public class FirstFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding>() {
     override fun getTopBarBackViewId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

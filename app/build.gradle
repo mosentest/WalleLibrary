@@ -92,6 +92,11 @@ android {
         exclude "lib/x86_64/librsjni.so"
         exclude "lib/x86/librsjni.so"
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 //kapt {
@@ -187,6 +192,11 @@ dependencies {
     // 更改：`RxJava 2.0` 依赖
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+
+
+    //高度封装rv  https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    //implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
 
 }
 

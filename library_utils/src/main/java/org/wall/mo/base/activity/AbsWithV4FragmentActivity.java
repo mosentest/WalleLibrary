@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,7 +29,7 @@ import org.wall.mo.utils.log.WLog;
  * * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsWithV4FragmentActivity extends AbsDataBindingAppCompatActivity {
+public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding> extends AbsDataBindingAppCompatActivity<B> {
 
     protected static final String TAG = AbsWithV4FragmentActivity.class.getSimpleName();
 

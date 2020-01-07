@@ -2,13 +2,14 @@ package org.wall.mo.base.fragment;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 
 import org.wall.mo.utils.log.WLog;
 
 /**
  * https://www.jianshu.com/p/0e2d746e3a3d
  */
-public abstract class LazyLoadEasyFragment extends AbsDataBindingV4Fragment {
+public abstract class LazyLoadEasyFragment<B extends ViewDataBinding> extends AbsDataBindingV4Fragment<B> {
 
     public final static String TAG = LazyLoadEasyFragment.class.getSimpleName();
 

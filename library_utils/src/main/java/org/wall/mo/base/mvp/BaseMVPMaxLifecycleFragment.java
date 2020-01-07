@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 
 import org.wall.mo.base.fragment.MaxLifecycleFragment;
 
@@ -16,8 +17,9 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract.BasePresenter>
-        extends MaxLifecycleFragment
+public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract.BasePresenter,
+        B extends ViewDataBinding>
+        extends MaxLifecycleFragment<B>
         implements BaseContract.BaseView {
 
     public presenter mPresenter;

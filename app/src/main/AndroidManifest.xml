@@ -117,6 +117,9 @@
         <activity android:name=".ntp.NtpActivity" />
         <activity android:name=".autodensity.AutoDensityActivity" />
         <activity android:name=".dropdownmenu.DropDownMenuActivity" />
+        <activity
+            android:name=".nestedrecyclerview.NestedRecyclerViewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name=".devicemanager.AdminReceiver">
             <meta-data

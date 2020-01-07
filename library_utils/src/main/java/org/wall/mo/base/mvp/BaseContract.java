@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference;
  */
 public interface BaseContract {
 
-    public static abstract class BasePresenter<View> {
+    public static abstract class BasePresenter<View extends BaseView> {
 
         /**
          * 弱引用持有view

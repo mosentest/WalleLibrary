@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 
 import org.wall.mo.base.StartActivityCompat;
 import org.wall.mo.base.nextextra.BaseNextExtra;
@@ -21,7 +22,7 @@ import org.wall.mo.base.nextextra.BaseNextExtra;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class InterceptActBackFragment extends AbsDataBindingV4Fragment implements IFragmentInterceptAct {
+public abstract class InterceptActBackFragment<B extends ViewDataBinding> extends AbsDataBindingV4Fragment<B> implements IFragmentInterceptAct {
     /**
      * 上个页面传递的参数集合对象
      */

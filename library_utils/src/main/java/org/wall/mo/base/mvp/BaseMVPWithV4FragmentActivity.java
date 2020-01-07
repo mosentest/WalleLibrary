@@ -3,6 +3,7 @@ package org.wall.mo.base.mvp;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity;
 
@@ -15,8 +16,10 @@ import org.wall.mo.base.activity.AbsWithV4FragmentActivity;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPWithV4FragmentActivity<presenter extends BaseContract.BasePresenter>
-        extends AbsWithV4FragmentActivity
+public abstract class BaseMVPWithV4FragmentActivity
+        <presenter extends BaseContract.BasePresenter,
+        B extends ViewDataBinding>
+        extends AbsWithV4FragmentActivity<B>
         implements BaseContract.BaseView {
 
     protected presenter mPresenter;

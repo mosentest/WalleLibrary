@@ -3,6 +3,7 @@ package org.wall.mo.base.mvp;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 
 import android.view.View;
 
@@ -17,8 +18,9 @@ import org.wall.mo.base.fragment.LazyLoadEasyProFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPLazyLoadEasyProFragment<presenter extends BaseContract.BasePresenter>
-        extends LazyLoadEasyProFragment
+public abstract class BaseMVPLazyLoadEasyProFragment<presenter extends BaseContract.BasePresenter,
+        B extends ViewDataBinding>
+        extends LazyLoadEasyProFragment<B>
         implements BaseContract.BaseView {
 
 

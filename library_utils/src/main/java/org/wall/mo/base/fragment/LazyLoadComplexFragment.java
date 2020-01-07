@@ -1,7 +1,9 @@
 package org.wall.mo.base.fragment;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -18,7 +20,7 @@ import java.util.List;
  * desc   : https://github.com/ImportEffort/FragmentLiftCycle/blob/master/app/src/main/java/com/wangshijia/www/fragmentliftcycle/LazyLoadBaseFragment.java
  * version: 1.0
  */
-public abstract class LazyLoadComplexFragment extends AbsDataBindingV4Fragment {
+public abstract class LazyLoadComplexFragment<B extends ViewDataBinding> extends AbsDataBindingV4Fragment<B> {
 
     public final static String TAG = LazyLoadComplexFragment.class.getSimpleName();
 

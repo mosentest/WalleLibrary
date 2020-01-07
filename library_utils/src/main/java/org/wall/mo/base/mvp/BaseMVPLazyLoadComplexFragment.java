@@ -3,6 +3,7 @@ package org.wall.mo.base.mvp;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 
 import android.view.View;
 
@@ -17,8 +18,10 @@ import org.wall.mo.base.fragment.LazyLoadComplexFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContract.BasePresenter>
-        extends LazyLoadComplexFragment
+public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContract.BasePresenter,
+
+        B extends ViewDataBinding>
+        extends LazyLoadComplexFragment<B>
         implements BaseContract.BaseView {
 
 

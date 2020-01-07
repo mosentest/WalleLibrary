@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.os.Message
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import mo.wall.org.R
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity
 
-class ScrollActivity : AbsWithV4FragmentActivity() {
+class ScrollActivity : AbsWithV4FragmentActivity<ViewDataBinding>() {
     override fun onClick(v: View?) {
 
     }

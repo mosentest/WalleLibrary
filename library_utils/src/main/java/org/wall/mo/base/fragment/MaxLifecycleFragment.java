@@ -1,5 +1,7 @@
 package org.wall.mo.base.fragment;
 
+import androidx.databinding.ViewDataBinding;
+
 import org.wall.mo.utils.log.WLog;
 
 /**
@@ -11,7 +13,7 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class MaxLifecycleFragment extends InterceptActBackFragment {
+public abstract class MaxLifecycleFragment<B extends ViewDataBinding> extends InterceptActBackFragment<B> {
 
     public final static String TAG = MaxLifecycleFragment.class.getSimpleName();
 

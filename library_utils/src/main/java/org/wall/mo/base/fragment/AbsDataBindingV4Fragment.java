@@ -30,7 +30,7 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsDataBindingV4Fragment extends Fragment implements IFragment {
+public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extends Fragment implements IFragment {
 
     public final static String TAG = AbsDataBindingV4Fragment.class.getSimpleName();
 
@@ -38,7 +38,7 @@ public abstract class AbsDataBindingV4Fragment extends Fragment implements IFrag
 
     protected IAttachActivity iAttachActivity;
 
-    protected ViewDataBinding mViewDataBinding;
+    protected B mViewDataBinding;
 
     protected View rootView;
 

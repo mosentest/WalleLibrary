@@ -34,13 +34,14 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsDataBindingAppCompatActivity extends AppCompatActivity implements IAttachActivity, View.OnClickListener {
+public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
+        extends AppCompatActivity implements IAttachActivity, View.OnClickListener {
 
     protected final static String TAG = AbsAppCompatActivity.class.getSimpleName();
 
     protected Handler mHandler = null;
 
-    protected ViewDataBinding mViewDataBinding;
+    protected B mViewDataBinding;
 
     static {
         /**

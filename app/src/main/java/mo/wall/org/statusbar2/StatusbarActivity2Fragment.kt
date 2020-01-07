@@ -5,13 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Message
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import mo.wall.org.R
 import org.wall.mo.base.fragment.InterceptActBackFragment
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class StatusbarActivity2Fragment : InterceptActBackFragment() {
+class StatusbarActivity2Fragment : InterceptActBackFragment<ViewDataBinding>() {
     override fun getTopBarTitleViewId(): Int {
         return 0
     }

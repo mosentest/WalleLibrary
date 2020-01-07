@@ -6,12 +6,13 @@ import android.os.Message
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import android.view.View
+import androidx.databinding.ViewDataBinding
 import mo.wall.org.R
 import mo.wall.org.service.MyService
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity
 import org.wall.mo.compat.statusbar.StatusBarUtil
 
-class StatusbarActivity : AbsWithV4FragmentActivity() {
+class StatusbarActivity : AbsWithV4FragmentActivity<ViewDataBinding>() {
     override fun onClick(v: View?) {
 
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Message;
 import android.view.View;
 
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity;
@@ -19,7 +20,7 @@ import org.wall.mo.base.activity.AbsWithV4FragmentActivity;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class DemoActivity extends AbsWithV4FragmentActivity {
+public class DemoActivity extends AbsWithV4FragmentActivity<ViewDataBinding> {
 
 
     @Override

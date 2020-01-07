@@ -3,6 +3,8 @@ package org.wall.mo.base.mvp;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
 import org.wall.mo.base.activity.AbsDataBindingAppCompatActivity;
 
@@ -15,8 +17,10 @@ import org.wall.mo.base.activity.AbsDataBindingAppCompatActivity;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPAppCompatActivity<presenter extends BaseContract.BasePresenter>
-        extends AbsDataBindingAppCompatActivity
+public abstract class BaseMVPAppCompatActivity<
+        presenter extends BaseContract.BasePresenter,
+        B extends ViewDataBinding>
+        extends AbsDataBindingAppCompatActivity<B>
         implements BaseContract.BaseView {
 
     protected presenter mPresenter;
