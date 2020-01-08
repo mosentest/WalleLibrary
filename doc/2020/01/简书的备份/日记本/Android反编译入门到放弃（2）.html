@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android反编译入门到放弃（2）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">Android反编译入门到放弃（2）</h1>
+        <div class="show-content">
+          <p><a href="https://www.jianshu.com/p/353309fdc2d1" target="_blank">Android反编译入门到放弃（1）</a></p><p>在上一篇简单使用了Android逆向助手实现dex2jar和JD-GUI的使用了。下面开始详细介绍下每个工具的用法</p><h1>
+
+dex2jar
+
+<br>
+</h1><p>dex2jar是一个实现dex文件转成jar的一个工具，通过解压APK，把classes.dex拖到d2j-dex2jar.bat，提示如下(｀･ω･´)ゞ(｀･ω･´)ゞ，就能把dex转为jar文件</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/12139254-5acbdd6f700d24ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">dex2jar-cmd</div>
+</div><p>dex2jar每个版本可能有不一样，但是肯定会有一个文件叫*dex2jar.bat</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/12139254-4f2a71a7e9d31d6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">
+
+dex2jar-tools</div>
+</div><p>cmd执行命令后，会在拖dex文件的目录下生成相应的<b>classes-dex2jar.jar</b></p><h1><b>jd-gui<br></b></h1><p>JD-GUI，一个独立的图形工具，用于显示来自CLASS文件的Java源代码。把jar拖到<b>jd-gui.exe</b>就可以显示Java源代码，如图所示</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/12139254-da01f77c50fd5112.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">classes-dex2jar.jar</div>
+</div><p>展开左边，查看了下代码，发现App接入了好多家平台的SDK，比如腾讯、百度、小米、新浪等等SDK，上个图看看</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/12139254-b5a80334ed897cd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">查看class源码</div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

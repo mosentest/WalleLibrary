@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import mo.wall.org.R
 import mo.wall.org.base.BaseAppCompatActivity
+import org.wall.mo.utils.GoogleAdIdUtils
+import org.wall.mo.utils.thread.CacheThreadExecutor
+import org.wall.mo.utils.thread.ExRunnable
 
 /**
  * Copyright (C), 2018-2019
@@ -82,6 +85,20 @@ class ApkInfoActivity : BaseAppCompatActivity() {
 
             mEdMinsdkversion.setText("" + AppInfo.getMinSdkVersion(this@ApkInfoActivity, packageName))
         }
+
+
+        CacheThreadExecutor.getExecutor().execute(object : ExRunnable() {
+            override fun exMsg(errorMsg: String?) {
+
+            }
+
+            override fun runEx() {
+                val googleAdId = GoogleAdIdUtils.getGoogleAdId(applicationContext)
+                Log.i("d", """googleAdId:$googleAdId""")
+            }
+
+        })
+
     }
 
 }

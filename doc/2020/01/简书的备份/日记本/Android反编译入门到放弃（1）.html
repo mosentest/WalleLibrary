@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android反编译入门到放弃（1）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">Android反编译入门到放弃（1）</h1>
+        <div class="show-content">
+          <h1>前言：</h1><p>什么是反编译？</p><blockquote><p>反编译的定义--计算机软件反向工程（Reverse engineering）也称为计算机软件还原工程，是指通过对他人软件的目标程序（比如可执行程序）进行“逆向分析、研究”工作，以推导出他人的软件产品所使用的思路、原理、结构、算法、处理过程、运行方法等设计要素，某些特定情况下可能推导出源代码。</p></blockquote><p>Java是运行在虚拟机上的编程语言，容易进行反编译得到源代码。当然，也有一些商业软件，对其程序进行了混淆加密，这样我们就很难用工具反编译了。</p><p>Android程序一般都是用Java来实现的，所以反编译就是将一个apk转换成相应的资源文件和Java代码，这一过程可能是apk-&gt;dex-&gt;jar-&gt;查看代码，也可能是apk-&gt;资源文件+smali</p><h1>反编译工具</h1><p>反编译的工具各式各样，我<b>知识点不广，无特别擅长点</b>，我只能介绍我用过的反编译工具，以下列表，就是我一直在用的工具。我会在后期的文章，对这些工具一个个介绍和使用</p><p>dex2jar：<a href="https://github.com/pxb1988/dex2jar" target="_blank">https://github.com/pxb1988/dex2jar</a></p><p>jd-gui：<a href="https://github.com/java-decompiler/jd-gui" target="_blank">https://github.com/java-decompiler/jd-gui</a></p><p>jadx：<a href="https://github.com/skylot/jadx" target="_blank">https://github.com/skylot/jadx</a></p><p>enjarify：<a href="https://github.com/google/enjarify" target="_blank">https://github.com/google/enjarify</a></p><p>Apktool：<a href="https://github.com/iBotPeaches/Apktool" target="_blank">https://github.com/iBotPeaches/Apktool</a></p><p>Android逆向助手：<a href="http://www.zdfans.com/1209.html" target="_blank">http://www.zdfans.com/1209.html</a></p><p>360Signer：<a href="http://www.pc6.com/softview/SoftView_230893.html" target="_blank">http://www.pc6.com/softview/SoftView_230893.html</a></p><p>jeb-cracked:<a href="https://blog.csdn.net/chuchus/article/details/50625418" target="_blank">https://blog.csdn.net/chuchus/article/details/50625418</a></p><p>AndroidKiller_v1.3.1：<a href="https://www.cr173.com/soft/105121.html" target="_blank">https://www.cr173.com/soft/105121.html</a></p><h2>认识APK</h2><p>介绍完了工具，来认识下APK的结构，为了提高文章的质量，会用几个APP来反编译，我不是为了破解人家APP，而是为了科普大家反编译，提高APP的安全性。Apk本来就是一个压缩文件，右键用解压工具都能正常把Apk所有东西释放出来</p><p>我就随便挑了一个apk解压了一下，为了不暴露我反编译谁的apk，我加了点马赛克，应该没人猜出来，解压的文件夹结构如下图所示：</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/12139254-b73cce9b04b67b4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">apk解压的文件</div>
+</div><p>看到上图，分别有assets、lib、src、res、AndroidMainfest.xml，看上去好熟悉，就是平常开发的目录结构而已。其他目录就，每个app可能会结构不一样。看文件类型，能看出有3个dex文件，这是用了MultiDex实现(65535方法数)，用Android逆向助手，可以把classes.dex反编译生成jar文件，并且会自动用了JD-GUI打开jar文件</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/12139254-b88b2767396dfe50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">
+
+Android逆向助手-dex2jar</div>
+</div><p>在用JD-GUI，我们可以这个jar里面真的有MutilDex，如下图所示</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/12139254-32e0af58bd6a9aa7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">反编译APK的目录结构</div>
+</div><p>MutilDex不是我讲的重点对象，今天就到这里吧，下次有空继续讲其他工具怎么用，我也洗澡看书睡觉了</p><h1>参考文章：</h1><p>https://blog.csdn.net/u013068887/article/details/72780823</p><p>https://blog.csdn.net/a38017032/article/details/54173024</p><p>如有侵权，我删</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
