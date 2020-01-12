@@ -1,6 +1,7 @@
 package org.wall.mo.base.mvp;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -17,9 +18,8 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract.BasePresenter,
-        B extends ViewDataBinding>
-        extends MaxLifecycleFragment<B>
+public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract.BasePresenter, B extends ViewDataBinding, T extends Parcelable>
+        extends MaxLifecycleFragment<B, T>
         implements BaseContract.BaseView {
 
     public presenter mPresenter;
@@ -27,7 +27,7 @@ public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract
     /**
      * 展示dialog次数
      */
-    private volatile int showDialogCount = 0;
+    private int showDialogCount = 0;
 
 
     protected abstract presenter createPresenter();
@@ -103,7 +103,7 @@ public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract
 
 
     @Override
-    public void onRequestFail(boolean showLoading, int flag) {
+    public void onLoadFail(boolean showLoading, int flag) {
         if (!showLoading) {
             return;
         }
@@ -116,7 +116,7 @@ public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract
     }
 
     @Override
-    public void onRequestStart(boolean showLoading, int flag, String tipMsg) {
+    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
         if (!showLoading) {
             return;
         }
@@ -127,7 +127,7 @@ public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract
     }
 
     @Override
-    public void onRequestSuccess(boolean showLoading, int flag, Object model) {
+    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
         if (!showLoading) {
             return;
         }

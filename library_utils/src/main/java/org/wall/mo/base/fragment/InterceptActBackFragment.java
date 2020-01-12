@@ -2,6 +2,7 @@ package org.wall.mo.base.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
 
 import org.wall.mo.base.StartActivityCompat;
-import org.wall.mo.base.nextextra.BaseNextExtra;
+import org.wall.mo.base.interfaces.IFragmentInterceptAct;
 
 /**
  * Copyright (C), 2018-2019
@@ -22,11 +23,12 @@ import org.wall.mo.base.nextextra.BaseNextExtra;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class InterceptActBackFragment<B extends ViewDataBinding> extends AbsDataBindingV4Fragment<B> implements IFragmentInterceptAct {
+public abstract class InterceptActBackFragment<B extends ViewDataBinding,
+        nextP extends Parcelable> extends AbsDataBindingV4Fragment<B> implements IFragmentInterceptAct {
     /**
      * 上个页面传递的参数集合对象
      */
-    private BaseNextExtra mNextParcelable;
+    private nextP mNextParcelable;
 
     private String mTitle;
     /**
@@ -37,15 +39,20 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding> extend
     @Override
     public boolean onFragmentInterceptGetIntent(Intent intent) {
         //解析参数
+        if (intent == null) {
+            return false;
+        }
         Bundle extras = intent.getExtras();
-        this.mTitle = extras.getString(StartActivityCompat.NEXT_TITLE);
-        this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
-        this.mNextParcelable = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
-        //消费参数
-        setTopBarTitle();
-        setTopBarBack();
-        //其他值
-        parseIntentData(intent);
+        if (extras != null) {
+            this.mTitle = extras.getString(StartActivityCompat.NEXT_TITLE);
+            this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
+            this.mNextParcelable = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
+            //消费参数
+            setTopBarTitle();
+            setTopBarBack();
+            //其他值
+            loadIntentData(intent);
+        }
         return false;
     }
 
@@ -122,7 +129,7 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding> extend
     public abstract int getTopBarBackViewId();
 
 
-    protected abstract void parseIntentData(Intent intent);
+    public abstract void loadIntentData(Intent intent);
 
 
     @Override

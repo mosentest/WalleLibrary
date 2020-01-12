@@ -11,7 +11,7 @@ import org.wall.mo.base.mvp.BaseContract;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class RepositoryCallBack<T, F> {
+public abstract class RepositoryCallBack<Body, Fail> {
 
     /**
      * 为了感知activity的生命周期
@@ -27,7 +27,7 @@ public abstract class RepositoryCallBack<T, F> {
         this.mFlag = flag;
         this.mLoading = loading;
         if (mBaseView != null) {
-            mBaseView.onRequestStart(mLoading, mFlag, tipMsg);
+            mBaseView.onLoadStart(mLoading, mFlag, tipMsg);
         }
     }
 
@@ -35,29 +35,29 @@ public abstract class RepositoryCallBack<T, F> {
         this(baseView, flag, "", false);
     }
 
-    public void onSuccess(T bean) {
+    public void onSuccess(Body bean) {
         if (mBaseView != null) {
-            mBaseView.onRequestSuccess(mLoading, mFlag, bean);
+            mBaseView.onLoadSuccess(mLoading, mFlag, bean);
         }
     }
 
-    public void onFail(F bean) {
+    public void onFail(Fail bean) {
         if (mBaseView != null) {
-            mBaseView.onRequestFail(mLoading, mFlag);
+            mBaseView.onLoadFail(mLoading, mFlag);
         }
         if (interceptError()) {
             if (mBaseView != null) {
-                mBaseView.onRequestInterceptFail(mFlag, bean);
+                mBaseView.onLoadInterceptFail(mFlag, bean);
             }
         } else {
             if (showError()) {
                 if (toast()) {
                     if (mBaseView != null) {
-                        mBaseView.onRequestToastFail(mFlag, bean);
+                        mBaseView.onLoadToastFail(mFlag, bean);
                     }
                 } else {
                     if (mBaseView != null) {
-                        mBaseView.onRequestDialogFail(mFlag, bean);
+                        mBaseView.onLoadDialogFail(mFlag, bean);
                     }
                 }
             }

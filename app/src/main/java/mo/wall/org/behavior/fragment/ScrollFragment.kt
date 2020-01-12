@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
+import android.os.Parcelable
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -20,7 +21,7 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
 </desc></version></time></author> */
-class ScrollFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding>() {
+class ScrollFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding, Parcelable>() {
     override fun getTopBarTitleViewId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -29,7 +30,8 @@ class ScrollFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding>() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun parseIntentData(intent: Intent?) {
+    override fun loadIntentData(intent: Intent?) {
+
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -55,14 +57,6 @@ class ScrollFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding>() {
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
-
-    }
-
-    override fun initData() {
-
-    }
-
-    override fun initClick() {
 
     }
 

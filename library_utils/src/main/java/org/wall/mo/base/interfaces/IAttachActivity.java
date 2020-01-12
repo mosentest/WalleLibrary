@@ -1,4 +1,4 @@
-package org.wall.mo.base.fragment;
+package org.wall.mo.base.interfaces;
 
 import android.os.Parcelable;
 
@@ -18,6 +18,8 @@ public interface IAttachActivity {
     public void setTopBarTitle();
 
     public void setTopBarBack();
+
+    public void showTopBar(boolean status);
 
     public void showShortToast(String msg);
 

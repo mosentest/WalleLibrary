@@ -1,7 +1,9 @@
 package org.wall.mo.base.mvp.demo;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
+import android.os.Parcelable;
 import android.view.View;
 
 import androidx.databinding.ViewDataBinding;
@@ -20,11 +22,11 @@ import org.wall.mo.base.activity.AbsWithV4FragmentActivity;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class DemoActivity extends AbsWithV4FragmentActivity<ViewDataBinding> {
+public class DemoActivity extends AbsWithV4FragmentActivity<ViewDataBinding, Parcelable> {
 
 
     @Override
-    public void parseIntentData(Intent intent) {
+    public void loadIntentData(Intent intent) {
 
     }
 
@@ -45,7 +47,12 @@ public class DemoActivity extends AbsWithV4FragmentActivity<ViewDataBinding> {
 
     @Override
     public Fragment createFragment() {
-        return DemoFragment.newInstance(getIntent().getExtras());
+        Intent intent = getIntent();
+        Bundle extras = null;
+        if (intent != null) {
+            extras = intent.getExtras();
+        }
+        return DemoFragment.newInstance(new DemoFragment(), extras);
     }
 
     @Override

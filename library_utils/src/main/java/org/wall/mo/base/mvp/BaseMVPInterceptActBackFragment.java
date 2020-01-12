@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
 
+import android.os.Parcelable;
 import android.view.View;
 
 import org.wall.mo.base.fragment.InterceptActBackFragment;
@@ -19,8 +20,8 @@ import org.wall.mo.base.fragment.InterceptActBackFragment;
  * 作者姓名 修改时间 版本号 描述
  */
 public abstract class BaseMVPInterceptActBackFragment<presenter extends BaseContract.BasePresenter,
-        B extends ViewDataBinding>
-        extends InterceptActBackFragment<B>
+        B extends ViewDataBinding, nextP extends Parcelable>
+        extends InterceptActBackFragment<B, nextP>
         implements BaseContract.BaseView {
 
 
@@ -29,7 +30,7 @@ public abstract class BaseMVPInterceptActBackFragment<presenter extends BaseCont
     /**
      * 展示dialog次数
      */
-    protected volatile int showDialogCount = 0;
+    protected int showDialogCount = 0;
 
 
     protected abstract presenter createPresenter();
@@ -104,7 +105,7 @@ public abstract class BaseMVPInterceptActBackFragment<presenter extends BaseCont
 
 
     @Override
-    public void onRequestFail(boolean showLoading, int flag) {
+    public void onLoadFail(boolean showLoading, int flag) {
         if (!showLoading) {
             return;
         }
@@ -117,7 +118,7 @@ public abstract class BaseMVPInterceptActBackFragment<presenter extends BaseCont
     }
 
     @Override
-    public void onRequestStart(boolean showLoading, int flag, String tipMsg) {
+    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
         if (!showLoading) {
             return;
         }
@@ -128,7 +129,7 @@ public abstract class BaseMVPInterceptActBackFragment<presenter extends BaseCont
     }
 
     @Override
-    public void onRequestSuccess(boolean showLoading, int flag, Object model) {
+    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
         if (!showLoading) {
             return;
         }

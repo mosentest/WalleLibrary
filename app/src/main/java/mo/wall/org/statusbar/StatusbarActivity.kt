@@ -3,16 +3,16 @@ package mo.wall.org.statusbar
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
-import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
+import android.os.Parcelable
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import mo.wall.org.R
 import mo.wall.org.service.MyService
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity
 import org.wall.mo.compat.statusbar.StatusBarUtil
 
-class StatusbarActivity : AbsWithV4FragmentActivity<ViewDataBinding>() {
+class StatusbarActivity : AbsWithV4FragmentActivity<ViewDataBinding, Parcelable>() {
     override fun onClick(v: View?) {
 
     }
@@ -48,19 +48,12 @@ class StatusbarActivity : AbsWithV4FragmentActivity<ViewDataBinding>() {
         StatusBarUtil.setStatusBarDarkTheme(this, true)
     }
 
-    override fun initData() {
+
+    override fun loadIntentData(intent: Intent?) {
 //        startForegroundService(Intent(this, MyService().javaClass))
         startService(Intent(this, MyService()::class.java))
     }
 
-
-    override fun parseIntentData(intent: Intent?) {
-
-    }
-
-    override fun initClick() {
-
-    }
 
     override fun showShortToast(msg: String?) {
 

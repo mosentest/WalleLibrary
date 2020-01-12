@@ -18,8 +18,7 @@ import org.wall.mo.base.fragment.LazyLoadEasyFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPLazyLoadEasyFragment<presenter extends BaseContract.BasePresenter,
-        B extends ViewDataBinding>
+public abstract class BaseMVPLazyLoadEasyFragment<presenter extends BaseContract.BasePresenter, B extends ViewDataBinding>
         extends LazyLoadEasyFragment<B>
         implements BaseContract.BaseView {
 
@@ -29,7 +28,7 @@ public abstract class BaseMVPLazyLoadEasyFragment<presenter extends BaseContract
     /**
      * 展示dialog次数
      */
-    private volatile int showDialogCount = 0;
+    private int showDialogCount = 0;
 
 
     protected abstract presenter createPresenter();
@@ -104,7 +103,7 @@ public abstract class BaseMVPLazyLoadEasyFragment<presenter extends BaseContract
 
 
     @Override
-    public void onRequestFail(boolean showLoading, int flag) {
+    public void onLoadFail(boolean showLoading, int flag) {
         if (!showLoading) {
             return;
         }
@@ -117,7 +116,7 @@ public abstract class BaseMVPLazyLoadEasyFragment<presenter extends BaseContract
     }
 
     @Override
-    public void onRequestStart(boolean showLoading, int flag, String tipMsg) {
+    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
         if (!showLoading) {
             return;
         }
@@ -128,7 +127,7 @@ public abstract class BaseMVPLazyLoadEasyFragment<presenter extends BaseContract
     }
 
     @Override
-    public void onRequestSuccess(boolean showLoading, int flag, Object model) {
+    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
         if (!showLoading) {
             return;
         }

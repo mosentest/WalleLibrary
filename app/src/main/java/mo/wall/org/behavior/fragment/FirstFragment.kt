@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
+import android.os.Parcelable
 import android.view.View
 import android.widget.Button
 import androidx.core.view.ViewCompat
@@ -22,12 +23,12 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
 </desc></version></time></author> */
-public class FirstFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding>() {
+public class FirstFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding,Parcelable>() {
     override fun getTopBarBackViewId(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun parseIntentData(intent: Intent?) {
+    override fun loadIntentData(intent: Intent?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

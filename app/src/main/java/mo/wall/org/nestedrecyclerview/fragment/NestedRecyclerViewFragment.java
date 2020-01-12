@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +17,6 @@ import java.util.List;
 
 import mo.wall.org.R;
 import mo.wall.org.databinding.FragmentNestedRecyclerviewBinding;
-import mo.wall.org.nestedrecyclerview.NestedParentMultiItemEntity;
 import mo.wall.org.nestedrecyclerview.view.ChildRecyclerView;
 import mo.wall.org.nestedrecyclerview.view.ParentRecyclerView;
 
@@ -30,7 +30,7 @@ import mo.wall.org.nestedrecyclerview.view.ParentRecyclerView;
  * 作者姓名 修改时间 版本号 描述
  */
 public class NestedRecyclerViewFragment extends
-        BaseMVPMaxLifecycleFragment<NestedRecyclerViewPresenter, FragmentNestedRecyclerviewBinding> implements
+        BaseMVPMaxLifecycleFragment<NestedRecyclerViewPresenter, FragmentNestedRecyclerviewBinding, Parcelable> implements
         NestedRecyclerViewContract.View {
 
 
@@ -105,9 +105,10 @@ public class NestedRecyclerViewFragment extends
     }
 
     @Override
-    protected void parseIntentData(Intent intent) {
+    public void loadIntentData(Intent intent) {
 
     }
+
 
     @Override
     protected void onAbsV4Attach(Context context) {
@@ -145,17 +146,17 @@ public class NestedRecyclerViewFragment extends
     }
 
     @Override
-    public void onRequestInterceptFail(int flag, Object failObj) {
+    public void onLoadInterceptFail(int flag, Object failObj) {
 
     }
 
     @Override
-    public void onRequestDialogFail(int flag, Object failObj) {
+    public void onLoadDialogFail(int flag, Object failObj) {
 
     }
 
     @Override
-    public void onRequestToastFail(int flag, Object failObj) {
+    public void onLoadToastFail(int flag, Object failObj) {
 
     }
 
@@ -190,5 +191,25 @@ public class NestedRecyclerViewFragment extends
         if (mViewDataBinding != null && mViewDataBinding.childView != null) {
             mViewDataBinding.childView.setParentRecyclerView(parentRecyclerView);
         }
+    }
+
+    @Override
+    public void statusLoadingView() {
+
+    }
+
+    @Override
+    public void statusNetWorkView() {
+
+    }
+
+    @Override
+    public void statusErrorView(int type, String msg) {
+
+    }
+
+    @Override
+    public void statusContentView() {
+
     }
 }

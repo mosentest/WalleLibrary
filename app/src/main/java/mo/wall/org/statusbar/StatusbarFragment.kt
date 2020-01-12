@@ -22,9 +22,9 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class StatusbarFragment : InterceptActBackFragment<ViewDataBinding>() {
+class StatusbarFragment : InterceptActBackFragment<ViewDataBinding, Parcelable>() {
     override fun showDialog(msg: String?) {
-        
+
     }
 
     override fun getTopBarTitleViewId(): Int {
@@ -36,19 +36,19 @@ class StatusbarFragment : InterceptActBackFragment<ViewDataBinding>() {
     }
 
     override fun showShortToast(msg: String?) {
-        
+
     }
 
     override fun showLongToast(msg: String?) {
-        
+
     }
 
     override fun hideDialog() {
-        
+
     }
 
-    override fun parseIntentData(intent: Intent?) {
-        
+    override fun loadIntentData(intent: Intent?) {
+
     }
 
 
@@ -58,10 +58,10 @@ class StatusbarFragment : InterceptActBackFragment<ViewDataBinding>() {
 
 
     companion object {
-        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
-            val fragment: androidx.fragment.app.Fragment? = StatusbarFragment()
-            args?.putString(TAG, TAG)
-            fragment!!.arguments = args
+        fun newInstance(args: Bundle?): Fragment {
+            val fragment: Fragment = StatusbarFragment()
+            //args?.putString(TAG, TAG)
+            fragment.arguments = args
             return fragment
         }
     }
@@ -72,13 +72,6 @@ class StatusbarFragment : InterceptActBackFragment<ViewDataBinding>() {
 
 
     override fun initView(rootView: View?, savedInstanceState: Bundle?) {
-
-    }
-
-    override fun initData() {
-    }
-
-    override fun initClick() {
 
     }
 

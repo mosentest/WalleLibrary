@@ -73,7 +73,9 @@ public class NestedRecyclerViewActivity extends
         });
 
         //监听生命周期
-        getLifecycle().addObserver(multiItemQuickAdapter);
+        if (multiItemQuickAdapter != null) {
+            getLifecycle().addObserver(multiItemQuickAdapter);
+        }
     }
 
     @Override
@@ -127,28 +129,50 @@ public class NestedRecyclerViewActivity extends
     }
 
     @Override
-    public void onRequestInterceptFail(int flag, Object failObj) {
+    public void onLoadInterceptFail(int flag, Object failObj) {
 
     }
 
     @Override
-    public void onRequestDialogFail(int flag, Object failObj) {
+    public void onLoadDialogFail(int flag, Object failObj) {
 
     }
 
     @Override
-    public void onRequestToastFail(int flag, Object failObj) {
+    public void onLoadToastFail(int flag, Object failObj) {
 
     }
 
 
     @Override
     public void onCurDestroy() {
-
+        if (multiItemQuickAdapter != null) {
+            getLifecycle().removeObserver(multiItemQuickAdapter);
+        }
     }
 
     @Override
     public void showData(List<NestedParentMultiItemEntity> itemEntityList) {
         multiItemQuickAdapter.setNewData(itemEntityList);
+    }
+
+    @Override
+    public void statusLoadingView() {
+
+    }
+
+    @Override
+    public void statusNetWorkView() {
+
+    }
+
+    @Override
+    public void statusErrorView(int type, String msg) {
+
+    }
+
+    @Override
+    public void statusContentView() {
+
     }
 }

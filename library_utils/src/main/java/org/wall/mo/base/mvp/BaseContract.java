@@ -2,7 +2,8 @@ package org.wall.mo.base.mvp;
 
 import android.os.Bundle;
 
-import org.wall.mo.base.mvp.demo.DemoContract;
+import org.wall.mo.base.interfaces.LoadView;
+import org.wall.mo.base.interfaces.StatusView;
 
 import java.lang.ref.WeakReference;
 
@@ -91,56 +92,8 @@ public interface BaseContract {
 
     }
 
-    public interface BaseView extends BaseRequestView {
-
-
+    public interface BaseView extends LoadView, StatusView {
     }
 
-    public interface BaseRequestView {
-        /**
-         * 请求前
-         *
-         * @param flag   标记来源
-         * @param tipMsg 加载的提示
-         */
-        public void onRequestStart(boolean showLoading, int flag, String tipMsg);
 
-        /**
-         * 请求成功
-         *
-         * @param flag
-         */
-        public void onRequestSuccess(boolean showLoading, int flag, Object o);
-
-
-        /**
-         * 请求失败
-         *
-         * @param flag
-         */
-        public void onRequestFail(boolean showLoading, int flag);
-
-        /**
-         * 请求失败 拦截自定义处理
-         *
-         * @param flag
-         */
-        public void onRequestInterceptFail(int flag, Object failObj);
-
-        /**
-         * 请求失败
-         *
-         * @param flag
-         * @param failObj 错误对象
-         */
-        public void onRequestDialogFail(int flag, Object failObj);
-
-        /**
-         * 请求失败
-         *
-         * @param flag
-         * @param failObj 错误对象
-         */
-        public void onRequestToastFail(int flag, Object failObj);
-    }
 }

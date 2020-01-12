@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
+import android.os.Parcelable
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import mo.wall.org.R
@@ -12,7 +13,7 @@ import org.wall.mo.base.fragment.InterceptActBackFragment
 /**
  * A placeholder fragment containing a simple view.
  */
-class StatusbarActivity2Fragment : InterceptActBackFragment<ViewDataBinding>() {
+class StatusbarActivity2Fragment : InterceptActBackFragment<ViewDataBinding, Parcelable>() {
     override fun getTopBarTitleViewId(): Int {
         return 0
     }
@@ -25,7 +26,7 @@ class StatusbarActivity2Fragment : InterceptActBackFragment<ViewDataBinding>() {
 
     }
 
-    override fun parseIntentData(intent: Intent?) {
+    override fun loadIntentData(intent: Intent?) {
 
     }
 
@@ -50,7 +51,7 @@ class StatusbarActivity2Fragment : InterceptActBackFragment<ViewDataBinding>() {
     companion object {
         fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
             val fragment: androidx.fragment.app.Fragment? = StatusbarActivity2Fragment()
-            args?.putString(TAG, TAG)
+            //args?.putString(TAG, TAG)
             fragment!!.arguments = args
             return fragment
         }

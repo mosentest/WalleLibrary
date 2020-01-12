@@ -3,13 +3,13 @@ package mo.wall.org.scroll
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
-import androidx.fragment.app.Fragment
+import android.os.Parcelable
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import mo.wall.org.R
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity
 
-class ScrollActivity : AbsWithV4FragmentActivity<ViewDataBinding>() {
+class ScrollActivity : AbsWithV4FragmentActivity<ViewDataBinding, Parcelable>() {
     override fun onClick(v: View?) {
 
     }
@@ -21,7 +21,7 @@ class ScrollActivity : AbsWithV4FragmentActivity<ViewDataBinding>() {
     override fun showDialog(msg: String?) {
     }
 
-    override fun parseIntentData(intent: Intent?) {
+    override fun loadIntentData(intent: Intent?) {
     }
 
     override fun getContainerViewId(): Int {
@@ -40,8 +40,6 @@ class ScrollActivity : AbsWithV4FragmentActivity<ViewDataBinding>() {
         return R.layout.activity_scroll
     }
 
-    override fun initClick() {
-    }
 
     override fun showLongToast(msg: String?) {
     }
@@ -51,13 +49,6 @@ class ScrollActivity : AbsWithV4FragmentActivity<ViewDataBinding>() {
 
     override fun createFragment(): androidx.fragment.app.Fragment {
         return ScrollFragment.newInstance(Bundle())
-    }
-
-    override fun initData() {
-    }
-
-    override fun initView(savedInstanceState: Bundle?) {
-        super.initView(savedInstanceState)
     }
 
     override fun showShortToast(msg: String?) {

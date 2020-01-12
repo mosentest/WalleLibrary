@@ -17,7 +17,7 @@ import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.wall.mo.base.fragment.IAttachActivity;
+import org.wall.mo.base.interfaces.IAttachActivity;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.ClickUtil;
 import org.wall.mo.utils.StringUtils;
@@ -70,6 +70,11 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
         parseIntentData();
         initData();
         initClick();
+    }
+
+    @Override
+    public void showTopBar(boolean status) {
+
     }
 
     @Override
@@ -282,8 +287,6 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
         mActivityJumpTime = SystemClock.uptimeMillis();
         return result;
     }
-
-
 
 
     public String getName() {

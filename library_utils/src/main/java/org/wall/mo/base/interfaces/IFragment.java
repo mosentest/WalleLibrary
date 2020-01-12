@@ -1,4 +1,4 @@
-package org.wall.mo.base.fragment;
+package org.wall.mo.base.interfaces;
 
 /**
  * Copyright (C), 2018-2019

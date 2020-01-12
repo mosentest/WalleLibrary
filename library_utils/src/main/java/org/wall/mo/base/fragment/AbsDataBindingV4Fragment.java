@@ -17,6 +17,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
+import org.wall.mo.base.interfaces.IAttachActivity;
+import org.wall.mo.base.interfaces.IFragment;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.log.WLog;
@@ -36,11 +38,11 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
 
     protected Context mContext;
 
-    protected IAttachActivity iAttachActivity;
+    protected IAttachActivity mAttachActivity;
 
     protected B mViewDataBinding;
 
-    protected View rootView;
+    protected View mRootView;
 
     protected Handler mHandler = null;
 
@@ -54,11 +56,8 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
      * @param args
      * @return
      */
-    public static Fragment newInstance(Bundle args) {
-        Fragment fragment = null;
-        if (args != null) {
-            args.putString(TAG, TAG);
-        }
+    public static Fragment newInstance(AbsDataBindingV4Fragment absDataBindingV4Fragment, Bundle args) {
+        Fragment fragment = absDataBindingV4Fragment;
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,7 +70,7 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         }
         this.mContext = context;
         if (context instanceof IAttachActivity) {
-            iAttachActivity = (IAttachActivity) context;
+            mAttachActivity = (IAttachActivity) context;
         } else {
             onAbsV4Attach(context);
         }
@@ -144,13 +143,13 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         }
         int layoutId = getLayoutId();
         if (layoutId != 0) {
-            if (rootView == null) {
-                rootView = inflater.inflate(layoutId, container, false);
-                mViewDataBinding = DataBindingUtil.bind(rootView);
+            if (mRootView == null) {
+                mRootView = inflater.inflate(layoutId, container, false);
+                mViewDataBinding = DataBindingUtil.bind(mRootView);
             }
             //在这里findViewById
-            initView(rootView, savedInstanceState);
-            return rootView;
+            initView(mRootView, savedInstanceState);
+            return mRootView;
         } else {
             return super.onCreateView(inflater, container, savedInstanceState);
         }
@@ -167,7 +166,7 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         if (idRes == View.NO_ID) {
             return null;
         }
-        return rootView.findViewById(idRes);
+        return mRootView.findViewById(idRes);
     }
 
     @Override
@@ -245,8 +244,8 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         if (mViewDataBinding != null) {
             mViewDataBinding.unbind();
         }
-        rootView = null;
-        iAttachActivity = null;
+        mRootView = null;
+        mAttachActivity = null;
         mContext = null;
     }
 

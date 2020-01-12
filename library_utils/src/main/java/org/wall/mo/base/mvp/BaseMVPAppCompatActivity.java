@@ -28,7 +28,7 @@ public abstract class BaseMVPAppCompatActivity<
     /**
      * 展示dialog次数
      */
-    protected volatile int showDialogCount = 0;
+    protected int showDialogCount = 0;
 
 
     public abstract presenter createPresenter();
@@ -104,7 +104,7 @@ public abstract class BaseMVPAppCompatActivity<
 
 
     @Override
-    public void onRequestFail(boolean showLoading, int flag) {
+    public void onLoadFail(boolean showLoading, int flag) {
         if (!showLoading) {
             return;
         }
@@ -117,7 +117,7 @@ public abstract class BaseMVPAppCompatActivity<
     }
 
     @Override
-    public void onRequestStart(boolean showLoading, int flag, String tipMsg) {
+    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
         if (!showLoading) {
             return;
         }
@@ -128,7 +128,7 @@ public abstract class BaseMVPAppCompatActivity<
     }
 
     @Override
-    public void onRequestSuccess(boolean showLoading, int flag, Object model) {
+    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
         if (!showLoading) {
             return;
         }

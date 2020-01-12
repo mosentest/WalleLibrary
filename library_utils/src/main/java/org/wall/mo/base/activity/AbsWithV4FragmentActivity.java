@@ -2,21 +2,19 @@ package org.wall.mo.base.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Parcelable;
-import android.view.View;
-import android.widget.TextView;
-
 import org.wall.mo.base.StartActivityCompat;
-import org.wall.mo.base.fragment.IFragmentInterceptAct;
-import org.wall.mo.base.nextextra.BaseNextExtra;
+import org.wall.mo.base.fragment.InterceptActBackFragment;
+import org.wall.mo.base.interfaces.IFragmentInterceptAct;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.log.WLog;
 
@@ -29,16 +27,17 @@ import org.wall.mo.utils.log.WLog;
  * * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding> extends AbsDataBindingAppCompatActivity<B> {
+public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, nextT extends Parcelable>
+        extends AbsDataBindingAppCompatActivity<B> {
 
     protected static final String TAG = AbsWithV4FragmentActivity.class.getSimpleName();
 
-    protected Fragment fragment;
+    protected Fragment mFragment;
 
     /**
      * 上个页面传递的参数集合对象
      */
-    private BaseNextExtra mNextParcelable;
+    private nextT mNextParcelable;
 
     private String mTitle;
     /**
@@ -50,17 +49,17 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding> exten
     @Override
     public void initView(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            if (fragment == null) {
-                fragment = createFragment();
+            if (mFragment == null) {
+                mFragment = createFragment();
             }
             int containerViewId = getContainerViewId();
-            if (fragment == null || containerViewId == 0) {
+            if (mFragment == null || containerViewId == 0) {
                 return;
             }
             FragmentManager supportFragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
             //用getName作为tag
-            fragmentTransaction.replace(containerViewId, fragment, getName());
+            fragmentTransaction.replace(containerViewId, mFragment, getName());
             fragmentTransaction.commit();
         } else {
             FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -75,12 +74,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding> exten
         //设置返回键
         int topBarBackViewId = getTopBarBackViewId();
         if (topBarBackViewId != 0) {
-            findViewById(topBarBackViewId).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
+            findViewById(topBarBackViewId).setOnClickListener(v -> onBackPressed());
         }
     }
 
@@ -90,27 +84,32 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding> exten
         if (intent == null) {
             return;
         }
-        //其他参数
-        if (fragment instanceof IFragmentInterceptAct
-                && ((IFragmentInterceptAct) fragment).onFragmentInterceptGetIntent(intent)) {
+        if (mFragment instanceof IFragmentInterceptAct
+                && ((IFragmentInterceptAct) mFragment).onFragmentInterceptGetIntent(intent)) {
             if (BuildConfig.DEBUG) {
                 WLog.i(TAG, "Fragment getIntent");
             }
         } else {
             //解析参数
             Bundle extras = intent.getExtras();
-            this.mTitle = extras.getString(StartActivityCompat.NEXT_TITLE);
-            this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
-            this.mNextParcelable = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
-            //消费参数
-            setTopBarTitle();
-            setTopBarBack();
-            //其他值
-            parseIntentData(intent);
+            if (extras != null) {
+                this.mTitle = extras.getString(StartActivityCompat.NEXT_TITLE);
+                this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
+                this.mNextParcelable = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
+                //消费参数
+                setTopBarTitle();
+                setTopBarBack();
+                //其他值
+                loadIntentData(intent);
+                if (mFragment instanceof InterceptActBackFragment) {
+                    //调用这个方法，为了在newIntent更新数据
+                    ((InterceptActBackFragment) mFragment).loadIntentData(intent);
+                }
+            }
         }
     }
 
-    public abstract void parseIntentData(Intent intent);
+    public abstract void loadIntentData(Intent intent);
 
 
     @Override
@@ -198,8 +197,8 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding> exten
         if (!mShowBack) {
             return;
         }
-        if (fragment instanceof IFragmentInterceptAct
-                && ((IFragmentInterceptAct) fragment).onFragmentInterceptOnBackPressed()) {
+        if (mFragment instanceof IFragmentInterceptAct
+                && ((IFragmentInterceptAct) mFragment).onFragmentInterceptOnBackPressed()) {
             if (BuildConfig.DEBUG) {
                 WLog.i(TAG, "Fragment onBackPressed");
             }
@@ -217,7 +216,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding> exten
     protected void onDestroy() {
         super.onDestroy();
         mNextParcelable = null;
-        fragment = null;
+        mFragment = null;
     }
 
 

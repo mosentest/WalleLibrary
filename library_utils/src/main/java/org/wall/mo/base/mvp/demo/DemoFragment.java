@@ -3,6 +3,7 @@ package org.wall.mo.base.mvp.demo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
+import android.os.Parcelable;
 
 import androidx.databinding.ViewDataBinding;
 
@@ -20,7 +21,7 @@ import org.wall.mo.base.mvp.BaseMVPMaxLifecycleFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Presenter, ViewDataBinding>
+public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Presenter, ViewDataBinding, Parcelable>
         implements DemoContract.View {
 
 
@@ -56,7 +57,7 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
     }
 
     @Override
-    protected void parseIntentData(Intent intent) {
+    public void loadIntentData(Intent intent) {
 
     }
 
@@ -82,17 +83,17 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
     }
 
     @Override
-    public void onRequestDialogFail(int flag, Object failObj) {
+    public void onLoadDialogFail(int flag, Object failObj) {
 
     }
 
     @Override
-    public void onRequestToastFail(int flag, Object failObj) {
+    public void onLoadToastFail(int flag, Object failObj) {
 
     }
 
     @Override
-    public void onRequestInterceptFail(int flag, Object failObj) {
+    public void onLoadInterceptFail(int flag, Object failObj) {
 
     }
 
@@ -106,4 +107,23 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
 
     }
 
+    @Override
+    public void statusLoadingView() {
+
+    }
+
+    @Override
+    public void statusNetWorkView() {
+
+    }
+
+    @Override
+    public void statusErrorView(int type, String msg) {
+
+    }
+
+    @Override
+    public void statusContentView() {
+
+    }
 }

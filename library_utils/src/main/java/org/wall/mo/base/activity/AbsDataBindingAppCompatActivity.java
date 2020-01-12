@@ -18,7 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
-import org.wall.mo.base.fragment.IAttachActivity;
+import org.wall.mo.base.interfaces.IAttachActivity;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.ClickUtil;
 import org.wall.mo.utils.StringUtils;
@@ -37,7 +37,7 @@ import org.wall.mo.utils.log.WLog;
 public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
         extends AppCompatActivity implements IAttachActivity, View.OnClickListener {
 
-    protected final static String TAG = AbsAppCompatActivity.class.getSimpleName();
+    protected final static String TAG = AbsDataBindingAppCompatActivity.class.getSimpleName();
 
     protected Handler mHandler = null;
 
@@ -72,10 +72,15 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
             //修改为这个方法，这个暂时会影响侧边滑动，先不考虑
             mViewDataBinding = DataBindingUtil.setContentView(this, layoutId);
         }
-        initView(savedInstanceState);
         parseIntentData();
+        initView(savedInstanceState);
         initData();
         initClick();
+    }
+
+    @Override
+    public void showTopBar(boolean status) {
+
     }
 
     @Override
@@ -191,7 +196,9 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        //必须设置这个
         setIntent(intent);
+        //onNewIntent->reStart->start->onResume()
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onNewIntent");
         }
@@ -205,7 +212,6 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
             WLog.i(TAG, getName() + ".onLowMemory");
         }
     }
-
 
 
     @Override

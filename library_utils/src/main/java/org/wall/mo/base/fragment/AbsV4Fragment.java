@@ -14,12 +14,12 @@ import androidx.fragment.app.Fragment;
 
 import android.os.SystemClock;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.wall.mo.base.interfaces.IAttachActivity;
+import org.wall.mo.base.interfaces.IFragment;
 import org.wall.mo.utils.BuildConfig;
-import org.wall.mo.utils.ClickUtil;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.log.WLog;
 
@@ -38,9 +38,9 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
 
     protected Context mContext;
 
-    protected IAttachActivity iAttachActivity;
+    protected IAttachActivity mAttachActivity;
 
-    protected View rootView;
+    protected View mRootView;
 
     protected Handler mHandler = null;
 
@@ -54,11 +54,8 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
      * @param args
      * @return
      */
-    public static Fragment newInstance(Bundle args) {
-        Fragment fragment = null;
-        if (args != null) {
-            args.putString(TAG, TAG);
-        }
+    public static Fragment newInstance(AbsDataBindingV4Fragment absDataBindingV4Fragment, Bundle args) {
+        Fragment fragment = absDataBindingV4Fragment;
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,7 +68,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
         }
         this.mContext = context;
         if (context instanceof IAttachActivity) {
-            iAttachActivity = (IAttachActivity) context;
+            mAttachActivity = (IAttachActivity) context;
         } else {
             onAbsV4Attach(context);
         }
@@ -144,12 +141,12 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
         }
         int layoutId = getLayoutId();
         if (layoutId != 0) {
-            if (rootView == null) {
-                rootView = inflater.inflate(layoutId, container, false);
+            if (mRootView == null) {
+                mRootView = inflater.inflate(layoutId, container, false);
             }
             //在这里findViewById
-            initView(rootView, savedInstanceState);
-            return rootView;
+            initView(mRootView, savedInstanceState);
+            return mRootView;
         } else {
             return super.onCreateView(inflater, container, savedInstanceState);
         }
@@ -166,7 +163,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
         if (idRes == View.NO_ID) {
             return null;
         }
-        return rootView.findViewById(idRes);
+        return mRootView.findViewById(idRes);
     }
 
     @Override
@@ -241,8 +238,8 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
         }
-        rootView = null;
-        iAttachActivity = null;
+        mRootView = null;
+        mAttachActivity = null;
         mContext = null;
     }
 
