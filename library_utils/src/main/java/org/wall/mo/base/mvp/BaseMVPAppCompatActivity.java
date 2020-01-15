@@ -35,11 +35,14 @@ public abstract class BaseMVPAppCompatActivity<
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
             mPresenter.attachView(this);
+        }
+        super.onCreate(savedInstanceState);
+        if (mPresenter != null) {
+            //这里处理一次
             mPresenter.onCreate(savedInstanceState);
         }
     }

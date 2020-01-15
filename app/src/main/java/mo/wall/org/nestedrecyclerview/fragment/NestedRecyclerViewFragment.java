@@ -92,6 +92,18 @@ public class NestedRecyclerViewFragment extends
         mViewDataBinding.childView.setLayoutManager(gridLayoutManager);
 
         mPresenter.loadData();
+
+        mViewDataBinding.name.setText(title);
+    }
+
+//    @Override
+//    protected boolean setCurRetainInstance() {
+//        return true;
+//    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -185,12 +197,6 @@ public class NestedRecyclerViewFragment extends
             return mViewDataBinding.childView;
         }
         return null;
-    }
-
-    public void setParentRecyclerView(ParentRecyclerView parentRecyclerView) {
-        if (mViewDataBinding != null && mViewDataBinding.childView != null) {
-            mViewDataBinding.childView.setParentRecyclerView(parentRecyclerView);
-        }
     }
 
     @Override

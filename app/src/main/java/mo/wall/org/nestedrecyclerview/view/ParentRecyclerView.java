@@ -119,7 +119,6 @@ public class ParentRecyclerView extends RecyclerView {
             lastY = e.getY();
         }
         if (isScrollEnd()) {
-            ChildRecyclerView childRecyclerView = findNestedScrollingChildRecyclerView();
             if (childRecyclerView != null) {
                 float deltaY = lastY - e.getY();
                 if (deltaY != 0) {
@@ -145,8 +144,8 @@ public class ParentRecyclerView extends RecyclerView {
 
     @Override
     public void scrollToPosition(int position) {
-        if (findNestedScrollingChildRecyclerView() != null) {
-            findNestedScrollingChildRecyclerView().scrollToPosition(position);
+        if (childRecyclerView != null) {
+            childRecyclerView.scrollToPosition(position);
         }
         postDelayed(() -> {
             super.scrollToPosition(position);
@@ -172,7 +171,6 @@ public class ParentRecyclerView extends RecyclerView {
     }
 
     private boolean canScroll() {
-        ChildRecyclerView childRecyclerView = findNestedScrollingChildRecyclerView();
         return childRecyclerView == null || childRecyclerView.isScrollTop();
     }
 
@@ -189,21 +187,16 @@ public class ParentRecyclerView extends RecyclerView {
     }
 
     private void childFling(int velY) {
-        if (findNestedScrollingChildRecyclerView() != null) {
-            findNestedScrollingChildRecyclerView().fling(0, velY);
+        if (childRecyclerView != null) {
+            childRecyclerView.fling(0, velY);
         }
     }
 
-    /**
-     * 获取ChildRecyclerView
-     *
-     * @return
-     */
-    private ChildRecyclerView findNestedScrollingChildRecyclerView() {
-        if (getAdapter() instanceof NestedParentMultiItemQuickAdapter) {
-            return ((NestedParentMultiItemQuickAdapter) getAdapter()).getChildRecyclerView();
-        }
-        return null;
+
+    private ChildRecyclerView childRecyclerView;
+
+    public void setChildRecyclerView(ChildRecyclerView childRecyclerView) {
+        this.childRecyclerView = childRecyclerView;
     }
 
 

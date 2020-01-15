@@ -16,6 +16,8 @@ import java.util.List;
 public class NestedRecyclerViewContract {
 
     public static abstract class Presenter extends BaseContract.BasePresenter<View> {
+
+        public abstract void load();
     }
 
     public interface View extends BaseContract.BaseView {

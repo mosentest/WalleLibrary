@@ -16,6 +16,37 @@ import java.util.Arrays;
 public class NestedRecyclerViewPresenter extends NestedRecyclerViewContract.Presenter {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void onStart() {
+
+    }
+
+    @Override
+    protected void onPause() {
+
+    }
+
+    @Override
+    protected void onStop() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+    }
+
+    @Override
+    public void load() {
         if (getView() != null) {
             getView().showData(Arrays.asList(
                     new NestedParentMultiItemEntity.Builder().type(1).build(),
@@ -54,30 +85,5 @@ public class NestedRecyclerViewPresenter extends NestedRecyclerViewContract.Pres
                     new NestedParentMultiItemEntity.Builder().type(5).build()
             ));
         }
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void onStart() {
-
-    }
-
-    @Override
-    protected void onPause() {
-
-    }
-
-    @Override
-    protected void onStop() {
-
-    }
-
-    @Override
-    protected void onDestroy() {
-
     }
 }
