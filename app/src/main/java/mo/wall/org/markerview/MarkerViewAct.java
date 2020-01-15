@@ -99,6 +99,7 @@ public class MarkerViewAct extends BaseAppCompatActivity {
         if (textZoom != null) {
             textZoom.cancel();
             textZoom.removeAllUpdateListeners();
+            textZoom.removeAllListeners();
         }
     }
 
