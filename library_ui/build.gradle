@@ -186,10 +186,15 @@ dependencies {
     }
 
     //高仿ios的dialog 对话框 https://github.com/kongzue/DialogV3
-//    implementation 'com.kongzue.dialog_v3:dialog:3.1.0'
+    implementation 'com.kongzue.dialog_v3x:dialog:3.1.8'
 
-    //从底部往上滑的对话框 https://github.com/orhanobut/dialogpl  us
+    //从底部往上滑的对话框 https://github.com/orhanobut/dialogplus
     implementation 'com.orhanobut:dialogplus:1.11@aar'
+
+
+    //https://github.com/iammert/StatusView
+    // Custom status view for Android.
+    implementation 'com.github.iammert:StatusView:1.3'
 
 
     //https://github.com/JavaNoober/AutoSave A framework can automatically generate OnSaveInstanceState code

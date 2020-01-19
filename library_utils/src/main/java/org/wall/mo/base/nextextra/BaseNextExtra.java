@@ -12,6 +12,7 @@ import android.os.Parcelable;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
+@Deprecated
 public class BaseNextExtra implements Parcelable {
 
 

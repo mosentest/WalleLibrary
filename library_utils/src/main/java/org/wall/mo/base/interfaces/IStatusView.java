@@ -1,6 +1,6 @@
 package org.wall.mo.base.interfaces;
 
-public interface StatusView {
+public interface IStatusView {
 
     /**
      * 加载view

@@ -117,7 +117,7 @@ public class NestedRecyclerViewFragment extends
     }
 
     @Override
-    public void loadIntentData(Intent intent) {
+    public void loadIntentData(Bundle bundle) {
 
     }
 

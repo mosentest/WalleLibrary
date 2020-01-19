@@ -1,8 +1,6 @@
-package org.wall.mo.base.mvp.demo;
+package org.wall.mo.base.mvpdemo;
 
 import android.os.Bundle;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Copyright (C), 2018-2019

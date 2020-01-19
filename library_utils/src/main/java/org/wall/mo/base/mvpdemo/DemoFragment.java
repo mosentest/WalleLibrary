@@ -1,7 +1,8 @@
-package org.wall.mo.base.mvp.demo;
+package org.wall.mo.base.mvpdemo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
 
@@ -57,7 +58,7 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
     }
 
     @Override
-    public void loadIntentData(Intent intent) {
+    public void loadIntentData(Bundle bundle) {
 
     }
 

@@ -1,6 +1,6 @@
 package org.wall.mo.base.interfaces;
 
-public interface LoadView {
+public interface ILoadView {
     /**
      * 请求前
      *

@@ -13,21 +13,13 @@ import android.os.Parcelable;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public interface IAttachActivity {
+public interface IAttachActivity extends IDialogView {
 
     public void setTopBarTitle();
 
     public void setTopBarBack();
 
     public void showTopBar(boolean status);
-
-    public void showShortToast(String msg);
-
-    public void showLongToast(String msg);
-
-    public void showDialog(String msg);
-
-    public void hideDialog();
 
     public Parcelable getNextExtra();
 }

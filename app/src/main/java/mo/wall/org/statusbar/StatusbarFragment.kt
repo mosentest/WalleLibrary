@@ -47,10 +47,9 @@ class StatusbarFragment : InterceptActBackFragment<ViewDataBinding, Parcelable>(
 
     }
 
-    override fun loadIntentData(intent: Intent?) {
+    override fun loadIntentData(bundle: Bundle?) {
 
     }
-
 
     override fun handleSubMessage(msg: Message?) {
 

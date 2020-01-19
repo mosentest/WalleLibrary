@@ -51,7 +51,7 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
             setTopBarTitle();
             setTopBarBack();
             //其他值
-            loadIntentData(intent);
+            loadIntentData(extras);
         }
         return false;
     }
@@ -129,7 +129,7 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
     public abstract int getTopBarBackViewId();
 
 
-    public abstract void loadIntentData(Intent intent);
+    public abstract void loadIntentData(Bundle bundle);
 
 
     @Override

@@ -26,7 +26,7 @@ class StatusbarActivity2Fragment : InterceptActBackFragment<ViewDataBinding, Par
 
     }
 
-    override fun loadIntentData(intent: Intent?) {
+    override fun loadIntentData(bundle: Bundle?) {
 
     }
 

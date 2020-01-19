@@ -22,18 +22,19 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
  * 作者姓名 修改时间 版本号 描述
 </desc></version></time></author> */
 class ScrollFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding, Parcelable>() {
+    override fun loadIntentData(bundle: Bundle?) {
+
+    }
+
     override fun getTopBarTitleViewId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        return 0
     }
 
     override fun getTopBarBackViewId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return 0
     }
 
-    override fun loadIntentData(intent: Intent?) {
-
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun onFragmentFirstVisible() {
 

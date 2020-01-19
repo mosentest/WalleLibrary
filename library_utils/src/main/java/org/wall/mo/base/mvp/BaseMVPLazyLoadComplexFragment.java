@@ -7,6 +7,7 @@ import androidx.databinding.ViewDataBinding;
 
 import android.view.View;
 
+import org.wall.mo.base.cview.LoadDialogView;
 import org.wall.mo.base.fragment.LazyLoadComplexFragment;
 
 /**
@@ -25,15 +26,14 @@ public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContr
 
     public presenter mPresenter;
 
-    /**
-     * 展示dialog次数
-     */
-    private int showDialogCount = 0;
+    protected LoadDialogView loadDialogView;
 
     protected abstract presenter createPresenter();
 
     @Override
     public void initView(View rootView, Bundle savedInstanceState) {
+        loadDialogView = new LoadDialogView(this);
+
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
@@ -91,6 +91,9 @@ public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContr
     public void onDestroy() {
         super.onDestroy();
         onCurDestroy();
+        if (loadDialogView != null) {
+            loadDialogView.onDetachView();
+        }
         if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter.onDestroy();
@@ -103,37 +106,22 @@ public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContr
 
     @Override
     public void onLoadFail(boolean showLoading, int flag) {
-        if (!showLoading) {
-            return;
-        }
-        //错误提示，让自己实现，不在底层处理
-        showDialogCount--;
-        if (showDialogCount < 0) {
-            showDialogCount = 0;
-            hideDialog();
+        if (loadDialogView != null) {
+            loadDialogView.loadEnd(showLoading);
         }
     }
 
     @Override
     public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
-        if (!showLoading) {
-            return;
-        }
-        showDialogCount++;
-        if (showDialogCount == 1) {
-            showDialog(tipMsg);
+        if (loadDialogView != null) {
+            loadDialogView.loadStart(showLoading, tipMsg);
         }
     }
 
     @Override
     public void onLoadSuccess(boolean showLoading, int flag, Object model) {
-        if (!showLoading) {
-            return;
-        }
-        showDialogCount--;
-        if (showDialogCount < 0) {
-            showDialogCount = 0;
-            hideDialog();
+        if (loadDialogView != null) {
+            loadDialogView.loadEnd(showLoading);
         }
     }
 }

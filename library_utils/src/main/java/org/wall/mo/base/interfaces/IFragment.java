@@ -11,17 +11,9 @@ package org.wall.mo.base.interfaces;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public interface IFragment {
+public interface IFragment extends IDialogView {
 
     public void setTopBarTitle();
 
     public void setTopBarBack();
-
-    public void showShortToast(String msg);
-
-    public void showLongToast(String msg);
-
-    public void showDialog(String msg);
-
-    public void hideDialog();
 }

@@ -1,4 +1,4 @@
-package org.wall.mo.base.mvp.demo;
+package org.wall.mo.base.mvpdemo;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,6 +1,5 @@
-package org.wall.mo.base.mvp.demo;
+package org.wall.mo.base.mvpdemo;
 
-import org.wall.mo.base.mvp.BaseContract;
 import org.wall.mo.utils.thread.ExRunnable;
 import org.wall.mo.utils.thread.MainThreadExecutor;
 

@@ -2,8 +2,8 @@ package org.wall.mo.base.mvp;
 
 import android.os.Bundle;
 
-import org.wall.mo.base.interfaces.LoadView;
-import org.wall.mo.base.interfaces.StatusView;
+import org.wall.mo.base.interfaces.ILoadView;
+import org.wall.mo.base.interfaces.IStatusView;
 
 import java.lang.ref.WeakReference;
 
@@ -92,7 +92,7 @@ public interface BaseContract {
 
     }
 
-    public interface BaseView extends LoadView, StatusView {
+    public interface BaseView extends ILoadView, IStatusView {
     }
 
 

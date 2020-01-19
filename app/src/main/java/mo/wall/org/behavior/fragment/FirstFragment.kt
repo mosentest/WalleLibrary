@@ -23,17 +23,18 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
 </desc></version></time></author> */
-public class FirstFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding,Parcelable>() {
+public class FirstFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding, Parcelable>() {
     override fun getTopBarBackViewId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return 0
     }
 
-    override fun loadIntentData(intent: Intent?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun loadIntentData(bundle: Bundle?) {
+
     }
+
 
     override fun getTopBarTitleViewId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return 0
     }
 
     override fun onFragmentFirstVisible() {

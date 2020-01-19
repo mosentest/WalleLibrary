@@ -103,7 +103,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, nextT
                 loadIntentData(intent);
                 if (mFragment instanceof InterceptActBackFragment) {
                     //调用这个方法，为了在newIntent更新数据
-                    ((InterceptActBackFragment) mFragment).loadIntentData(intent);
+                    ((InterceptActBackFragment) mFragment).loadIntentData(extras);
                 }
             }
         }
