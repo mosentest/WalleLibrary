@@ -91,6 +91,11 @@ android {
         exclude "lib/arm64-v8a/librsjni.so"
         exclude "lib/x86_64/librsjni.so"
         exclude "lib/x86/librsjni.so"
+
+        exclude "lib/x86_64/librsjni_androidx.so"
+        exclude "lib/x86/librsjni_androidx.so"
+        exclude "lib/armeabi-v7a/librsjni_androidx.so"
+        exclude "lib/arm64-v8a/librsjni_androidx.so"
     }
 
     compileOptions {
@@ -116,6 +121,9 @@ dependencies {
 //    implementation "android.arch.paging:rxjava2:1.0.0-rc1"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation rootProject.ext.dependencies.core_ktx
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 //    kapt "com.android.databinding:compiler:3.1.0"
 
@@ -191,7 +199,7 @@ dependencies {
 
     // 更改：`RxJava 2.0` 依赖
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.11'
 
 
     //高度封装rv  https://github.com/CymChad/BaseRecyclerViewAdapterHelper
@@ -224,9 +232,15 @@ configurations.all {
                 || requested.group == 'androidx.core'
                 || requested.group == 'androidx.vectordrawable'
                 || requested.group == 'androidx.collection'
+                || requested.group == 'androidx.versionedparcelable'
+                || requested.group == 'androidx.vectordrawable'
         ) {
             println("androidx----" + requested.name)
             details.useVersion rootProject.ext.android.compatx_version
+        } else if (requested.group == 'androidx.lifecycle'
+                || requested.group == 'androidx.arch.core') {
+            println("androidx-lifecycle-arch--" + requested.name)
+            details.useVersion rootProject.ext.android.compat_lifecycle_version
         }
     }
 }

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.moz1q1'
 
@@ -73,7 +75,7 @@ dependencies {
     compileOnly(rootProject.ext.dependencies.recyclerview) {
         force true
     }
-    compileOnly(rootProject.ext.dependencies.annotation) {
+    implementation(rootProject.ext.dependencies.annotation) {
         force true
     }
     compileOnly(rootProject.ext.dependencies.constraintlayout) {
@@ -85,6 +87,22 @@ dependencies {
     compileOnly('com.squareup.okhttp3:okhttp:3.10.0') {
         force true
     }
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-common:2.1.0'
+    implementation 'androidx.arch.core:core-common:2.1.0'
+    implementation 'androidx.collection:collection:1.1.0'
+
+
+    implementation rootProject.ext.dependencies.lifecycle_runtime
+    implementation rootProject.ext.dependencies.lifecycle_common
+    implementation rootProject.ext.dependencies.lifecycle_viewmodel
+    implementation rootProject.ext.dependencies.core_common
+    implementation rootProject.ext.dependencies.collection
+    compileOnly rootProject.ext.dependencies.core_ktx
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     //https://github.com/SenhLinsh/Utils-Everywhere
 //    implementation 'com.github.SenhLinsh:Utils-Everywhere:2.1.0'
 }
+

@@ -7,33 +7,47 @@ ext {
     ]
 
     android = [
-            applicationId    : "moziqi_devok",
-            compileSdkVersion: 28,
-            buildToolsVersion: "28.0.2",
-            minSdkVersion    : 17,
-            targetSdkVersion : 19,
-            versionCode      : 2,
-            versionName      : "1.0.0",
-            compat_version   : "28.0.0",
-            compatx_version  : "1.1.0"
+            applicationId           : "mo_dev",
+            compileSdkVersion       : 28,
+            buildToolsVersion       : "28.0.3",
+            minSdkVersion           : 17,
+            targetSdkVersion        : 19,
+            versionCode             : 2,
+            versionName             : "1.0.0",
+            compat_version          : "28.0.0",
+            compatx_version         : "1.1.0",
+            compat_lifecycle_version: "2.1.0"
     ]
     //https://developer.android.google.cn/jetpack/androidx/versions?hl=en-US
     dependencies = [
             //fragment    : "com.android.support:support-fragment:$rootProject.ext.android.compat_version",
-            appCompat       : 'androidx.appcompat:appcompat:1.1.0',
             //cardview    : "com.android.support:cardview-v7:$rootProject.ext.android.compat_version",
-            cardview        : 'androidx.cardview:cardview:1.0.0',
-            recyclerview    : 'androidx.recyclerview:recyclerview:1.1.0',
-            annotation      : 'androidx.annotation:annotation:1.1.0',
-            fragment        : 'androidx.fragment:fragment:1.1.0',
-            exifinterface   : 'androidx.exifinterface:exifinterface:1.1.0',
-            loader          : 'androidx.loader:loader:1.1.0',
-            core            : 'androidx.core:core:1.1.0',
-            multidex        : 'androidx.multidex:multidex:2.0.0',
-            legacy          : 'androidx.legacy:legacy-support-v4:1.0.0',
+
+            appCompat              : "androidx.appcompat:appcompat:$android.compatx_version",
+            recyclerview           : "androidx.recyclerview:recyclerview:$android.compatx_version",
+            annotation             : "androidx.annotation:annotation:$android.compatx_version",
+            fragment               : "androidx.fragment:fragment:$android.compatx_version",
+            exifinterface          : "androidx.exifinterface:exifinterface:$android.compatx_version",
+            loader                 : "androidx.loader:loader:$android.compatx_version",
+            core                   : "androidx.core:core:$android.compatx_version",
+            versionedparcelable    : "androidx.versionedparcelable:versionedparcelable:$android.compatx_version",
+            vectordrawable         : "androidx.vectordrawable:vectordrawable:$android.compatx_version",
+            vectordrawable_animated: "androidx.vectordrawable:vectordrawable-animated:$android.compatx_version",
+            collection             : "androidx.collection:collection:$android.compatx_version",
+            core_ktx               : "androidx.core:core-ktx:$android.compatx_version",
+
+            lifecycle_runtime      : "androidx.lifecycle:lifecycle-runtime:$android.compat_lifecycle_version",
+            lifecycle_common       : "androidx.lifecycle:lifecycle-common:$android.compat_lifecycle_version",
+            lifecycle_viewmodel    : "androidx.lifecycle:lifecycle-viewmodel:$android.compat_lifecycle_version",
+            core_common            : "androidx.arch.core:core-common:$android.compat_lifecycle_version",
+
+            multidex               : "androidx.multidex:multidex:2.0.1",
+            cardview               : "androidx.cardview:cardview:1.0.0",
+            legacy                 : "androidx.legacy:legacy-support-v4:1.0.0",
 //            constraintlayout: 'androidx.constraintlayout:constraintlayout:1.1.3',
-            constraintlayout: 'androidx.constraintlayout:constraintlayout:2.0.0-beta2',
-            design          : 'com.google.android.material:material:1.0.0',
-            flexbox         : "com.google.android:flexbox:0.3.2"
+            constraintlayout       : "androidx.constraintlayout:constraintlayout:2.0.0-beta2",
+            design                 : "com.google.android.material:material:1.0.0",
+            //https://github.com/google/flexbox-layout
+            flexbox                : "com.google.android:flexbox:2.0.1"
     ]
 }
