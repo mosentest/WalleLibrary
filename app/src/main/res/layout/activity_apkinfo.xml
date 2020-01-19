@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:hint="pkg"
             android:padding="@dimen/w_dp_10"
-            android:text="com.freekidspainting.glowcoloringapp" />
+            android:text="com.dictionary.fa" />
     </LinearLayout>
 
     <LinearLayout

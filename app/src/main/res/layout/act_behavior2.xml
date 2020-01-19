@@ -10,20 +10,65 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
+
+            <mo.wall.org.behavior.view.MyHeaderView
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout"
-            app:layout_constraintVertical_weight="1" />
+                <LinearLayout
+                    android:id="@+id/topIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/w_dp_200"
+                    android:background="@color/google_red"
+                    android:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/topName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/w_dp_30"
+                    android:background="@color/google_green" />
+
+
+                <ImageView
+                    android:id="@+id/topIcon2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/w_dp_100"
+                    android:background="@color/google_yellow"
+                    android:orientation="horizontal" />
+
+
+                <LinearLayout
+                    android:id="@+id/topName2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/w_dp_40"
+                    android:background="@color/google_blue"
+                    android:orientation="horizontal" />
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@id/stopView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    app:layout_anchor="@+id/topName2"
+                    app:layout_anchorGravity="bottom" />
+
+            </mo.wall.org.behavior.view.MyHeaderView>
+
+            <mo.wall.org.behavior.view.MyViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black_overlay"
+                app:layout_behavior=".behavior.behavior.MyHeaderViewScrollViewBehavior" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

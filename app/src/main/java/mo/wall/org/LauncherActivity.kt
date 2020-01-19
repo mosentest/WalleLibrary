@@ -24,7 +24,7 @@ class LauncherActivity : AppCompatActivity() {
         mHideHandler.postDelayed({
             startActivity(Intent(this, MainActivity().javaClass))
             finish()
-        }, 3000)
+        }, 1000)
     }
 
     override fun onBackPressed() {

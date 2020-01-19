@@ -2,16 +2,18 @@ package mo.wall.org.behavior
 
 import android.os.Bundle
 import android.os.Message
+import android.widget.*
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
 import androidx.core.view.ViewCompat
 import androidx.viewpager.widget.ViewPager
-import android.widget.BaseAdapter
-import android.widget.Button
 import mo.wall.org.R
 import mo.wall.org.base.BaseAppCompatActivity
 import mo.wall.org.behavior.fragment.FirstFragment
 import mo.wall.org.behavior.fragment.ScrollFragment
+import mo.wall.org.behavior.view.MyHeaderView
+import mo.wall.org.behavior.view.MyViewPager
+import mo.wall.org.nestedrecyclerview.view.XViewPager
 import org.wall.mo.base.adapter.MaxLifecyclePagerAdapter
 import org.wall.mo.base.adapter.SubPagerAdapter
 
@@ -28,7 +30,14 @@ class BehaviorActivity : BaseAppCompatActivity() {
 
 
     private lateinit var mTabLayout: TabLayout
-    private lateinit var mViewPager: androidx.viewpager.widget.ViewPager
+    private lateinit var mViewPager: MyViewPager
+
+    private lateinit var mTopIcon: LinearLayout
+    private lateinit var mTopName: TextView
+    private lateinit var mTopIcon2: ImageView
+    private lateinit var mTopName2: LinearLayout
+
+    private lateinit var mHeader: MyHeaderView
 
 
     private lateinit var fragments: ArrayList<androidx.fragment.app.Fragment>
@@ -44,9 +53,33 @@ class BehaviorActivity : BaseAppCompatActivity() {
         setContentView(R.layout.act_behavior2)
 
 
-        mTabLayout = findViewById<TabLayout>(R.id.tabLayout)
-        mViewPager = findViewById<androidx.viewpager.widget.ViewPager>(R.id.viewPager)
 
+
+        mHeader = findViewById<MyHeaderView>(R.id.header)
+
+
+        mTabLayout = findViewById(R.id.stopView)
+        mViewPager = findViewById(R.id.viewPager)
+        mViewPager.setMyHeaderView(mHeader)
+
+
+        mTopIcon = findViewById<LinearLayout>(R.id.topIcon)
+        mTopName = findViewById<TextView>(R.id.topName)
+        mTopIcon2 = findViewById<ImageView>(R.id.topIcon2)
+        mTopName2 = findViewById<LinearLayout>(R.id.topName2)
+
+        mTopIcon.setOnClickListener {
+            Toast.makeText(this, "icon", Toast.LENGTH_SHORT).show()
+        }
+        mTopName.setOnClickListener {
+            Toast.makeText(this, "name", Toast.LENGTH_SHORT).show()
+        }
+        mTopIcon2.setOnClickListener {
+            Toast.makeText(this, "icon2", Toast.LENGTH_SHORT).show()
+        }
+        mTopName2.setOnClickListener {
+            Toast.makeText(this, "name2", Toast.LENGTH_SHORT).show()
+        }
         fragments = ArrayList<androidx.fragment.app.Fragment>()
         titles = ArrayList<String>()
 
