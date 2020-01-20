@@ -80,4 +80,8 @@ class ScrollFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding, Parcel
     override fun hideDialog() {
 
     }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode)
+    }
 }

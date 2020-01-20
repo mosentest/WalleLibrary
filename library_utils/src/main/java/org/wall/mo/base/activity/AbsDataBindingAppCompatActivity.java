@@ -213,6 +213,14 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
         }
     }
 
+    @Override
+    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode);
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onMultiWindowModeChanged.isInMultiWindowMode:" + isInMultiWindowMode);
+        }
+    }
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

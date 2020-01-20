@@ -308,6 +308,15 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         }
     }
 
+
+    @Override
+    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode);
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + ".onMultiWindowModeChanged.isInMultiWindowMode:" + isInMultiWindowMode);
+        }
+    }
+
     /**
      * 获取onAttach的context
      *

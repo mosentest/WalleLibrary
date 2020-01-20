@@ -115,8 +115,9 @@ dependencies {
     //implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
 
+    //https://github.com/zhihu/Matisse
     // 知乎图片选择框架
-    implementation('com.zhihu.android:matisse:0.5.2-beta2') {
+    implementation('com.zhihu.android:matisse:0.5.2') {
         exclude group: 'androidx.appcompat'
         exclude group: 'androidx.legacy'
         exclude group: 'androidx.annotation'
@@ -214,6 +215,12 @@ dependencies {
     //https://github.com/iammert/StatusView
     // Custom status view for Android.
     implementation 'com.github.iammert:StatusView:1.3'
+
+    //https://github.com/Bigkoo/Android-PickerView
+    //Android-PickerView（时间选择器、省市区三级联动）
+    //关于挡住 虚拟机键盘问题，需要 参考这个博客 https://www.cnblogs.com/whycxb/p/9163456.html
+    //主要是拿当前布局的根布局 通过setDecorView 放进去
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
 
     //https://github.com/JavaNoober/AutoSave A framework can automatically generate OnSaveInstanceState code

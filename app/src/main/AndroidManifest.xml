@@ -70,7 +70,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LauncherActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,7 +77,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".behavior.BehaviorActivity" />
+        <activity
+            android:name=".behavior.BehaviorActivity" />
         <activity android:name=".apkinfo.ApkInfoActivity" />
         <activity android:name=".headerimg.HeaderImgAct" />
         <activity android:name=".markerview.MarkerViewAct" />
@@ -111,7 +111,9 @@
             android:name=".statusbar.StatusbarActivity"
             android:launchMode="singleTop"
             android:theme="@style/NoTitleTheme" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize|orientation|keyboardHidden" />
         <activity android:name=".datausage.DataUsageSummaryActivity" />
         <activity android:name=".devicemanager.DeviceManagerActivity" />
         <activity android:name=".ntp.NtpActivity" />
@@ -129,7 +131,8 @@
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
-        </receiver> <!-- 全面屏适配 -->
+        </receiver>
+        <!-- 全面屏适配 -->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" /> <!-- 华为适配 -->

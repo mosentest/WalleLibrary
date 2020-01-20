@@ -61,12 +61,13 @@
 
             </mo.wall.org.behavior.view.MyHeaderView>
 
-            <mo.wall.org.behavior.view.MyViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/black_overlay"
                 app:layout_behavior=".behavior.behavior.MyHeaderViewScrollViewBehavior" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

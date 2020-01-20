@@ -1,5 +1,6 @@
 package mo.wall.org.behavior
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Message
 import android.widget.*
@@ -30,7 +31,7 @@ class BehaviorActivity : BaseAppCompatActivity() {
 
 
     private lateinit var mTabLayout: TabLayout
-    private lateinit var mViewPager: MyViewPager
+    private lateinit var mViewPager: ViewPager
 
     private lateinit var mTopIcon: LinearLayout
     private lateinit var mTopName: TextView
@@ -60,7 +61,7 @@ class BehaviorActivity : BaseAppCompatActivity() {
 
         mTabLayout = findViewById(R.id.stopView)
         mViewPager = findViewById(R.id.viewPager)
-        mViewPager.setMyHeaderView(mHeader)
+        //mViewPager.setMyHeaderView(mHeader)
 
 
         mTopIcon = findViewById<LinearLayout>(R.id.topIcon)
@@ -94,6 +95,7 @@ class BehaviorActivity : BaseAppCompatActivity() {
             }
         }.apply {
             setData(fragments, titles)
+            notifyDataSetChanged()
         }
 
         mViewPager.setPageTransformer(false, AlphaTransformer())
@@ -108,5 +110,12 @@ class BehaviorActivity : BaseAppCompatActivity() {
          * 完成切换页面刷新
          */
         mTabLayout.setupWithViewPager(mViewPager)
+    }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration?) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
+        mHeader.let {
+            it.requestLayout()
+        }
     }
 }
