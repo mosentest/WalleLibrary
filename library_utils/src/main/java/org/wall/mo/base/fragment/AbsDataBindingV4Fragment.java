@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,9 @@ import org.wall.mo.base.interfaces.IFragment;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.log.WLog;
+import org.wall.mo.utils.network.NetStateChangeObserver;
+import org.wall.mo.utils.network.NetStateChangeReceiver;
+import org.wall.mo.utils.network.NetworkType;
 
 /**
  * Copyright (C), 2018-2019
@@ -32,7 +36,9 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extends Fragment implements IFragment {
+public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extends Fragment
+        implements IFragment,
+        NetStateChangeObserver {
 
     public final static String TAG = AbsDataBindingV4Fragment.class.getSimpleName();
 
@@ -45,6 +51,8 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
     protected View mRootView;
 
     protected Handler mHandler = null;
+
+    private NetStateChangeReceiver mNetStateChangeReceiver;
 
     public Handler getHandler() {
         return mHandler;
@@ -112,6 +120,9 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate");
         }
+        mNetStateChangeReceiver = new NetStateChangeReceiver();
+        mNetStateChangeReceiver.setNetStateChangeObserver(this);
+        NetStateChangeReceiver.registerReceiver(getCurActivity(), mNetStateChangeReceiver);
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -233,10 +244,10 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
         }
+        NetStateChangeReceiver.unRegisterReceiver(getCurActivity(), mNetStateChangeReceiver);
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
@@ -247,6 +258,7 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         mRootView = null;
         mAttachActivity = null;
         mContext = null;
+        super.onDestroy();
     }
 
     @Override
@@ -317,6 +329,87 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         }
     }
 
+
+    @Override
+    public void startActivity(Intent intent, @Nullable Bundle options) {
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + "》》》startActivity options -- 开始 --");
+        }
+        if (startActivitySelfCheck(intent)) {
+            if (BuildConfig.DEBUG) {
+
+                WLog.i(TAG, getName() + "》》》startActivity options -- 满足 --");
+            }
+            // 查看源码得知 startActivity 最终也会调用 startActivityForResult
+            super.startActivity(intent, options);
+        }
+    }
+
+    //控制startactivity 参考这个哥们https://www.jianshu.com/p/579f1f118161
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + "》》》startActivityForResult -- 开始 --");
+        }
+        if (startActivitySelfCheck(intent)) {
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, getName() + "》》》startActivityForResult -- 满足 --");
+            }
+            // 查看源码得知 startActivity 最终也会调用 startActivityForResult
+            super.startActivityForResult(intent, requestCode, options);
+        }
+    }
+
+    private String mActivityJumpTag;
+
+    private long mActivityJumpTime;
+
+    /**
+     * 检查当前 Activity 是否重复跳转了，不需要检查则重写此方法并返回 true 即可
+     *
+     * @param intent 用于跳转的 Intent 对象
+     * @return 检查通过返回true, 检查不通过返回false
+     */
+    protected boolean startActivitySelfCheck(Intent intent) {
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- 开始 --");
+        }
+        // 默认检查通过
+        boolean result = true;
+        if (BuildConfig.DEBUG) {
+            WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- intent --" + (intent == null));
+        }
+        if (intent == null) {
+            return result;
+        }
+        // 标记对象
+        String tag;
+        if (intent.getComponent() != null) { // 显式跳转
+            tag = intent.getComponent().getClassName();
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- 显式跳转 --" + tag);
+            }
+        } else if (intent.getAction() != null) { // 隐式跳转
+            tag = intent.getAction();
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- 隐式跳转 --" + tag);
+            }
+        } else {
+            return result;
+        }
+        if (tag.equals(mActivityJumpTag) && (mActivityJumpTime >= SystemClock.uptimeMillis() - 500)) {
+            // 检查不通过
+            result = false;
+            if (BuildConfig.DEBUG) {
+                WLog.i(TAG, getName() + "》》》startActivitySelfCheck -- result --" + result);
+            }
+        }
+        // 记录启动标记和时间
+        mActivityJumpTag = tag;
+        mActivityJumpTime = SystemClock.uptimeMillis();
+        return result;
+    }
+
     /**
      * 获取onAttach的context
      *
@@ -360,6 +453,17 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
     @Deprecated
     public void initClick() {
 
+    }
+
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+        WLog.i(TAG, getName() + ".onNetConnected.networkType:" + networkType);
+    }
+
+    @Override
+    public void onNetDisconnected() {
+        WLog.i(TAG, getName() + ".onNetDisconnected");
     }
 
     public abstract void handleSubMessage(Message msg);

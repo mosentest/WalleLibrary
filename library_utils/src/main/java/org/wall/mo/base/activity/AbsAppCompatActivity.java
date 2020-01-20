@@ -23,21 +23,35 @@ import org.wall.mo.utils.ClickUtil;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.keyboard.KeyboardUtils;
 import org.wall.mo.utils.log.WLog;
+import org.wall.mo.utils.network.NetStateChangeObserver;
+import org.wall.mo.utils.network.NetStateChangeReceiver;
+import org.wall.mo.utils.network.NetworkType;
 
 /**
  * Copyright (C), 2018-2019
  * Author: ziqimo
  * Date: 2019/5/30 上午9:53
- * Description: ${DESCRIPTION}
+ * Description:
+ * <p>
+ * 后面尽力考虑用AbsDataBindingAppCompatActivity类来实现逻辑
+ * 后面尽力考虑用AbsDataBindingAppCompatActivity类来实现逻辑
+ * 后面尽力考虑用AbsDataBindingAppCompatActivity类来实现逻辑
+ * <p>
  * History:
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsAppCompatActivity extends AppCompatActivity implements IAttachActivity, View.OnClickListener {
+@Deprecated
+public abstract class AbsAppCompatActivity extends AppCompatActivity
+        implements IAttachActivity,
+        View.OnClickListener,
+        NetStateChangeObserver {
 
     protected final static String TAG = AbsAppCompatActivity.class.getSimpleName();
 
     protected Handler mHandler = null;
+
+    private NetStateChangeReceiver mNetStateChangeReceiver;
 
     static {
         /**
@@ -52,6 +66,9 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         }
+        mNetStateChangeReceiver = new NetStateChangeReceiver();
+        mNetStateChangeReceiver.setNetStateChangeObserver(this);
+        NetStateChangeReceiver.registerReceiver(this, mNetStateChangeReceiver);
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -100,6 +117,7 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onResume");
         }
+
     }
 
     @Override
@@ -120,14 +138,15 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
         }
+        NetStateChangeReceiver.unRegisterReceiver(this, mNetStateChangeReceiver);
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
         }
+        super.onDestroy();
     }
 
     @Override
@@ -314,6 +333,16 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity implements 
     @Deprecated
     public void initClick() {
 
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+        WLog.i(TAG, getName() + ".onNetConnected.networkType:" + networkType);
+    }
+
+    @Override
+    public void onNetDisconnected() {
+        WLog.i(TAG, getName() + ".onNetDisconnected");
     }
 
     public abstract void handleSubMessage(Message msg);

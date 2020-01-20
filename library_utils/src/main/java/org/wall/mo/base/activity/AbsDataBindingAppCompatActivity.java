@@ -24,6 +24,9 @@ import org.wall.mo.utils.ClickUtil;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.keyboard.KeyboardUtils;
 import org.wall.mo.utils.log.WLog;
+import org.wall.mo.utils.network.NetStateChangeObserver;
+import org.wall.mo.utils.network.NetStateChangeReceiver;
+import org.wall.mo.utils.network.NetworkType;
 
 /**
  * Copyright (C), 2018-2019
@@ -35,11 +38,15 @@ import org.wall.mo.utils.log.WLog;
  * 作者姓名 修改时间 版本号 描述
  */
 public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
-        extends AppCompatActivity implements IAttachActivity, View.OnClickListener {
+        extends AppCompatActivity implements IAttachActivity,
+        View.OnClickListener,
+        NetStateChangeObserver {
 
     protected final static String TAG = AbsDataBindingAppCompatActivity.class.getSimpleName();
 
     protected Handler mHandler = null;
+
+    private NetStateChangeReceiver mNetStateChangeReceiver;
 
     protected B mViewDataBinding;
 
@@ -56,6 +63,9 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         }
+        mNetStateChangeReceiver = new NetStateChangeReceiver();
+        mNetStateChangeReceiver.setNetStateChangeObserver(this);
+        NetStateChangeReceiver.registerReceiver(this, mNetStateChangeReceiver);
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -126,10 +136,10 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
         }
+        NetStateChangeReceiver.unRegisterReceiver(this, mNetStateChangeReceiver);
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
@@ -137,6 +147,7 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
         if (mViewDataBinding != null) {
             mViewDataBinding.unbind();
         }
+        super.onDestroy();
     }
 
     @Override
@@ -334,6 +345,16 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
     @Deprecated
     public void initClick() {
 
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+        WLog.i(TAG, getName() + ".onNetConnected.networkType:" + networkType);
+    }
+
+    @Override
+    public void onNetDisconnected() {
+        WLog.i(TAG, getName() + ".onNetDisconnected");
     }
 
     public abstract void handleSubMessage(Message msg);

@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".statusbar2.Statusbar2Activity">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <org.wall.mo.compat.statusbar.view.StatusBarHeightRelativeLayout
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/w_dp_200"
-        android:background="@color/colorAccent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".statusbar2.Statusbar2Activity">
 
-    </org.wall.mo.compat.statusbar.view.StatusBarHeightRelativeLayout>
 
-    <include layout="@layout/w_view_topbar" />
+        <org.wall.mo.compat.statusbar.view.StatusBarHeightRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_dp_200"
+            android:background="@color/colorAccent">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        </org.wall.mo.compat.statusbar.view.StatusBarHeightRelativeLayout>
 
-</LinearLayout>
+        <include layout="@layout/w_view_topbar" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

@@ -22,6 +22,9 @@ import org.wall.mo.base.interfaces.IFragment;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.log.WLog;
+import org.wall.mo.utils.network.NetStateChangeObserver;
+import org.wall.mo.utils.network.NetStateChangeReceiver;
+import org.wall.mo.utils.network.NetworkType;
 
 /**
  * Copyright (C), 2018-2019
@@ -29,10 +32,17 @@ import org.wall.mo.utils.log.WLog;
  * Date: 2019/5/29 下午4:50
  * Description: ${DESCRIPTION}
  * History: 基础类 列出相关的声明周期方法
+ * <p>
+ * 后面尽量考虑AbsDataBindingV4Fragment来实现逻辑
+ * 后面尽量考虑AbsDataBindingV4Fragment来实现逻辑
+ * 后面尽量考虑AbsDataBindingV4Fragment来实现逻辑
+ *
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsV4Fragment extends Fragment implements IFragment {
+@Deprecated
+public abstract class AbsV4Fragment extends Fragment implements IFragment,
+        NetStateChangeObserver {
 
     public final static String TAG = AbsV4Fragment.class.getSimpleName();
 
@@ -44,6 +54,8 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
 
     protected Handler mHandler = null;
 
+    private NetStateChangeReceiver mNetStateChangeReceiver;
+
     public Handler getHandler() {
         return mHandler;
     }
@@ -54,8 +66,8 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
      * @param args
      * @return
      */
-    public static Fragment newInstance(AbsDataBindingV4Fragment absDataBindingV4Fragment, Bundle args) {
-        Fragment fragment = absDataBindingV4Fragment;
+    public static Fragment newInstance(AbsV4Fragment absV4Fragment, Bundle args) {
+        Fragment fragment = absV4Fragment;
         fragment.setArguments(args);
         return fragment;
     }
@@ -110,6 +122,9 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate");
         }
+        mNetStateChangeReceiver = new NetStateChangeReceiver();
+        mNetStateChangeReceiver.setNetStateChangeObserver(this);
+        NetStateChangeReceiver.registerReceiver(getCurActivity(), mNetStateChangeReceiver);
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -230,10 +245,10 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
         }
+        NetStateChangeReceiver.unRegisterReceiver(getCurActivity(), mNetStateChangeReceiver);
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
@@ -241,6 +256,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
         mRootView = null;
         mAttachActivity = null;
         mContext = null;
+        super.onDestroy();
     }
 
     @Override
@@ -298,7 +314,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
     public void onLowMemory() {
         super.onLowMemory();
         if (BuildConfig.DEBUG) {
-            WLog.i(TAG , getName() + ".onLowMemory");
+            WLog.i(TAG, getName() + ".onLowMemory");
         }
     }
 
@@ -425,6 +441,17 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment {
     @Deprecated
     public void initClick() {
 
+    }
+
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+        WLog.i(TAG, getName() + ".onNetConnected.networkType:" + networkType);
+    }
+
+    @Override
+    public void onNetDisconnected() {
+        WLog.i(TAG, getName() + ".onNetDisconnected");
     }
 
     public abstract void handleSubMessage(Message msg);
