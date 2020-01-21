@@ -14,12 +14,12 @@ import org.wall.mo.base.mvp.BaseContract.BasePresenter;
  */
 public class DemoContract {
 
-    public static abstract class Presenter extends BasePresenter<View> {
+        public static abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void postMsg(final int flag);
-    }
+            public abstract void postMsg(final int flag);
+        }
 
-    public interface View extends BaseContract.BaseView {
+        public interface View extends BaseContract.BaseView {
 
-    }
+        }
 }

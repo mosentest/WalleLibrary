@@ -157,10 +157,6 @@ public class NestedRecyclerViewFragment extends
 
     }
 
-    @Override
-    public void onLoadInterceptFail(int flag, Object failObj) {
-
-    }
 
     @Override
     public void onLoadDialogFail(int flag, Object failObj) {

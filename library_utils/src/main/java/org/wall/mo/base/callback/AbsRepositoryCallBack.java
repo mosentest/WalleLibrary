@@ -31,18 +31,30 @@ public abstract class AbsRepositoryCallBack<Body, Fail> {
         }
     }
 
+    public AbsRepositoryCallBack(ILoadView baseView, int flag, boolean loading) {
+        this(baseView, flag, "", loading);
+    }
+
+    public AbsRepositoryCallBack(ILoadView baseView, boolean loading) {
+        this(baseView, -1, "", loading);
+    }
+
     public AbsRepositoryCallBack(ILoadView baseView, int flag) {
         this(baseView, flag, "", false);
     }
 
-    public void onRepositorySuccess(Body bean) {
+    public AbsRepositoryCallBack(ILoadView baseView) {
+        this(baseView, -1, "", false);
+    }
+
+    public void repositorySuccess(Body bean) {
         if (mBaseView != null) {
             mBaseView.onLoadSuccess(mLoading, mFlag, bean);
             onSuccess(mFlag, bean);
         }
     }
 
-    public void onRepositoryFail(Fail bean) {
+    public void repositoryFail(Fail bean) {
         if (mBaseView != null) {
             mBaseView.onLoadFail(mLoading, mFlag);
         }

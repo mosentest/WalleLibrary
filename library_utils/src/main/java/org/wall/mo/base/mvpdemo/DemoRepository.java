@@ -30,14 +30,14 @@ public class DemoRepository {
             @Override
             public void runEx() {
                 if (repositoryCallBack != null) {
-                    repositoryCallBack.onRepositorySuccess(new Object());
+                    repositoryCallBack.repositorySuccess(new Object());
                 }
             }
 
             @Override
             public void exMsg(String errorMsg) throws RuntimeException {
                 if (repositoryCallBack != null) {
-                    repositoryCallBack.onRepositoryFail(new Object());
+                    repositoryCallBack.repositoryFail(new Object());
                 }
             }
         });

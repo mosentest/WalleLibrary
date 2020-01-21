@@ -1,4 +1,4 @@
-package org.wall.mo.base;
+package org.wall.mo.base.helper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +24,7 @@ public class StartActivityCompat {
 
     /**
      * 封装其他，其他参数都转成parcelable对象，方便代码跟踪
+     * 也是为了saveInstance方便处理数据问题
      */
     public static final String NEXT_PARCELABLE = "next_parcelable";
 

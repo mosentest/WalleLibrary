@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
 
-import org.wall.mo.base.StartActivityCompat;
+import org.wall.mo.base.helper.StartActivityCompat;
 import org.wall.mo.base.interfaces.IFragmentInterceptAct;
 
 /**

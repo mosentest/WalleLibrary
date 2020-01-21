@@ -1,7 +1,6 @@
 package org.wall.mo.base.mvpdemo;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
@@ -28,7 +27,7 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
 
     @Override
     protected DemoContract.Presenter createPresenter() {
-        return null;
+        return new DemoPresenter();
     }
 
 
@@ -42,10 +41,6 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
         return 0;
     }
 
-    @Override
-    public void handleSubMessage(Message msg) {
-
-    }
 
     @Override
     public int getTopBarTitleViewId() {
@@ -58,10 +53,24 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
     }
 
     @Override
+    public void onFragmentFirstVisible() {
+
+    }
+
+    /**
+     * 会通过activity的onIntent传值过来
+     *
+     * @param bundle
+     */
+    @Override
     public void loadIntentData(Bundle bundle) {
 
     }
 
+    @Override
+    public void handleSubMessage(Message msg) {
+
+    }
 
     @Override
     public void showShortToast(String msg) {
@@ -93,10 +102,6 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
 
     }
 
-    @Override
-    public void onFragmentFirstVisible() {
-
-    }
 
     @Override
     protected void onCurDestroy() {

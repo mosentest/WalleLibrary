@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import org.wall.mo.base.StartActivityCompat;
+import org.wall.mo.base.helper.StartActivityCompat;
 import org.wall.mo.base.fragment.InterceptActBackFragment;
 import org.wall.mo.base.interfaces.IFragmentInterceptAct;
 import org.wall.mo.utils.BuildConfig;
@@ -27,7 +27,7 @@ import org.wall.mo.utils.log.WLog;
  * * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, nextT extends Parcelable>
+public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, acceptT extends Parcelable>
         extends AbsDataBindingAppCompatActivity<B> {
 
     protected static final String TAG = AbsWithV4FragmentActivity.class.getSimpleName();
@@ -37,7 +37,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, nextT
     /**
      * 上个页面传递的参数集合对象
      */
-    private nextT mNextParcelable;
+    private acceptT mNextParcelable;
 
     private String mTitle;
     /**

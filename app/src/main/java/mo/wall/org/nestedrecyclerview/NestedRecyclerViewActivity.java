@@ -225,10 +225,6 @@ public class NestedRecyclerViewActivity extends
         return null;
     }
 
-    @Override
-    public void onLoadInterceptFail(int flag, Object failObj) {
-
-    }
 
     @Override
     public void onLoadDialogFail(int flag, Object failObj) {

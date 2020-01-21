@@ -6,7 +6,6 @@ import android.os.*
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.text.TextUtils
 import mo.wall.org.apkinfo.ApkInfoActivity
 import mo.wall.org.autodensity.AutoDensityActivity
@@ -29,9 +28,8 @@ import mo.wall.org.statusbar.StatusbarActivity
 import mo.wall.org.statusbar2.Statusbar2Activity
 import mo.wall.org.throwcard.ThrowCardActivity
 import mo.wall.org.webviewinscrollview.WebInScrollActivity
-import org.wall.mo.base.StartActivityCompat
+import org.wall.mo.base.helper.StartActivityCompat
 import org.wall.mo.compat.statusbar.StatusBarUtil
-import androidx.appcompat.app.AppCompatDelegate
 import mo.wall.org.nestedrecyclerview.NestedRecyclerViewActivity
 
 
