@@ -23,6 +23,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -43,8 +48,36 @@ dependencies {
     compileOnly(rootProject.ext.dependencies.loader) {
         force true
     }
-    compileOnly('com.squareup.okhttp3:okhttp:3.10.0') {
+    // OkHttp
+    api('com.squareup.okhttp3:okhttp:3.10.0') {
         force true
     }
-    implementation 'com.google.code.gson:gson:2.8.5'
+    api('com.squareup.okhttp3:logging-interceptor:3.9.1') {
+        force true
+    }
+    api('com.squareup.okio:okio:2.2.2') {
+        force true
+    }
+
+    // Retrofit2
+    api('com.squareup.retrofit2:retrofit:2.4.0') {
+        force true
+    }
+    api('com.squareup.retrofit2:adapter-rxjava2:2.4.0') {
+        force true
+    }
+
+    // json
+    api('com.google.code.gson:gson:2.8.5') {
+        force true
+    }
+
+    // RxJava2
+    api('io.reactivex.rxjava2:rxjava:2.2.11') {
+        force true
+    }
+    api('io.reactivex.rxjava2:rxandroid:2.1.1') {
+        force true
+    }
+    api project(path: ':library_utils')
 }
