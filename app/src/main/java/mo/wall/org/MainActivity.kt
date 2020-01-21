@@ -16,6 +16,7 @@ import mo.wall.org.camera2.CameraV2GLSurfaceViewActivity
 import mo.wall.org.circlepercent.CirclePercentActivity
 import mo.wall.org.datausage.DataUsageSummaryActivity
 import mo.wall.org.devicemanager.DeviceManagerActivity
+import mo.wall.org.dialog.MyDialogActivity
 import mo.wall.org.dropdownmenu.DropDownMenuActivity
 import mo.wall.org.markerview.MarkerViewAct
 import mo.wall.org.nestedscrolling.NestedScrollingActivity
@@ -92,6 +93,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 ""))
 
+        lists?.add(createEntity("重建和内存泄漏相关问题学习", "Dialog和DialogFragment", 1, MyDialogActivity().javaClass.name))
         lists?.add(createEntity("NestedRecyclerView，仿淘宝、京东首页，通过两层嵌套的RecyclerView实现tab的吸顶效果。", "NestedRecyclerView", 1, NestedRecyclerViewActivity().javaClass.name))
         lists?.add(createEntity("Behavior入门学习", "Behavior", 1, BehaviorActivity().javaClass.name))
         lists?.add(createEntity("MarkerView绘制和学习", "MarkerView", 1, MarkerViewAct().javaClass.name))

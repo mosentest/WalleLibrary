@@ -1,4 +1,4 @@
-package com.ssl;
+package org.wall.mo.http.ssl;
  
 import android.content.Context;
  

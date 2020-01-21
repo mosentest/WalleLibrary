@@ -77,6 +77,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".dialog.MyDialogActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".behavior.BehaviorActivity" />
         <activity android:name=".apkinfo.ApkInfoActivity" />
         <activity android:name=".headerimg.HeaderImgAct" />

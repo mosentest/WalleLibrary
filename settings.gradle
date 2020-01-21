@@ -5,8 +5,8 @@ include ':app',
         ':library_urlconnection',
         ':library_compat',
         ':library_okhttp',
-        ':library_framework19',
-        ':app_refreshlayout',
-        ':app_recyclerviewsuspend',
-        ':app_snake',
-        ':invokeinstallpackage'
+        ':library_framework19'
+//        ':app_refreshlayout',
+//        ':app_recyclerviewsuspend',
+//        ':app_snake',
+//        ':invokeinstallpackage'

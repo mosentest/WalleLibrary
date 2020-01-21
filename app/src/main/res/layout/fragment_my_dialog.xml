@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="org.wall.mo.http://schemas.android.com/apk/res/android"
+    xmlns:app="org.wall.mo.http://schemas.android.com/apk/res-auto"
+    xmlns:tools="org.wall.mo.http://schemas.android.com/tools">
 
     <data>
 
@@ -15,7 +15,7 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CaFaFragment"
+            android:text="MyDialogFragment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
