@@ -1,31 +1,28 @@
-package ${packageName};
+package mo.wall.org.test21;
 
-
-
-import android.os.Bundle;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Message;
-
-import mo.wall.org.databinding.Fragment${underscoreToCamelCase(classToResource(activityClass))}Binding;
 
 import org.wall.mo.base.mvp.BaseMVPMaxLifecycleFragment;
 
 import mo.wall.org.R;
+import mo.wall.org.databinding.FragmentCaFaBinding;
 
 
-public class ${fragmentClass} extends 
-        BaseMVPMaxLifecycleFragment<${contractClass}.Presenter, Fragment${underscoreToCamelCase(classToResource(activityClass))}Binding, ${acceptParClass}>
-        implements ${contractClass}.View {
+public class CaFaFragment extends
+        BaseMVPMaxLifecycleFragment<CaFaContract.Presenter, FragmentCaFaBinding, CaFaAcceptPar>
+        implements CaFaContract.View {
 
-    public static ${fragmentClass} newInstance(Bundle args) {
-        ${fragmentClass} fragment = new ${fragmentClass}();
+    public static CaFaFragment newInstance(Bundle args) {
+        CaFaFragment fragment = new CaFaFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-   @Override
-    protected ${contractClass}.Presenter createPresenter() {
-        return new ${presenterClass}();
+    @Override
+    protected CaFaContract.Presenter createPresenter() {
+        return new CaFaPresenter();
     }
 
 
@@ -36,7 +33,7 @@ public class ${fragmentClass} extends
 
     @Override
     public int getLayoutId() {
-        return R.layout.${fragmentLayout};
+        return R.layout.fragment_ca_fa;
     }
 
 

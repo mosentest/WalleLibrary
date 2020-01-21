@@ -1,12 +1,7 @@
-package ${packageName};
-
-import ${superClassFqcn};
-import android.os.Bundle;
-<#if includeCppSupport!false>
-import android.widget.TextView;
-</#if>
+package mo.wall.org.test21;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 
@@ -14,10 +9,10 @@ import androidx.fragment.app.Fragment;
 
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity;
 
-import mo.wall.org.databinding.Activity${underscoreToCamelCase(classToResource(activityClass))}Binding;
 import mo.wall.org.R;
+import mo.wall.org.databinding.ActivityCaFaBinding;
 
-public class ${activityClass} extends AbsWithV4FragmentActivity<Activity${underscoreToCamelCase(classToResource(activityClass))}Binding, ${acceptParClass}> {
+public class CaFaActivity extends AbsWithV4FragmentActivity<ActivityCaFaBinding, CaFaAcceptPar> {
 
     @Override
     public int getContainerViewId() {
@@ -27,7 +22,7 @@ public class ${activityClass} extends AbsWithV4FragmentActivity<Activity${unders
 
     @Override
     public int getLayoutId() {
-        return R.layout.${activityLayout};
+        return R.layout.activity_ca_fa;
     }
 
 
@@ -48,7 +43,7 @@ public class ${activityClass} extends AbsWithV4FragmentActivity<Activity${unders
         if (intent != null) {
             extras = intent.getExtras();
         }
-        return ${fragmentClass}.newInstance(extras);
+        return CaFaFragment.newInstance(extras);
     }
 
     @Override

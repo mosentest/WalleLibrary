@@ -1,4 +1,4 @@
-package ${packageName}.${fragmentPackage};
+package ${packageName};
 
 import org.wall.mo.base.mvp.BaseContract;
 import org.wall.mo.base.mvp.BaseContract.BasePresenter;

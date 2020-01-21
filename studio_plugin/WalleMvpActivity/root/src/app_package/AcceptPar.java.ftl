@@ -1,4 +1,4 @@
-package ${packageName}.${fragmentPackage};
+package ${packageName};
 
 
 import android.os.Parcel;

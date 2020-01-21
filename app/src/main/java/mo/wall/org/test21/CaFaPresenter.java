@@ -1,8 +1,8 @@
-package ${packageName};
+package mo.wall.org.test21;
 
 import android.os.Bundle;
 
-public class ${presenterClass} extends ${contractClass}.Presenter {
+public class CaFaPresenter extends CaFaContract.Presenter {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

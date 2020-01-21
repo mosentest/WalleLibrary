@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="mo.wall.org">
-
     <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -68,6 +67,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".test21.CaFaActivity"></activity>
         <activity
             android:name=".LauncherActivity"
             android:theme="@style/FullscreenTheme">
@@ -77,8 +77,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".behavior.BehaviorActivity" />
+        <activity android:name=".behavior.BehaviorActivity" />
         <activity android:name=".apkinfo.ApkInfoActivity" />
         <activity android:name=".headerimg.HeaderImgAct" />
         <activity android:name=".markerview.MarkerViewAct" />
@@ -131,8 +130,7 @@
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
-        </receiver>
-        <!-- 全面屏适配 -->
+        </receiver> <!-- 全面屏适配 -->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" /> <!-- 华为适配 -->

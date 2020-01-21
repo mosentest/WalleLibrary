@@ -1,4 +1,4 @@
-package ${escapeKotlinIdentifiers(packageName)}.${escapeKotlinIdentifiers(fragmentPackage)}
+package ${packageName};
 
 import ${getMaterialComponentName('android.arch.lifecycle.ViewModel', useAndroidX)}
 

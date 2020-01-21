@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <template
-    format="5"
+    format="6"
     revision="1"
-    name="Fragment + ViewModel"
+    name="Walle 1 activity 1 Fragment"
     minApi="14"
     minBuildApi="14"
-    description="Creates a new activity and a fragment with view model">
+    description="Creates a walle activity and a fragment（暂时仅支持java）">
 
     <category value="Activity" />
     <formfactor value="Mobile" />
@@ -23,7 +23,7 @@
         name="Activity Layout Name"
         type="string"
         constraints="layout|unique|nonempty"
-        suggest="${classToResource(activityClass)}_activity"
+        suggest="activity_${classToResource(activityClass)}"
         default="main_activity"
         help="The name of the layout to create for the activity" />
 
@@ -41,7 +41,7 @@
         name="Fragment Layout Name"
         type="string"
         constraints="layout|unique|nonempty"
-        suggest="${classToResource(fragmentClass)}_fragment"
+        suggest="fragment_${classToResource(fragmentClass)}"
         default="main_fragment"
         help="The name of the layout to create for the fragment" />
 
@@ -50,7 +50,7 @@
         name="Accept Par Name"
         type="string"
         constraints="class|unique|nonempty"
-        suggest="${underscoreToCamelCase(classToResource(activityClass))}ViewModel"
+        suggest="${underscoreToCamelCase(classToResource(activityClass))}AcceptPar"
         default="AcceptParViewModel"
         help="The name of the Accept Par class to create" />
 
@@ -92,8 +92,8 @@
         type="string"
         constraints="package"
         suggest="ui.${classToResource(fragmentClass)?replace('_', '')}"
-        default="ui.main"
-        help="The package path for the fragment and the view model" />
+        default="ui"
+        help="这个用不上，我废弃了，只是没删除" />
 
     <parameter
         id="includeInstantAppUrl"
