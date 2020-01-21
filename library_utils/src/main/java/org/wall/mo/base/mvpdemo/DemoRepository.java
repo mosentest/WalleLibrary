@@ -1,5 +1,6 @@
 package org.wall.mo.base.mvpdemo;
 
+import org.wall.mo.base.callback.AbsRepositoryCallBack;
 import org.wall.mo.utils.thread.ExRunnable;
 import org.wall.mo.utils.thread.MainThreadExecutor;
 
@@ -24,19 +25,19 @@ public class DemoRepository {
         return instance;
     }
 
-    public void loadUserInfo(final RepositoryCallBack<Object, Object> repositoryCallBack) {
+    public void loadUserInfo(final AbsRepositoryCallBack<Object, Object> repositoryCallBack) {
         MainThreadExecutor.getExecutor().execute(new ExRunnable() {
             @Override
             public void runEx() {
                 if (repositoryCallBack != null) {
-                    repositoryCallBack.onSuccess(new Object());
+                    repositoryCallBack.onRepositorySuccess(new Object());
                 }
             }
 
             @Override
             public void exMsg(String errorMsg) throws RuntimeException {
                 if (repositoryCallBack != null) {
-                    repositoryCallBack.onFail(new Object());
+                    repositoryCallBack.onRepositoryFail(new Object());
                 }
             }
         });

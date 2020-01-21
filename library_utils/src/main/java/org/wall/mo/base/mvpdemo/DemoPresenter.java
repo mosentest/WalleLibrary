@@ -2,6 +2,8 @@ package org.wall.mo.base.mvpdemo;
 
 import android.os.Bundle;
 
+import org.wall.mo.base.callback.AbsRepositoryCallBack;
+
 /**
  * Copyright (C), 2018-2019
  * Author: ziqimo
@@ -15,30 +17,16 @@ public class DemoPresenter extends DemoContract.Presenter {
 
     @Override
     public void postMsg(final int flag) {
-        DemoRepository.getInstance().loadUserInfo(new RepositoryCallBack<Object, Object>(getView(), flag) {
+        DemoRepository.getInstance().loadUserInfo(new AbsRepositoryCallBack<Object, Object>(getView(), flag) {
+
             @Override
-            public void onSuccess(Object bean) {
-                super.onSuccess(bean);
+            public void onSuccess(int flag, Object bean) {
+
             }
 
             @Override
-            public void onFail(Object bean) {
-                super.onFail(bean);
-            }
-
-            @Override
-            public boolean interceptError() {
-                return super.interceptError();
-            }
-
-            @Override
-            public boolean showError() {
-                return super.showError();
-            }
-
-            @Override
-            public boolean toast() {
-                return super.toast();
+            public boolean onInterceptLoadFail(int flag, Object bean) {
+                return super.onInterceptLoadFail(flag, bean);
             }
         });
     }

@@ -94,11 +94,6 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
     }
 
     @Override
-    public void onLoadInterceptFail(int flag, Object failObj) {
-
-    }
-
-    @Override
     public void onFragmentFirstVisible() {
 
     }

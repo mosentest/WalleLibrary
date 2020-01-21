@@ -30,6 +30,9 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
      */
     private nextP mNextParcelable;
 
+    /**
+     * 标题
+     */
     private String mTitle;
     /**
      * 展示返回键按钮
@@ -129,6 +132,11 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
     public abstract int getTopBarBackViewId();
 
 
+    /**
+     * 会通过activity的onIntent传值过来
+     *
+     * @param bundle
+     */
     public abstract void loadIntentData(Bundle bundle);
 
 

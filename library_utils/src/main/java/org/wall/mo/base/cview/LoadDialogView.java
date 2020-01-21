@@ -20,7 +20,6 @@ public class LoadDialogView {
      */
     protected int showDialogCount = 0;
 
-
     private WeakReference<IDialogView> mLoadView;
 
     public LoadDialogView(IDialogView dialogView) {
@@ -52,7 +51,7 @@ public class LoadDialogView {
         }
         //错误提示，让自己实现，不在底层处理
         showDialogCount--;
-        if (showDialogCount == 0) {
+        if (showDialogCount <= 0) {
             if (isAdd()) {
                 mLoadView.get().hideDialog();
             }

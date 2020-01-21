@@ -25,13 +25,6 @@ public interface ILoadView {
     public void onLoadFail(boolean showLoading, int flag);
 
     /**
-     * 请求失败 拦截自定义处理
-     *
-     * @param flag
-     */
-    public void onLoadInterceptFail(int flag, Object failObj);
-
-    /**
      * 请求失败
      *
      * @param flag
