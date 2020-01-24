@@ -437,7 +437,7 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
      * @param rootView
      * @param savedInstanceState
      */
-    public abstract void initView(View rootView, Bundle savedInstanceState);
+    public abstract void initView(View rootView,  @Nullable Bundle savedInstanceState);
 
     /**
      * 废弃这2个方法

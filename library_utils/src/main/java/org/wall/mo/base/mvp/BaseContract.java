@@ -2,6 +2,8 @@ package org.wall.mo.base.mvp;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+
 import org.wall.mo.base.interfaces.ILoadView;
 import org.wall.mo.base.interfaces.IStatusView;
 
@@ -25,10 +27,10 @@ public interface BaseContract {
          */
         protected WeakReference<View> viewReference;
 
-        protected abstract void onCreate(Bundle savedInstanceState);
+        protected abstract void onCreate(@Nullable Bundle savedInstanceState);
 
 
-        protected abstract void onRestoreInstanceState(Bundle savedInstanceState);
+        protected abstract void onRestoreInstanceState(@Nullable Bundle savedInstanceState);
 
         protected abstract void onStart();
 

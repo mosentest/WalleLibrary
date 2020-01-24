@@ -3,11 +3,12 @@ package mo.wall.org.dialog
 import android.os.Bundle
 
 class MyDialogPresenter : MyDialogContract.Presenter() {
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
 
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
 
     }
 

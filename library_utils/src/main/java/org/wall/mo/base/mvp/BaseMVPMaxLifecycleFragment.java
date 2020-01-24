@@ -31,7 +31,7 @@ public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract
 
 
     @Override
-    public void initView(View rootView, Bundle savedInstanceState) {
+    public void initView(View rootView, @Nullable Bundle savedInstanceState) {
         loadDialogView = new LoadDialogView(this);
 
         mPresenter = createPresenter();
