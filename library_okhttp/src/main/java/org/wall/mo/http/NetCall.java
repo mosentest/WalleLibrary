@@ -9,10 +9,11 @@ import okhttp3.Call;
 
 /**
  * 自定义网络回调接口
+ * 一般情况，后台数据都会做加密处理，所以返回字符串后续自己出来，是最好的
  */
-public abstract class NetCall<T> {
+public abstract class NetCall {
 
-    public abstract void success(Call call, T object);
+    public abstract void success(Call call, String object);
 
     public abstract void failed(Call call, Exception e);
 
@@ -28,7 +29,7 @@ public abstract class NetCall<T> {
         if (type instanceof Class) {
             return type;
         } else {
-            return new TypeToken<T>() {
+            return new TypeToken<String>() {
             }.getType();
         }
     }

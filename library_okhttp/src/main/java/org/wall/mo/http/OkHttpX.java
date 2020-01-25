@@ -18,8 +18,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.net.FileNameMap;
 import java.net.Proxy;
+import java.net.URLConnection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -167,6 +170,13 @@ public class OkHttpX {
         this.debug = debug;
     }
 
+    public OkHttpClient getOkHttpClient() {
+        return mOkHttpClient;
+    }
+
+    public Gson getGson() {
+        return mGson;
+    }
 
     private Request.Builder createDefaultRequest() {
         return new Request.Builder();
@@ -263,7 +273,7 @@ public class OkHttpX {
                 public void onResponse(Call call, Response response) throws IOException {
                     try {
                         if (netCall != null) {
-                            netCall.success(call, mGson.fromJson(response.body().string(), netCall.getType()));
+                            netCall.success(call, response.body().string());
                         }
                     } catch (Exception e) {
                         //所有异常都处理
@@ -364,7 +374,7 @@ public class OkHttpX {
                 public void onResponse(Call call, Response response) throws IOException {
                     try {
                         if (netCall != null) {
-                            netCall.success(call, mGson.fromJson(response.body().string(), netCall.getType()));
+                            netCall.success(call, response.body().string());
                         }
                     } catch (Exception e) {
                         //所有异常都处理
@@ -418,7 +428,7 @@ public class OkHttpX {
                 public void onResponse(Call call, Response response) throws IOException {
                     try {
                         if (netCall != null) {
-                            netCall.success(call, mGson.fromJson(response.body().string(), netCall.getType()));
+                            netCall.success(call, response.body().string());
                         }
                     } catch (Exception e) {
                         //所有异常都处理
@@ -448,11 +458,19 @@ public class OkHttpX {
         return call;
     }
 
-
-    private Call preUpload(String url, Map<String, String> bodyParams, String fileKey, Map<String, String> uploadFileParams) {
+    /**
+     * https://www.jb51.net/article/106020.htm
+     *
+     * @param url
+     * @param bodyParams
+     * @param fileKey
+     * @param files
+     * @return
+     */
+    private Call preUpload(String url, Map<String, String> bodyParams, String fileKey, List<File> files) {
         Call call = null;
         RequestBody requestBody = null;
-        if (TextUtils.isEmpty(fileKey) || uploadFileParams == null || uploadFileParams.isEmpty()) {
+        if (TextUtils.isEmpty(fileKey) || files == null || files.isEmpty()) {
             requestBody = setRequestBody(bodyParams);
         } else {
             MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -466,13 +484,11 @@ public class OkHttpX {
                     builder.addFormDataPart(key, value);
                 }
             }
-            Set<Map.Entry<String, String>> uploadFileEntries = uploadFileParams.entrySet();
-            Iterator<Map.Entry<String, String>> iterator = uploadFileEntries.iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> uploadFileNext = iterator.next();
-                String fileName = uploadFileNext.getKey();
-                String filePath = uploadFileNext.getValue();
-                builder.addFormDataPart(fileKey, fileName, RequestBody.create(MultipartBody.FORM, new File(filePath)));
+            //遍历paths中所有图片绝对路径到builder，并约定key如“upload”作为后台接受多张图片的key
+            for (File file : files) {
+                String fileName = file.getName();
+                String mimeType = guessMimeType(fileName);
+                builder.addFormDataPart(fileKey, fileName, RequestBody.create(MediaType.parse(mimeType), file));
             }
             requestBody = builder.build();
         }
@@ -486,22 +502,37 @@ public class OkHttpX {
 
 
     /**
+     * 获取文件后缀的方法
+     *
+     * @param path
+     * @return
+     */
+    private String guessMimeType(String path) {
+        FileNameMap fileNameMap = URLConnection.getFileNameMap();
+        String contentType = fileNameMap.getContentTypeFor(path);
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        return contentType;
+    }
+
+    /**
      * 异步上传文件
      *
      * @param url
      * @param bodyParams
      * @param fileKey
-     * @param uploadFileParams
+     * @param files
      * @param netCall
      * @return
      */
     public Call uploadAsync(String url,
                             Map<String, String> bodyParams,
                             String fileKey,
-                            Map<String, String> uploadFileParams, final NetCall netCall) {
+                            List<File> files, final NetCall netCall) {
         Call call = null;
         try {
-            call = preUpload(url, bodyParams, fileKey, uploadFileParams);
+            call = preUpload(url, bodyParams, fileKey, files);
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -512,7 +543,7 @@ public class OkHttpX {
                 public void onResponse(Call call, Response response) throws IOException {
                     try {
                         if (netCall != null) {
-                            netCall.success(call, mGson.fromJson(response.body().string(), netCall.getType()));
+                            netCall.success(call, response.body().string());
                         }
                     } catch (Exception e) {
                         //所有异常都处理
