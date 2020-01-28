@@ -66,6 +66,9 @@ dependencies {
     api('com.squareup.retrofit2:adapter-rxjava2:2.4.0') {
         force true
     }
+    api('com.squareup.retrofit2:converter-gson:2.4.0') {
+        force true
+    }
 
     // json
     api('com.google.code.gson:gson:2.8.5') {
