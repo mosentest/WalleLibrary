@@ -13,11 +13,19 @@ import okhttp3.Call;
  */
 public abstract class NetCall {
 
+    private CallLife mCallLife;
+
+    public NetCall(CallLife callLife) {
+        this.mCallLife = callLife;
+    }
+
     public abstract void success(Call call, String object);
 
     public abstract void failed(Call call, Exception e);
 
-    public abstract CallLife getCallLife();
+    public CallLife getCallLife() {
+        return mCallLife;
+    }
 
     /**
      * https://www.jianshu.com/p/6e07b80fd9f9

@@ -1,6 +1,7 @@
-package mo.wall.org;
+package mo.wall.org.main;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import mo.wall.org.R;
+
 import static androidx.recyclerview.widget.RecyclerView.Adapter;
-import static androidx.recyclerview.widget.RecyclerView.OnClickListener;
+import static android.view.View.OnClickListener;
 import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 /**
@@ -81,7 +84,7 @@ public class MainAdapter extends Adapter implements OnClickListener {
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items == null ? 0 : items.size();
     }
 
 
@@ -91,6 +94,10 @@ public class MainAdapter extends Adapter implements OnClickListener {
 
     public void setItems(List<Entity> items) {
         this.items = items;
+    }
+
+    public List<Entity> getItems() {
+        return items;
     }
 
     @Override

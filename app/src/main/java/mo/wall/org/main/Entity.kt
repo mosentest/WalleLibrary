@@ -1,4 +1,4 @@
-package mo.wall.org
+package mo.wall.org.main
 
 /**
  * 作者 create by moziqi on 2018/6/30

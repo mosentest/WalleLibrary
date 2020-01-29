@@ -64,13 +64,9 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
             OkHttpX.getInstance(activity).setDebug(true)
             val map = mutableMapOf<String, String>()
             map.put("aa", "ccc")
-            OkHttpX.getInstance(activity).postJsonAsync("https://www.pyhtech.com/appin", map, object : NetCall<String>() {
+            OkHttpX.getInstance(activity).postJsonAsync("https://www.pyhtech.com/appin", map,
+                    object : NetCall(mCallLife) {
                 override fun failed(call: Call?, e: Exception?) {
-                    WLog.w("cccc", "ccc", e)
-                }
-
-                override fun getCallLife(): CallLife {
-                    return mCallLife
                 }
 
                 override fun success(call: Call?, `object`: String?) {

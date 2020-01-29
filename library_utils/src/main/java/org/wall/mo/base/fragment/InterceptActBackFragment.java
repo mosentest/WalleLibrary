@@ -109,9 +109,6 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
 
     @Override
     public boolean onFragmentInterceptOnBackPressed() {
-        if (!mShowBack) {
-            return true;
-        }
         return false;
     }
 

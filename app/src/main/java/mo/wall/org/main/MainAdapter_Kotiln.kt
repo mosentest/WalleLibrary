@@ -1,10 +1,10 @@
-package mo.wall.org
+package mo.wall.org.main
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import mo.wall.org.R
 
 /**
  * 作者 create by moziqi on 2018/6/30
