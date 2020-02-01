@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         rvMain!!.adapter = adapter;
 
 
-        mainViewModel.loadData()
+        mainViewModel.loadData("mo")
 
 
         mainViewModel.datas.observe(this, Observer {

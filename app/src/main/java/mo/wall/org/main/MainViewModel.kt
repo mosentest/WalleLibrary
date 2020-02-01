@@ -50,22 +50,23 @@ class MainViewModel : ViewModel() {
     val isLoad: MutableLiveData<Event<Boolean>> = MutableLiveData()
 
 
-    fun loadData() {
+    fun loadData(agrs: String) {
         isLoad.value = Event(true)
-
+        var agrs1 = "1"
 
         WLog.i("mk", "loadData:" + Thread.currentThread().name)
 
 
         uiScope.launch {
 
+            var agrs2 = "2"
 
-            WLog.i("mk", "launch:" + Thread.currentThread().name)
+            WLog.i("mk", agrs + "," + agrs1 + "," + agrs2 + ",launch:" + Thread.currentThread().name)
 
             val deferred = async(Dispatchers.IO) {
 
 
-                WLog.i("mk", "async:" + Thread.currentThread().name)
+                WLog.i("mk", agrs + "," + agrs1 + "," + agrs2 + ",async:" + Thread.currentThread().name)
 
                 var lists: ArrayList<Entity> = ArrayList();
 
