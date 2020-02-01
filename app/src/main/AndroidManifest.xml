@@ -115,8 +115,11 @@
             android:launchMode="singleTop"
             android:theme="@style/NoTitleTheme" />
         <activity
-            android:name=".main.MainActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize|orientation|keyboardHidden" />
+            android:name=".main.MainActivity" />
+        <!--
+            android:configChanges="screenLayout|screenSize|smallestScreenSize|orientation|keyboardHidden"
+
+            -->
         <activity android:name=".datausage.DataUsageSummaryActivity" />
         <activity android:name=".devicemanager.DeviceManagerActivity" />
         <activity android:name=".ntp.NtpActivity" />
