@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -128,6 +128,8 @@ dependencies {
 //    kapt "com.android.databinding:compiler:3.1.0"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
@@ -246,10 +248,12 @@ configurations.all {
         ) {
             println("androidx----" + requested.name)
             details.useVersion rootProject.ext.android.compatx_version
-        } else if (requested.group == 'androidx.lifecycle'
-                || requested.group == 'androidx.arch.core') {
+        } else if (requested.group == 'androidx.lifecycle') {
             println("androidx-lifecycle-arch--" + requested.name)
             details.useVersion rootProject.ext.android.compat_lifecycle_version
+        } else if (requested.group == 'androidx.arch.core') {
+            println("androidx-lifecycle-arch--" + requested.name)
+            details.useVersion rootProject.ext.android.compat_arch_common_version
         }
     }
 }

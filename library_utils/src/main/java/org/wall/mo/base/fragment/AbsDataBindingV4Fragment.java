@@ -11,6 +11,7 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -151,6 +152,16 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreateView savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
+        }
+        if (mRootView != null) {
+            ViewGroup parent = (ViewGroup) mRootView.getParent();
+            if (parent != null) {
+                parent.removeView(mRootView);
+            }
+            if (mViewDataBinding == null) {
+                mViewDataBinding = DataBindingUtil.bind(mRootView);
+            }
+            return mRootView;
         }
         int layoutId = getLayoutId();
         if (layoutId != 0) {
@@ -437,7 +448,7 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
      * @param rootView
      * @param savedInstanceState
      */
-    public abstract void initView(View rootView,  @Nullable Bundle savedInstanceState);
+    public abstract void initView(View rootView, @Nullable Bundle savedInstanceState);
 
     /**
      * 废弃这2个方法

@@ -29,6 +29,14 @@ import mo.wall.org.nestedrecyclerview.view.ParentRecyclerView;
  * Author: ziqimo
  * Date: 2020-01-06 20:34
  * Description:
+ *
+ *
+ * 这里还有一参考对象
+ *
+ * https://github.com/hh-pan/NestRecyScroll
+ *
+ *
+ *
  * History:
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
@@ -109,6 +117,9 @@ public class NestedRecyclerViewActivity extends
     }
 
     private void bottomView() {
+        if (bottomView != null) {
+            return;
+        }
 
         List<String> titles = new ArrayList<>();
         List<Fragment> viewFragments = new ArrayList<>();
@@ -126,29 +137,20 @@ public class NestedRecyclerViewActivity extends
             viewFragments.add(NestedRecyclerViewFragment.newInstance(bundle));
         }
 
-        if (bottomView != null) {
-            bottomView = null;
-        }
         bottomView = LayoutInflater.from(this).inflate(R.layout.activity_nested_recyclerview_bottom_sub, null);
+
 
         TabLayout tabLayout = bottomView.findViewById(R.id.tabLayout);
         ViewPager viewPager = bottomView.findViewById(R.id.viewPager);
-        viewPager.setId(viewPager.getId());
+
+        //viewPager.setId(viewPager.getId());
 
 //        viewPager.removeAllViews();
 
         MaxLifecyclePagerAdapter lifecyclePagerAdapter = new MaxLifecyclePagerAdapter(getSupportFragmentManager()) {
-//            @Override
-//            public Fragment getItem(int position) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("title", titles.get(position));
-//                return NestedRecyclerViewFragment.newInstance(bundle);
-//            }
         };
         lifecyclePagerAdapter.setData(viewFragments, titles);
         viewPager.setAdapter(lifecyclePagerAdapter);
-
-
         viewPager.post(new Runnable() {
             @Override
             public void run() {
@@ -159,7 +161,7 @@ public class NestedRecyclerViewActivity extends
                     public void onPageSelected(int position) {
                         super.onPageSelected(position);
                         NestedRecyclerViewFragment fragment = (NestedRecyclerViewFragment) viewFragments.get(position);
-                        if (mViewDataBinding != null) {
+                        if (mViewDataBinding != null && mViewDataBinding.parentView != null) {
                             mViewDataBinding.parentView.setChildRecyclerView(fragment.getChildRecyclerView());
                         }
                     }
@@ -168,7 +170,7 @@ public class NestedRecyclerViewActivity extends
                 tabLayout.setTabIndicatorFullWidth(false);
                 int currentItem = viewPager.getCurrentItem();
                 NestedRecyclerViewFragment fragment = (NestedRecyclerViewFragment) viewFragments.get(currentItem);
-                if (mViewDataBinding != null) {
+                if (mViewDataBinding != null && mViewDataBinding.parentView != null) {
                     mViewDataBinding.parentView.setChildRecyclerView(fragment.getChildRecyclerView());
                 }
             }

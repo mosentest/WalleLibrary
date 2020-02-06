@@ -36,9 +36,18 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
             childHeight = childAt.getMeasuredHeight();
             lastViewHeight = ((MyHeaderView) childAt).getLastViewHeight();
         }
-        int mode = View.MeasureSpec.getMode(parentHeightMeasureSpec);
-        int i = View.MeasureSpec.makeMeasureSpec(lastViewHeight, mode);
-        child.measure(parentWidthMeasureSpec, parentHeightMeasureSpec - i);
+        /**
+         *
+         *         int mode = View.MeasureSpec.getMode(parentHeightMeasureSpec);
+         *         int i = View.MeasureSpec.makeMeasureSpec(lastViewHeight, mode);
+         *         child.measure(parentWidthMeasureSpec, parentHeightMeasureSpec - i);
+         */
+        //获取父布局确切的值
+        int height = View.MeasureSpec.getSize(parentHeightMeasureSpec);
+        //减去头部的高度
+        height = height - lastViewHeight;
+        //转为相应的
+        child.measure(parentWidthMeasureSpec, View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
         return true;
     }
 

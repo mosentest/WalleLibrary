@@ -3,6 +3,7 @@ package mo.wall.org.main
 import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import mo.wall.org.apkinfo.ApkInfoActivity
 import mo.wall.org.autodensity.AutoDensityActivity
@@ -53,6 +54,12 @@ class MainViewModel : ViewModel() {
     fun loadData(agrs: String) {
         isLoad.value = Event(true)
         var agrs1 = "1"
+
+//        viewModelScope.launch {
+//            async(Dispatchers.IO) {
+//
+//            }
+//        }
 
         WLog.i("mk", "loadData:" + Thread.currentThread().name)
 

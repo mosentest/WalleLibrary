@@ -16,7 +16,8 @@ ext {
             versionName             : "1.0.0",
             compat_version          : "28.0.0",
             compatx_version         : "1.1.0",
-            compat_lifecycle_version: "2.1.0"
+            compat_lifecycle_version: "2.2.0",
+            compat_arch_common_version: "2.1.0"
     ]
     //https://developer.android.google.cn/jetpack/androidx/versions?hl=en-US
     dependencies = [
@@ -39,7 +40,7 @@ ext {
             lifecycle_runtime      : "androidx.lifecycle:lifecycle-runtime:$android.compat_lifecycle_version",
             lifecycle_common       : "androidx.lifecycle:lifecycle-common:$android.compat_lifecycle_version",
             lifecycle_viewmodel    : "androidx.lifecycle:lifecycle-viewmodel:$android.compat_lifecycle_version",
-            core_common            : "androidx.arch.core:core-common:$android.compat_lifecycle_version",
+            core_common            : "androidx.arch.core:core-common:$android.compat_arch_common_version",
 
             multidex               : "androidx.multidex:multidex:2.0.1",
             cardview               : "androidx.cardview:cardview:1.0.0",
