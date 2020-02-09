@@ -199,6 +199,11 @@ public class ParentRecyclerView extends RecyclerView {
         this.childRecyclerView = childRecyclerView;
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        childRecyclerView = null;
+    }
 
     private boolean isScrollEnd() {
         //RecyclerView.canScrollVertically(1)的值表示是否能向上滚动，false表示已经滚动到底部

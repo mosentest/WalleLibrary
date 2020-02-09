@@ -44,11 +44,11 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
 
     protected final static String TAG = AbsDataBindingAppCompatActivity.class.getSimpleName();
 
-    protected Handler mHandler = null;
+    public Handler mHandler = null;
 
-    private NetStateChangeReceiver mNetStateChangeReceiver;
+    public NetStateChangeReceiver mNetStateChangeReceiver;
 
-    protected B mViewDataBinding;
+    public B mViewDataBinding;
 
     static {
         /**

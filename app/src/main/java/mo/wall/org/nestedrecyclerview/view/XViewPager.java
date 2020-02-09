@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
  */
 public class XViewPager extends ViewPager {
 
-    private boolean hasActivityDestroy;
+    private boolean hasActivityDestroy = true;
 
     public XViewPager(@NonNull Context context) {
         super(context);

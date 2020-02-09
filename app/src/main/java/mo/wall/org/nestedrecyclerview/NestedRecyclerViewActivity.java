@@ -29,14 +29,14 @@ import mo.wall.org.nestedrecyclerview.view.ParentRecyclerView;
  * Author: ziqimo
  * Date: 2020-01-06 20:34
  * Description:
- *
- *
+ * <p>
+ * <p>
  * 这里还有一参考对象
- *
+ * <p>
  * https://github.com/hh-pan/NestRecyScroll
- *
- *
- *
+ * <p>
+ * <p>
+ * <p>
  * History:
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
@@ -76,7 +76,7 @@ public class NestedRecyclerViewActivity extends
         mViewDataBinding.topView.tvTopBarTitle.setText("NestedRecyclerView");
 
 
-        multiItemQuickAdapter = new NestedParentMultiItemQuickAdapter(this, null);
+        multiItemQuickAdapter = new NestedParentMultiItemQuickAdapter(this, getLifecycle(), null);
 
         multiItemQuickAdapter.bindToRecyclerView(mViewDataBinding.parentView);
 
@@ -99,10 +99,6 @@ public class NestedRecyclerViewActivity extends
             }
         });
 
-        //监听生命周期
-        if (multiItemQuickAdapter != null) {
-            getLifecycle().addObserver(multiItemQuickAdapter);
-        }
 
         multiItemQuickAdapter.setLoadView(new NestedParentMultiItemQuickAdapter.LoadView() {
             @Override
@@ -121,21 +117,6 @@ public class NestedRecyclerViewActivity extends
             return;
         }
 
-        List<String> titles = new ArrayList<>();
-        List<Fragment> viewFragments = new ArrayList<>();
-
-        titles.add("推荐");
-        titles.add("微资讯");
-        titles.add("疾病百科");
-        titles.add("饮食");
-        titles.add("养生");
-
-        for (int i = 0; i < titles.size(); i++) {
-            String s = titles.get(i);
-            Bundle bundle = new Bundle();
-            bundle.putString("title", s);
-            viewFragments.add(NestedRecyclerViewFragment.newInstance(bundle));
-        }
 
         bottomView = LayoutInflater.from(this).inflate(R.layout.activity_nested_recyclerview_bottom_sub, null);
 
@@ -147,34 +128,6 @@ public class NestedRecyclerViewActivity extends
 
 //        viewPager.removeAllViews();
 
-        MaxLifecyclePagerAdapter lifecyclePagerAdapter = new MaxLifecyclePagerAdapter(getSupportFragmentManager()) {
-        };
-        lifecyclePagerAdapter.setData(viewFragments, titles);
-        viewPager.setAdapter(lifecyclePagerAdapter);
-        viewPager.post(new Runnable() {
-            @Override
-            public void run() {
-                int size = titles.size();
-                viewPager.setOffscreenPageLimit(size);
-                viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        super.onPageSelected(position);
-                        NestedRecyclerViewFragment fragment = (NestedRecyclerViewFragment) viewFragments.get(position);
-                        if (mViewDataBinding != null && mViewDataBinding.parentView != null) {
-                            mViewDataBinding.parentView.setChildRecyclerView(fragment.getChildRecyclerView());
-                        }
-                    }
-                });
-                tabLayout.setupWithViewPager(viewPager);
-                tabLayout.setTabIndicatorFullWidth(false);
-                int currentItem = viewPager.getCurrentItem();
-                NestedRecyclerViewFragment fragment = (NestedRecyclerViewFragment) viewFragments.get(currentItem);
-                if (mViewDataBinding != null && mViewDataBinding.parentView != null) {
-                    mViewDataBinding.parentView.setChildRecyclerView(fragment.getChildRecyclerView());
-                }
-            }
-        });
     }
 
     @Override
@@ -249,7 +202,7 @@ public class NestedRecyclerViewActivity extends
     @Override
     public void showData(List<NestedParentMultiItemEntity> itemEntityList) {
         multiItemQuickAdapter.setNewData(itemEntityList);
-        bottomView();
+        //bottomView();
     }
 
     @Override

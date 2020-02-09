@@ -121,9 +121,11 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate");
         }
-        mNetStateChangeReceiver = new NetStateChangeReceiver();
-        mNetStateChangeReceiver.setNetStateChangeObserver(this);
-        NetStateChangeReceiver.registerReceiver(getCurActivity(), mNetStateChangeReceiver);
+        if (mNetStateChangeReceiver == null) {
+            mNetStateChangeReceiver = new NetStateChangeReceiver();
+            mNetStateChangeReceiver.setNetStateChangeObserver(this);
+            NetStateChangeReceiver.registerReceiver(getCurActivity(), mNetStateChangeReceiver);
+        }
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -258,7 +260,9 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
         }
-        NetStateChangeReceiver.unRegisterReceiver(getCurActivity(), mNetStateChangeReceiver);
+        if (mNetStateChangeReceiver != null) {
+            NetStateChangeReceiver.unRegisterReceiver(getCurActivity(), mNetStateChangeReceiver);
+        }
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
@@ -274,10 +278,11 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
 
     @Override
     public void onDetach() {
-        super.onDetach();
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDetach");
         }
+        super.onDetach();
+
     }
 
 
