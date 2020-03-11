@@ -67,7 +67,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".test21.CaFaActivity"></activity>
+        <activity android:name=".screenshot.ScreenshotActivity"></activity>
+        <activity android:name=".test21.CaFaActivity" />
         <activity
             android:name=".LauncherActivity"
             android:theme="@style/FullscreenTheme">
@@ -77,7 +78,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".dialog.MyDialogActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -114,12 +114,8 @@
             android:name=".statusbar.StatusbarActivity"
             android:launchMode="singleTop"
             android:theme="@style/NoTitleTheme" />
-        <activity
-            android:name=".main.MainActivity" />
-        <!--
-            android:configChanges="screenLayout|screenSize|smallestScreenSize|orientation|keyboardHidden"
-
-            -->
+        <activity android:name=".main.MainActivity" />
+        <!--             android:configChanges="screenLayout|screenSize|smallestScreenSize|orientation|keyboardHidden" -->
         <activity android:name=".datausage.DataUsageSummaryActivity" />
         <activity android:name=".devicemanager.DeviceManagerActivity" />
         <activity android:name=".ntp.NtpActivity" />
