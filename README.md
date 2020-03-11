@@ -2,7 +2,7 @@
 
 [目录结构说明](https://github.com/moz1q1/WalleLibrary/wiki)
 
-[日常开发积累doc](https://github.com/moz1q1/WalleLibrary/tree/androidx/doc)
+[个人笔记](https://github.com/moz1q1/WalleLibrary/tree/androidx/mynote)
 
 
 
