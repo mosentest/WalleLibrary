@@ -37,7 +37,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
@@ -257,7 +256,7 @@ public class OkHttpX {
      * @param netCall
      * @return
      */
-    public Call getAsync(String url, Map<String, String> bodyParams, final NetCall netCall) {
+    public Call getAsync(String url, Map<String, String> bodyParams, final NetCallX netCall) {
         Call call = null;
         try {
             call = preGet(url, bodyParams);
@@ -288,7 +287,7 @@ public class OkHttpX {
                 }
             });
             if (netCall != null) {
-                CallLife callLife = netCall.getCallLife();
+                CallXLife callLife = netCall.getCallLife();
                 if (callLife != null) {
                     callLife.add(call);
                 }
@@ -358,7 +357,7 @@ public class OkHttpX {
      * @param bodyParams
      * @param netCall
      */
-    public Call postFormAsync(String url, Map<String, String> bodyParams, final NetCall netCall) {
+    public Call postFormAsync(String url, Map<String, String> bodyParams, final NetCallX netCall) {
         Call call = null;
         try {
             call = prePost(url, setRequestBody(bodyParams));
@@ -389,7 +388,7 @@ public class OkHttpX {
                 }
             });
             if (netCall != null) {
-                CallLife callLife = netCall.getCallLife();
+                CallXLife callLife = netCall.getCallLife();
                 if (callLife != null) {
                     callLife.add(call);
                 }
@@ -413,7 +412,7 @@ public class OkHttpX {
         return response;
     }
 
-    public Call postJsonAsync(String url, Map<String, String> bodyParams, final NetCall netCall) {
+    public Call postJsonAsync(String url, Map<String, String> bodyParams, final NetCallX netCall) {
         Call call = null;
         try {
             String json = mGson.toJson(bodyParams);
@@ -442,7 +441,7 @@ public class OkHttpX {
                 }
             });
             if (netCall != null) {
-                CallLife callLife = netCall.getCallLife();
+                CallXLife callLife = netCall.getCallLife();
                 if (callLife != null) {
                     callLife.add(call);
                 }
@@ -529,7 +528,7 @@ public class OkHttpX {
     public Call uploadAsync(String url,
                             Map<String, String> bodyParams,
                             String fileKey,
-                            List<File> files, final NetCall netCall) {
+                            List<File> files, final NetCallX netCall) {
         Call call = null;
         try {
             call = preUpload(url, bodyParams, fileKey, files);
@@ -557,7 +556,7 @@ public class OkHttpX {
                 }
             });
             if (netCall != null) {
-                CallLife callLife = netCall.getCallLife();
+                CallXLife callLife = netCall.getCallLife();
                 if (callLife != null) {
                     callLife.add(call);
                 }

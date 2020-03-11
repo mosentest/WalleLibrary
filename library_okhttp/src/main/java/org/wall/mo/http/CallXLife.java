@@ -18,24 +18,33 @@ import okhttp3.Call;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class CallLife implements LifecycleObserver {
+public class CallXLife implements LifecycleObserver {
 
     private List<Call> callLists = new ArrayList<>();
+
+    private Lifecycle lifecycle;
+
+    private CallXLife(Lifecycle lifecycle) {
+        this.lifecycle = lifecycle;
+        if (this.lifecycle != null) {
+            this.lifecycle.addObserver(this);
+        }
+    }
 
     /**
      * 每个P或者VM都独立一个
      *
      * @return
      */
-    public static CallLife getCallLife() {
-        return new CallLife();
+    public static CallXLife getCallLife(Lifecycle lifecycle) {
+        return new CallXLife(lifecycle);
     }
 
     public void add(Call call) {
         callLists.add(call);
     }
 
-    public void remove() {
+    private void remove() {
         for (Call call : callLists) {
             if (!call.isCanceled()) {
                 call.cancel();
@@ -47,6 +56,9 @@ public class CallLife implements LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroy() {
         remove();
+        if (lifecycle != null) {
+            lifecycle.removeObserver(this);
+        }
     }
 
 }

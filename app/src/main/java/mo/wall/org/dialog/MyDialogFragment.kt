@@ -12,10 +12,9 @@ import org.wall.mo.base.mvp.BaseMVPMaxLifecycleFragment
 
 import mo.wall.org.R
 import okhttp3.Call
-import org.wall.mo.http.CallLife
-import org.wall.mo.http.NetCall
+import org.wall.mo.http.CallXLife
+import org.wall.mo.http.NetCallX
 import org.wall.mo.http.OkHttpX
-import org.wall.mo.utils.log.WLog
 import java.lang.Exception
 
 
@@ -27,7 +26,20 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycle.addObserver(mCallLife)
+
+        //        lifecycle.addObserver()
+        //        viewLifecycleOwner.lifecycle.addObserver()
+
+        //https://www.wandouip.com/t5i234203/
+
+        /**
+         *
+        【种瓜达人】广州-落后后-落后与贫困交加的单身人民群众 14:36:35
+        aactivity用this
+        【种瓜达人】广州-落后后-落后与贫困交加的单身人民群众 14:36:41
+        fragment用owner
+         */
+        mCallXLife = CallXLife.getCallLife(viewLifecycleOwner.lifecycle)
     }
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
@@ -56,23 +68,25 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
         return 0
     }
 
-    var mCallLife: CallLife = CallLife()
+    lateinit var mCallXLife: CallXLife
 
     override fun onFragmentFirstVisible() {
+
+
         mViewDataBinding.message.setOnClickListener {
 
             OkHttpX.getInstance(activity).setDebug(true)
             val map = mutableMapOf<String, String>()
             map.put("aa", "ccc")
             OkHttpX.getInstance(activity).postJsonAsync("https://www.pyhtech.com/appin", map,
-                    object : NetCall(mCallLife) {
-                override fun failed(call: Call?, e: Exception?) {
-                }
+                    object : NetCallX(mCallXLife) {
+                        override fun failed(call: Call?, e: Exception?) {
+                        }
 
-                override fun success(call: Call?, `object`: String?) {
-                }
+                        override fun success(call: Call?, `object`: String?) {
+                        }
 
-            });
+                    });
         }
     }
 
@@ -115,7 +129,6 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
 
 
     override fun onCurDestroy() {
-        lifecycle.removeObserver(mCallLife)
     }
 
     override fun statusLoadingView() {

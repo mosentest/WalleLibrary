@@ -11,11 +11,11 @@ import okhttp3.Call;
  * 自定义网络回调接口
  * 一般情况，后台数据都会做加密处理，所以返回字符串后续自己出来，是最好的
  */
-public abstract class NetCall {
+public abstract class NetCallX {
 
-    private CallLife mCallLife;
+    private CallXLife mCallLife;
 
-    public NetCall(CallLife callLife) {
+    public NetCallX(CallXLife callLife) {
         this.mCallLife = callLife;
     }
 
@@ -23,7 +23,7 @@ public abstract class NetCall {
 
     public abstract void failed(Call call, Exception e);
 
-    public CallLife getCallLife() {
+    public CallXLife getCallLife() {
         return mCallLife;
     }
 
