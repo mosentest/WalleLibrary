@@ -222,6 +222,9 @@ dependencies {
     //implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
 
+
+    implementation 'com.yanzhenjie.permission:support:2.0.1'
+
 }
 
 /**

@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
 import mo.wall.org.R
 import org.wall.mo.base.helper.StartActivityCompat
 import org.wall.mo.compat.statusbar.StatusBarUtil
@@ -38,6 +40,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        AndPermission.with(this).runtime().permission(Permission.Group.CAMERA,
+                Permission.Group.STORAGE,
+                arrayOf(Permission.READ_PHONE_STATE),
+                Permission.Group.LOCATION,
+                Permission.Group.MICROPHONE)
+                .onGranted({
+
+                }).onDenied({
+
+                }).start()
 
         //mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
