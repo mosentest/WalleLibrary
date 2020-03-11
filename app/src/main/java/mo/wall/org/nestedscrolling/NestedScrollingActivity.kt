@@ -2,12 +2,10 @@ package mo.wall.org.nestedscrolling
 
 import android.os.Bundle
 import android.os.Message
-import androidx.core.content.ContextCompat
 import android.widget.TextView
 import android.widget.Toast
 import mo.wall.org.R
 import mo.wall.org.base.BaseAppCompatActivity
-import org.wall.mo.compat.statusbar.StatusBarUtil
 
 class NestedScrollingActivity : BaseAppCompatActivity() {
 

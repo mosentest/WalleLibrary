@@ -9,33 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import mo.wall.org.R
-import mo.wall.org.apkinfo.ApkInfoActivity
-import mo.wall.org.autodensity.AutoDensityActivity
-import mo.wall.org.behavior.BehaviorActivity
-import mo.wall.org.camera1.MedioRecorderCamera1Activity
-import mo.wall.org.camera2.Camera2Activity
-import mo.wall.org.camera2.CameraV2GLSurfaceViewActivity
-import mo.wall.org.circlepercent.CirclePercentActivity
-import mo.wall.org.datausage.DataUsageSummaryActivity
-import mo.wall.org.devicemanager.DeviceManagerActivity
-import mo.wall.org.dialog.MyDialogActivity
-import mo.wall.org.dropdownmenu.DropDownMenuActivity
-import mo.wall.org.markerview.MarkerViewAct
-import mo.wall.org.nestedscrolling.NestedScrollingActivity
-import mo.wall.org.nodisplay.NoDisplayActivity
-import mo.wall.org.ntp.NtpActivity
-import mo.wall.org.opengl.OpenGLActivity
-import mo.wall.org.opengl2.OpenGLES20Activity
-import mo.wall.org.scroll.ScrollActivity
-import mo.wall.org.statusbar.StatusbarActivity
-import mo.wall.org.statusbar2.Statusbar2Activity
-import mo.wall.org.throwcard.ThrowCardActivity
-import mo.wall.org.webviewinscrollview.WebInScrollActivity
 import org.wall.mo.base.helper.StartActivityCompat
 import org.wall.mo.compat.statusbar.StatusBarUtil
-import mo.wall.org.nestedrecyclerview.NestedRecyclerViewActivity
 
 
 class MainActivity : AppCompatActivity() {

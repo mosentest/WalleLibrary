@@ -5,8 +5,8 @@ import android.content.Context
 import android.os.StrictMode
 import androidx.multidex.MultiDex
 import android.widget.Toast
-import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper
-import org.wall.mo.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
+import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper
+import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
 import org.wall.mo.utils.autolayout.AutoDensity
 
 /**

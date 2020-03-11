@@ -1,12 +1,10 @@
 include ':app',
         ':library_ui',
-        ':library_utils',
+        ':library_common',
         ':library_database',
         ':library_urlconnection',
-        ':library_compat',
-        ':library_okhttp',
-        ':library_framework19'
+        ':library_okhttp'
+//下面的三个暂时不需要参与编译
 //        ':app_refreshlayout',
 //        ':app_recyclerviewsuspend',
-//        ':app_snake',
-//        ':invokeinstallpackage'
+//        ':app_snake'

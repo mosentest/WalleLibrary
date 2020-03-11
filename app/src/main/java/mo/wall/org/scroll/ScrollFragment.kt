@@ -2,7 +2,6 @@ package mo.wall.org.scroll
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View

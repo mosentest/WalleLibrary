@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.Message
 import mo.wall.org.R
 import mo.wall.org.base.BaseAppCompatActivity
-import org.wall.mo.fw.DataUsageSummaryHelper
 
 /**
  * 作者 create by moziqi on 2018/6/30
