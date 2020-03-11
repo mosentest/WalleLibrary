@@ -1,0 +1,35 @@
+参考文章
+https://www.cnblogs.com/yoyoketang/p/8983193.html
+
+模拟点击抖音的笔记
+
+启动抖音命令
+在我桌面的大概是这个位置
+input tap 555 800
+
+点击个人信息保护指引的对话框，我知道了
+adb shell input tap 500 1200
+
+权限点击 需要重复点击
+adb shell input tap 800 1000
+
+点击未成年人的对话框，我知道了
+adb shell input tap 127 907
+
+点击我的页面
+adb shell input tap 970 1730
+
+打开密码登录页面 需要执行2次，因为键盘弹起来了
+adb shell input tap 150 850
+
+输入手机号码
+adb shell input text 135xxxx
+
+切换到密码输入框
+adb shell input tap 350 618
+
+然后输入密码
+adb shell input text 135xxxx
+
+勾选服务协议 我已阅读
+adb shell input tap 94 738
