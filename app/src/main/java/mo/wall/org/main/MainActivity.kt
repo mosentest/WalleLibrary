@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.datas.observe(this, Observer {
 
-            WLog.i("mk", " in main activity setItem" + Thread.currentThread().name)
+            WLog.i("mk", " in main activity setItem " + Thread.currentThread().name)
 
             adapter.setItems(it)
         })

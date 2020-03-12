@@ -129,12 +129,12 @@ class MainViewModel : ViewModel() {
                 lists.add(createEntity("关于Android实现View滑动的9种方式姿势", "View滑动", 1, ScrollActivity::class.java.name))
                 lists.add(createEntity("fb读取apk信息总结", "读取apk信息", 1, ApkInfoActivity::class.java.name))
 
-                WLog.i("mk", " in add end" + Thread.currentThread().name)
+                WLog.i("mk", " in add end " + Thread.currentThread().name)
                 //最后返回值
                 lists
 
             }
-            WLog.i("mk", " set data" + Thread.currentThread().name)
+            WLog.i("mk", " set data " + Thread.currentThread().name)
             datas.value = deferred.await()
         }
 
