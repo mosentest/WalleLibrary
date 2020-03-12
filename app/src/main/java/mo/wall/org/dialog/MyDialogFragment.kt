@@ -24,9 +24,8 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
         MyDialogContract.View {
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun initView(rootView: View, savedInstanceState: Bundle?) {
+        super.initView(rootView, savedInstanceState)
         //        lifecycle.addObserver()
         //        viewLifecycleOwner.lifecycle.addObserver()
 
@@ -40,10 +39,6 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
         fragment用owner
          */
         mCallXLife = CallXLife.getCallLife(viewLifecycleOwner.lifecycle)
-    }
-
-    override fun initView(rootView: View, savedInstanceState: Bundle?) {
-        super.initView(rootView, savedInstanceState)
     }
 
     override fun createPresenter(): MyDialogContract.Presenter {

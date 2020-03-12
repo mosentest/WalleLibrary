@@ -48,7 +48,7 @@ class WalleApp : Application() {
             StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
                     .detectLeakedSqlLiteObjects()
                     .detectLeakedClosableObjects() //API等级11
-                    .detectActivityLeaks()
+//                    .detectActivityLeaks()
                     .penaltyLog()
                     .penaltyDeath()
                     .build())

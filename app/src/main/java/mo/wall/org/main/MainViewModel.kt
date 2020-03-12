@@ -23,6 +23,7 @@ import mo.wall.org.nodisplay.NoDisplayActivity
 import mo.wall.org.ntp.NtpActivity
 import mo.wall.org.opengl.OpenGLActivity
 import mo.wall.org.opengl2.OpenGLES20Activity
+import mo.wall.org.screenshot.ScreenshotActivity
 import mo.wall.org.scroll.ScrollActivity
 import mo.wall.org.statusbar.StatusbarActivity
 import mo.wall.org.statusbar2.Statusbar2Activity
@@ -104,6 +105,7 @@ class MainViewModel : ViewModel() {
                         0,
                         ""))
 
+                lists.add(createEntity("关于5.0以上的截屏方式", "截屏", 1, ScreenshotActivity::class.java.name))
                 lists.add(createEntity("重建和内存泄漏相关问题学习", "Dialog和DialogFragment", 1, MyDialogActivity::class.java.name))
                 lists.add(createEntity("NestedRecyclerView，仿淘宝、京东首页，通过两层嵌套的RecyclerView实现tab的吸顶效果。", "NestedRecyclerView", 1, NestedRecyclerViewActivity::class.java.name))
                 lists.add(createEntity("Behavior入门学习", "Behavior", 1, BehaviorActivity::class.java.name))
@@ -127,9 +129,12 @@ class MainViewModel : ViewModel() {
                 lists.add(createEntity("关于Android实现View滑动的9种方式姿势", "View滑动", 1, ScrollActivity::class.java.name))
                 lists.add(createEntity("fb读取apk信息总结", "读取apk信息", 1, ApkInfoActivity::class.java.name))
 
+                WLog.i("mk", " in add end" + Thread.currentThread().name)
                 //最后返回值
                 lists
+
             }
+            WLog.i("mk", " set data" + Thread.currentThread().name)
             datas.value = deferred.await()
         }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import mo.wall.org.R
 
 /**
@@ -33,12 +34,13 @@ class MainAdapter_Kotiln : androidx.recyclerview.widget.RecyclerView.Adapter<Mai
         this.context = context
     }
 
-    public class Holder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    public class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
 
     fun setData(lists: ArrayList<Entity>?) {
         this.lists = lists;
+        notifyDataSetChanged()
     }
 
 }

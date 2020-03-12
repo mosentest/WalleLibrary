@@ -94,6 +94,7 @@ public class MainAdapter extends Adapter implements OnClickListener {
 
     public void setItems(List<Entity> items) {
         this.items = items;
+        notifyDataSetChanged();
     }
 
     public List<Entity> getItems() {

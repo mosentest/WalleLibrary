@@ -14,6 +14,7 @@ import com.yanzhenjie.permission.runtime.Permission
 import mo.wall.org.R
 import org.wall.mo.base.helper.StartActivityCompat
 import org.wall.mo.compat.statusbar.StatusBarUtil
+import org.wall.mo.utils.log.WLog
 
 
 class MainActivity : AppCompatActivity() {
@@ -70,6 +71,9 @@ class MainActivity : AppCompatActivity() {
 
 
         mainViewModel.datas.observe(this, Observer {
+
+            WLog.i("mk", " in main activity setItem" + Thread.currentThread().name)
+
             adapter.setItems(it)
         })
 
