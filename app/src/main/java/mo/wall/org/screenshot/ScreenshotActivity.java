@@ -62,12 +62,23 @@ public class ScreenshotActivity extends AbsWithV4FragmentActivity<ActivityScreen
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        mViewDataBinding.img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCapture();
-            }
+        mViewDataBinding.img.setOnClickListener(v -> startCapture());
+        mViewDataBinding.tvShot.setOnClickListener(v -> {
+            mViewDataBinding.img.setImageBitmap(getScreenShotBmp());
         });
+    }
+
+    /**
+     * 获取屏幕截图
+     */
+    private Bitmap getScreenShotBmp() {
+        View decorView = getWindow().getDecorView();    //获取当前activity所在的最顶层的view--DecorView
+        decorView.setDrawingCacheEnabled(true);         //启用绘图缓存
+        decorView.buildDrawingCache();                  //强制构建绘图缓存（防止上面启用绘图缓存的操作失败）
+        Bitmap bitmap = decorView.getDrawingCache();     //获取绘图缓存中的 bitmap
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight());
+        decorView.setDrawingCacheEnabled(false);    //createBitmap完成之后一定要置为false，否则短时间内多次截图时内容不会变化！
+        return bitmap;
     }
 
     private void startCapture() {
@@ -76,7 +87,6 @@ public class ScreenshotActivity extends AbsWithV4FragmentActivity<ActivityScreen
             Bitmap screenshot = Screenshot.getInstance().screenshot();
             mViewDataBinding.img.setImageBitmap(screenshot);
         }
-
     }
 
     @Override

@@ -151,14 +151,13 @@ public class Screenshot {
             mVirtualDisplay.release();
             mVirtualDisplay = null;
         }
-        if (mMediaProjection != null) {
-            mMediaProjection.stop();
-            mMediaProjection = null;
-        }
         if (mImageReader != null) {
             mImageReader.close();
             mImageReader = null;
         }
-
+        if (mMediaProjection != null) {
+            mMediaProjection.stop();
+            mMediaProjection = null;
+        }
     }
 }
