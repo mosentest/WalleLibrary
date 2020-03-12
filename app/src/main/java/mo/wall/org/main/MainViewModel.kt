@@ -109,7 +109,7 @@ class MainViewModel : ViewModel() {
                 lists.add(createEntity("重建和内存泄漏相关问题学习", "Dialog和DialogFragment", 1, MyDialogActivity::class.java.name))
                 lists.add(createEntity("NestedRecyclerView，仿淘宝、京东首页，通过两层嵌套的RecyclerView实现tab的吸顶效果。", "NestedRecyclerView", 1, NestedRecyclerViewActivity::class.java.name))
                 lists.add(createEntity("Behavior入门学习", "Behavior", 1, BehaviorActivity::class.java.name))
-                lists.add(createEntity("MarkerView绘制和学习", "MarkerView", 1, MarkerViewAct::class.java.name))
+                lists.add(createEntity("MarkerView绘制和学习（支付宝财富折线图）", "MarkerView", 1, MarkerViewAct::class.java.name))
                 lists.add(createEntity("解决webview固定高度在scrollview问题", "scrollview嵌套webview", 1, WebInScrollActivity::class.java.name))
                 lists.add(createEntity("卡片扔出去效果", "卡片动画", 1, ThrowCardActivity::class.java.name))
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
