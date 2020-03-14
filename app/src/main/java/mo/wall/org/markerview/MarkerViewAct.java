@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mo.wall.org.R;
 import mo.wall.org.base.BaseAppCompatActivity;
 
@@ -27,6 +30,7 @@ public class MarkerViewAct extends BaseAppCompatActivity {
     private TextView mTitle;
 
     private ValueAnimator textZoom;
+    private PolylineView mPlv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class MarkerViewAct extends BaseAppCompatActivity {
         setContentView(R.layout.act_markerview);
 
         mTitle = findViewById(R.id.title);
+        mPlv = findViewById(R.id.plv);
 
         mTitle.setTextSize(14);
         textZoom = ValueAnimator.ofInt(0, 100);
@@ -64,6 +69,41 @@ public class MarkerViewAct extends BaseAppCompatActivity {
             }
         });
         mTitle.setOnClickListener(v -> textZoom.start());
+
+
+        List<String> yHearts = new ArrayList<>();
+
+
+        List<PolylineView.PolylineData> x = new ArrayList<>();
+        List<PolylineView.PolylineData> x1 = new ArrayList<>();
+
+        yHearts.add("300");
+        yHearts.add("400");
+        yHearts.add("500");
+        yHearts.add("600");
+        yHearts.add("700");
+        yHearts.add("800");
+
+        x.add(new PolylineView.PolylineData.Builder().date("11-14").time("11:20").value("300").build());
+        x.add(new PolylineView.PolylineData.Builder().date("11-15").time("11:20").value("309").build());
+        x.add(new PolylineView.PolylineData.Builder().date("11-14").time("11:20").value("510").build());
+        x.add(new PolylineView.PolylineData.Builder().date("11-16").time("11:20").value("510").build());
+        x.add(new PolylineView.PolylineData.Builder().date("11-17").time("11:20").value("760").build());
+        x.add(new PolylineView.PolylineData.Builder().date("11-18").time("11:20").value("390").build());
+        x.add(new PolylineView.PolylineData.Builder().date("11-19").time("11:20").value("620").build());
+        x.add(new PolylineView.PolylineData.Builder().date("11-20").time("11:20").value("590").build());
+
+
+        x1.add(new PolylineView.PolylineData.Builder().date("11-14").time("11:20").value("310").build());
+        x1.add(new PolylineView.PolylineData.Builder().date("11-15").time("11:20").value("300").build());
+        x1.add(new PolylineView.PolylineData.Builder().date("11-14").time("11:20").value("333").build());
+        x1.add(new PolylineView.PolylineData.Builder().date("11-16").time("11:20").value("400").build());
+        x1.add(new PolylineView.PolylineData.Builder().date("11-17").time("11:20").value("500").build());
+        x1.add(new PolylineView.PolylineData.Builder().date("11-18").time("11:20").value("300").build());
+        x1.add(new PolylineView.PolylineData.Builder().date("11-19").time("11:20").value("450").build());
+        x1.add(new PolylineView.PolylineData.Builder().date("11-20").time("11:20").value("590").build());
+
+        mPlv.setData(yHearts, x, x1);
     }
 
     @Override

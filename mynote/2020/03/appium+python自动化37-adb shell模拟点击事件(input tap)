@@ -33,3 +33,24 @@ adb shell input text 135xxxx
 
 勾选服务协议 我已阅读
 adb shell input tap 94 738
+
+上拉
+adb shell input swipe 300 1000 300 100
+下拉
+adb shell input swipe 300 100 300 1000
+
+
+点赞操作
+adb shell input tap 1000 900
+
+评论
+adb shell input tap 1000 1095
+
+点击输入框
+adb shell input tap 500 1700
+
+点击输入框 关闭按钮
+adb shell input tap 1010 423
+
+截取当前屏幕的图片并保存到电脑
+adb shell screencap -p >screenshot.png

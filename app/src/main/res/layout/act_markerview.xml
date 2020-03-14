@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <mo.wall.org.markerview.MarkerView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/w_dp_300"
-        android:background="#eeeeee"
-        android:padding="@dimen/w_dp_10" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <mo.wall.org.markerview.MarkerView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_dp_300"
+            android:background="#eeeeee"
+            android:padding="@dimen/w_dp_10" />
 
 
-    <TextView
+        <mo.wall.org.markerview.PolylineView
+            android:id="@+id/plv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_dp_300"
+            android:padding="@dimen/dp_10" />
 
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_margin="@dimen/dp_10"
-        android:padding="@dimen/dp_10"
-        android:text="我的">
+        <TextView
 
-    </TextView>
-</LinearLayout>
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:text="我的">
+
+        </TextView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
