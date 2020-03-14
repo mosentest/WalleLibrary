@@ -54,3 +54,9 @@ adb shell input tap 1010 423
 
 截取当前屏幕的图片并保存到电脑
 adb shell screencap -p >screenshot.png
+
+
+参考python读取图片orc处理文章
+https://blog.csdn.net/m0_37215794/article/details/81944027
+https://blog.csdn.net/weixin_38246633/article/details/82993678
+https://blog.csdn.net/wodedipang_/article/details/84585914?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
