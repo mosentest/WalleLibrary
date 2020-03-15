@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="mo.wall.org">
+
     <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -49,6 +50,14 @@
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+
+    <!--辅助功能-->
+    <uses-permission
+        android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        tools:ignore="ProtectedPermissions" />
+
+
     <uses-permission
         android:name="android.permission.READ_NETWORK_USAGE_HISTORY"
         tools:ignore="ProtectedPermissions" />
@@ -59,6 +68,7 @@
     <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" /> <!-- 使用纹理压缩 -->
     <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
 
+
     <application
         android:name=".WalleApp"
         android:allowBackup="true"
@@ -67,17 +77,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screenshot.ScreenshotActivity"></activity>
-        <activity android:name=".test21.CaFaActivity" />
-        <activity
-            android:name=".LauncherActivity"
-            android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <service android:name=".screenshot.service.ScreenService">
+
+        </service>
+
+        <service
+            android:name=".service.MyService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".screenshot.service.MyAccessibilityService"
+            android:exported="false"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
-        </activity>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibilityservice" />
+        </service>
+
+        <activity android:name=".screenshot.ScreenshotActivity" />
+
+        <activity android:name=".test21.CaFaActivity" />
+
         <activity
             android:name=".dialog.MyDialogActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -105,17 +131,12 @@
             android:label="@string/title_activity_statusbar"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".service.MyService"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity
             android:name=".statusbar.StatusbarActivity"
             android:launchMode="singleTop"
             android:theme="@style/NoTitleTheme" />
-        <activity android:name=".main.MainActivity" />
-        <!--             android:configChanges="screenLayout|screenSize|smallestScreenSize|orientation|keyboardHidden" -->
+        <activity android:name=".main.MainActivity" /> <!-- android:configChanges="screenLayout|screenSize|smallestScreenSize|orientation|keyboardHidden" -->
         <activity android:name=".datausage.DataUsageSummaryActivity" />
         <activity android:name=".devicemanager.DeviceManagerActivity" />
         <activity android:name=".ntp.NtpActivity" />
@@ -124,6 +145,18 @@
         <activity
             android:name=".nestedrecyclerview.NestedRecyclerViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <activity
+            android:name=".LauncherActivity"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
 
         <receiver android:name=".devicemanager.AdminReceiver">
             <meta-data

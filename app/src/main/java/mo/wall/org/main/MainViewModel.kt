@@ -105,7 +105,7 @@ class MainViewModel : ViewModel() {
                         0,
                         ""))
 
-                lists.add(createEntity("关于5.0以上的截屏方式", "截屏", 1, ScreenshotActivity::class.java.name))
+                lists.add(createEntity("关于5.0以上的截屏方式", "截屏和辅助功能", 1, ScreenshotActivity::class.java.name))
                 lists.add(createEntity("重建和内存泄漏相关问题学习", "Dialog和DialogFragment", 1, MyDialogActivity::class.java.name))
                 lists.add(createEntity("NestedRecyclerView，仿淘宝、京东首页，通过两层嵌套的RecyclerView实现tab的吸顶效果。", "NestedRecyclerView", 1, NestedRecyclerViewActivity::class.java.name))
                 lists.add(createEntity("Behavior入门学习", "Behavior", 1, BehaviorActivity::class.java.name))

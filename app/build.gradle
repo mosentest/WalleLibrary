@@ -225,6 +225,12 @@ dependencies {
 
     implementation 'com.yanzhenjie.permission:support:2.0.1'
 
+
+    /**
+     * orc识别图片文字
+     */
+    implementation 'com.rmtheis:tess-two:9.1.0'
+
 }
 
 /**
