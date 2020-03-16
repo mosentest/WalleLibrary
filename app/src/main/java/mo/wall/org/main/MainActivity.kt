@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 intent.setComponent(componet)
                 intent.putExtra("title", item.title)
 //                startActivity(intent)
-                StartActivityCompat.startActivity(this, null, item.title, true, intent);
+                StartActivityCompat.startActivity(MainActivity@this, null, item.title, true, intent);
             }
         }
 
