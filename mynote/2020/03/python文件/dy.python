@@ -1,0 +1,45 @@
+# encoding=utf8
+# 开发环境是基于python2.x开发的
+# 图片识别需要安装pytesseract
+# 图片裁剪需要安装pillow
+# 安装Android的adb
+#https://blog.csdn.net/wodedipang_/article/details/84585914
+
+
+from PIL import Image, ImageFilter
+from pytesseract import *
+
+import os
+import time
+
+os.system('adb devices')
+
+os.system("adb shell screencap -p > image/screenshot.png")
+
+# os.system("adb shell input tap 1000 900")
+
+image = Image.open('image/screenshot.png')
+
+print(image.format, image.size, image.mode)
+
+#裁剪需要识别文字的地方
+x = 10
+y = 1290
+w = 850
+h = 400
+region = image.crop((x, y, x + w, y + h))
+region.save("image/crop_screenshot_left.png")
+image_left = Image.open('image/crop_screenshot_left.png')
+text_left = image_to_string(image_left, lang='chi_sim')
+print(text_left)
+
+#裁剪需要识别文字的地方
+x = 920
+y = 800
+w = 150
+h = 600
+region = image.crop((x, y, x + w, y + h))
+region.save("image/crop_screenshot_right.png")
+image_right = Image.open('image/crop_screenshot_right.png')
+text_right = image_to_string(image_right, lang='chi_sim')
+print(text_right)
