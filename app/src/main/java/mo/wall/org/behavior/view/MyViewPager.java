@@ -40,82 +40,82 @@ public class MyViewPager extends ViewPager {
         return b;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        boolean b = super.onTouchEvent(event);
-
-        int y;
-        int x;
-        int dy;
-        int dx;
-
-        int top;
-        int topAdd;
-        int bottom;
-        int bottomAdd;
-
-        top = getTop();
-        bottom = getBottom();
-
-
-        int childCount = getChildCount();
-
-        switch (event.getAction()) {
-            //按下
-            case MotionEvent.ACTION_DOWN:
-                lastY = (int) event.getY();
-                lastX = (int) event.getX();
-                for (int i = 0; i < childCount; i++) {
-                    getChildAt(i).setEnabled(true);
-                }
-                break;
-            //移动
-            case MotionEvent.ACTION_MOVE:
-                y = (int) (event.getY());
-                x = (int) (event.getX());
-                dy = y - lastY;
-                dx = x - lastX;
-                float diffY = Math.abs(dy);
-                float diffX = Math.abs(dx);
-
-                if (diffY < diffX) {
-                    return b;
-                }
-
-                topAdd = top + dy;
-                bottomAdd = bottom + dy;
-
-                int height = getHeight();
-                int headerHeight = myHeaderView.getHeight();
-
-                int lastViewHeight = myHeaderView.getLastViewHeight();
-
-
-                if (BuildConfig.DEBUG) {
-                    WLog.i("aaaa", "dy:" + dy
-                            + ",headerHeight:" + headerHeight
-                            + ",lastViewHeight:" + lastViewHeight
-                            + ",top:" + top
-                            + ",topAdd:" + topAdd
-                            + ",bottom:" + bottom
-                            + ",bottomAdd:" + bottomAdd);
-                }
-
-
-//                if (topAdd >= lastViewHeight
-//                        && topAdd <= headerHeight - lastViewHeight) {
-//                    offsetTopAndBottom(dy);
-//                    currentY = dy;
-//                    if (myHeaderView != null) {
-//                        myHeaderView.offsetTopAndBottom(-dy);
-//                    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//
+//        boolean b = super.onTouchEvent(event);
+//
+//        int y;
+//        int x;
+//        int dy;
+//        int dx;
+//
+//        int top;
+//        int topAdd;
+//        int bottom;
+//        int bottomAdd;
+//
+//        top = getTop();
+//        bottom = getBottom();
+//
+//
+//        int childCount = getChildCount();
+//
+//        switch (event.getAction()) {
+//            //按下
+//            case MotionEvent.ACTION_DOWN:
+//                lastY = (int) event.getY();
+//                lastX = (int) event.getX();
+//                for (int i = 0; i < childCount; i++) {
+//                    getChildAt(i).setEnabled(true);
 //                }
-                break;
-        }
-
-        return b;
-    }
+//                break;
+//            //移动
+//            case MotionEvent.ACTION_MOVE:
+//                y = (int) (event.getY());
+//                x = (int) (event.getX());
+//                dy = y - lastY;
+//                dx = x - lastX;
+//                float diffY = Math.abs(dy);
+//                float diffX = Math.abs(dx);
+//
+//                if (diffY < diffX) {
+//                    return b;
+//                }
+//
+//                topAdd = top + dy;
+//                bottomAdd = bottom + dy;
+//
+//                int height = getHeight();
+//                int headerHeight = myHeaderView.getHeight();
+//
+//                int lastViewHeight = myHeaderView.getLastViewHeight();
+//
+//
+//                if (BuildConfig.DEBUG) {
+//                    WLog.i("aaaa", "dy:" + dy
+//                            + ",headerHeight:" + headerHeight
+//                            + ",lastViewHeight:" + lastViewHeight
+//                            + ",top:" + top
+//                            + ",topAdd:" + topAdd
+//                            + ",bottom:" + bottom
+//                            + ",bottomAdd:" + bottomAdd);
+//                }
+//
+//
+////                if (topAdd >= lastViewHeight
+////                        && topAdd <= headerHeight - lastViewHeight) {
+////                    offsetTopAndBottom(dy);
+////                    currentY = dy;
+////                    if (myHeaderView != null) {
+////                        myHeaderView.offsetTopAndBottom(-dy);
+////                    }
+////                }
+//                break;
+//        }
+//
+//        return b;
+//    }
 
     public int getCurrentY() {
         return currentY;

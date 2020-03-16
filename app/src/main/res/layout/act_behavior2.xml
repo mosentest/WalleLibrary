@@ -50,7 +50,6 @@
                     android:background="@color/google_blue"
                     android:orientation="horizontal" />
 
-
                 <com.google.android.material.tabs.TabLayout
                     android:id="@id/stopView"
                     android:layout_width="match_parent"
@@ -60,6 +59,7 @@
                     app:layout_anchorGravity="bottom" />
 
             </mo.wall.org.behavior.view.MyHeaderView>
+
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"

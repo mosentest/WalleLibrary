@@ -48,75 +48,75 @@ public class MyHeaderView extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        boolean b = super.dispatchTouchEvent(event);
-        int y;
-        int x;
-        int dy;
-        int dx;
-
-        int top;
-        int topAdd;
-        int bottom;
-        int bottomAdd;
-
-        top = getTop();
-        bottom = getBottom();
-
-
-        int childCount = getChildCount();
-
-        switch (event.getAction()) {
-            //按下
-            case MotionEvent.ACTION_DOWN:
-                lastY = (int) event.getY();
-                lastX = (int) event.getX();
-                for (int i = 0; i < childCount; i++) {
-                    getChildAt(i).setEnabled(true);
-                }
-                break;
-            //移动
-            case MotionEvent.ACTION_MOVE:
-                y = (int) (event.getY());
-                x = (int) (event.getX());
-                dy = y - lastY;
-                dx = x - lastX;
-                float diffY = Math.abs(dy);
-                float diffX = Math.abs(dx);
-
-                if (diffY < diffX) {
-                    return b;
-                }
-
-                topAdd = top + dy;
-                bottomAdd = bottom + dy;
-
-//                if (BuildConfig.DEBUG) {
-//                    WLog.i("aaaa", "dy:" + dy
-//                            + ",offY:" + offY
-//                            + ",top:" + top
-//                            + ",topAdd:" + topAdd
-//                            + ",bottom:" + bottom
-//                            + ",bottomAdd:" + bottomAdd);
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent event) {
+//        boolean b = super.dispatchTouchEvent(event);
+//        int y;
+//        int x;
+//        int dy;
+//        int dx;
+//
+//        int top;
+//        int topAdd;
+//        int bottom;
+//        int bottomAdd;
+//
+//        top = getTop();
+//        bottom = getBottom();
+//
+//
+//        int childCount = getChildCount();
+//
+//        switch (event.getAction()) {
+//            //按下
+//            case MotionEvent.ACTION_DOWN:
+//                lastY = (int) event.getY();
+//                lastX = (int) event.getX();
+//                for (int i = 0; i < childCount; i++) {
+//                    getChildAt(i).setEnabled(true);
 //                }
-
-                if (topAdd >= -offY && bottomAdd <= mHeight) {
-                    offsetTopAndBottom(dy);
-                    currentY = dy;
-                    for (int i = 0; i < childCount; i++) {
-                        getChildAt(i).setEnabled(false);
-                    }
-                    return true;
-                } else {
-                    for (int i = 0; i < childCount; i++) {
-                        getChildAt(i).setEnabled(true);
-                    }
-                }
-                break;
-        }
-        return b;
-    }
+//                break;
+//            //移动
+//            case MotionEvent.ACTION_MOVE:
+//                y = (int) (event.getY());
+//                x = (int) (event.getX());
+//                dy = y - lastY;
+//                dx = x - lastX;
+//                float diffY = Math.abs(dy);
+//                float diffX = Math.abs(dx);
+//
+//                if (diffY < diffX) {
+//                    return b;
+//                }
+//
+//                topAdd = top + dy;
+//                bottomAdd = bottom + dy;
+//
+////                if (BuildConfig.DEBUG) {
+////                    WLog.i("aaaa", "dy:" + dy
+////                            + ",offY:" + offY
+////                            + ",top:" + top
+////                            + ",topAdd:" + topAdd
+////                            + ",bottom:" + bottom
+////                            + ",bottomAdd:" + bottomAdd);
+////                }
+//
+//                if (topAdd >= -offY && bottomAdd <= mHeight) {
+//                    offsetTopAndBottom(dy);
+//                    currentY = dy;
+//                    for (int i = 0; i < childCount; i++) {
+//                        getChildAt(i).setEnabled(false);
+//                    }
+//                    return true;
+//                } else {
+//                    for (int i = 0; i < childCount; i++) {
+//                        getChildAt(i).setEnabled(true);
+//                    }
+//                }
+//                break;
+//        }
+//        return b;
+//    }
 
 
     @Override
@@ -124,11 +124,11 @@ public class MyHeaderView extends LinearLayout {
         return super.onInterceptTouchEvent(event);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        boolean b = super.onTouchEvent(event);
-        return true;
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        boolean b = super.onTouchEvent(event);
+//        return true;
+//    }
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
