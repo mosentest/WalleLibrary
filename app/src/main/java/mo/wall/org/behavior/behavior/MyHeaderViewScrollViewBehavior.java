@@ -2,6 +2,7 @@ package mo.wall.org.behavior.behavior;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -76,11 +77,6 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
         return true;
     }
 
-    @Override
-    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull ViewPager child, @NonNull View dependency) {
-        child.setTranslationY(dependency.getTranslationY());
-        return true;
-    }
 
     @Override
     public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull ViewPager child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
@@ -97,6 +93,17 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
     public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull ViewPager child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
         return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
     }
+
+    @Override
+    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull ViewPager child, @NonNull View dependency) {
+        int scrollY = dependency.getScrollY();
+        float translationY = dependency.getTranslationY();
+        int top = dependency.getTop();
+        Log.i("AA", "scrollY>" + scrollY + ",translationY>" + translationY + ",top:" + top);
+        child.setY(dependency.getHeight() + top);
+        return true;
+    }
+
 
     @Override
     public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull ViewPager child, @NonNull View dependency) {
@@ -141,8 +148,7 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 int dy = y - lastY;
-                getDependentView().scrollBy(0, -dy);
-                child.offsetTopAndBottom(dy);
+                getDependentView().offsetTopAndBottom(dy);
                 lastY = y;
                 break;
             case MotionEvent.ACTION_CANCEL:
