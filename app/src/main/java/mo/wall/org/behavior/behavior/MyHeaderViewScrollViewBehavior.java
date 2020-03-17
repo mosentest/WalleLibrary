@@ -20,12 +20,14 @@ import mo.wall.org.behavior.view.MyHeaderView;
  */
 public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<ViewPager> {
 
+    private static final String TAG = MyHeaderViewScrollViewBehavior.class.getSimpleName();
+
     private int childHeight;
 
-    private WeakReference<View> dependentView;
+    private WeakReference<MyHeaderView> dependentView;
     private int lastViewHeight;
 
-    private View getDependentView() {
+    private MyHeaderView getDependentView() {
         return dependentView.get();
     }
 
@@ -100,7 +102,7 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
         float translationY = dependency.getTranslationY();
         int top = dependency.getTop();
         Log.i("AA", "scrollY>" + scrollY + ",translationY>" + translationY + ",top:" + top);
-        child.setY(dependency.getHeight() + top);
+        child.setY(dependency.getMeasuredHeight() + top);
         return true;
     }
 
@@ -108,7 +110,7 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
     @Override
     public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull ViewPager child, @NonNull View dependency) {
         if (dependency instanceof MyHeaderView) {
-            dependentView = new WeakReference<>(dependency);
+            dependentView = new WeakReference<>((MyHeaderView) dependency);
             return true;
         }
         return super.layoutDependsOn(parent, child, dependency);
@@ -121,7 +123,8 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
 
     @Override
     public boolean onInterceptTouchEvent(@NonNull CoordinatorLayout parent, @NonNull ViewPager child, @NonNull MotionEvent ev) {
-        int dy = (int) ev.getY();
+
+        int y = (int) ev.getY();
         View dependView = getDependentView();
         if (dependView == null) {
             return super.onInterceptTouchEvent(parent, child, ev);
@@ -131,8 +134,16 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
                 downY = (int) ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                lastY = dy;
-                if (Math.abs(lastY - downY) > 1 && dy < (dependView.getMeasuredHeight() + dependView.getTranslationY())) {
+                int dy = y - lastY;
+                lastY = y;
+                Log.i(TAG, "dy" + dy);
+                Log.i(TAG, "dependView.getMeasuredHeight():" + dependView.getMeasuredHeight());
+                Log.i(TAG, "dependView.getTranslationY():" + dependView.getTranslationY());
+//                if (Math.abs(lastY - downY) > 1 && dy < (dependView.getMeasuredHeight() + dependView.getTranslationY())) {
+//                    return true;
+//                }
+                if (getDependentView().getTop() > -(getDependentView().getMeasuredHeight() - lastViewHeight) + dy
+                        && getDependentView().getTop() + dy < 0) {
                     return true;
                 }
                 break;
@@ -148,7 +159,16 @@ public class MyHeaderViewScrollViewBehavior extends CoordinatorLayout.Behavior<V
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 int dy = y - lastY;
-                getDependentView().offsetTopAndBottom(dy);
+                int currentY = getDependentView().getMeasuredHeight() + getDependentView().getTop();
+                int lastViewHeight = getDependentView().getLastViewHeight();
+                Log.i(TAG, "currentY:" + currentY);
+                Log.i(TAG, "getDependentView().getTop():" + getDependentView().getTop());
+                Log.i(TAG, "lastViewHeight:" + lastViewHeight);
+                Log.i(TAG, "dy:" + dy);
+                if (getDependentView().getTop() + dy > -(getDependentView().getMeasuredHeight() - lastViewHeight)
+                        && getDependentView().getTop() + dy < 0) {
+                    getDependentView().offsetTopAndBottom(dy);
+                }
                 lastY = y;
                 break;
             case MotionEvent.ACTION_CANCEL:
