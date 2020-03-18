@@ -25,16 +25,6 @@ import mo.wall.org.R;
  * 作者姓名 修改时间 版本号 描述
  */
 public class MyHeaderView extends LinearLayout {
-    private int lastY;
-    private int lastX;
-    private int lastViewHeight;
-
-    private int currentY = 0;
-    private int offY;
-    private int mHeight;
-
-    private View stopView;
-
 
     public MyHeaderView(Context context) {
         this(context, null, 0);
@@ -46,31 +36,5 @@ public class MyHeaderView extends LinearLayout {
 
     public MyHeaderView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        stopView = findViewById(R.id.stopView);
-        if (stopView != null) {
-            lastViewHeight = stopView.getMeasuredHeight();
-        }
-        mHeight = getHeight();
-        offY = mHeight - lastViewHeight;
-    }
-
-    @Override
-    public void scrollTo(int x, int y) {
-        if (y <= 0) {
-            y = 0;
-        } else if (y >= getHeight() - lastViewHeight) {
-            y = getHeight() - lastViewHeight;
-        }
-        currentY = y;
-        super.scrollTo(x, y);
-    }
-
-    public int getLastViewHeight() {
-        return lastViewHeight;
     }
 }

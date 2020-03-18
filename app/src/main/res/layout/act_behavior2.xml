@@ -31,14 +31,14 @@
                 <TextView
                     android:id="@+id/topName"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/w_dp_30"
+                    android:layout_height="@dimen/w_dp_70"
                     android:background="@color/google_green" />
 
 
                 <ImageView
                     android:id="@+id/topIcon2"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/w_dp_100"
+                    android:layout_height="@dimen/w_dp_80"
                     android:background="@color/google_yellow"
                     android:orientation="horizontal" />
 
@@ -46,27 +46,30 @@
                 <LinearLayout
                     android:id="@+id/topName2"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/w_dp_40"
+                    android:layout_height="@dimen/w_dp_90"
                     android:background="@color/google_blue"
                     android:orientation="horizontal" />
+
+            </mo.wall.org.behavior.view.MyHeaderView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_behavior=".behavior.behavior.MyViewPagerBehavior">
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@id/stopView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    app:layout_anchor="@+id/topName2"
-                    app:layout_anchorGravity="bottom" />
+                    android:layout_height="wrap_content" />
 
-            </mo.wall.org.behavior.view.MyHeaderView>
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/black_overlay" />
+            </LinearLayout>
 
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black_overlay"
-                app:layout_behavior=".behavior.behavior.MyHeaderViewScrollViewBehavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
