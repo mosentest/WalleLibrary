@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.StrictMode
 import androidx.multidex.MultiDex
 import android.widget.Toast
+import leakcanary.LeakCanary
 import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper
 import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
 import org.wall.mo.utils.autolayout.AutoDensity
@@ -23,16 +24,12 @@ class WalleApp : Application() {
         super.onCreate()
         ctx = this;
 
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
-//            // This process is dedicated to LeakCanary for heap analysis.
-//            // You should not init your app in this process.
-//            return;
-//        }
-//        LeakCanary.install(this);
 
-//        DoraemonKit.install(this)
+
 
         if (BuildConfig.DEBUG) {
+
+
             //线程策略
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectCustomSlowCalls() //API等级11，使用StrictMode.noteSlowCode
@@ -52,6 +49,18 @@ class WalleApp : Application() {
                     .penaltyLog()
                     .penaltyDeath()
                     .build())
+
+
+//            DoraemonKit.install(this)
+
+//            2.x开始用contentprovider注入的
+//            if (LeakCanary.isInAnalyzerProcess(this)) {
+//                // This process is dedicated to LeakCanary for heap analysis.
+//                // You should not init your app in this process.
+//                return;
+//            }
+//            LeakCanary.install(this);
+
         }
 
         helper = AppFrontBackHelper();

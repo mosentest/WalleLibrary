@@ -41,7 +41,7 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "false")//这是log控制，也会影响好多地方的开关控制
             buildConfigField "String", "bugly_appid", "\"xxxxxx\"" //
         }
-        textApk {//
+        tesApk {//
             // 每个环境包名不同
             applicationId "mo.wall.org.test"
             //终端打包命令教程https://www.jianshu.com/p/c5f69437100a
