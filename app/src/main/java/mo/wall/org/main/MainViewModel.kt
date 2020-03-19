@@ -157,6 +157,6 @@ class MainViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-//        viewModelJob.cancel()
+        viewModelJob.cancel()
     }
 }
