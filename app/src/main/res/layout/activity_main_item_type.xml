@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorAccent"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -11,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="标题"
-        android:textColor="@android:color/white"
+        android:textColor="@color/google_blue"
         android:textSize="20dp" />
 
 </LinearLayout>

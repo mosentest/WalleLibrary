@@ -12,6 +12,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.appbar.AppBarLayout;
+
 import java.lang.ref.WeakReference;
 
 import mo.wall.org.R;
@@ -24,6 +26,8 @@ public class MyViewPagerBehavior extends CoordinatorLayout.Behavior<LinearLayout
 
     private static final String TAG = MyViewPagerBehavior.class.getSimpleName();
 
+
+    private AppBarLayout appBarLayout;
     /**
      * http://www.hackerav.com/?post=60261
      *

@@ -60,3 +60,12 @@ adb shell screencap -p >screenshot.png
 https://blog.csdn.net/m0_37215794/article/details/81944027
 https://blog.csdn.net/weixin_38246633/article/details/82993678
 https://blog.csdn.net/wodedipang_/article/details/84585914?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
+
+
+
+下载地址:https://github.com/tesseract-ocr/tessdata
+
+根据自己的需求选择所要的语言库，在这里我们选择的是简体中文所以选择的库是：chi_sim.traineddata
+将文件拷贝到到：/usr/local/Cellar/tesseract/3.04.01_2/share/tessdata目录下。
+
+/usr/local/Cellar/tesseract/4.1.1/share/tessdata

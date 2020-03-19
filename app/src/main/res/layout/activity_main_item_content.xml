@@ -2,25 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/selectable_background"
-    android:orientation="vertical"
-    android:clickable="true"
-    android:padding="10dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_main_content_title"
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/w_dp_0_1"
+        android:background="@color/color_999999" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="标题"
-        android:textColor="@android:color/white"
-        android:textSize="18dp" />
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/tv_main_content_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="介绍"
-        android:textColor="@android:color/white"
-        android:textSize="12dp" />
+        <TextView
+            android:id="@+id/tv_main_content_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:textColor="@color/color_333333"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_main_content_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="介绍"
+            android:textColor="@color/color_999999"
+            android:textSize="12dp" />
+    </LinearLayout>
 </LinearLayout>
