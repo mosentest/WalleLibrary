@@ -2,8 +2,12 @@ package mo.wall.org.rxjava2.api;
 
 import org.wall.mo.dropdownmenu.TabBean;
 import org.wall.mo.utils.log.WLog;
+import org.wall.mo.utils.thread.CacheThreadExecutor;
+import org.wall.mo.utils.thread.ExRunnable;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -283,6 +287,57 @@ public class RxjavaLearn {
 
             }
         });
+    }
+
+    final static Lock LOCK = new ReentrantLock();
+
+    public static void testLock() {
+        CacheThreadExecutor.getExecutor().execute(new ExRunnable() {
+            @Override
+            public void runEx() {
+                lockMain(".in lock.1", 10000, ".in lock.1 after", ".no lock.1");
+            }
+
+            @Override
+            public void exMsg(String errorMsg) throws RuntimeException {
+
+            }
+        });
+        CacheThreadExecutor.getExecutor().execute(new ExRunnable() {
+            @Override
+            public void runEx() {
+                lockMain(".in lock.2", 3000, ".in lock.2 after", ".no lock.2");
+            }
+
+            @Override
+            public void exMsg(String errorMsg) throws RuntimeException {
+
+            }
+        });
+    }
+
+    /**
+     * 没锁就不执行释放内存
+     *
+     * @param s
+     * @param i
+     * @param s2
+     * @param s3
+     */
+    private static void lockMain(String s, int i, String s2, String s3) {
+        if (LOCK.tryLock()) {
+            WLog.i(TAG, Thread.currentThread().getName() + s);
+            try {
+                Thread.sleep(i);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            WLog.i(TAG, Thread.currentThread().getName() + s2);
+        } else {
+            WLog.i(TAG, Thread.currentThread().getName() + s3);
+            return;
+        }
+        LOCK.unlock();
     }
 }
 

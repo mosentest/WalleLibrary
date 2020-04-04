@@ -16,8 +16,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import mo.wall.org.databinding.FragmentRxJavaBinding;
 
 import org.wall.mo.base.mvp.BaseMVPMaxLifecycleFragment;
+import org.wall.mo.utils.log.WLog;
+import org.wall.mo.utils.thread.CacheThreadExecutor;
+import org.wall.mo.utils.thread.ExRunnable;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import mo.wall.org.R;
 import mo.wall.org.rxjava2.api.RxjavaLearn;
@@ -27,6 +33,7 @@ import mo.wall.org.rxjava2.data.RxJavaAcceptPar;
 public class RxJavaFragment extends
         BaseMVPMaxLifecycleFragment<RxJavaContract.Presenter, FragmentRxJavaBinding, RxJavaAcceptPar>
         implements RxJavaContract.View {
+
 
     public static RxJavaFragment newInstance(Bundle args) {
         RxJavaFragment fragment = new RxJavaFragment();
@@ -115,6 +122,7 @@ public class RxJavaFragment extends
             }
         });
     }
+
 
     /**
      * 会通过activity的onIntent传值过来
