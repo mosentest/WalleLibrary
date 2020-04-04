@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="mo.wall.org">
-
     <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -49,19 +48,13 @@
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-
-
-    <!--辅助功能-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 辅助功能 -->
     <uses-permission
         android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
         tools:ignore="ProtectedPermissions" />
-
-
     <uses-permission
         android:name="android.permission.READ_NETWORK_USAGE_HISTORY"
         tools:ignore="ProtectedPermissions" />
-
     <!--
     adb shell appops set mo.wall.org android\:get_usage_stats allow
 system_alert_window
@@ -69,14 +62,12 @@ system_alert_window
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 0x00020000代表OpenGL ES 2.0版本，3.0版本是0x00030000，3.1版本是0x00030001 -->
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" /> <!-- 应用程序能够使用OpenGL ES 2.0的API -->
     <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" /> <!-- 使用纹理压缩 -->
     <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
-
 
     <application
         android:name=".WalleApp"
@@ -86,16 +77,15 @@ system_alert_window
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".rxjava2.RxJavaActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <service android:name=".screenshot.service.ScreenService">
-
-        </service>
-
+        <service android:name=".screenshot.service.ScreenService"></service>
         <service
             android:name=".service.MyService"
             android:enabled="true"
             android:exported="true" />
-
         <service
             android:name=".screenshot.service.MyAccessibilityService"
             android:exported="false"
@@ -110,9 +100,7 @@ system_alert_window
         </service>
 
         <activity android:name=".screenshot.ScreenshotActivity" />
-
         <activity android:name=".test21.CaFaActivity" />
-
         <activity
             android:name=".dialog.MyDialogActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -139,8 +127,6 @@ system_alert_window
             android:name=".statusbar2.Statusbar2Activity"
             android:label="@string/title_activity_statusbar"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name=".statusbar.StatusbarActivity"
             android:launchMode="singleTop"
@@ -154,8 +140,6 @@ system_alert_window
         <activity
             android:name=".nestedrecyclerview.NestedRecyclerViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name=".LauncherActivity"
             android:theme="@style/FullscreenTheme">
@@ -165,7 +149,6 @@ system_alert_window
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <receiver android:name=".devicemanager.AdminReceiver">
             <meta-data
