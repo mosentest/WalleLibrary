@@ -18,6 +18,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
@@ -200,8 +201,11 @@ public class RxjavaLearn {
     public static void testConcat() {
         Observable<Integer> just1 = Observable.create(emitter -> {
             try {
-                emitter.onNext(1);
-                emitter.onNext(3);
+                emitter.onNext(7);
+                Thread.sleep(1000);
+                emitter.onNext(8);
+                Thread.sleep(1000);
+                emitter.onNext(9);
             } catch (Exception e) {
                 emitter.onError(e);
             } finally {
@@ -229,6 +233,128 @@ public class RxjavaLearn {
             @Override
             public void onComplete() {
                 WLog.i(TAG, "onComplete");
+            }
+        });
+    }
+
+    public static void testFlatMap() {
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            emitter.onNext("1");
+            emitter.onNext("2");
+            emitter.onNext("3");
+        }).compose(applySchedulers()).flatMap((Function<String, ObservableSource<Integer>>) s -> {
+//            if ("2".equals(s)) {
+//                return Observable.error(new Exception("String is 2"));
+//            }
+            return new Observable<Integer>() {
+                @Override
+                protected void subscribeActual(Observer<? super Integer> observer) {
+                    observer.onNext(Integer.parseInt(s));
+                }
+            };
+        }).compose(applySchedulers()).flatMap((Function<Integer, ObservableSource<String>>) integer -> {
+//            if (integer == 1) {
+//                return Observable.error(new Exception("integer is 1"));
+//            }
+            return Observable.create(emitter -> {
+                emitter.onNext(String.valueOf(integer));
+            });
+        }).compose(applySchedulers()).subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                mCompositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(String s) {
+                WLog.i(TAG, Thread.currentThread().getName() + ".onNext:" + s);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                WLog.i(TAG, Thread.currentThread().getName() + ".onError:" + e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    /**
+     * 把 第一个和第二个合并数据起来处理
+     */
+    public static void testZip() {
+        Observable<Integer> just1 = Observable.just(1, 3);
+        Observable<Integer> just2 = Observable.just(2, 4);
+        Observable.zip(just1, just2, new BiFunction<Integer, Integer, Object>() {
+            @Override
+            public Object apply(Integer integer, Integer integer2) throws Exception {
+                return integer + integer2;
+            }
+        }).compose(applySchedulers()).subscribe(new Observer<Object>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                mCompositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(Object o) {
+                WLog.i(TAG, Thread.currentThread().getName() + ".onNext:" + o);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    /***
+     *  Merge 可能会让合并的Observables发射的数据交错
+     */
+    public static void testMerge() {
+        Observable<String> obs1 = Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            emitter.onNext("1");
+            Thread.sleep(1000);
+            emitter.onNext("2");
+            Thread.sleep(1000);
+            emitter.onNext("3");
+        }).compose(applySchedulers());
+        Observable<String> obs2 = Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            emitter.onNext("4");
+            Thread.sleep(1000);
+            emitter.onNext("5");
+            Thread.sleep(1000);
+            emitter.onNext("6");
+        })
+//                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+                .compose(applySchedulers());
+        Observable.merge(obs1, obs2).compose(applySchedulers()).subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                mCompositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(String s) {
+                WLog.i(TAG, Thread.currentThread().getName() + ".onNext:" + s);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }
