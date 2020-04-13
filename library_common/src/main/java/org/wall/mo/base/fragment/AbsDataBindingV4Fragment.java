@@ -259,10 +259,10 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
         }
+        mRootView = null;
         if (mViewDataBinding != null) {
             mViewDataBinding.unbind();
         }
-        mRootView = null;
         mAttachActivity = null;
         mContext = null;
         super.onDestroy();

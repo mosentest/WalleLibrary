@@ -215,6 +215,7 @@ public class ParentRecyclerView extends RecyclerView {
     private ChildRecyclerView childRecyclerView;
 
     public void setChildRecyclerView(ChildRecyclerView childRecyclerView) {
+        this.childRecyclerView = null;
         this.childRecyclerView = childRecyclerView;
     }
 

@@ -122,11 +122,6 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment,
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate");
         }
-        if (mNetStateChangeReceiver == null) {
-            mNetStateChangeReceiver = new NetStateChangeReceiver();
-            mNetStateChangeReceiver.setNetStateChangeObserver(this);
-            NetStateChangeReceiver.registerReceiver(getCurActivity(), mNetStateChangeReceiver);
-        }
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -211,6 +206,11 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment,
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onStart");
         }
+        if (mNetStateChangeReceiver == null) {
+            mNetStateChangeReceiver = new NetStateChangeReceiver();
+            mNetStateChangeReceiver.setNetStateChangeObserver(this);
+            NetStateChangeReceiver.registerReceiver(getCurActivity(), mNetStateChangeReceiver);
+        }
     }
 
     @Override
@@ -235,6 +235,11 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment,
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onPause");
         }
+        if (mNetStateChangeReceiver != null) {
+            mNetStateChangeReceiver.setNetStateChangeObserver(null);
+            NetStateChangeReceiver.unRegisterReceiver(getCurActivity(), mNetStateChangeReceiver);
+            mNetStateChangeReceiver = null;
+        }
     }
 
     @Override
@@ -249,11 +254,6 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment,
     public void onDestroy() {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
-        }
-        if (mNetStateChangeReceiver != null) {
-            mNetStateChangeReceiver.setNetStateChangeObserver(null);
-            NetStateChangeReceiver.unRegisterReceiver(getCurActivity(), mNetStateChangeReceiver);
-            mNetStateChangeReceiver = null;
         }
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);

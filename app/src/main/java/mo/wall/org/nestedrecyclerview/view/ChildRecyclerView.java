@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Field;
+
 import mo.wall.org.nestedrecyclerview.utils.FlingHelper;
 
 /**
@@ -119,4 +121,22 @@ public class ChildRecyclerView extends RecyclerView {
     private ParentRecyclerView findParentRecyclerView() {
         return null;
     }
+
+//    private static Field mParent;
+//
+//    /**
+//     * https://www.jianshu.com/p/a4d99014e1a1
+//     */
+//    @Override
+//    protected void onDetachedFromWindow() {
+//        try {
+//            mParent = View.class.getDeclaredField("mParent");
+//            mParent.setAccessible(true);
+//            if (mParent != null)
+//                mParent.set(this, null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        super.onDetachedFromWindow();
+//    }
 }
