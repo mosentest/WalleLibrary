@@ -204,7 +204,7 @@ dependencies {
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
 
     // debugImplementation because LeakCanary should only run in debug builds.
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
 
 //    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:2.0.1'
 //    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit-leakcanary:2.0.1'

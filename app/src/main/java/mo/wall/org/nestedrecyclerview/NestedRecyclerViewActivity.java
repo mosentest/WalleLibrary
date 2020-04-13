@@ -3,26 +3,17 @@ package mo.wall.org.nestedrecyclerview;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
-
-import org.wall.mo.base.adapter.MaxLifecyclePagerAdapter;
 import org.wall.mo.base.mvp.BaseMVPAppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mo.wall.org.R;
 import mo.wall.org.databinding.ActivityNestedRecyclerviewBinding;
-import mo.wall.org.nestedrecyclerview.fragment.NestedRecyclerViewFragment;
-import mo.wall.org.nestedrecyclerview.view.ParentRecyclerView;
 
 /**
  * Copyright (C), 2018-2020

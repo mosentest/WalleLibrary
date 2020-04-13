@@ -1,8 +1,6 @@
 package mo.wall.org.nestedrecyclerview;
 
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -130,8 +128,8 @@ public class NestedParentMultiItemQuickAdapter
                     viewPager.setAdapter(lifecyclePagerAdapter);
                     lifecyclePagerAdapter.notifyDataSetChanged();
                 }
-                //int size = titles.size();
-                //viewPager.setOffscreenPageLimit(size);
+                int size = titles.size();
+                viewPager.setOffscreenPageLimit(size);
                 viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                     @Override
                     public void onPageSelected(int position) {

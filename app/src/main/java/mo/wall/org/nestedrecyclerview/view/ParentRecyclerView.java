@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.wall.mo.utils.log.WLog;
 
+import java.lang.ref.WeakReference;
+
 import mo.wall.org.nestedrecyclerview.utils.FlingHelper;
 
 /**
@@ -126,11 +128,11 @@ public class ParentRecyclerView extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 if (isScrollEnd()) {
                     //如果父RecyclerView已经滑动到底部，需要让子RecyclerView滑动剩余的距离
-                    if (childRecyclerView != null) {
+                    if (mChildRecyclerView != null) {
                         WLog.i(TAG, "lastY:" + lastY);
                         float deltaY = lastY - e.getY();
                         WLog.i(TAG, "deltaY:" + deltaY);
-                        childRecyclerView.scrollBy(0, (int) deltaY);
+                        mChildRecyclerView.scrollBy(0, (int) deltaY);
                     }
                 }
                 break;
@@ -153,8 +155,8 @@ public class ParentRecyclerView extends RecyclerView {
 
     @Override
     public void scrollToPosition(int position) {
-        if (childRecyclerView != null) {
-            childRecyclerView.scrollToPosition(position);
+        if (mChildRecyclerView != null) {
+            mChildRecyclerView.scrollToPosition(position);
         }
         postDelayed(() -> {
             super.scrollToPosition(position);
@@ -190,7 +192,7 @@ public class ParentRecyclerView extends RecyclerView {
     }
 
     private boolean canScroll() {
-        return childRecyclerView == null || childRecyclerView.isScrollTop();
+        return mChildRecyclerView == null || mChildRecyclerView.isScrollTop();
     }
 
 
@@ -206,24 +208,23 @@ public class ParentRecyclerView extends RecyclerView {
     }
 
     private void childFling(int velY) {
-        if (childRecyclerView != null) {
+        if (mChildRecyclerView != null) {
             WLog.i(TAG, "velY:" + velY);
-            childRecyclerView.fling(0, velY);
+            mChildRecyclerView.fling(0, velY);
         }
     }
 
-    private ChildRecyclerView childRecyclerView;
+    private ChildRecyclerView mChildRecyclerView;
 
     public void setChildRecyclerView(ChildRecyclerView childRecyclerView) {
-        this.childRecyclerView = null;
-        this.childRecyclerView = childRecyclerView;
+        this.mChildRecyclerView = childRecyclerView;
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         WLog.i(TAG, "onDetachedFromWindow");
-        childRecyclerView = null;
+        mChildRecyclerView = null;
     }
 
     private boolean isScrollEnd() {

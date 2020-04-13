@@ -156,6 +156,17 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
                 mRootView = inflater.inflate(layoutId, container, false);
                 mViewDataBinding = DataBindingUtil.bind(mRootView);
             }
+            /**
+             *
+             ————————————————
+             版权声明：本文为CSDN博主「ljtyzhr」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+             原文链接：https://blog.csdn.net/ljtyzhr/article/details/40736525
+             */
+            // 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
+            ViewGroup parent = (ViewGroup) mRootView.getParent();
+            if (parent != null){
+                parent.removeView(mRootView);
+            }
             //在这里findViewById
             initView(mRootView, savedInstanceState);
             return mRootView;

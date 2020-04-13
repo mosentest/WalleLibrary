@@ -60,6 +60,14 @@ public abstract class MaxLifecyclePagerAdapter extends FragmentPagerAdapter {
         return registeredFragments.get(position);
     }
 
+    /**
+     * https://www.jianshu.com/p/ad810a0bef6b
+     * @param activity
+     * @param viewPager
+     * @param position
+     * @param defaultResult
+     * @return
+     */
     public static Fragment instantiateFragment(FragmentActivity activity, ViewPager viewPager, int position, Fragment defaultResult) {
         String tag = "android:switcher:" + viewPager.getId() + ":" + position;
         Fragment fragment = activity.getSupportFragmentManager().findFragmentByTag(tag);
