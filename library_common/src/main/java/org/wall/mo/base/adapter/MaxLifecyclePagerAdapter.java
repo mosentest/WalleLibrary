@@ -48,6 +48,18 @@ public abstract class MaxLifecyclePagerAdapter extends FragmentPagerAdapter {
         super.destroyItem(container, position, object);
     }
 
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        return super.instantiateItem(container, position);
+    }
+
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull View container, int position) {
+        return super.instantiateItem(container, position);
+    }
+
     @Override
     public void destroyItem(@NonNull View container, int position, @NonNull Object object) {
         super.destroyItem(container, position, object);

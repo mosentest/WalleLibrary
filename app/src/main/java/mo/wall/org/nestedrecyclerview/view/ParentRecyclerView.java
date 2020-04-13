@@ -2,12 +2,18 @@ package mo.wall.org.nestedrecyclerview.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.wall.mo.utils.log.WLog;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import mo.wall.org.nestedrecyclerview.NestedParentMultiItemEntity;
 import mo.wall.org.nestedrecyclerview.NestedParentMultiItemQuickAdapter;
@@ -19,6 +25,9 @@ import mo.wall.org.nestedrecyclerview.utils.FlingHelper;
  * Date: 2020-01-06 20:46
  * Description:
  * History: 参考
+ * <p>\\
+ * <p>
+ * https://github.com/JasonGaoH/NestedRecyclerView
  * <p>
  * NestedRecyclerView，仿淘宝、京东首页，通过两层嵌套的RecyclerView实现tab的吸顶效果。
  * https://juejin.im/post/5d5f4cfcf265da03e61b18b8
@@ -27,6 +36,8 @@ import mo.wall.org.nestedrecyclerview.utils.FlingHelper;
  * 作者姓名 修改时间 版本号 描述
  */
 public class ParentRecyclerView extends RecyclerView {
+
+    private static final String TAG = ParentRecyclerView.class.getSimpleName();
 
     private FlingHelper mFlingHelper;
 
@@ -46,6 +57,7 @@ public class ParentRecyclerView extends RecyclerView {
      * 记录上次Event事件的y坐标
      */
     private float lastY;
+
 
     public ParentRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -93,8 +105,6 @@ public class ParentRecyclerView extends RecyclerView {
                 stopScroll();
                 break;
             case MotionEvent.ACTION_MOVE:
-                //在ACTION_MOVE的情况下，将lastY置为0
-                lastY = 0f;
                 break;
         }
         return super.dispatchTouchEvent(ev);
@@ -115,16 +125,20 @@ public class ParentRecyclerView extends RecyclerView {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        if (lastY == 0.0f) {
-            lastY = e.getY();
-        }
-        if (isScrollEnd()) {
-            if (childRecyclerView != null) {
-                float deltaY = lastY - e.getY();
-                if (deltaY != 0) {
-                    scrollBy(0, (int) deltaY);
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (isScrollEnd()) {
+                    //如果父RecyclerView已经滑动到底部，需要让子RecyclerView滑动剩余的距离
+                    if (childRecyclerView != null) {
+                        WLog.i(TAG, "lastY:" + lastY);
+                        float deltaY = lastY - e.getY();
+                        WLog.i(TAG, "deltaY:" + deltaY);
+                        childRecyclerView.scrollBy(0, (int) deltaY);
+                    }
                 }
-            }
+                break;
         }
         lastY = e.getY();
         return super.onTouchEvent(e);
@@ -165,6 +179,16 @@ public class ParentRecyclerView extends RecyclerView {
             public boolean canScrollVertically() {
                 return canScroll();
             }
+
+            @Override
+            public void addDisappearingView(View child) {
+                super.addDisappearingView(child);
+            }
+
+            @Override
+            public boolean supportsPredictiveItemAnimations() {
+                return false;
+            }
         };
         setLayoutManager(gridLayoutManager);
         return gridLayoutManager;
@@ -188,10 +212,10 @@ public class ParentRecyclerView extends RecyclerView {
 
     private void childFling(int velY) {
         if (childRecyclerView != null) {
+            WLog.i(TAG, "velY:" + velY);
             childRecyclerView.fling(0, velY);
         }
     }
-
 
     private ChildRecyclerView childRecyclerView;
 
@@ -210,4 +234,46 @@ public class ParentRecyclerView extends RecyclerView {
         return !canScrollVertically(1);
     }
 
+//    ----------------------------------------------------------------------------------------------
+//     NestedScroll. fix：当ChildRecyclerView下滑时(手指未放开)，ChildRecyclerView滑动到顶部（非fling），此时ParentRecyclerView不会继续下滑。
+//    ----------------------------------------------------------------------------------------------
+
+//    @Override
+//    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+//        return target instanceof ChildRecyclerView;
+//    }
+//
+//    @Override
+//    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+//        super.onNestedPreScroll(target, dx, dy, consumed);
+//        //1.当前Parent RecyclerView没有滑动底，且dy> 0 是下滑
+//        boolean isParentCanScroll = dy > 0 && isScrollEnd();
+//        //2.当前Child RecyclerView滑到顶部了，且dy < 0,即上滑
+//        boolean isChildCanNotScroll = !(dy >= 0 || childRecyclerView == null || childRecyclerView.isScrollTop());
+//        //以上两种情况都需要让Parent RecyclerView去scroll，和下面onNestedPreFling机制类似
+//        if (isParentCanScroll || isChildCanNotScroll) {
+//            scrollBy(0, dy);
+//            consumed[1] = dy;
+//        }
+//    }
+//
+//    @Override
+//    public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
+//        boolean isParentCanFling = velocityY > 0f && isScrollEnd();
+//        boolean isChildCanNotFling = !(velocityY >= 0 || childRecyclerView == null || childRecyclerView.isScrollTop());
+//        if (isParentCanFling && isChildCanNotFling) {
+//            return false;
+//        }
+//        fling(0, (int) velocityY);
+//        return true;
+//    }
+
+    //----------------------------------------------------------------------------------------------
+    // NestedScroll. fix：当ChildRecyclerView下滑时(手指未放开)，ChildRecyclerView滑动到顶部（非fling），此时ParentRecyclerView不会继续下滑。
+    //----------------------------------------------------------------------------------------------
 }

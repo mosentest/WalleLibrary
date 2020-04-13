@@ -47,15 +47,6 @@ public class NestedRecyclerViewActivity extends
 
     NestedParentMultiItemQuickAdapter multiItemQuickAdapter;
 
-
-    protected List<String> titles = new ArrayList<>();
-    protected List<Fragment> viewFragments = new ArrayList<>();
-
-    protected MaxLifecyclePagerAdapter lifecyclePagerAdapter;
-
-    private View bottomView;
-
-
     @Override
     public NestedRecyclerViewPresenter createPresenter() {
         return new NestedRecyclerViewPresenter();
@@ -69,6 +60,14 @@ public class NestedRecyclerViewActivity extends
 
     @Override
     public void initView(Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+            List<Fragment> fragments = getSupportFragmentManager().getFragments();
+            for (Fragment fragment : fragments) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+            }
+        }
+
         mViewDataBinding.topView.tvTopBarLeftBack.setVisibility(View.VISIBLE);
         mViewDataBinding.topView.tvTopBarLeftBack.setOnClickListener(v -> {
             onBackPressed();
@@ -98,36 +97,7 @@ public class NestedRecyclerViewActivity extends
                 return 3;
             }
         });
-
-
-        multiItemQuickAdapter.setLoadView(new NestedParentMultiItemQuickAdapter.LoadView() {
-            @Override
-            public void loadBottom(ViewGroup viewGroup, int position) {
-
-                viewGroup.removeAllViews();
-                viewGroup.addView(bottomView);
-            }
-        });
-
         mPresenter.load();
-    }
-
-    private void bottomView() {
-        if (bottomView != null) {
-            return;
-        }
-
-
-        bottomView = LayoutInflater.from(this).inflate(R.layout.activity_nested_recyclerview_bottom_sub, null);
-
-
-        TabLayout tabLayout = bottomView.findViewById(R.id.tabLayout);
-        ViewPager viewPager = bottomView.findViewById(R.id.viewPager);
-
-        //viewPager.setId(viewPager.getId());
-
-//        viewPager.removeAllViews();
-
     }
 
     @Override

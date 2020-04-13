@@ -43,7 +43,7 @@ public class NestedParentMultiItemQuickAdapter
 
     private AbsDataBindingAppCompatActivity mActivity;
 
-    private LinearLayout mBottomFl;
+//    private LinearLayout mBottomFl;
 
     MaxLifecyclePagerAdapter lifecyclePagerAdapter;
 
@@ -98,21 +98,20 @@ public class NestedParentMultiItemQuickAdapter
             case 4:
                 break;
             case 5:
-                mBottomFl = helper.getView(R.id.bottomFl);
-
                 TabLayout tabLayout = helper.getView(R.id.tabLayout);
                 ViewPager viewPager = helper.getView(R.id.viewPager);
+
                 if (lifecyclePagerAdapter == null) {
                     lifecyclePagerAdapter = new MaxLifecyclePagerAdapter(mActivity.getSupportFragmentManager()) {
                     };
                     lifecyclePagerAdapter.setData(viewFragments, titles);
-                } else {
                     lifecyclePagerAdapter.notifyDataSetChanged();
+                    viewPager.setAdapter(lifecyclePagerAdapter);
                 }
-                viewPager.setAdapter(lifecyclePagerAdapter);
 
-                int size = titles.size();
-                viewPager.setOffscreenPageLimit(size);
+
+                //int size = titles.size();
+                //viewPager.setOffscreenPageLimit(size);
                 viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                     @Override
                     public void onPageSelected(int position) {
