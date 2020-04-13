@@ -21,7 +21,6 @@ import java.lang.reflect.Field;
  */
 public class XViewPager extends ViewPager {
 
-    private boolean hasActivityDestroy = true;
 
     public XViewPager(@NonNull Context context) {
         super(context);
@@ -35,41 +34,15 @@ public class XViewPager extends ViewPager {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        try {
-            Field mFirstLayout = ViewPager.class.getDeclaredField("mFirstLayout");
-            mFirstLayout.setAccessible(true);
-            mFirstLayout.set(this, false);
-            if (getAdapter() != null) {
-                getAdapter().notifyDataSetChanged();
-            }
-            setCurrentItem(getCurrentItem());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        int height = 0;
-//        for (int i = 0; i < getChildCount(); i++) {
-//            View child = getChildAt(i);
-//            child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-//            int h = child.getMeasuredHeight();
-//            if (h > height)
-//                height = h;
-//        }
-//        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        if (hasActivityDestroy) {
-            super.onDetachedFromWindow();
-        }
-    }
-
-    public void setHasDestroy(boolean hasDestroy) {
-        hasActivityDestroy = hasDestroy;
+        super.onDetachedFromWindow();
     }
 }

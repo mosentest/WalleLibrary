@@ -2,7 +2,6 @@ package mo.wall.org.nestedrecyclerview.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -13,10 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.wall.mo.utils.log.WLog;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import mo.wall.org.nestedrecyclerview.NestedParentMultiItemEntity;
-import mo.wall.org.nestedrecyclerview.NestedParentMultiItemQuickAdapter;
 import mo.wall.org.nestedrecyclerview.utils.FlingHelper;
 
 /**
@@ -226,6 +221,7 @@ public class ParentRecyclerView extends RecyclerView {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        WLog.i(TAG, "onDetachedFromWindow");
         childRecyclerView = null;
     }
 

@@ -3,20 +3,19 @@ package mo.wall.org.behavior
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Message
-import android.widget.*
-import com.google.android.material.tabs.TabLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.core.view.ViewCompat
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import mo.wall.org.R
 import mo.wall.org.base.BaseAppCompatActivity
 import mo.wall.org.behavior.fragment.FirstFragment
 import mo.wall.org.behavior.fragment.ScrollFragment
 import mo.wall.org.behavior.view.MyHeaderView
-import mo.wall.org.behavior.view.MyViewPager
-import mo.wall.org.nestedrecyclerview.view.XViewPager
 import org.wall.mo.base.adapter.MaxLifecyclePagerAdapter
-import org.wall.mo.base.adapter.SubPagerAdapter
 
 /**
  * Copyright (C), 2018-2019
@@ -90,11 +89,19 @@ class BehaviorActivity : BaseAppCompatActivity() {
         fragments.add(ScrollFragment.newInstance(Bundle()))
 
         mViewPager.adapter = object : MaxLifecyclePagerAdapter(supportFragmentManager) {
+
             override fun getItem(position: Int): Fragment {
-                return super.getItem(position)
+                return fragments.get(position)
+            }
+
+            override fun getCount(): Int {
+                return titles.size
+            }
+
+            override fun getPageTitle(position: Int): CharSequence? {
+                return titles.get(position)
             }
         }.apply {
-            setData(fragments, titles)
             notifyDataSetChanged()
         }
 

@@ -69,6 +69,9 @@ system_alert_window
     <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" /> <!-- 使用纹理压缩 -->
     <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
 
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+
     <application
         android:name=".WalleApp"
         android:allowBackup="true"

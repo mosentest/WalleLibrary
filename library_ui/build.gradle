@@ -197,13 +197,14 @@ dependencies {
 
     //申请权限库 https://github.com/yanzhenjie/AndPermission
     // 也可以考虑他的图片选择库 https://github.com/yanzhenjie/Album
-    implementation('com.yanzhenjie.permission:support:2.0.1') {
-        exclude group: 'androidx.appcompat'
-        exclude group: 'androidx.legacy'
-        exclude group: 'androidx.annotation'
-        exclude group: 'androidx.fragment'
-        exclude group: 'androidx.core'
-    }
+//    implementation('com.yanzhenjie.permission:support:2.0.1') {
+//        exclude group: 'androidx.appcompat'
+//        exclude group: 'androidx.legacy'
+//        exclude group: 'androidx.annotation'
+//        exclude group: 'androidx.fragment'
+//        exclude group: 'androidx.core'
+//    }
+    implementation 'com.yanzhenjie:permission:2.0.3'
 
     //高仿ios的dialog 对话框 https://github.com/kongzue/DialogV3
     implementation 'com.kongzue.dialog_v3x:dialog:3.1.8'

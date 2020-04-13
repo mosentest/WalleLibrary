@@ -18,6 +18,8 @@ import org.wall.mo.base.interfaces.IFragmentInterceptAct;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.log.WLog;
 
+import java.util.List;
+
 /**
  * Copyright (C), 2018-2019
  * Author: ziqimo
@@ -48,29 +50,52 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            if (mFragment == null) {
-                mFragment = createFragment();
+
+        /**
+         *        if (savedInstanceState == null) {
+         *             if (mFragment == null) {
+         *                 mFragment = createFragment();
+         *             }
+         *             int containerViewId = getContainerViewId();
+         *             if (mFragment == null || containerViewId == 0) {
+         *                 return;
+         *             }
+         *             FragmentManager supportFragmentManager = getSupportFragmentManager();
+         *             FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+         *             //用getName作为tag
+         *             fragmentTransaction.replace(containerViewId, mFragment, getName());
+         *             fragmentTransaction.commit();
+         *         } else {
+         *             FragmentManager supportFragmentManager = getSupportFragmentManager();
+         *             FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+         *             Fragment fragmentByTag = supportFragmentManager.findFragmentByTag(getName());
+         *             if (fragmentByTag == null) {
+         *                 return;
+         *             }
+         *             fragmentTransaction.replace(containerViewId, fragmentByTag);
+         *             fragmentTransaction.commit();
+         *         }
+         */
+        if (savedInstanceState != null) {
+            List<Fragment> fragments = getSupportFragmentManager().getFragments();
+            for (Fragment fragment : fragments) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
             }
-            int containerViewId = getContainerViewId();
-            if (mFragment == null || containerViewId == 0) {
-                return;
-            }
-            FragmentManager supportFragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-            //用getName作为tag
-            fragmentTransaction.replace(containerViewId, mFragment, getName());
-            fragmentTransaction.commit();
-        } else {
-            FragmentManager supportFragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-            Fragment fragmentByTag = supportFragmentManager.findFragmentByTag(getName());
-            if (fragmentByTag == null) {
-                return;
-            }
-            fragmentTransaction.show(fragmentByTag);
-            fragmentTransaction.commit();
         }
+
+        if (mFragment == null) {
+            mFragment = createFragment();
+        }
+        int containerViewId = getContainerViewId();
+        if (mFragment == null || containerViewId == 0) {
+            return;
+        }
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        //用getName作为tag
+        fragmentTransaction.replace(containerViewId, mFragment, getName());
+        fragmentTransaction.commit();
+
         //设置返回键
         int topBarBackViewId = getTopBarBackViewId();
         if (topBarBackViewId != 0) {

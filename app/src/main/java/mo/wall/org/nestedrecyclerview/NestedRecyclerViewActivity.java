@@ -164,9 +164,6 @@ public class NestedRecyclerViewActivity extends
 
     @Override
     public void onCurDestroy() {
-        if (multiItemQuickAdapter != null) {
-            getLifecycle().removeObserver(multiItemQuickAdapter);
-        }
     }
 
     @Override

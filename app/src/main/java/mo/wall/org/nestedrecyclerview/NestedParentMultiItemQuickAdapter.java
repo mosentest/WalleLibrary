@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
@@ -38,7 +40,8 @@ public class NestedParentMultiItemQuickAdapter
         extends BaseMultiItemQuickAdapter<NestedParentMultiItemEntity, BaseViewHolder>
         implements LifecycleObserver {
 
-    private final ArrayList<Fragment> viewFragments;
+//    private final ArrayList<Fragment> viewFragments;
+
     private final ArrayList<String> titles;
 
     private AbsDataBindingAppCompatActivity mActivity;
@@ -60,6 +63,7 @@ public class NestedParentMultiItemQuickAdapter
         this.mLifecycle = lifecycle;
         mLifecycle.addObserver(this);
         mActivity = activity;
+
         addItemType(1, R.layout.activity_nested_recyclerview_header);
         addItemType(2, R.layout.activity_nested_recyclerview_header_item);
         addItemType(3, R.layout.activity_nested_recyclerview_title);
@@ -69,21 +73,13 @@ public class NestedParentMultiItemQuickAdapter
 
         titles = new ArrayList<>();
 
-        viewFragments = new ArrayList<>();
+//        viewFragments = new ArrayList<>();
 
         titles.add("推荐");
         titles.add("微资讯");
         titles.add("疾病百科");
         titles.add("饮食");
         titles.add("养生");
-
-        for (int i = 0; i < titles.size(); i++) {
-            String s = titles.get(i);
-            Bundle bundle = new Bundle();
-            bundle.putString("title", s);
-            viewFragments.add(NestedRecyclerViewFragment.newInstance(bundle));
-        }
-
     }
 
     @Override
@@ -102,64 +98,74 @@ public class NestedParentMultiItemQuickAdapter
                 ViewPager viewPager = helper.getView(R.id.viewPager);
 
                 if (lifecyclePagerAdapter == null) {
+//                    for (int i = 0; i < titles.size(); i++) {
+//                        String s = titles.get(i);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("title", s);
+//                        viewFragments.add(MaxLifecyclePagerAdapter.instantiateFragment(mActivity, viewPager, i, NestedRecyclerViewFragment.newInstance(bundle)));
+//                    }
                     lifecyclePagerAdapter = new MaxLifecyclePagerAdapter(mActivity.getSupportFragmentManager()) {
+
+                        @NonNull
+                        @Override
+                        public Fragment getItem(int position) {
+                            String s = titles.get(position);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("title", s);
+                            return NestedRecyclerViewFragment.newInstance(bundle);
+                            //return viewFragments.get(position);
+                        }
+
+                        @Override
+                        public int getCount() {
+                            return titles.size();
+                        }
+
+                        @Nullable
+                        @Override
+                        public CharSequence getPageTitle(int position) {
+                            return titles.get(position);
+                        }
                     };
-                    lifecyclePagerAdapter.setData(viewFragments, titles);
-                    lifecyclePagerAdapter.notifyDataSetChanged();
                     viewPager.setAdapter(lifecyclePagerAdapter);
+                    lifecyclePagerAdapter.notifyDataSetChanged();
                 }
-
-
                 //int size = titles.size();
                 //viewPager.setOffscreenPageLimit(size);
                 viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                     @Override
                     public void onPageSelected(int position) {
                         super.onPageSelected(position);
-                        NestedRecyclerViewFragment fragment = (NestedRecyclerViewFragment) viewFragments.get(position);
-                        if (mActivity instanceof NestedRecyclerViewActivity) {
-                            ActivityNestedRecyclerviewBinding mViewDataBinding = ((NestedRecyclerViewActivity) mActivity).mViewDataBinding;
-                            if (mViewDataBinding != null && mViewDataBinding.parentView != null) {
-                                mViewDataBinding.parentView.setChildRecyclerView(fragment.getChildRecyclerView());
-                            }
-
-                        }
-
+                        setChildRV(position);
                     }
                 });
                 tabLayout.setupWithViewPager(viewPager);
                 tabLayout.setTabIndicatorFullWidth(false);
-
                 viewPager.post(() -> {
                     int currentItem = viewPager.getCurrentItem();
-                    NestedRecyclerViewFragment fragment = (NestedRecyclerViewFragment) viewFragments.get(currentItem);
-                    ActivityNestedRecyclerviewBinding mViewDataBinding = ((NestedRecyclerViewActivity) mActivity).mViewDataBinding;
-                    if (mViewDataBinding != null && mViewDataBinding.parentView != null) {
-                        mViewDataBinding.parentView.setChildRecyclerView(fragment.getChildRecyclerView());
-                    }
+                    setChildRV(currentItem);
                 });
                 break;
         }
     }
 
-    private LoadView mLoadView;
-
-    public interface LoadView {
-        public void loadBottom(ViewGroup viewGroup, int position);
-    }
-
-    public void setLoadView(LoadView loadView) {
-        this.mLoadView = loadView;
+    private void setChildRV(int currentItem) {
+        NestedRecyclerViewFragment fragment = (NestedRecyclerViewFragment) lifecyclePagerAdapter.getRegisteredFragment(currentItem);
+        ActivityNestedRecyclerviewBinding mViewDataBinding = ((NestedRecyclerViewActivity) mActivity).mViewDataBinding;
+        if (mViewDataBinding != null && fragment != null) {
+            mViewDataBinding.parentView.setChildRecyclerView(fragment.getChildRecyclerView());
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void onDestroy() {
-        if (viewFragments != null) {
-            viewFragments.clear();
-        }
+//        if (viewFragments != null) {
+//            viewFragments.clear();
+//        }
         if (titles != null) {
             titles.clear();
         }
+        lifecyclePagerAdapter = null;
         if (mLifecycle != null) {
             mLifecycle.removeObserver(this);
         }

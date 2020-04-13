@@ -66,9 +66,11 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
         }
-        mNetStateChangeReceiver = new NetStateChangeReceiver();
-        mNetStateChangeReceiver.setNetStateChangeObserver(this);
-        NetStateChangeReceiver.registerReceiver(this, mNetStateChangeReceiver);
+        if (mNetStateChangeReceiver == null) {
+            mNetStateChangeReceiver = new NetStateChangeReceiver();
+            mNetStateChangeReceiver.setNetStateChangeObserver(this);
+            NetStateChangeReceiver.registerReceiver(this, mNetStateChangeReceiver);
+        }
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -141,7 +143,11 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
         }
-        NetStateChangeReceiver.unRegisterReceiver(this, mNetStateChangeReceiver);
+        if (mNetStateChangeReceiver != null) {
+            mNetStateChangeReceiver.setNetStateChangeObserver(null);
+            NetStateChangeReceiver.unRegisterReceiver(this, mNetStateChangeReceiver);
+            mNetStateChangeReceiver = null;
+        }
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;

@@ -121,11 +121,6 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreate");
         }
-        if (mNetStateChangeReceiver == null) {
-            mNetStateChangeReceiver = new NetStateChangeReceiver();
-            mNetStateChangeReceiver.setNetStateChangeObserver(this);
-            NetStateChangeReceiver.registerReceiver(getCurActivity(), mNetStateChangeReceiver);
-        }
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -154,16 +149,6 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onCreateView savedInstanceState is " + StringUtils.isNULL(savedInstanceState));
-        }
-        if (mRootView != null) {
-            ViewGroup parent = (ViewGroup) mRootView.getParent();
-            if (parent != null) {
-                parent.removeView(mRootView);
-            }
-            if (mViewDataBinding == null) {
-                mViewDataBinding = DataBindingUtil.bind(mRootView);
-            }
-            return mRootView;
         }
         int layoutId = getLayoutId();
         if (layoutId != 0) {
@@ -221,6 +206,11 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onStart");
         }
+        if (mNetStateChangeReceiver == null) {
+            mNetStateChangeReceiver = new NetStateChangeReceiver();
+            mNetStateChangeReceiver.setNetStateChangeObserver(this);
+            NetStateChangeReceiver.registerReceiver(getCurActivity(), mNetStateChangeReceiver);
+        }
     }
 
     @Override
@@ -243,7 +233,12 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
     public void onStop() {
         super.onStop();
         if (BuildConfig.DEBUG) {
-            WLog.i(TAG, getName() + ".onPause");
+            WLog.i(TAG, getName() + ".onStop");
+        }
+        if (mNetStateChangeReceiver != null) {
+            mNetStateChangeReceiver.setNetStateChangeObserver(null);
+            NetStateChangeReceiver.unRegisterReceiver(getCurActivity(), mNetStateChangeReceiver);
+            mNetStateChangeReceiver = null;
         }
     }
 
@@ -259,9 +254,6 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
     public void onDestroy() {
         if (BuildConfig.DEBUG) {
             WLog.i(TAG, getName() + ".onDestroy");
-        }
-        if (mNetStateChangeReceiver != null) {
-            NetStateChangeReceiver.unRegisterReceiver(getCurActivity(), mNetStateChangeReceiver);
         }
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
