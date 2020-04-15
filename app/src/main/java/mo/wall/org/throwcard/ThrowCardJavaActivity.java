@@ -1,8 +1,10 @@
 package mo.wall.org.throwcard;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -20,6 +22,7 @@ import mo.wall.org.base.BaseAppCompatActivity;
  */
 public class ThrowCardJavaActivity extends BaseAppCompatActivity {
     private View mView;
+    private ViewPropertyAnimator viewPropertyAnimator;
 
     @Override
     public void handleMessageAct(@Nullable Message msg) {
@@ -34,10 +37,12 @@ public class ThrowCardJavaActivity extends BaseAppCompatActivity {
 
         mView = findViewById(R.id.view);
 
+        viewPropertyAnimator = mView.animate();
+
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mView.animate()
+                viewPropertyAnimator
                         .rotation(-45f)
                         .translationX(-mView.getWidth() * 2)
                         .translationY(mView.getHeight())
@@ -45,5 +50,18 @@ public class ThrowCardJavaActivity extends BaseAppCompatActivity {
                         .start();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (viewPropertyAnimator != null) {
+            viewPropertyAnimator.setListener(null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                viewPropertyAnimator.setUpdateListener(null);
+            }
+            viewPropertyAnimator.cancel();
+        }
+
     }
 }
