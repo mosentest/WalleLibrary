@@ -73,7 +73,11 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
          *                 return;
          *             }
          *             fragmentTransaction.replace(containerViewId, fragmentByTag);
-         *             fragmentTransaction.commit();
+         *             try {
+         *                  fragmentTransaction.commit();
+         *              } catch (Exception e) {
+         *                  fragmentTransaction.commitAllowingStateLoss();
+         *              }
          *         }
          */
         if (savedInstanceState != null) {
@@ -94,7 +98,11 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         //用getName作为tag
         fragmentTransaction.replace(containerViewId, mFragment, getName());
-        fragmentTransaction.commit();
+        try {
+            fragmentTransaction.commit();
+        } catch (Exception e) {
+            fragmentTransaction.commitAllowingStateLoss();
+        }
 
         //设置返回键
         int topBarBackViewId = getTopBarBackViewId();
