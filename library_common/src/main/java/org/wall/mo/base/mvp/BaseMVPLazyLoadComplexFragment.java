@@ -19,14 +19,14 @@ import org.wall.mo.base.fragment.LazyLoadComplexFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContract.BasePresenter, B extends ViewDataBinding>
-        extends LazyLoadComplexFragment<B>
-        implements BaseContract.BaseView {
+public abstract class BaseMVPLazyLoadComplexFragment<
+        V extends BaseContract.BaseView,
+        presenter extends BaseContract.BasePresenter,
+        B extends ViewDataBinding>
+        extends LazyLoadComplexFragment<B> {
 
 
     public presenter mPresenter;
-
-    protected LoadDialogView loadDialogView;
 
     protected abstract presenter createPresenter();
 
@@ -37,7 +37,7 @@ public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContr
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
-            mPresenter.attachView(this);
+            mPresenter.attachView((V) this);
             mPresenter.onCreate(savedInstanceState);
         }
     }
@@ -62,11 +62,11 @@ public abstract class BaseMVPLazyLoadComplexFragment<presenter extends BaseContr
     public void onResume() {
         super.onResume();
         if (mPresenter != null) {
-            boolean viewNull = mPresenter.onResume();
+            boolean viewNull = mPresenter.isAttach();
             if (!viewNull) {
                 mPresenter.detachView();
                 //这里处理再一次
-                mPresenter.attachView(this);
+                mPresenter.attachView((V) this);
             }
         }
     }

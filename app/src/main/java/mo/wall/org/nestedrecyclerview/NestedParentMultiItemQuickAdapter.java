@@ -59,7 +59,9 @@ public class NestedParentMultiItemQuickAdapter
     public NestedParentMultiItemQuickAdapter(AbsDataBindingAppCompatActivity activity, Lifecycle lifecycle, List<NestedParentMultiItemEntity> data) {
         super(data);
         this.mLifecycle = lifecycle;
-        mLifecycle.addObserver(this);
+        if (this.mLifecycle != null) {
+            mLifecycle.addObserver(this);
+        }
         mActivity = activity;
 
         addItemType(1, R.layout.activity_nested_recyclerview_header);
@@ -102,7 +104,7 @@ public class NestedParentMultiItemQuickAdapter
 //                        bundle.putString("title", s);
 //                        viewFragments.add(MaxLifecyclePagerAdapter.instantiateFragment(mActivity, viewPager, i, NestedRecyclerViewFragment.newInstance(bundle)));
 //                    }
-                    lifecyclePagerAdapter = new MaxLifecyclePagerAdapter(mActivity.getSupportFragmentManager()) {
+                    lifecyclePagerAdapter = new MaxLifecyclePagerAdapter(mActivity.getSupportFragmentManager(), mLifecycle) {
 
                         @NonNull
                         @Override
@@ -168,6 +170,6 @@ public class NestedParentMultiItemQuickAdapter
             mLifecycle.removeObserver(this);
         }
         mActivity = null;
-        WLog.i("mo", "onDestroy");
+        WLog.i("NestedParentMultiItemQuickAdapter", "NestedParentMultiItemQuickAdapter.onDestroy");
     }
 }

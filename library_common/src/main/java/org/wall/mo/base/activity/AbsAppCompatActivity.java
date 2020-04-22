@@ -20,6 +20,7 @@ import android.view.View;
 import org.wall.mo.base.interfaces.IAttachActivity;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.ClickUtil;
+import org.wall.mo.utils.ILifecycleObserver;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.keyboard.KeyboardUtils;
 import org.wall.mo.utils.log.WLog;
@@ -45,12 +46,15 @@ import org.wall.mo.utils.network.NetworkType;
 public abstract class AbsAppCompatActivity extends AppCompatActivity
         implements IAttachActivity,
         View.OnClickListener,
-        NetStateChangeObserver {
+        NetStateChangeObserver,
+        ILifecycleObserver {
 
     protected final static String TAG = AbsAppCompatActivity.class.getSimpleName();
 
+    @Nullable
     protected Handler mHandler = null;
 
+    @Nullable
     private NetStateChangeReceiver mNetStateChangeReceiver;
 
     static {
@@ -352,4 +356,9 @@ public abstract class AbsAppCompatActivity extends AppCompatActivity
     }
 
     public abstract void handleSubMessage(Message msg);
+
+    @Override
+    public void onLifeClear() {
+        ILifecycleObserver.InnerClass.clear(this);
+    }
 }

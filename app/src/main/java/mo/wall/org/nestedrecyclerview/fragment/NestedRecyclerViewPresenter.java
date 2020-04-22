@@ -47,7 +47,7 @@ public class NestedRecyclerViewPresenter extends NestedRecyclerViewContract.Pres
 
     @Override
     public void loadData() {
-        if (getView() != null) {
+        if (isAttach()) {
             getView().showData(Arrays.asList(
                     new NestedChildMultiItemEntity.Builder().type(1).build(),
                     new NestedChildMultiItemEntity.Builder().type(2).build(),

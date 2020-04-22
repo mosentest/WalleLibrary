@@ -6,7 +6,9 @@ import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -34,17 +36,21 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
 
     protected static final String TAG = AbsWithV4FragmentActivity.class.getSimpleName();
 
+    @Nullable
     protected Fragment mFragment;
 
     /**
      * 上个页面传递的参数集合对象
      */
+    @Nullable
     private acceptT mNextParcelable;
 
+    @Nullable
     private String mTitle;
     /**
      * 展示返回键按钮
      */
+    @Nullable
     private boolean mShowBack;
 
 
@@ -72,6 +78,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
          *             if (fragmentByTag == null) {
          *                 return;
          *             }
+         *             mFragment = fragmentByTag;
          *             fragmentTransaction.replace(containerViewId, fragmentByTag);
          *             try {
          *                  fragmentTransaction.commit();
@@ -108,6 +115,14 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
         int topBarBackViewId = getTopBarBackViewId();
         if (topBarBackViewId != 0) {
             findViewById(topBarBackViewId).setOnClickListener(v -> onBackPressed());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mFragment == null) {
+            onBackPressed();
         }
     }
 
@@ -174,6 +189,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
      *
      * @return
      */
+    @IdRes
     public abstract int getContainerViewId();
 
     /**
@@ -182,6 +198,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
      *
      * @return
      */
+    @IdRes
     public abstract int getTopBarTitleViewId();
 
     /**
@@ -190,6 +207,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
      *
      * @return
      */
+    @IdRes
     public abstract int getTopBarBackViewId();
 
 
@@ -198,6 +216,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
      * fragment
      * * @return
      */
+    @Nullable
     public abstract Fragment createFragment();
 
     /**

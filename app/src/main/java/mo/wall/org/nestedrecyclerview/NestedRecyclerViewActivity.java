@@ -33,7 +33,8 @@ import mo.wall.org.databinding.ActivityNestedRecyclerviewBinding;
  * 作者姓名 修改时间 版本号 描述
  */
 public class NestedRecyclerViewActivity extends
-        BaseMVPAppCompatActivity<NestedRecyclerViewPresenter, ActivityNestedRecyclerviewBinding>
+        BaseMVPAppCompatActivity<NestedRecyclerViewContract.View,
+                NestedRecyclerViewPresenter, ActivityNestedRecyclerviewBinding>
         implements NestedRecyclerViewContract.View {
 
     NestedParentMultiItemQuickAdapter multiItemQuickAdapter;

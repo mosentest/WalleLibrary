@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 
 import org.wall.mo.base.interfaces.ILoadView;
 import org.wall.mo.base.interfaces.IStatusView;
+import org.wall.mo.utils.ILifecycleObserver;
 
 import java.lang.ref.WeakReference;
 
@@ -20,7 +21,7 @@ import java.lang.ref.WeakReference;
  */
 public interface BaseContract {
 
-    public static abstract class BasePresenter<View extends BaseView> {
+    public abstract class BasePresenter<View extends BaseView> implements ILifecycleObserver {
 
         /**
          * 弱引用持有view
@@ -33,15 +34,6 @@ public interface BaseContract {
         protected abstract void onRestoreInstanceState(@Nullable Bundle savedInstanceState);
 
         protected abstract void onStart();
-
-        /**
-         * 这里为了创建对view的引用
-         *
-         * @return
-         */
-        protected boolean onResume() {
-            return viewReference == null || viewReference.get() == null;
-        }
 
         protected abstract void onPause();
 
@@ -56,8 +48,9 @@ public interface BaseContract {
          *
          * @return 获取BaseView对象
          */
+        @Nullable
         protected View getView() {
-            return viewReference.get();
+            return viewReference == null ? null : viewReference.get();
         }
 
         /**
@@ -92,6 +85,10 @@ public interface BaseContract {
             }
         }
 
+        @Override
+        public void onLifeClear() {
+            ILifecycleObserver.InnerClass.clear(this);
+        }
     }
 
     public interface BaseView extends ILoadView, IStatusView {

@@ -88,7 +88,7 @@ class BehaviorActivity : BaseAppCompatActivity() {
         fragments.add(FirstFragment.newInstance(Bundle()))
         fragments.add(ScrollFragment.newInstance(Bundle()))
 
-        mViewPager.adapter = object : MaxLifecyclePagerAdapter(supportFragmentManager) {
+        mViewPager.adapter = object : MaxLifecyclePagerAdapter(supportFragmentManager, lifecycle) {
 
             override fun getItem(position: Int): Fragment {
                 return fragments.get(position)

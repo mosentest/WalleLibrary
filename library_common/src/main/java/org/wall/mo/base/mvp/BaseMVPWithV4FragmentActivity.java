@@ -67,7 +67,7 @@ public abstract class BaseMVPWithV4FragmentActivity
     protected void onResume() {
         super.onResume();
         if (mPresenter != null) {
-            boolean viewNull = mPresenter.onResume();
+            boolean viewNull = mPresenter.isAttach();
             if (!viewNull) {
                 mPresenter.detachView();
                 //这里处理再一次

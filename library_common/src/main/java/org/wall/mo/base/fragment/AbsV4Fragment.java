@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import org.wall.mo.base.interfaces.IAttachActivity;
 import org.wall.mo.base.interfaces.IFragment;
 import org.wall.mo.utils.BuildConfig;
+import org.wall.mo.utils.ILifecycleObserver;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.log.WLog;
 import org.wall.mo.utils.network.NetStateChangeObserver;
@@ -42,7 +43,8 @@ import org.wall.mo.utils.network.NetworkType;
  */
 @Deprecated
 public abstract class AbsV4Fragment extends Fragment implements IFragment,
-        NetStateChangeObserver {
+        NetStateChangeObserver,
+        ILifecycleObserver {
 
     public final static String TAG = AbsV4Fragment.class.getSimpleName();
 
@@ -164,7 +166,7 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment,
              */
             // 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
             ViewGroup parent = (ViewGroup) mRootView.getParent();
-            if (parent != null){
+            if (parent != null) {
                 parent.removeView(mRootView);
             }
             //在这里findViewById
@@ -472,4 +474,9 @@ public abstract class AbsV4Fragment extends Fragment implements IFragment,
     }
 
     public abstract void handleSubMessage(Message msg);
+
+    @Override
+    public void onLifeClear() {
+        ILifecycleObserver.InnerClass.clear(this);
+    }
 }

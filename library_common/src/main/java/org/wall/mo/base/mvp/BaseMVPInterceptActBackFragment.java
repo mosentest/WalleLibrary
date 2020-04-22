@@ -20,26 +20,25 @@ import org.wall.mo.base.fragment.InterceptActBackFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPInterceptActBackFragment<presenter extends BaseContract.BasePresenter,
-        B extends ViewDataBinding, nextP extends Parcelable>
-        extends InterceptActBackFragment<B, nextP>
-        implements BaseContract.BaseView {
+public abstract class BaseMVPInterceptActBackFragment
+        <V extends BaseContract.BaseView,
+                presenter extends BaseContract.BasePresenter,
+                B extends ViewDataBinding,
+                nextP extends Parcelable>
+        extends InterceptActBackFragment<B, nextP> {
 
 
     protected presenter mPresenter;
-
-    protected LoadDialogView loadDialogView;
 
     protected abstract presenter createPresenter();
 
     @Override
     public void initView(View rootView, Bundle savedInstanceState) {
-        loadDialogView = new LoadDialogView(this);
 
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
-            mPresenter.attachView(this);
+            mPresenter.attachView((V) this);
             mPresenter.onCreate(savedInstanceState);
         }
     }
@@ -64,11 +63,11 @@ public abstract class BaseMVPInterceptActBackFragment<presenter extends BaseCont
     public void onResume() {
         super.onResume();
         if (mPresenter != null) {
-            boolean viewNull = mPresenter.onResume();
+            boolean viewNull = mPresenter.isAttach();
             if (!viewNull) {
                 mPresenter.detachView();
                 //这里处理再一次
-                mPresenter.attachView(this);
+                mPresenter.attachView((V) this);
             }
         }
     }
@@ -92,39 +91,11 @@ public abstract class BaseMVPInterceptActBackFragment<presenter extends BaseCont
     @Override
     public void onDestroy() {
         super.onDestroy();
-        onCurDestroy();
-        if (loadDialogView != null) {
-            loadDialogView.onDetachView();
-        }
         if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter.onDestroy();
         }
         mPresenter = null;
-    }
-
-    protected abstract void onCurDestroy();
-
-
-    @Override
-    public void onLoadFail(boolean showLoading, int flag) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
-        }
-    }
-
-    @Override
-    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
-        if (loadDialogView != null) {
-            loadDialogView.loadStart(showLoading, tipMsg);
-        }
-    }
-
-    @Override
-    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
-        }
     }
 }
 

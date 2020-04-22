@@ -3,11 +3,12 @@ package org.wall.mo.base.mvp;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 import org.wall.mo.base.activity.AbsDataBindingAppCompatActivity;
 import org.wall.mo.base.cview.LoadDialogView;
+import org.wall.mo.base.interfaces.ILoadView;
+import org.wall.mo.base.interfaces.IStatusView;
 
 /**
  * Copyright (C), 2018-2019
@@ -18,18 +19,16 @@ import org.wall.mo.base.cview.LoadDialogView;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPAppCompatActivity<
-        presenter extends BaseContract.BasePresenter,
-        B extends ViewDataBinding>
-        extends AbsDataBindingAppCompatActivity<B>
-        implements BaseContract.BaseView {
+public abstract class BaseMVPAppCompatActivity
+        <V extends BaseContract.BaseView,
+                P extends BaseContract.BasePresenter<V>,
+                B extends ViewDataBinding>
+        extends AbsDataBindingAppCompatActivity<B> {
 
-    protected presenter mPresenter;
-
-    protected LoadDialogView loadDialogView;
+    protected P mPresenter;
 
 
-    public abstract presenter createPresenter();
+    public abstract P createPresenter();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public abstract class BaseMVPAppCompatActivity<
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
-            mPresenter.attachView(this);
+            mPresenter.attachView((V) this);
         }
         super.onCreate(savedInstanceState);
         if (mPresenter != null) {
@@ -67,11 +66,11 @@ public abstract class BaseMVPAppCompatActivity<
     protected void onResume() {
         super.onResume();
         if (mPresenter != null) {
-            boolean viewNull = mPresenter.onResume();
+            boolean viewNull = mPresenter.isAttach();
             if (!viewNull) {
                 mPresenter.detachView();
                 //这里处理再一次
-                mPresenter.attachView(this);
+                mPresenter.attachView((V) this);
             }
         }
     }
@@ -95,38 +94,10 @@ public abstract class BaseMVPAppCompatActivity<
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        onCurDestroy();
-        if (loadDialogView != null) {
-            loadDialogView.onDetachView();
-        }
         if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter.onDestroy();
-        }
-        mPresenter = null;
-    }
-
-    public abstract void onCurDestroy();
-
-
-    @Override
-    public void onLoadFail(boolean showLoading, int flag) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
-        }
-    }
-
-    @Override
-    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
-        if (loadDialogView != null) {
-            loadDialogView.loadStart(showLoading, tipMsg);
-        }
-    }
-
-    @Override
-    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
+            mPresenter = null;
         }
     }
 }

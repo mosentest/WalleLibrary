@@ -10,6 +10,7 @@ import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +19,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
+import org.wall.mo.base.cview.LoadDialogView;
 import org.wall.mo.base.interfaces.IAttachActivity;
+import org.wall.mo.base.interfaces.ILoadView;
+import org.wall.mo.base.interfaces.IStatusView;
 import org.wall.mo.utils.BuildConfig;
 import org.wall.mo.utils.ClickUtil;
+import org.wall.mo.utils.ILifecycleObserver;
 import org.wall.mo.utils.StringUtils;
 import org.wall.mo.utils.keyboard.KeyboardUtils;
 import org.wall.mo.utils.log.WLog;
@@ -40,15 +45,23 @@ import org.wall.mo.utils.network.NetworkType;
 public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
         extends AppCompatActivity implements IAttachActivity,
         View.OnClickListener,
-        NetStateChangeObserver {
+        NetStateChangeObserver,
+        ILifecycleObserver, ILoadView, IStatusView {
 
     protected final static String TAG = AbsDataBindingAppCompatActivity.class.getSimpleName();
 
+    @Nullable
     public Handler mHandler = null;
 
+    @Nullable
     public NetStateChangeReceiver mNetStateChangeReceiver;
 
+    @Nullable
     public B mViewDataBinding;
+
+
+    protected LoadDialogView loadDialogView;
+
 
     static {
         /**
@@ -153,6 +166,10 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
         if (mViewDataBinding != null) {
             mViewDataBinding.unbind();
         }
+        if (loadDialogView != null) {
+            loadDialogView.onDetachView();
+        }
+        onLifeClear();
         super.onDestroy();
     }
 
@@ -257,7 +274,7 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
     }
 
     protected boolean onFastDoubleClickEnable() {
-        return true;
+        return false;
     }
 
     //控制startactivity 参考这个哥们https://www.jianshu.com/p/579f1f118161
@@ -364,4 +381,31 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
     }
 
     public abstract void handleSubMessage(Message msg);
+
+
+    @Override
+    public void onLoadFail(boolean showLoading, int flag) {
+        if (loadDialogView != null) {
+            loadDialogView.loadEnd(showLoading);
+        }
+    }
+
+    @Override
+    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
+        if (loadDialogView != null) {
+            loadDialogView.loadStart(showLoading, tipMsg);
+        }
+    }
+
+    @Override
+    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
+        if (loadDialogView != null) {
+            loadDialogView.loadEnd(showLoading);
+        }
+    }
+
+    @Override
+    public void onLifeClear() {
+        ILifecycleObserver.InnerClass.clear(this);
+    }
 }

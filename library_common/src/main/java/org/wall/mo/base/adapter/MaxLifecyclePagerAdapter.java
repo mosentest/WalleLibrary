@@ -1,19 +1,19 @@
 package org.wall.mo.base.adapter;
 
-import android.app.Activity;
 import android.util.SparseArray;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 import androidx.viewpager.widget.ViewPager;
 
-import java.util.List;
+import org.wall.mo.utils.ILifecycleObserver;
 
 /**
  * https://blog.csdn.net/c6E5UlI1N/article/details/90307961
@@ -27,12 +27,18 @@ import java.util.List;
  * https://www.wanandroid.com/wenda/show/12574
  * #每日一问 ViewPager 这个流传广泛的写法，其实是有问题的！
  */
-public abstract class MaxLifecyclePagerAdapter extends FragmentPagerAdapter {
+public abstract class MaxLifecyclePagerAdapter extends FragmentPagerAdapter implements ILifecycleObserver {
+
+    private Lifecycle lifecycle = null;
 
     private SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
-    public MaxLifecyclePagerAdapter(FragmentManager fm) {
+    public MaxLifecyclePagerAdapter(FragmentManager fm, Lifecycle lifecycle) {
         super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        this.lifecycle = lifecycle;
+        if (this.lifecycle != null) {
+            this.lifecycle.addObserver(this);
+        }
     }
 
     /**
@@ -62,6 +68,7 @@ public abstract class MaxLifecyclePagerAdapter extends FragmentPagerAdapter {
 
     /**
      * https://www.jianshu.com/p/ad810a0bef6b
+     *
      * @param activity
      * @param viewPager
      * @param position
@@ -72,5 +79,15 @@ public abstract class MaxLifecyclePagerAdapter extends FragmentPagerAdapter {
         String tag = "android:switcher:" + viewPager.getId() + ":" + position;
         Fragment fragment = activity.getSupportFragmentManager().findFragmentByTag(tag);
         return fragment == null ? defaultResult : fragment;
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    @Override
+    public void onLifeClear() {
+        ILifecycleObserver.InnerClass.clear(this);
+        if (this.lifecycle != null) {
+            this.lifecycle.removeObserver(this);
+            this.lifecycle = null;
+        }
     }
 }
