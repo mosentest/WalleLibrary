@@ -10,7 +10,6 @@ import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +32,9 @@ import org.wall.mo.utils.network.NetStateChangeObserver;
 import org.wall.mo.utils.network.NetStateChangeReceiver;
 import org.wall.mo.utils.network.NetworkType;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 /**
  * Copyright (C), 2018-2019
  * Author: ziqimo
@@ -54,13 +56,13 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
     public Handler mHandler = null;
 
     @Nullable
-    public NetStateChangeReceiver mNetStateChangeReceiver;
+    public NetStateChangeReceiver mNetStateChangeReceiver = null;
 
     @Nullable
-    public B mViewDataBinding;
+    public B mViewDataBinding = null;
 
-
-    protected LoadDialogView loadDialogView;
+    @Nullable
+    protected LoadDialogView mLoadDialogView = null;
 
 
     static {
@@ -81,6 +83,9 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
             mNetStateChangeReceiver.setNetStateChangeObserver(this);
             NetStateChangeReceiver.registerReceiver(this, mNetStateChangeReceiver);
         }
+        if (mLoadDialogView == null) {
+            mLoadDialogView = new LoadDialogView(this);
+        }
         //创建一个handler
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper()) {
@@ -93,9 +98,23 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
         }
         int layoutId = getLayoutId();
         if (layoutId != 0) {
-            //setContentView(layoutId);
             //修改为这个方法，这个暂时会影响侧边滑动，先不考虑
-            mViewDataBinding = DataBindingUtil.setContentView(this, layoutId);
+            ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+            if (genericSuperclass == null) {
+                setContentView(layoutId);
+                return;
+            }
+            Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
+            Class clazz = (Class) actualTypeArguments[actualTypeArguments.length - 1];
+            WLog.i(TAG, getName() + ".clazz:" + clazz.getName());
+            if (ViewDataBinding.class.isAssignableFrom(clazz) && ViewDataBinding.class != clazz) {
+                mViewDataBinding = DataBindingUtil.setContentView(this, layoutId);
+                if (mViewDataBinding != null) {
+                    mViewDataBinding.setLifecycleOwner(this);
+                }
+            } else {
+                setContentView(layoutId);
+            }
         }
         parseIntentData();
         initView(savedInstanceState);
@@ -104,7 +123,7 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
     }
 
     @Override
-    public void showTopBar(boolean status) {
+    public void showTopBar(boolean show) {
 
     }
 
@@ -165,9 +184,10 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
         }
         if (mViewDataBinding != null) {
             mViewDataBinding.unbind();
+            mViewDataBinding = null;
         }
-        if (loadDialogView != null) {
-            loadDialogView.onDetachView();
+        if (mLoadDialogView != null) {
+            mLoadDialogView.onDetachView();
         }
         onLifeClear();
         super.onDestroy();
@@ -384,23 +404,16 @@ public abstract class AbsDataBindingAppCompatActivity<B extends ViewDataBinding>
 
 
     @Override
-    public void onLoadFail(boolean showLoading, int flag) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
+    public void onLoadFinish(boolean showLoading) {
+        if (mLoadDialogView != null) {
+            mLoadDialogView.loadEnd(showLoading);
         }
     }
 
     @Override
-    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
-        if (loadDialogView != null) {
-            loadDialogView.loadStart(showLoading, tipMsg);
-        }
-    }
-
-    @Override
-    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
+    public void onLoadStart(boolean showLoading, String tipMsg) {
+        if (mLoadDialogView != null) {
+            mLoadDialogView.loadStart(showLoading, tipMsg);
         }
     }
 

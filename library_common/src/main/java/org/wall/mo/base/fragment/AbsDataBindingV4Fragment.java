@@ -11,7 +11,6 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,20 +46,20 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         ILifecycleObserver, ILoadView, IStatusView {
 
     public final static String TAG = AbsDataBindingV4Fragment.class.getSimpleName();
-
+    @Nullable
     protected Context mContext;
-
+    @Nullable
     protected IAttachActivity mAttachActivity;
-
+    @Nullable
     protected B mViewDataBinding;
-
+    @Nullable
     protected View mRootView;
-
+    @Nullable
     protected Handler mHandler = null;
-
+    @Nullable
     private NetStateChangeReceiver mNetStateChangeReceiver;
-
-    protected LoadDialogView loadDialogView;
+    @Nullable
+    protected LoadDialogView mLoadDialogView;
 
     public Handler getHandler() {
         return mHandler;
@@ -72,7 +71,7 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
      * @param args
      * @return
      */
-    public static Fragment newInstance(AbsDataBindingV4Fragment absDataBindingV4Fragment, Bundle args) {
+    public static Fragment newInstance(@NonNull AbsDataBindingV4Fragment absDataBindingV4Fragment, Bundle args) {
         Fragment fragment = absDataBindingV4Fragment;
         fragment.setArguments(args);
         return fragment;
@@ -139,8 +138,8 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
             };
         }
 
-        if (loadDialogView == null) {
-            loadDialogView = new LoadDialogView(this);
+        if (mLoadDialogView == null) {
+            mLoadDialogView = new LoadDialogView(this);
         }
 
         /**
@@ -165,7 +164,12 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         if (layoutId != 0) {
             if (mRootView == null) {
                 mRootView = inflater.inflate(layoutId, container, false);
+            }
+            if (mRootView != null) {
                 mViewDataBinding = DataBindingUtil.bind(mRootView);
+            }
+            if (mViewDataBinding != null) {
+                mViewDataBinding.setLifecycleOwner(this);
             }
             /**
              *
@@ -174,9 +178,11 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
              原文链接：https://blog.csdn.net/ljtyzhr/article/details/40736525
              */
             // 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-            ViewGroup parent = (ViewGroup) mRootView.getParent();
-            if (parent != null) {
-                parent.removeView(mRootView);
+            if (mRootView != null) {
+                ViewGroup parent = (ViewGroup) mRootView.getParent();
+                if (parent != null) {
+                    parent.removeView(mRootView);
+                }
             }
             //在这里findViewById
             initView(mRootView, savedInstanceState);
@@ -194,7 +200,7 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
      * @return
      */
     public <T extends View> T findViewById(int idRes) {
-        if (idRes == View.NO_ID) {
+        if (idRes == View.NO_ID || mRootView == null) {
             return null;
         }
         return mRootView.findViewById(idRes);
@@ -286,9 +292,9 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
             mViewDataBinding.unbind();
             mViewDataBinding = null;
         }
-        if (loadDialogView != null) {
-            loadDialogView.onDetachView();
-            loadDialogView = null;
+        if (mLoadDialogView != null) {
+            mLoadDialogView.onDetachView();
+            mLoadDialogView = null;
         }
         mAttachActivity = null;
         mContext = null;
@@ -505,23 +511,16 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
 
 
     @Override
-    public void onLoadFail(boolean showLoading, int flag) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
+    public void onLoadStart(boolean showLoading, String tipMsg) {
+        if (mLoadDialogView != null) {
+            mLoadDialogView.loadStart(showLoading, tipMsg);
         }
     }
 
     @Override
-    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
-        if (loadDialogView != null) {
-            loadDialogView.loadStart(showLoading, tipMsg);
-        }
-    }
-
-    @Override
-    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
+    public void onLoadFinish(boolean showLoading) {
+        if (mLoadDialogView != null) {
+            mLoadDialogView.loadEnd(showLoading);
         }
     }
 

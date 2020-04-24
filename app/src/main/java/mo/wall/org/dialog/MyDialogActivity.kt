@@ -68,4 +68,19 @@ class MyDialogActivity : AbsWithV4FragmentActivity<ActivityMyDialogBinding, MyDi
     override fun hideDialog() {
 
     }
+
+    override fun showInfoDialog(msg: String?) {
+    }
+
+    override fun statusLoadingView() {
+    }
+
+    override fun statusNetWorkView() {
+    }
+
+    override fun statusErrorView(type: Int, msg: String?) {
+    }
+
+    override fun statusContentView() {
+    }
 }

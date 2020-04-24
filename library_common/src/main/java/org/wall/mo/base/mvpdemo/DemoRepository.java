@@ -16,11 +16,15 @@ import org.wall.mo.utils.thread.MainThreadExecutor;
 public class DemoRepository {
 
 
-    private static DemoRepository instance;
+    private volatile static DemoRepository instance;
 
     public static DemoRepository getInstance() {
         if (instance == null) {
-            instance = new DemoRepository();
+            synchronized (DemoRepository.class) {
+                if (instance == null) {
+                    instance = new DemoRepository();
+                }
+            }
         }
         return instance;
     }

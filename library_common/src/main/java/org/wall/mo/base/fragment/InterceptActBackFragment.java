@@ -24,11 +24,13 @@ import org.wall.mo.base.interfaces.IFragmentInterceptAct;
  * 作者姓名 修改时间 版本号 描述
  */
 public abstract class InterceptActBackFragment<B extends ViewDataBinding,
-        nextP extends Parcelable> extends AbsDataBindingV4Fragment<B> implements IFragmentInterceptAct {
+        startBundle extends Parcelable>
+        extends AbsDataBindingV4Fragment<B>
+        implements IFragmentInterceptAct {
     /**
      * 上个页面传递的参数集合对象
      */
-    private nextP mNextParcelable;
+    private startBundle mStartBundle;
 
     /**
      * 标题
@@ -48,8 +50,8 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
         Bundle extras = intent.getExtras();
         if (extras != null) {
             this.mTitle = extras.getString(StartActivityCompat.NEXT_TITLE);
-            this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
-            this.mNextParcelable = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
+            this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, false);
+            this.mStartBundle = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
             //消费参数
             setTopBarTitle();
             setTopBarBack();
@@ -66,7 +68,7 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
         if (outState != null) {
             outState.putString(StartActivityCompat.NEXT_TITLE, mTitle);
             outState.putBoolean(StartActivityCompat.NEXT_SHOW_BACK, mShowBack);
-            outState.putParcelable(StartActivityCompat.NEXT_PARCELABLE, mNextParcelable);
+            outState.putParcelable(StartActivityCompat.NEXT_PARCELABLE, mStartBundle);
         }
     }
 
@@ -75,8 +77,8 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
             this.mTitle = savedInstanceState.getString(StartActivityCompat.NEXT_TITLE);
-            this.mShowBack = savedInstanceState.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
-            this.mNextParcelable = savedInstanceState.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
+            this.mShowBack = savedInstanceState.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, false);
+            this.mStartBundle = savedInstanceState.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
             setTopBarTitle();
             setTopBarBack();
         }
@@ -140,6 +142,6 @@ public abstract class InterceptActBackFragment<B extends ViewDataBinding,
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mNextParcelable = null;
+        mStartBundle = null;
     }
 }

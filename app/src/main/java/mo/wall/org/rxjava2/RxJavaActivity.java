@@ -84,7 +84,32 @@ public class RxJavaActivity extends AbsWithV4FragmentActivity<ActivityRxJavaBind
     }
 
     @Override
+    public void showInfoDialog(String msg) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void statusLoadingView() {
+
+    }
+
+    @Override
+    public void statusNetWorkView() {
+
+    }
+
+    @Override
+    public void statusErrorView(int type, String msg) {
+
+    }
+
+    @Override
+    public void statusContentView() {
+
     }
 }

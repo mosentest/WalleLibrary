@@ -5,6 +5,7 @@ import android.os.Message;
 import android.os.Parcelable;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -33,11 +34,14 @@ import mo.wall.org.databinding.ActivityNestedRecyclerviewBinding;
  * 作者姓名 修改时间 版本号 描述
  */
 public class NestedRecyclerViewActivity extends
-        BaseMVPAppCompatActivity<NestedRecyclerViewContract.View,
-                NestedRecyclerViewPresenter, ActivityNestedRecyclerviewBinding>
+        BaseMVPAppCompatActivity<
+                NestedRecyclerViewContract.View,
+                NestedRecyclerViewContract.Presenter,
+                ActivityNestedRecyclerviewBinding>
         implements NestedRecyclerViewContract.View {
 
-    NestedParentMultiItemQuickAdapter multiItemQuickAdapter;
+    @Nullable
+    NestedParentMultiItemQuickAdapter multiItemQuickAdapter = null;
 
     @Override
     public NestedRecyclerViewPresenter createPresenter() {
@@ -53,43 +57,57 @@ public class NestedRecyclerViewActivity extends
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        if (savedInstanceState != null) {
-            List<Fragment> fragments = getSupportFragmentManager().getFragments();
-            for (Fragment fragment : fragments) {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
-            }
+//        if (savedInstanceState != null) {
+//            List<Fragment> fragments = getSupportFragmentManager().getFragments();
+//            for (Fragment fragment : fragments) {
+//                getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+//            }
+//        }
+
+        if (mViewDataBinding != null) {
+            mViewDataBinding.topView.tvTopBarLeftBack.setVisibility(View.VISIBLE);
+            mViewDataBinding.topView.tvTopBarLeftBack.setOnClickListener(v -> {
+                onBackPressed();
+            });
+            mViewDataBinding.topView.tvTopBarTitle.setText("NestedRecyclerView");
+
+
+            multiItemQuickAdapter = new NestedParentMultiItemQuickAdapter(this, getLifecycle(), null);
+
+            multiItemQuickAdapter.bindToRecyclerView(mViewDataBinding.parentView);
+
+            GridLayoutManager gridLayoutManager = mViewDataBinding.parentView.initLayoutManager(12);
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    NestedParentMultiItemEntity nestedMultiItemEntity = multiItemQuickAdapter.getData().get(position);
+                    int itemType = nestedMultiItemEntity.getItemType();
+                    switch (itemType) {
+                        case 1:
+                        case 3:
+                        case 5:
+                            return 12;
+
+                        case 4:
+                            return 4;
+                    }
+                    return 3;
+                }
+            });
         }
 
-        mViewDataBinding.topView.tvTopBarLeftBack.setVisibility(View.VISIBLE);
-        mViewDataBinding.topView.tvTopBarLeftBack.setOnClickListener(v -> {
-            onBackPressed();
-        });
-        mViewDataBinding.topView.tvTopBarTitle.setText("NestedRecyclerView");
+        if (mPresenter != null) {
+            mPresenter.load();
+        }
+    }
 
 
-        multiItemQuickAdapter = new NestedParentMultiItemQuickAdapter(this, getLifecycle(), null);
-
-        multiItemQuickAdapter.bindToRecyclerView(mViewDataBinding.parentView);
-
-        GridLayoutManager gridLayoutManager = mViewDataBinding.parentView.initLayoutManager(12);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                NestedParentMultiItemEntity nestedMultiItemEntity = multiItemQuickAdapter.getData().get(position);
-                int itemType = nestedMultiItemEntity.getItemType();
-                switch (itemType) {
-                    case 1:
-                    case 3:
-                    case 5:
-                        return 12;
-
-                    case 4:
-                        return 4;
-                }
-                return 3;
-            }
-        });
-        mPresenter.load();
+    @Override
+    public void showData(List<NestedParentMultiItemEntity> itemEntityList) {
+        if (multiItemQuickAdapter != null) {
+            multiItemQuickAdapter.setNewData(itemEntityList);
+        }
+        //bottomView();
     }
 
     @Override
@@ -118,6 +136,11 @@ public class NestedRecyclerViewActivity extends
     }
 
     @Override
+    public Parcelable getBundle() {
+        return null;
+    }
+
+    @Override
     public void showShortToast(String msg) {
 
     }
@@ -138,32 +161,10 @@ public class NestedRecyclerViewActivity extends
     }
 
     @Override
-    public Parcelable getNextExtra() {
-        return null;
-    }
-
-
-    @Override
-    public void onLoadDialogFail(int flag, Object failObj) {
+    public void showInfoDialog(String msg) {
 
     }
 
-    @Override
-    public void onLoadToastFail(int flag, Object failObj) {
-
-    }
-
-
-    @Override
-    public void onCurDestroy() {
-
-    }
-
-    @Override
-    public void showData(List<NestedParentMultiItemEntity> itemEntityList) {
-        multiItemQuickAdapter.setNewData(itemEntityList);
-        //bottomView();
-    }
 
     @Override
     public void statusLoadingView() {

@@ -31,7 +31,8 @@ import mo.wall.org.rxjava2.data.RxJavaAcceptPar;
 
 
 public class RxJavaFragment extends
-        BaseMVPMaxLifecycleFragment<RxJavaContract.Presenter, FragmentRxJavaBinding, RxJavaAcceptPar>
+        BaseMVPMaxLifecycleFragment<RxJavaContract.View,
+                RxJavaContract.Presenter, FragmentRxJavaBinding, RxJavaAcceptPar>
         implements RxJavaContract.View {
 
 
@@ -160,18 +161,8 @@ public class RxJavaFragment extends
     }
 
     @Override
-    public void onLoadDialogFail(int flag, Object failObj) {
+    public void showInfoDialog(String msg) {
 
-    }
-
-    @Override
-    public void onLoadToastFail(int flag, Object failObj) {
-
-    }
-
-
-    @Override
-    protected void onCurDestroy() {
     }
 
     @Override

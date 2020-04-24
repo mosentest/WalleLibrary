@@ -26,7 +26,7 @@ public interface BaseContract {
         /**
          * 弱引用持有view
          */
-        protected WeakReference<View> viewReference;
+        protected WeakReference<View> mViewReference;
 
         protected abstract void onCreate(@Nullable Bundle savedInstanceState);
 
@@ -50,7 +50,7 @@ public interface BaseContract {
          */
         @Nullable
         protected View getView() {
-            return viewReference == null ? null : viewReference.get();
+            return mViewReference == null ? null : mViewReference.get();
         }
 
         /**
@@ -70,8 +70,8 @@ public interface BaseContract {
          * @param view View层实例
          */
         protected void attachView(View view) {
-            if (viewReference == null) {
-                viewReference = new WeakReference<>(view);
+            if (mViewReference == null) {
+                mViewReference = new WeakReference<>(view);
             }
         }
 
@@ -79,9 +79,9 @@ public interface BaseContract {
          * 取消关联View
          */
         protected void detachView() {
-            if (viewReference != null) {
-                viewReference.clear();
-                viewReference = null;
+            if (mViewReference != null) {
+                mViewReference.clear();
+                mViewReference = null;
             }
         }
 

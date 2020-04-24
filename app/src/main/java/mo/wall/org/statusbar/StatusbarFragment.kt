@@ -23,6 +23,26 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class StatusbarFragment : InterceptActBackFragment<ViewDataBinding, Parcelable>() {
+    override fun statusContentView() {
+
+    }
+
+    override fun showInfoDialog(msg: String?) {
+
+    }
+
+    override fun statusLoadingView() {
+
+    }
+
+    override fun statusNetWorkView() {
+
+    }
+
+    override fun statusErrorView(type: Int, msg: String?) {
+
+    }
+
     override fun showDialog(msg: String?) {
 
     }

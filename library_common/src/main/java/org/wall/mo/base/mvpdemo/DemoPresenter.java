@@ -25,8 +25,8 @@ public class DemoPresenter extends DemoContract.Presenter {
             }
 
             @Override
-            public boolean onInterceptLoadFail(int flag, Object bean) {
-                return super.onInterceptLoadFail(flag, bean);
+            public void onError(int flag, Object bean) {
+
             }
         });
     }

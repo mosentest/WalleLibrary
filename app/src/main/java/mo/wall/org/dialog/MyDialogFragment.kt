@@ -18,10 +18,15 @@ import org.wall.mo.http.OkHttpX
 import java.lang.Exception
 
 
-class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
+class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.View,
+        MyDialogContract.Presenter,
         FragmentMyDialogBinding,
         MyDialogAcceptPar>(),
         MyDialogContract.View {
+
+    override fun showInfoDialog(msg: String?) {
+
+    }
 
 
     override fun initView(rootView: View, savedInstanceState: Bundle?) {
@@ -68,7 +73,7 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
     override fun onFragmentFirstVisible() {
 
 
-        mViewDataBinding.message.setOnClickListener {
+        mViewDataBinding?.message?.setOnClickListener {
 
             OkHttpX.getInstance(activity).setDebug(true)
             val map = mutableMapOf<String, String>()
@@ -114,18 +119,6 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
 
     }
 
-    override fun onLoadDialogFail(flag: Int, failObj: Any) {
-
-    }
-
-    override fun onLoadToastFail(flag: Int, failObj: Any) {
-
-    }
-
-
-    override fun onCurDestroy() {
-    }
-
     override fun statusLoadingView() {
 
     }
@@ -143,7 +136,6 @@ class MyDialogFragment : BaseMVPMaxLifecycleFragment<MyDialogContract.Presenter,
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance(args: Bundle?): MyDialogFragment {
             val fragment = MyDialogFragment()

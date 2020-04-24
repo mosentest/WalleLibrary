@@ -22,6 +22,26 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment
  * 作者姓名 修改时间 版本号 描述
 </desc></version></time></author> */
 class ScrollFragment : MaxLifecycleFragment<FragmentBehaviorFristBinding, Parcelable>() {
+    override fun statusContentView() {
+        
+    }
+
+    override fun showInfoDialog(msg: String?) {
+        
+    }
+
+    override fun statusLoadingView() {
+        
+    }
+
+    override fun statusNetWorkView() {
+        
+    }
+
+    override fun statusErrorView(type: Int, msg: String?) {
+        
+    }
+
     override fun loadIntentData(bundle: Bundle?) {
 
     }

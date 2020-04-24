@@ -13,4 +13,6 @@ public interface IDialogView extends IToastView {
     public void showDialog(String msg);
 
     public void hideDialog();
+
+    public void showInfoDialog(String msg);
 }

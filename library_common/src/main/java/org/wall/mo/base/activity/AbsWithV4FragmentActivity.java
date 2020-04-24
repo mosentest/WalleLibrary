@@ -31,7 +31,8 @@ import java.util.List;
  * * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, acceptT extends Parcelable>
+public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding,
+        startBundle extends Parcelable>
         extends AbsDataBindingAppCompatActivity<B> {
 
     protected static final String TAG = AbsWithV4FragmentActivity.class.getSimpleName();
@@ -43,7 +44,7 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
      * 上个页面传递的参数集合对象
      */
     @Nullable
-    private acceptT mNextParcelable;
+    private startBundle mStartBundle;
 
     @Nullable
     private String mTitle;
@@ -142,8 +143,8 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 this.mTitle = extras.getString(StartActivityCompat.NEXT_TITLE);
-                this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
-                this.mNextParcelable = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
+                this.mShowBack = extras.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, false);
+                this.mStartBundle = extras.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
                 //消费参数
                 setTopBarTitle();
                 setTopBarBack();
@@ -159,14 +160,13 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
 
     public abstract void loadIntentData(Intent intent);
 
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (outState != null) {
             outState.putString(StartActivityCompat.NEXT_TITLE, mTitle);
             outState.putBoolean(StartActivityCompat.NEXT_SHOW_BACK, mShowBack);
-            outState.putParcelable(StartActivityCompat.NEXT_PARCELABLE, mNextParcelable);
+            outState.putParcelable(StartActivityCompat.NEXT_PARCELABLE, mStartBundle);
         }
     }
 
@@ -175,13 +175,12 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
             this.mTitle = savedInstanceState.getString(StartActivityCompat.NEXT_TITLE);
-            this.mShowBack = savedInstanceState.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, true);
-            this.mNextParcelable = savedInstanceState.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
+            this.mShowBack = savedInstanceState.getBoolean(StartActivityCompat.NEXT_SHOW_BACK, false);
+            this.mStartBundle = savedInstanceState.getParcelable(StartActivityCompat.NEXT_PARCELABLE);
             setTopBarTitle();
             setTopBarBack();
         }
     }
-
 
     /**
      * 替换 fragment 的 container View Id
@@ -260,14 +259,14 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding, accep
     }
 
     @Override
-    public Parcelable getNextExtra() {
-        return mNextParcelable;
+    public Parcelable getBundle() {
+        return mStartBundle;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mNextParcelable = null;
+        mStartBundle = null;
         mFragment = null;
     }
 

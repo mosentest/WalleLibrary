@@ -13,7 +13,10 @@ import mo.wall.org.R;
 
 
 public class ScreenshotFragment extends
-        BaseMVPMaxLifecycleFragment<ScreenshotContract.Presenter, FragmentScreenshotBinding, ScreenshotAcceptPar>
+        BaseMVPMaxLifecycleFragment<ScreenshotContract.View,
+                ScreenshotContract.Presenter,
+                FragmentScreenshotBinding,
+                ScreenshotAcceptPar>
         implements ScreenshotContract.View {
 
     public static ScreenshotFragment newInstance(Bundle args) {
@@ -90,18 +93,7 @@ public class ScreenshotFragment extends
     }
 
     @Override
-    public void onLoadDialogFail(int flag, Object failObj) {
-
-    }
-
-    @Override
-    public void onLoadToastFail(int flag, Object failObj) {
-
-    }
-
-
-    @Override
-    protected void onCurDestroy() {
+    public void showInfoDialog(String msg) {
 
     }
 

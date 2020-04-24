@@ -66,8 +66,7 @@ public class KeyboardUtils {
             return;
         }
         try {
-            InputMethodManager imm =
-                    (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             final View focusView = activity.getCurrentFocus();
             if (imm != null && focusView != null) {
                 // flags: InputMethodManager.HIDE_NOT_ALWAYS
@@ -95,8 +94,7 @@ public class KeyboardUtils {
             eTt.setFocusableInTouchMode(true);
             eTt.requestFocus();
 
-            InputMethodManager imm = (InputMethodManager)
-                    eTt.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) eTt.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             // isOpen若返回true，则表示输入法打开，默认是打开的....
             // boolean isOpen = imm.isActive()
             // view为接受软键盘输入的视图，SHOW_FORCED表示强制显示

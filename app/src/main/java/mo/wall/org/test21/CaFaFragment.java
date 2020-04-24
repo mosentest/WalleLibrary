@@ -11,7 +11,8 @@ import mo.wall.org.databinding.FragmentCaFaBinding;
 
 
 public class CaFaFragment extends
-        BaseMVPMaxLifecycleFragment<CaFaContract.Presenter, FragmentCaFaBinding, CaFaAcceptPar>
+        BaseMVPMaxLifecycleFragment<CaFaContract.View,
+                CaFaContract.Presenter, FragmentCaFaBinding, CaFaAcceptPar>
         implements CaFaContract.View {
 
     public static CaFaFragment newInstance(Bundle args) {
@@ -88,18 +89,7 @@ public class CaFaFragment extends
     }
 
     @Override
-    public void onLoadDialogFail(int flag, Object failObj) {
-
-    }
-
-    @Override
-    public void onLoadToastFail(int flag, Object failObj) {
-
-    }
-
-
-    @Override
-    protected void onCurDestroy() {
+    public void showInfoDialog(String msg) {
 
     }
 

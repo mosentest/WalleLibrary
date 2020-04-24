@@ -45,11 +45,11 @@ public interface ILifecycleObserver extends LifecycleObserver {
                     Log.i(TAG, "clearField>>" + name);
                     Object fieldObj = field.get(o);
                     if (fieldObj != null) {
-                        Method[] methods = field.getClass().getMethods();
-                        clearMethod(fieldObj, methods);
-                        Method[] declaredMethods = field.getClass().getDeclaredMethods();
-                        clearMethod(fieldObj, declaredMethods);
-                        field.set(o, null);
+//                        Method[] methods = fieldObj.getClass().getMethods();
+//                        clearMethod(fieldObj, methods);
+//                        Method[] declaredMethods = fieldObj.getClass().getDeclaredMethods();
+//                        clearMethod(fieldObj, declaredMethods);
+//                        field.set(o, null);
                     }
                 } catch (Exception e) {
                     //e.printStackTrace();
@@ -67,6 +67,8 @@ public interface ILifecycleObserver extends LifecycleObserver {
                             || name.toLowerCase().contains("destroy")
                             || name.toLowerCase().contains("close")
                             || name.toLowerCase().contains("cancel")
+                            || name.toLowerCase().contains("detach")
+                            || name.toLowerCase().contains("unbind")
                     ) {
                         method.invoke(o);
                     }

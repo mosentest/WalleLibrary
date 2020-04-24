@@ -21,7 +21,8 @@ import org.wall.mo.base.mvp.BaseMVPMaxLifecycleFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Presenter, ViewDataBinding, Parcelable>
+public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.View,
+        DemoContract.Presenter, ViewDataBinding, Parcelable>
         implements DemoContract.View {
 
 
@@ -93,18 +94,7 @@ public class DemoFragment extends BaseMVPMaxLifecycleFragment<DemoContract.Prese
     }
 
     @Override
-    public void onLoadDialogFail(int flag, Object failObj) {
-
-    }
-
-    @Override
-    public void onLoadToastFail(int flag, Object failObj) {
-
-    }
-
-
-    @Override
-    protected void onCurDestroy() {
+    public void showInfoDialog(String msg) {
 
     }
 

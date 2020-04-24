@@ -14,7 +14,7 @@ import mo.wall.org.R;
 
 
 public class ${fragmentClass} extends 
-        BaseMVPMaxLifecycleFragment<${contractClass}.Presenter, Fragment${underscoreToCamelCase(classToResource(activityClass))}Binding, ${acceptParClass}>
+        BaseMVPMaxLifecycleFragment<${contractClass}.View, ${contractClass}.Presenter, Fragment${underscoreToCamelCase(classToResource(activityClass))}Binding, ${acceptParClass}>
         implements ${contractClass}.View {
 
     public static ${fragmentClass} newInstance(Bundle args) {

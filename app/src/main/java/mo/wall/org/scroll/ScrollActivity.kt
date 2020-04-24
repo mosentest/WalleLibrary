@@ -10,6 +10,26 @@ import mo.wall.org.R
 import org.wall.mo.base.activity.AbsWithV4FragmentActivity
 
 class ScrollActivity : AbsWithV4FragmentActivity<ViewDataBinding, Parcelable>() {
+    override fun showInfoDialog(msg: String?) {
+        
+    }
+
+    override fun statusLoadingView() {
+        
+    }
+
+    override fun statusNetWorkView() {
+        
+    }
+
+    override fun statusErrorView(type: Int, msg: String?) {
+        
+    }
+
+    override fun statusContentView() {
+        
+    }
+
     override fun onClick(v: View?) {
 
     }

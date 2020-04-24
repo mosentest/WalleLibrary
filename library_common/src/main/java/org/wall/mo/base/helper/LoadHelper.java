@@ -54,9 +54,10 @@ public class LoadHelper<T, F> {
             }
 
             @Override
-            public void repositoryFail(F bean) {
-                super.repositoryFail(bean);
-                refreshCallback.loadError(flag, refresh, bean);
+            public void onError(int flag, F bean) {
+                if (refreshCallback != null) {
+                    refreshCallback.loadError(flag, refresh, bean);
+                }
             }
         };
     }

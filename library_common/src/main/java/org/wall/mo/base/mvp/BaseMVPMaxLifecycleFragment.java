@@ -19,25 +19,23 @@ import org.wall.mo.base.fragment.MaxLifecycleFragment;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract.BasePresenter, B extends ViewDataBinding, T extends Parcelable>
-        extends MaxLifecycleFragment<B, T>
+public abstract class BaseMVPMaxLifecycleFragment
+        <V extends BaseContract.BaseView,
+                P extends BaseContract.BasePresenter<V>,
+                B extends ViewDataBinding, startBundle extends Parcelable>
+        extends MaxLifecycleFragment<B, startBundle>
         implements BaseContract.BaseView {
 
-    public presenter mPresenter;
+    protected P mPresenter;
 
-    protected LoadDialogView loadDialogView;
-
-    protected abstract presenter createPresenter();
-
+    protected abstract P createPresenter();
 
     @Override
     public void initView(View rootView, @Nullable Bundle savedInstanceState) {
-        loadDialogView = new LoadDialogView(this);
-
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次
-            mPresenter.attachView(this);
+            mPresenter.attachView((V) this);
             mPresenter.onCreate(savedInstanceState);
         }
     }
@@ -66,7 +64,7 @@ public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract
             if (!viewNull) {
                 mPresenter.detachView();
                 //这里处理再一次
-                mPresenter.attachView(this);
+                mPresenter.attachView((V) this);
             }
         }
     }
@@ -90,38 +88,10 @@ public abstract class BaseMVPMaxLifecycleFragment<presenter extends BaseContract
     @Override
     public void onDestroy() {
         super.onDestroy();
-        onCurDestroy();
-        if (loadDialogView != null) {
-            loadDialogView.onDetachView();
-        }
         if (mPresenter != null) {
             mPresenter.detachView();
             mPresenter.onDestroy();
-        }
-        mPresenter = null;
-    }
-
-    protected abstract void onCurDestroy();
-
-
-    @Override
-    public void onLoadFail(boolean showLoading, int flag) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
-        }
-    }
-
-    @Override
-    public void onLoadStart(boolean showLoading, int flag, String tipMsg) {
-        if (loadDialogView != null) {
-            loadDialogView.loadStart(showLoading, tipMsg);
-        }
-    }
-
-    @Override
-    public void onLoadSuccess(boolean showLoading, int flag, Object model) {
-        if (loadDialogView != null) {
-            loadDialogView.loadEnd(showLoading);
+            mPresenter = null;
         }
     }
 }

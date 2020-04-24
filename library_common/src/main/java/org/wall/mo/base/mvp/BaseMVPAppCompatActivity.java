@@ -2,13 +2,10 @@ package org.wall.mo.base.mvp;
 
 import android.os.Bundle;
 
+import org.wall.mo.base.activity.AbsDataBindingAppCompatActivity;
+
 import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
-
-import org.wall.mo.base.activity.AbsDataBindingAppCompatActivity;
-import org.wall.mo.base.cview.LoadDialogView;
-import org.wall.mo.base.interfaces.ILoadView;
-import org.wall.mo.base.interfaces.IStatusView;
 
 /**
  * Copyright (C), 2018-2019
@@ -25,15 +22,13 @@ public abstract class BaseMVPAppCompatActivity
                 B extends ViewDataBinding>
         extends AbsDataBindingAppCompatActivity<B> {
 
+    @Nullable
     protected P mPresenter;
-
 
     public abstract P createPresenter();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        loadDialogView = new LoadDialogView(this);
-
         mPresenter = createPresenter();
         if (mPresenter != null) {
             //这里处理一次

@@ -30,7 +30,10 @@ import mo.wall.org.nestedrecyclerview.view.ParentRecyclerView;
  * 作者姓名 修改时间 版本号 描述
  */
 public class NestedRecyclerViewFragment extends
-        BaseMVPMaxLifecycleFragment<NestedRecyclerViewPresenter, FragmentNestedRecyclerviewBinding, Parcelable> implements
+        BaseMVPMaxLifecycleFragment<NestedRecyclerViewContract.View,
+                NestedRecyclerViewContract.Presenter,
+                FragmentNestedRecyclerviewBinding,
+                Parcelable> implements
         NestedRecyclerViewContract.View {
 
 
@@ -157,22 +160,11 @@ public class NestedRecyclerViewFragment extends
 
     }
 
-
     @Override
-    public void onLoadDialogFail(int flag, Object failObj) {
+    public void showInfoDialog(String msg) {
 
     }
 
-    @Override
-    public void onLoadToastFail(int flag, Object failObj) {
-
-    }
-
-
-    @Override
-    protected void onCurDestroy() {
-
-    }
 
     @Override
     public void showData(List<NestedChildMultiItemEntity> itemEntityList) {

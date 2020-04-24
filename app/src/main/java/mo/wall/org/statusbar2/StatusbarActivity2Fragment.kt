@@ -14,6 +14,26 @@ import org.wall.mo.base.fragment.InterceptActBackFragment
  * A placeholder fragment containing a simple view.
  */
 class StatusbarActivity2Fragment : InterceptActBackFragment<ViewDataBinding, Parcelable>() {
+    override fun statusContentView() {
+        
+    }
+
+    override fun showInfoDialog(msg: String?) {
+        
+    }
+
+    override fun statusLoadingView() {
+        
+    }
+
+    override fun statusNetWorkView() {
+        
+    }
+
+    override fun statusErrorView(type: Int, msg: String?) {
+        
+    }
+
     override fun getTopBarTitleViewId(): Int {
         return 0
     }

@@ -19,7 +19,7 @@ public interface IAttachActivity extends IDialogView {
 
     public void setTopBarBack();
 
-    public void showTopBar(boolean status);
+    public void showTopBar(boolean show);
 
-    public Parcelable getNextExtra();
+    public Parcelable getBundle();
 }

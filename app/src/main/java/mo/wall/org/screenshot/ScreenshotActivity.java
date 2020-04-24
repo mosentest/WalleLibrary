@@ -135,4 +135,29 @@ public class ScreenshotActivity extends AbsWithV4FragmentActivity<ActivityScreen
     public void hideDialog() {
 
     }
+
+    @Override
+    public void showInfoDialog(String msg) {
+
+    }
+
+    @Override
+    public void statusLoadingView() {
+
+    }
+
+    @Override
+    public void statusNetWorkView() {
+
+    }
+
+    @Override
+    public void statusErrorView(int type, String msg) {
+
+    }
+
+    @Override
+    public void statusContentView() {
+
+    }
 }

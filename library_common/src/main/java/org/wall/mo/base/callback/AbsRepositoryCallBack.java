@@ -27,7 +27,7 @@ public abstract class AbsRepositoryCallBack<Body, Fail> {
         this.mFlag = flag;
         this.mLoading = loading;
         if (mBaseView != null) {
-            mBaseView.onLoadStart(mLoading, mFlag, tipMsg);
+            mBaseView.onLoadStart(mLoading, tipMsg);
         }
     }
 
@@ -49,30 +49,15 @@ public abstract class AbsRepositoryCallBack<Body, Fail> {
 
     public void repositorySuccess(Body bean) {
         if (mBaseView != null) {
-            mBaseView.onLoadSuccess(mLoading, mFlag, bean);
+            mBaseView.onLoadFinish(mLoading);
             onSuccess(mFlag, bean);
         }
     }
 
     public void repositoryFail(Fail bean) {
         if (mBaseView != null) {
-            mBaseView.onLoadFail(mLoading, mFlag);
-        }
-        if (!showErrorMsg()) {
-            return;
-        }
-        if (mBaseView != null
-                && onInterceptLoadFail(mFlag, bean)) {
-            return;
-        }
-        if (toast()) {
-            if (mBaseView != null) {
-                mBaseView.onLoadToastFail(mFlag, bean);
-            }
-        } else {
-            if (mBaseView != null) {
-                mBaseView.onLoadDialogFail(mFlag, bean);
-            }
+            mBaseView.onLoadFinish(mLoading);
+            onError(mFlag, bean);
         }
     }
 
@@ -86,31 +71,9 @@ public abstract class AbsRepositoryCallBack<Body, Fail> {
     public abstract void onSuccess(int flag, Body bean);
 
     /**
-     * 拦截错误信息处理，在处理的时候，需要判断getView方法是否为null
-     *
      * @param flag
      * @param bean
-     * @return
      */
-    public boolean onInterceptLoadFail(int flag, Fail bean) {
-        return false;
-    }
+    public abstract void onError(int flag, Fail bean);
 
-    /**
-     * 是否展示错误信息，默认为true
-     *
-     * @return
-     */
-    private boolean showErrorMsg() {
-        return true;
-    }
-
-    /**
-     * 默认toast
-     *
-     * @return
-     */
-    private boolean toast() {
-        return true;
-    }
 }

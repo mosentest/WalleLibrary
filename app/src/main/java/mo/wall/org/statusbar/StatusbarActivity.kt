@@ -13,6 +13,26 @@ import org.wall.mo.base.activity.AbsWithV4FragmentActivity
 import org.wall.mo.compat.statusbar.StatusBarUtil
 
 class StatusbarActivity : AbsWithV4FragmentActivity<ViewDataBinding, Parcelable>() {
+    override fun showInfoDialog(msg: String?) {
+        
+    }
+
+    override fun statusLoadingView() {
+        
+    }
+
+    override fun statusNetWorkView() {
+        
+    }
+
+    override fun statusErrorView(type: Int, msg: String?) {
+        
+    }
+
+    override fun statusContentView() {
+        
+    }
+
     override fun onClick(v: View?) {
 
     }

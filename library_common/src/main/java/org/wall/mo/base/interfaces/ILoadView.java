@@ -4,39 +4,12 @@ public interface ILoadView {
     /**
      * 请求前
      *
-     * @param flag   标记来源
      * @param tipMsg 加载的提示
      */
-    public void onLoadStart(boolean showLoading, int flag, String tipMsg);
+    public void onLoadStart(boolean showLoading, String tipMsg);
 
     /**
-     * 请求成功
-     *
-     * @param flag
+     * 请求结束
      */
-    public void onLoadSuccess(boolean showLoading, int flag, Object o);
-
-
-    /**
-     * 请求失败
-     *
-     * @param flag
-     */
-    public void onLoadFail(boolean showLoading, int flag);
-
-    /**
-     * 请求失败
-     *
-     * @param flag
-     * @param failObj 错误对象
-     */
-    public void onLoadDialogFail(int flag, Object failObj);
-
-    /**
-     * 请求失败
-     *
-     * @param flag
-     * @param failObj 错误对象
-     */
-    public void onLoadToastFail(int flag, Object failObj);
+    public void onLoadFinish(boolean showLoading);
 }

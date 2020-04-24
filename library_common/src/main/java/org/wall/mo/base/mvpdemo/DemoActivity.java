@@ -90,4 +90,29 @@ public class DemoActivity extends AbsWithV4FragmentActivity<ViewDataBinding, Par
     public void hideDialog() {
 
     }
+
+    @Override
+    public void showInfoDialog(String msg) {
+
+    }
+
+    @Override
+    public void statusLoadingView() {
+
+    }
+
+    @Override
+    public void statusNetWorkView() {
+
+    }
+
+    @Override
+    public void statusErrorView(int type, String msg) {
+
+    }
+
+    @Override
+    public void statusContentView() {
+
+    }
 }

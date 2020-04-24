@@ -15,7 +15,10 @@ import org.wall.mo.utils.log.WLog;
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-public abstract class MaxLifecycleFragment<B extends ViewDataBinding, nextP extends Parcelable> extends InterceptActBackFragment<B, nextP> {
+public abstract class MaxLifecycleFragment<
+        B extends ViewDataBinding,
+        startBundle extends Parcelable>
+        extends InterceptActBackFragment<B, startBundle> {
 
     public final static String TAG = MaxLifecycleFragment.class.getSimpleName();
 
