@@ -49,7 +49,7 @@ public interface ILifecycleObserver extends LifecycleObserver {
 //                        clearMethod(fieldObj, methods);
 //                        Method[] declaredMethods = fieldObj.getClass().getDeclaredMethods();
 //                        clearMethod(fieldObj, declaredMethods);
-//                        field.set(o, null);
+                        field.set(o, null);
                     }
                 } catch (Exception e) {
                     //e.printStackTrace();

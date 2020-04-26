@@ -298,6 +298,7 @@ public abstract class AbsDataBindingV4Fragment<B extends ViewDataBinding> extend
         }
         mAttachActivity = null;
         mContext = null;
+        onLifeClear();
         super.onDestroy();
     }
 
