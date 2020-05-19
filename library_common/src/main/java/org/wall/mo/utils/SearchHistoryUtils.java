@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.xky.app.patient.App;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +33,8 @@ public class SearchHistoryUtils {
     public final static int TOTAL_HEALTH = 5;
 
     // 保存搜索记录
-    public static void saveSearchHistory(String inputText, String sp_key, int total) {
-        SharedPreferences sp = App.getInstance().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+    public static void saveSearchHistory(Context context, String inputText, String sp_key, int total) {
+        SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         if (TextUtils.isEmpty(inputText)) {
             return;
         }
@@ -71,8 +70,8 @@ public class SearchHistoryUtils {
     }
 
     //获取搜索记录
-    public static List<String> getSearchHistory(String sp_key) {
-        SharedPreferences sp = App.getInstance().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+    public static List<String> getSearchHistory(Context context, String sp_key) {
+        SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         String longHistory = sp.getString(sp_key, "");
         String[] tmpHistory = longHistory.split(","); //split后长度为1有一个空串对象
         List<String> historyList = new ArrayList<String>(Arrays.asList(tmpHistory));
@@ -82,8 +81,8 @@ public class SearchHistoryUtils {
         return historyList;
     }
 
-    public static void clear(String sp_key) {
-        SharedPreferences sp = App.getInstance().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+    public static void clear(Context context, String sp_key) {
+        SharedPreferences sp = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         sp.edit().remove(sp_key).commit();
     }
 }
