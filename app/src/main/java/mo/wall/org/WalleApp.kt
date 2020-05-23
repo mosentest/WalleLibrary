@@ -1,14 +1,17 @@
 package mo.wall.org
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.os.Bundle
 import android.os.StrictMode
-import androidx.multidex.MultiDex
 import android.widget.Toast
-import leakcanary.LeakCanary
+import androidx.multidex.MultiDex
+import mo.wall.org.throwcard.ThinkingFactory
 import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper
 import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
 import org.wall.mo.utils.autolayout.AutoDensity
+
 
 /**
  * 作者 create by moziqi on 2018/7/6
@@ -75,6 +78,38 @@ class WalleApp : Application() {
             }
         })
         AutoDensity.initApplication(2f, 750f, 1334f, 4.7f)
+
+
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityPaused(activity: Activity?) {
+
+            }
+
+            override fun onActivityResumed(activity: Activity?) {
+
+            }
+
+            override fun onActivityStarted(activity: Activity?) {
+
+            }
+
+            override fun onActivityDestroyed(activity: Activity?) {
+
+            }
+
+            override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
+
+            }
+
+            override fun onActivityStopped(activity: Activity?) {
+
+            }
+
+            override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+
+            }
+
+        })
     }
 
     override fun attachBaseContext(base: Context?) {

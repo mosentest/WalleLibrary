@@ -12,14 +12,22 @@ class ThrowCardActivity : BaseAppCompatActivity() {
 
 
     private lateinit var mView: View
+    private lateinit var mDstOut: DstOutView
+
+
+    private var progress: Int? = 2
 
     var animate: ViewPropertyAnimator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThinkingFactory.rep(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_throw_card)
 
         mView = findViewById<View>(R.id.view)
+
+
+        mDstOut = findViewById<DstOutView>(R.id.dstOut)
 
         animate = mView.animate()
 
@@ -34,6 +42,14 @@ class ThrowCardActivity : BaseAppCompatActivity() {
             }
 
         }
+        var runnable = object : Runnable {
+            override fun run() {
+                progress = progress!! + 1
+                mDstOut.setProgress(progress!!)
+                handler.postDelayed(this, 500)
+            }
+        }
+        handler.postDelayed(runnable, 500)
     }
 
 

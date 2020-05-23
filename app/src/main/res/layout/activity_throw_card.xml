@@ -8,6 +8,11 @@
     tools:context=".throwcard.ThrowCardActivity">
 
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="一键加入" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="@dimen/w_dp_300"
@@ -22,5 +27,11 @@
         android:layout_gravity="center"
         android:background="@color/colorPrimaryDark" />
 
+    <mo.wall.org.throwcard.DstOutView
+        android:id="@+id/dstOut"
+        android:layout_width="@dimen/w_dp_300"
+        android:layout_height="@dimen/w_dp_300"
+        android:layout_gravity="center">
 
+    </mo.wall.org.throwcard.DstOutView>
 </FrameLayout>
