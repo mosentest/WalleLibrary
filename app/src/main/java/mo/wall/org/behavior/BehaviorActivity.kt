@@ -41,7 +41,7 @@ class BehaviorActivity : BaseAppCompatActivity() {
     private lateinit var mHeader: MyHeaderView
 
 
-    private lateinit var fragments: ArrayList<androidx.fragment.app.Fragment>
+//    private lateinit var fragments: ArrayList<androidx.fragment.app.Fragment>
     private lateinit var titles: ArrayList<String>
 
 
@@ -81,18 +81,22 @@ class BehaviorActivity : BaseAppCompatActivity() {
         mTopName2.setOnClickListener {
             Toast.makeText(this, "name2", Toast.LENGTH_SHORT).show()
         }
-        fragments = ArrayList<androidx.fragment.app.Fragment>()
+//        fragments = ArrayList<androidx.fragment.app.Fragment>()
         titles = ArrayList<String>()
 
         titles.add("button简单使用")
         titles.add("Scroll滚动通知")
-        fragments.add(FirstFragment.newInstance(Bundle()))
-        fragments.add(ScrollFragment.newInstance(Bundle()))
+//        fragments.add(FirstFragment.newInstance(Bundle()))
+//        fragments.add(ScrollFragment.newInstance(Bundle()))
 
         mViewPager.adapter = object : MaxLifecyclePagerAdapter(supportFragmentManager, lifecycle) {
 
             override fun getItem(position: Int): Fragment {
-                return fragments.get(position)
+                return when (position) {
+                    1 -> FirstFragment.newInstance(Bundle())
+                    2 -> ScrollFragment.newInstance(Bundle())
+                    else -> FirstFragment.newInstance(Bundle())
+                }
             }
 
             override fun getCount(): Int {

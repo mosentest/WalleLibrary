@@ -7,6 +7,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.List;
 
+/**
+ * https://www.jianshu.com/p/4fc9fc71fa5f
+ */
 public class SubPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
     private List<String> titles;

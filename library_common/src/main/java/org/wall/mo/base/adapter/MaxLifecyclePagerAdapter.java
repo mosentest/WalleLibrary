@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,6 +25,10 @@ import org.wall.mo.utils.ILifecycleObserver;
  * #每日一问 | Fragment 是如何被存储与恢复的？
  * https://www.wanandroid.com/wenda/show/12574
  * #每日一问 ViewPager 这个流传广泛的写法，其实是有问题的！
+ *
+ * https://www.jianshu.com/p/4fc9fc71fa5f
+ *
+ *
  */
 public abstract class MaxLifecyclePagerAdapter extends FragmentPagerAdapter implements ILifecycleObserver {
 
@@ -84,7 +87,6 @@ public abstract class MaxLifecyclePagerAdapter extends FragmentPagerAdapter impl
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     @Override
     public void onLifeClear() {
-        ILifecycleObserver.InnerClass.clear(this);
         if (this.lifecycle != null) {
             this.lifecycle.removeObserver(this);
             this.lifecycle = null;
