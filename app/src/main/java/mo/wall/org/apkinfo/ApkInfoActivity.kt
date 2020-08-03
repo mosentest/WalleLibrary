@@ -66,22 +66,27 @@ class ApkInfoActivity : BaseAppCompatActivity() {
                 return@setOnClickListener
             }
             val g = AFPUtils.G(this@ApkInfoActivity, packageName)
-            Log.i("g", g)
             mEdAfp.setText(g)
+            Log.i("d", "AFPUtils:$g")
+
             val g1 = ASHASUtils.G(this@ApkInfoActivity, packageName)
             mEdAsha.setText(g1)
-            Log.i("g1", g1)
+            Log.i("d", "ASHASUtils:$g1")
 
             val d = apk_sizeUtils.D(this@ApkInfoActivity, packageName)
             mEdSize.setText("" + d)
-            Log.i("d", d.toString())
+            Log.i("d", "size:$d")
 
 
             mEdVerCode.setText("" + AppInfo.getVersionCode(this@ApkInfoActivity, packageName))
 
-            mEdVerName.setText("" + AppInfo.getversionName(this@ApkInfoActivity, packageName))
+            val getversionName = AppInfo.getversionName(this@ApkInfoActivity, packageName)
+            Log.i("d", "getversionName:$getversionName")
+            mEdVerName.setText("" + getversionName)
 
-            mEdAppName.setText("" + AppInfo.getAppName(this@ApkInfoActivity, packageName))
+            val appName = AppInfo.getAppName(this@ApkInfoActivity, packageName)
+            Log.i("d", "appName:$appName")
+            mEdAppName.setText("" + appName)
 
             mEdMinsdkversion.setText("" + AppInfo.getMinSdkVersion(this@ApkInfoActivity, packageName))
         }

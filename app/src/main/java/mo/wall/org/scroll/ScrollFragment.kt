@@ -27,8 +27,8 @@ class ScrollFragment : androidx.fragment.app.Fragment() {
         arguments?.let {
 
         }
-        StatusBarUtil.setStatusBarColor(activity, ContextCompat.getColor(activity!!, R.color.colorPrimaryDark))
-        StatusBarUtil.setStatusBarDarkTheme(activity, false)
+        StatusBarUtil.setStatusBarColor(activity!!, ContextCompat.getColor(activity!!, R.color.colorPrimaryDark))
+        StatusBarUtil.setStatusBarDarkTheme(activity!!, false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
