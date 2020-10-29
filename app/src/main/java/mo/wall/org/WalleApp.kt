@@ -150,6 +150,8 @@ class WalleApp : Application() {
             if (mPackageInfo != null) {
                 return mPackageInfo?.packageName
             } else {
+                //移除chrome
+                //com.android.chrome
                 /**
                  * https://www.cnblogs.com/travellife/p/3932823.html
                  */
