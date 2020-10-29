@@ -42,7 +42,7 @@ class WebInScrollActivity : BaseAppCompatActivity() {
 //        mWebview = findViewById<FixWebView>(R.id.webview)
         mScrollview = findViewById<FixScrollView>(R.id.scrollview)
 
-        mWebview.loadUrl("https://www.toouds.top/newGame/index.html?gameChannelId=1078")
+        mWebview.loadUrl("https://www.baidu.com")
 
 
         mScrollview.webView = mWebview
