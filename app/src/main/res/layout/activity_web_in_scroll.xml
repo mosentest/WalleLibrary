@@ -18,14 +18,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/w_dp_500"
+                android:layout_height="@dimen/w_dp_200"
                 android:background="@color/color_999999" />
 
-
-            <mo.wall.org.webviewinscrollview.FixWebView
-                android:id="@+id/webview"
+            <FrameLayout
+                android:id="@+id/flay"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/w_dp_300" />
+                android:layout_height="@dimen/w_dp_600" />
+
+            <!-- <mo.wall.org.webviewinscrollview.FixWebView
+                 android:id="@+id/webview"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/w_dp_600" />-->
 
 
             <LinearLayout

@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
 import mo.wall.org.R
 import mo.wall.org.base.BaseAppCompatActivity
 
@@ -24,6 +25,8 @@ class WebInScrollActivity : BaseAppCompatActivity() {
     private lateinit var mScrollview: FixScrollView
 
 
+    private lateinit var mFlay: FrameLayout
+
     override fun handleMessageAct(msg: Message?) {
     }
 
@@ -32,10 +35,14 @@ class WebInScrollActivity : BaseAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_in_scroll)
 
-        mWebview = findViewById<FixWebView>(R.id.webview)
+        mFlay = findViewById<FrameLayout>(R.id.flay)
+        mWebview = FixWebView(ContextX(this))
+
+        mFlay.addView(mWebview)
+//        mWebview = findViewById<FixWebView>(R.id.webview)
         mScrollview = findViewById<FixScrollView>(R.id.scrollview)
 
-        mWebview.loadUrl("https://github.com/moz1q1")
+        mWebview.loadUrl("https://www.toouds.top/newGame/index.html?gameChannelId=1078")
 
 
         mScrollview.webView = mWebview

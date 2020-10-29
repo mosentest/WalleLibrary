@@ -223,8 +223,15 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx'
 
 
-    implementation 'com.yanzhenjie:permission:2.0.3'
-
+//    implementation 'com.yanzhenjie:permission:2.0.3'
+    
+    /**
+     * https://github.com/permissions-dispatcher/PermissionsDispatcher
+     */
+    def permissionsdispatcher_version = "4.8.0"
+    implementation "org.permissionsdispatcher:permissionsdispatcher:$permissionsdispatcher_version"
+    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:$permissionsdispatcher_version"
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:$permissionsdispatcher_version"
 
     /**
      * orc识别图片文字

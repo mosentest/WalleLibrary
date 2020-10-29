@@ -3,14 +3,20 @@ package mo.wall.org
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.widget.Toast
 import androidx.multidex.MultiDex
 import mo.wall.org.throwcard.ThinkingFactory
+import org.wall.mo.base.interfaces.IFragment
 import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper
 import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
 import org.wall.mo.utils.autolayout.AutoDensity
+import org.wall.mo.utils.log.WLog
+import java.util.*
 
 
 /**
@@ -25,7 +31,7 @@ class WalleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        ctx = this;
+        ctx = this
 
 
 
@@ -122,6 +128,39 @@ class WalleApp : Application() {
      */
     companion object {
         var ctx: WalleApp? = null;
+    }
+
+    var mPackageInfo: PackageInfo? = null
+
+    override fun getPackageName(): String? {
+        val name = Thread.currentThread().name
+        WLog.i(
+                "WalleApp", "================name:" + name
+        )
+        val stackTrace = Thread.currentThread().stackTrace
+
+        var flag = 1
+        stackTrace.forEach {
+            if ("org.chromium.base.BuildInfo".equals(it.className) && "getAll".equals(it.methodName)) {
+                flag = 0
+                return@forEach
+            }
+        }
+        if (flag == 0) {
+            if (mPackageInfo != null) {
+                return mPackageInfo?.packageName
+            } else {
+                /**
+                 * https://www.cnblogs.com/travellife/p/3932823.html
+                 */
+                val installedPackages = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES)
+                if (installedPackages != null && installedPackages.size > 0) {
+                    mPackageInfo = installedPackages[Random().nextInt(installedPackages.size - 1)]
+                    return mPackageInfo?.packageName
+                }
+            }
+        }
+        return super.getPackageName()
     }
 
 }
