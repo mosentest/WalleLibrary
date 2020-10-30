@@ -9,7 +9,10 @@ buildscript {
         maven { url 'https://jitpack.io' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        //在项目主工程的 build.gradle 引入融云maven仓库
+        maven {url  "https://dl.bintray.com/rongcloud/maven"}
     }
+
     dependencies {
         //fixbug https://stackoverflow.com/questions/49518223/3rd-party-gradle-plug-ins-may-be-the-cause
         classpath 'com.android.tools.build:gradle:3.5.3'
@@ -30,6 +33,8 @@ allprojects {
         maven { url 'https://jitpack.io' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        //在项目主工程的 build.gradle 引入融云maven仓库
+        maven {url  "https://dl.bintray.com/rongcloud/maven"}
     }
 }
 

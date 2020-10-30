@@ -7,11 +7,8 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.StrictMode
-import android.util.Log
 import android.widget.Toast
 import androidx.multidex.MultiDex
-import mo.wall.org.throwcard.ThinkingFactory
-import org.wall.mo.base.interfaces.IFragment
 import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper
 import org.wall.mo.utils.activitylifecyclecallback.AppFrontBackHelper.OnAppStatusListener
 import org.wall.mo.utils.autolayout.AutoDensity
@@ -32,7 +29,6 @@ class WalleApp : Application() {
     override fun onCreate() {
         super.onCreate()
         ctx = this
-
 
 
 
