@@ -1,7 +1,9 @@
 package org.wall.mo.widgets.edittext;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -100,6 +102,17 @@ public class EditTextUtils {
             //Drawable drawable = resources.getDrawable(R.drawable.icon_delete_registered);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             editText.setCompoundDrawables(null, null, drawable, null);
+        }
+    }
+
+    /**
+     * https://blog.csdn.net/li0978/article/details/105014121
+     *
+     * @param activity
+     */
+    public static void bugAndroid10DisableAutoFill(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            activity.getWindow().getDecorView().setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS);
         }
     }
 }
