@@ -3,6 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+
+def verCodeNew() {
+    return new Date().format("yyyyMMdd").toInteger()
+}
+
 android {
 
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -12,7 +17,7 @@ android {
         applicationId "mo.wall.org"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 1
+        versionCode verCodeNew()
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
