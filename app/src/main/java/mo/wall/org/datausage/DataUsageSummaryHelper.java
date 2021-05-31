@@ -94,7 +94,7 @@ public class DataUsageSummaryHelper {
             }
         } catch (RemoteException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         } finally {
             android.util.Log.i(TAG, "getMsimTotalData:finally");

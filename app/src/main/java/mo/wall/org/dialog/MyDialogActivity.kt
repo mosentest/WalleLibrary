@@ -32,7 +32,7 @@ class MyDialogActivity : AbsWithV4FragmentActivity<ActivityMyDialogBinding, MyDi
         return R.id.tvTopBarLeftBack
     }
 
-    override fun createFragment(): Fragment {
+    override fun createFragment(): Fragment? {
         val intent = intent
         var extras: Bundle? = null
         if (intent != null) {

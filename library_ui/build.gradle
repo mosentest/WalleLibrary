@@ -53,7 +53,7 @@ dependencies {
     compileOnly(rootProject.ext.dependencies.exifinterface) {
         force true
     }
-    compileOnly(rootProject.ext.dependencies.cardview) {
+    compileOnly(rootProject.ext.dependencies.core) {
         force true
     }
     compileOnly(rootProject.ext.dependencies.recyclerview) {

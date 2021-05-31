@@ -42,7 +42,7 @@ class WalleApp : Application() {
                     .detectDiskWrites()
                     .detectCustomSlowCalls()//检测自定义耗时操作
                     .detectNetwork()   // or .detectAll() for all detectable problems
-                    .penaltyDialog() //弹出违规提示对话框
+//                    .penaltyDialog() //弹出违规提示对话框
                     .penaltyLog() //在Logcat 中打印违规异常信息
                     .penaltyFlashScreen() //API等级11
                     .build())

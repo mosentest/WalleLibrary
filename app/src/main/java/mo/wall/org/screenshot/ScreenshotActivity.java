@@ -64,10 +64,14 @@ public class ScreenshotActivity extends AbsWithV4FragmentActivity<ActivityScreen
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        mViewDataBinding.img.setOnClickListener(v -> startCapture());
-        mViewDataBinding.tvShot.setOnClickListener(v -> {
-            mViewDataBinding.img.setImageBitmap(getScreenShotBmp());
-        });
+        if (mViewDataBinding != null) {
+            mViewDataBinding.img.setOnClickListener(v -> startCapture());
+        }
+        if (mViewDataBinding != null) {
+            mViewDataBinding.tvShot.setOnClickListener(v -> {
+                mViewDataBinding.img.setImageBitmap(getScreenShotBmp());
+            });
+        }
     }
 
     /**
