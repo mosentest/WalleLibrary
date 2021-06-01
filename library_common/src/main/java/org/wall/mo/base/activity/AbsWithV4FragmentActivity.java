@@ -95,8 +95,12 @@ public abstract class AbsWithV4FragmentActivity<B extends ViewDataBinding,
             }
         }
 
-        if (mFragment == null) {
-            mFragment = createFragment();
+        try {
+            if (mFragment == null) {
+                mFragment = createFragment();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         int containerViewId = getContainerViewId();
         if (mFragment == null || containerViewId == 0) {

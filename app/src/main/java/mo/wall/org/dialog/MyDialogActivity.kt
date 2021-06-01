@@ -38,7 +38,12 @@ class MyDialogActivity : AbsWithV4FragmentActivity<ActivityMyDialogBinding, MyDi
         if (intent != null) {
             extras = intent.extras
         }
-        return MyDialogFragment.newInstance(extras)
+//        val newInstance = MyDialogFragment.newInstance(extras)
+
+        val newInstance = MyDialogFragment().apply {
+            arguments = extras
+        }
+        return newInstance
     }
 
     override fun loadIntentData(intent: Intent) {
